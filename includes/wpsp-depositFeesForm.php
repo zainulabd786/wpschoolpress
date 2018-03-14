@@ -130,8 +130,8 @@
 									<div class="panel-heading"> Invoice Preview </div>
 						                <div class="panel-body">
 											<div class="invoice-prev">
-
-												<div class="inv-header row">
+												<!--Old Invoice Format By Zainul Abideen -->
+												<!--<div class="inv-header row">
 													<div class="inv-header-left col-sm-6">
 														<h3><b>School Management System</b></h3>
 														<i style="font-size:100px" class="fa fa-graduation-cap"></i>
@@ -185,7 +185,68 @@
 															<td class="inv-entries-due" colspan="2"></td>
 														</tr>
 													</table>
+												</div>-->
+												<!--Old Invoice Format By Zainul Abideen ends -->
+
+												<?php 
+													//fetch School Details From Database										
+													$settings_table	=	$wpdb->prefix."wpsp_settings";
+													$sel_setting		=	$wpdb->get_results("select * from $settings_table");
+													$school_name = "";
+													$school_logo = "";
+													$school_add = "";
+													$school_city = "";
+													$school_state = "";
+													$school_country = "";
+													$school_number = "";
+													$school_email = "";
+													$school_site = "";
+													foreach( $sel_setting as $setting ) :
+														switch ($setting->id) {
+															case (1): $school_name = $setting->option_value; break;
+															case (2): $school_logo = $setting->option_value; break;
+															case (6): $school_add = $setting->option_value; break;
+															case (7): $school_city = $setting->option_value; break;
+															case (8): $school_state = $setting->option_value; break;
+															case (9): $school_country = $setting->option_value; break;
+															case (10): $school_number = $setting->option_value; break;
+															case (12): $school_email = $setting->option_value; break;
+															case (13): $school_site = $setting->option_value; break;
+															
+														}
+													endforeach; ?>
+												<div class="invoice-header">
+													<div class="invoice-header-logo-name row">
+
+														<div class="invoice-header-logo col-md-3">
+															<img src="<?php if(!empty($school_logo)) echo $school_logo; ?>" height=90 width=90>
+														</div>
+														<div class="invoice-header-name col-md-9">
+															<h2><?php if(!empty($school_name)) echo $school_name; ?></h2>
+														</div>
+
+													</div>
+
+													<div class="invoice-header-school-details">
+														<b><?php echo $school_add.", ".$school_city; ?></b>
+														<p><?php echo "Web: ".$school_site." | Email: ".$school_email; ?></p>
+													</div>
+
+													<div class="invoice-header-doc-details row">
+														<div class="invoice-header-slip-no col-xs-4">
+															<strong>Slip No.</strong>
+															<div></div>
+														</div>
+														<div class="invoice-header-heading col-xs-4">
+															<div>FEE BILL CUM RECEIPT</div>
+														</div>
+														<div class="invoice-header-date col-xs-4">
+															<strong>Date:</strong>
+															<div></div>
+														</div>
+													</div>
 												</div>
+
 											</div>
 						                </div>
 								</header>

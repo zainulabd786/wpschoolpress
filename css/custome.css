@@ -190,7 +190,8 @@ a.add-parent { margin-bottom:15px; }
 .remove-inp:hover{
     background-color: #afbdd3;
 }
-.inv-header-left, .inv-des-left{
+/* Old Invoice Format By Zainul Abideen */
+/*.inv-header-left, .inv-des-left{
     text-align: left;
 }
 .inv-header-right, .inv-des-right{
@@ -206,11 +207,11 @@ a.add-parent { margin-bottom:15px; }
 .invoice-prev .inv-entries table td{
     border: 1px dotted grey;
     padding: 8px;
-}
+}*/
+/* Old Invoice Format By Zainul Abideen ends */
 #FeesDepositForm sup{
     color: red;
 }
-
 #FeesDepositForm .form-inline .form-group{
     width: 43.5%;
 }
@@ -220,7 +221,67 @@ a.add-parent { margin-bottom:15px; }
 #fees-inp{
     padding: 8px 0 8px 0;
 }
-
+.invoice-header-logo-name .invoice-header-logo{
+    text-align: right;
+}
+.invoice-header-logo-name .invoice-header-name{
+    text-align: left;
+    padding: 12px;
+}
+.invoice-header-logo-name .invoice-header-name h2{
+    font-family: Impact, Charcoal, sans-serif;
+}
+.invoice-header-school-details{
+    text-align: center;
+    position: relative;
+    top: -20px;
+}
+.invoice-header-school-details b{
+    font-size: 20px;
+}
+.invoice-header-slip-no strong{
+    width: 60px;
+}
+.invoice-header-slip-no, .invoice-header-date{
+    margin-top: 15px;
+}
+.invoice-header-date strong{
+    width: 50px;
+}
+.invoice-header-date div{
+    width: 150px;
+    border-bottom: 1px dotted #000;
+    height: 15px;
+}
+.invoice-header-slip-no div{
+    width: 150px;
+    border-bottom: 1px dotted #000;
+    height: 15px;
+}
+.invoice-header-slip-no, .invoice-header-date{
+    display: inline-flex;
+}
+.invoice-header-heading{
+    border: 2px solid #000;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+}
+.invoice-header-heading div{
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 25px;
+}
+.invoice-header-date{
+    position: relative;
+    right: 0;
+}
+@media screen(min-width: 1920px){
+    .invoice-header-date{
+        position: relative;
+        right: -100px;
+    }
+}
 
 
 
