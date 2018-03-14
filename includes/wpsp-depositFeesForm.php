@@ -27,10 +27,6 @@
 												<label for="dep-issue-date">Issue Date</label>
 												<input type="text" class="form-control" id="dep-issue-date" value="<?php echo $current_date; ?>" disabled>
 											</div>
-											<div class="form-group">
-												<label for="dep-title">Title<sup>*</sup></label>
-												<input type="text" class="form-control" id="dep-title">
-											</div>
 											<div class="form-group dep-class-select">
 												<label for="dep-class">Class<sup>*</sup></label>
 												<select name="ClassID" id="ClassID dep-class" class="form-control">
@@ -54,30 +50,74 @@
 													<option value="">Select Student</option>
 												</select>
 											</div>
-											<label for="dep-amount">Amount<sup>*</sup></label>
-											<div style="padding-left: 15px;" class="form-inline row">
-												<div class="form-group col-xs-4 row">
-													<input type="text" class="form-control col-sm-12" id="dep-amount-exp" placeholder="Amount Expected">
+											<label for="dep-amount">Select Month<sup>*</sup></label>
+											<div class="form-inline">
+												<div class="form-group dep-from-select">
+													<select class="form-control">
+														<option>Select From Month</option><?php
+														$months_array = array("January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
+														for ($m=0; $m<12; $m++) { ?>
+															<option value="<?php echo $months_array[$m]; ?>"><?php echo $months_array[$m]; ?></option>;
+														<?php } ?>
+													</select>
+													<label>From</label>
 												</div>
-												<div class="form-group col-xs-4 row">
-													<input type="text" class="form-control col-sm-12" id="dep-amount-paid" placeholder="Amount Paid">
-												</div>
-												<div class="form-group col-xs-4 row">
-													<input type="text" class="form-control col-sm-12" id="dep-amount-due" placeholder="Amount Due" disabled>
+												<div class="form-group dep-to-select">
+													<select class="form-control">
+														<option>Select To Month</option><?php
+														$months_array = array("January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
+														for ($m=0; $m<12; $m++) { ?>
+															<option value="<?php echo $months_array[$m]; ?>"><?php echo $months_array[$m]; ?></option>;
+														<?php } ?>
+													</select>
+													<label>To</label>
 												</div>
 											</div>
-											<div class="form-group">
-												<label for="dep-status">Status<sup>*</sup></label>
-						                      	<select id="dep-status" class="form-control">
-													<option value="">Select Status</option>
-													<option value="paid">Paid</option>
-													<option value="partiallyPaid">Partially Paid</option>
-													<option value="unpaid">Unpaid</option>
+											<div class="form-group dep-fee-type">
+												<label>Fees Type</label>
+												<select class="form-control">
+													<option value="">Select Fee Type</option>
+													<option value="AdmissionFees">Admission Fees</option>
+													<option value="TuitionFees">Tution Fees(Monthly)</option>
+													<option value="TransportFees">Transportaion Charges(Mothly)</option>
+													<option value="AnnualCharge">Annual Charge</option>
+													<option value="RecreationCharge">Recreation Charges</option>
 												</select>
-						                    </div>
-						                    <div class="form-group">
-												<label for="dep-desc">Description<sup>*</sup></label>
-												<textarea id="dep-desc" class="form-control"></textarea> 
+											</div>
+											<div class="dep-adm-inp" id="fees-inp">
+												<label>Admission Fees(<i class="fa fa-inr"></i>)</label>
+												<div class="input-group">
+													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="dep-tf-inp" id="fees-inp">
+												<label>Tution Fees(<i class="fa fa-inr"></i>)</label>
+												<div class="input-group">
+													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="dep-tc-inp" id="fees-inp">
+												<label>Transportation Chares(<i class="fa fa-inr"></i>)</label>
+												<div class="input-group">
+													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="dep-ac-inp" id="fees-inp">
+												<label>Annual Charges(<i class="fa fa-inr"></i>)</label>
+												<div class="input-group">
+													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
+													<input type="text" class="form-control">
+												</div>
+											</div>
+											<div class="dep-rf-inp" id="fees-inp">
+												<label>Recreation Fees(<i class="fa fa-inr"></i>)</label>
+												<div class="input-group">
+													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
+													<input type="text" class="form-control">
+												</div>
 											</div>
 											<input type="button" class="btn btn-success btn-block" value="Submit" id="dep-fees-btn">
 						                </div>

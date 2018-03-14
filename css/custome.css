@@ -184,7 +184,12 @@ a.add-parent { margin-bottom:15px; }
 
 
 }
-
+.remove-inp{
+    cursor: pointer;
+}
+.remove-inp:hover{
+    background-color: #afbdd3;
+}
 .inv-header-left, .inv-des-left{
     text-align: left;
 }
@@ -206,6 +211,15 @@ a.add-parent { margin-bottom:15px; }
     color: red;
 }
 
+#FeesDepositForm .form-inline .form-group{
+    width: 43.5%;
+}
+#FeesDepositForm .form-inline .form-group label{
+    font-size: 10px;
+}
+#fees-inp{
+    padding: 8px 0 8px 0;
+}
 
 
 
