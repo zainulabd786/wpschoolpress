@@ -151,7 +151,9 @@ html,body{
     top: 12px;
     cursor:pointer;
 }
-
+.avatar img {
+    margin-top: 13px;
+}
 
 </style>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -161,7 +163,7 @@ html,body{
 <div class="container">
     <div class="login-container">
             <div id="output"></div>
-            <div class="avatar"><img src="<?php echo WPSP_PLUGIN_URL.'img/logo.png';?>" height="84" width="84"></div>
+            <div class="avatar"><img src="<?php echo WPSP_PLUGIN_URL.'img/logo.png';?>" height="70" width="70"></div>
             <div class="form-box">
                 <form action="<?php echo site_url(); ?>/wp-login.php" method="post">
                     <input type="text" placeholder="username" name="log" id="user_login">
