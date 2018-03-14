@@ -1,193 +1,176 @@
 <style>
-    @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-    .login-page {
-        width: 360px;
-        padding: 5% 0 0;
+body{background: #eee url(http://subtlepatterns.com/patterns/sativa.png);}
+html,body{
+    position: relative;
+    height: 100%;
+}
+
+.login-container{
+    position: relative;
+    width: 300px;
+    margin: 80px auto;
+    padding: 20px 40px 40px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+#output{
+    position: absolute;
+    width: 300px;
+    top: -75px;
+    left: 0;
+    color: #fff;
+}
+
+#output.alert-success{
+    background: rgb(25, 204, 25);
+}
+
+#output.alert-danger{
+    background: rgb(228, 105, 105);
+}
+
+
+.login-container::before,.login-container::after{
+    content: "";
+    position: absolute;
+    width: 100%;height: 100%;
+    top: 3.5px;left: 0;
+    background: #fff;
+    z-index: -1;
+    -webkit-transform: rotateZ(4deg);
+    -moz-transform: rotateZ(4deg);
+    -ms-transform: rotateZ(4deg);
+    border: 1px solid #ccc;
+
+}
+
+.login-container::after{
+    top: 5px;
+    z-index: -2;
+    -webkit-transform: rotateZ(-2deg);
+     -moz-transform: rotateZ(-2deg);
+      -ms-transform: rotateZ(-2deg);
+
+}
+
+.avatar{
+    width: 100px;height: 100px;
+    margin: 10px auto 30px;
+    border-radius: 100%;
+    border: 2px solid #aaa;
+    background-size: cover;
+}
+
+.form-box input{
+    width: 100%;
+    padding: 10px;
+    height:40px;
+    border: 1px solid #ccc;;
+    background: #fafafa;
+    transition:0.2s ease-in-out;
+
+}
+
+.form-box input:focus{
+    outline: 0;
+    background: #eee;
+}
+
+.form-box input[type="text"]{
+    border-radius: 5px 5px 0 0;
+    text-transform: lowercase;
+}
+
+.form-box input[type="password"]{
+    border-radius: 0 0 5px 5px;
+    border-top: 0;
+}
+
+.form-box button.login{
+    margin-top:15px;
+    padding: 10px 20px;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+.fadeInUp {
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp;
+}
+
+
+.password{
+    position: relative;
+}
+
+.password input[type="password"]{
+    padding-right: 30px;
+}
+
+.password .glyphicon,#password2 .glyphicon {
+    display:none;
+    right: 15px;
+    position: absolute;
+    top: 12px;
+    cursor:pointer;
+}
 
-        margin: auto;
-
-    }
-
-    .form {
-
-        position: relative;
-
-        z-index: 1;
-
-        background: #FFFFFF;
-
-        max-width: 360px;
-
-        margin: 0 auto 10px;
-
-        padding: 25px 35px 35px 35px;
-
-    }
-
-    .form input {
-
-        font-family: "Roboto", sans-serif;
-
-        outline: 0;
-
-        background: #f2f2f2;
-
-        width: 100%;
-
-        border: 0;
-
-        margin: 0 0 15px;
-
-        padding: 12px;
-
-        box-sizing: border-box;
-
-        font-size: 14px;
-
-    }
-
-    .form button {
-
-        font-family: "Roboto", sans-serif;
-
-        text-transform: uppercase;
-
-        outline: 0;
-
-        background: #3c8dbc;
-
-        width: 100%;
-
-        border: 0;
-
-        padding: 15px;
-
-        color: #FFFFFF;
-
-        font-size: 14px;
-
-        cursor: pointer;
-
-    }
-
-    .form button:hover,.form button:active,.form button:focus {
-
-        background: #337ab7;
-
-    }
-
-    .form .message {
-
-        margin: 15px 0 0;
-
-        color: #b3b3b3;
-
-        font-size: 12px;
-
-    }
-
-    .form .message a {
-
-        color: #b3b3b3;
-
-        text-decoration: none;
-
-    }
-
-    .reference{
-
-        font-family: "Roboto", sans-serif;
-
-        text-align:center;
-
-        color: #b3b3b3;
-
-        font-size: 12px;
-
-    }
-
-    .reference a {
-
-        color: #b3b3b3;
-
-        text-decoration: none;
-
-    }
-
-    body {
-
-        background: #ecf0f5; /* fallback for old browsers */
-
-    }
-
-    .logo{
-
-        -webkit-background-size: 84px;
-
-        background-size: 84px;
-
-        background-position: center top;
-
-        background-repeat: no-repeat;
-
-        color: #444;
-
-        height: 84px;
-
-        font-size: 20px;
-
-        line-height: 1.3em;
-
-        margin: 0 auto 15px;
-
-        padding: 0;
-
-        text-decoration: none;
-
-        width: 84px;
-
-        outline: 0;
-
-        display: block;
-
-    }
-
-    .form label{
-
-        text-align: left !important;
-
-        font-weight: normal;
-
-        color:#72777c;
-
-    }
-
-    .left{
-
-        text-align: left;
-
-    }
-
-    .right{
-
-        text-align: right;
-
-    }
 
 </style>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-<div class="login-page">
-    <div class="logo"><img src="<?php echo WPSP_PLUGIN_URL.'img/logo.png';?>" height="84" width="84"></div>
-    <div class="form">
-       <form class="login-form" action="<?php echo site_url(); ?>/wp-login.php" method="post">
-            <label><?php _e( 'Username or Email', 'WPSchoolPress' );?></label>
-            <input type="text" placeholder="username" name="log" id="user_login">
-            <label><?php _e( 'Password', 'WPSchoolPress' ); ?></label>
-            <input type="password" placeholder="password" name="pwd" id="user_pass">
-            <button><?php _e( 'login', 'WPSchoolPress'); ?></button>
-            <p class="message left"><a href="<?php echo site_url(); ?>/wp-login.php?action=lostpassword"><?php _e( 'Forgot password?', 'WPSchoolPress'); ?></a></p>
-            <p class="message right"><a href="<?php echo site_url(); ?>/wp-login.php?action=register"><?php _e( "Register", "WPSchoolPress" );?></a></p>
-        </form>
-    </div>
-    <p class="reference"><?php _e( 'Powered by', 'WPSchoolPress'); ?><a href="http://wpschoolpress.com" title="school management system" target="_blank"> WPSchoolpress</a></p>
+<div class="container">
+    <div class="login-container">
+            <div id="output"></div>
+            <div class="avatar"><img src="<?php echo WPSP_PLUGIN_URL.'img/logo.png';?>" height="84" width="84"></div>
+            <div class="form-box">
+                <form action="<?php echo site_url(); ?>/wp-login.php" method="post">
+                    <input type="text" placeholder="username" name="log" id="user_login">
+                    <div class="password">
+                        <input type="password" placeholder="password" name="pwd" id="user_pass">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </div>
+                    <button class="btn btn-info btn-block login" type="submit"><?php _e( 'login', 'schoolweb'); ?></button>
+                </form>
+            </div>
+        </div>       
 </div>
