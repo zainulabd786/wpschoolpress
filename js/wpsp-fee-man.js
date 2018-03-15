@@ -129,9 +129,13 @@ $(document).ready(function(){
 
 	$(".dep-adm-inp .expected").keyup(function(){
 		$(".adm-fees-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(this).val()-$(".dep-adm-inp .paid").val();
+		$(".adm-fees-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});
 	$(".dep-adm-inp .paid").keyup(function(){
 		$(".adm-fees-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(".dep-adm-inp .expected").val()-$(this).val();
+		$(".adm-fees-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});
 
 	$(".dep-tf-inp .expected").keyup(function(){

@@ -313,35 +313,35 @@
 															<td>Admission Fees</td>
 															<td class="inv-expected-amt">0</td>
 															<td class="inv-paid-amt">0</td>
-															<td></td>
+															<td class="inv-bal-amt"></td>
 														</tr>
 														<tr class="tution-fees-te-inv">
 															<td>2</td>
 															<td>Tution Fees(Mothly)</td>
 															<td class="inv-expected-amt">0</td>
 															<td class="inv-paid-amt">0</td>
-															<td></td>
+															<td class="inv-bal-amt"></td>
 														</tr>
 														<tr class="trans-chg-tr-inv">
 															<td>3</td>
 															<td>Transportation charges(Monthly)</td>
 															<td class="inv-expected-amt">0</td>
 															<td class="inv-paid-amt">0</td>
-															<td></td>
+															<td class="inv-bal-amt"></td>
 														</tr>
 														<tr class="annual-chg-tr-inv">
 															<td>4</td>
 															<td>Annual Charges<br>(Dress+Books+Copies+Stationary)</td>
 															<td class="inv-expected-amt">0</td>
 															<td class="inv-paid-amt">0</td>
-															<td></td>
+															<td class="inv-bal-amt"></td>
 														</tr>
 														<tr class="rec-chg-tr-inv">
 															<td>5</td>
 															<td>Recreation Charge</td>
 															<td class="inv-expected-amt">0</td>
 															<td class="inv-paid-amt">0</td>
-															<td></td>
+															<td class="inv-bal-amt"></td>
 														</tr>
 														<tr class="inv-tab-bottom">
 															<td></td>
