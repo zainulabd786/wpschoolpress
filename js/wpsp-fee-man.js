@@ -14,6 +14,12 @@ $(document).ready(function(){
 	});
 	$(".dep-class-select select").change(function(){
 		$.post(ajax_url, { action: "fetch_all_stydents_of_a_class", value: $(this).val() }, function(data){ $(".dep-student-select select").html(data); });
+		$(".b5 .sb2 div").text($(this).val());
+	});
+	$(".dep-student-select select").change(function(){
+		$.post(ajax_url, { action: "fetch_all_details_of_a_student_for_fee", studentId: $(this).val() }, function(data){
+		 	$(".script-to-fill-invoice").html(data); 
+		});
 	});
 	$(".dep-adm-inp").hide();
 	$(".dep-tf-inp").hide();

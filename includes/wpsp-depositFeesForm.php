@@ -235,14 +235,14 @@
 													<div class="invoice-header-doc-details row">
 														<div class="invoice-header-slip-no col-xs-4">
 															<strong>Slip No.</strong>
-															<div>91</div>
+															<div></div>
 														</div>
 														<div class="invoice-header-heading col-xs-4">
 															<div>FEE BILL CUM RECEIPT</div>
 														</div>
 														<div class="invoice-header-date col-xs-4">
 															<strong>Date:</strong>
-															<div> 11/10/17 </div>
+															<div><?php echo $current_date; ?></div>
 														</div>
 													</div>
 												</div>
@@ -251,7 +251,7 @@
 
 													<div class="blank b1">
 														<strong>Name</strong>
-														<div>Zainul</div>
+														<div></div>
 													</div>
 													<div class="blank b2">
 														<strong>Father Name</strong>
@@ -290,6 +290,10 @@
 
 												</div>
 
+												<div class="script-to-fill-invoice">
+													
+												</div>
+												
 												<div class="invoice-body">
 													<table>
 														<tr class="tab-head">

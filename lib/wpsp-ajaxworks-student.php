@@ -533,13 +533,37 @@ function wpsp_checkRollNo(){
 	function wpsp_fetch_all_stydents_of_a_class(){
 		global $wpdb;
 		$standard = $_POST['value'];
-		$student_table	=	$wpdb->prefix."wpsp_student";							
-		$users_table	=	$wpdb->prefix."users";
-		$students	=	$wpdb->get_results("select * from $student_table s, $users_table u where u.ID=s.wp_usr_id AND class_id='$standard' order by sid desc");
+		$student_table	=	$wpdb->prefix."wpsp_student";
+		$students	=	$wpdb->get_results("select s_fname, s_mname, s_lname, p_fname, p_mname, p_lname, sid from $student_table where class_id='$standard' order by sid desc");
 		foreach ($students as $std) {
 			$student_name = $std->s_fname." ".$std->s_mname." ".$std->s_lname;
 			$fathers_name = $std->p_fname." ".$std->p_mname." ".$std->p_lname;
-			echo "<option value='".$std->s_regno."'>".$student_name." S/O ".$fathers_name."</option>";
+			echo "<option value='".$std->sid."'>".$student_name." S/O ".$fathers_name."</option>";
+		}
+		exit();
+	}
+
+	add_action( 'wp_ajax_fetch_all_details_of_a_student_for_fee', 'wpsp_fetch_all_student_details' );
+	function wpsp_fetch_all_student_details(){
+		global $wpdb;
+		$stid = $_POST['studentId'];
+		$student_table	=	$wpdb->prefix."wpsp_student";
+		$sql_student_detail = $wpdb->get_results("select * from $student_table where sid='$stid' order by sid desc");
+		foreach ($sql_student_detail as $student) {
+			$student_name = $student->s_fname." ".$student->s_mname." ".$student->s_lname;
+			$fathers_name = $student->p_fname." ".$student->p_mname." ".$student->p_lname;
+			$mobile = $student->s_phone;
+			$reg_no = $student->s_regno; ?>
+			<script type="text/javascript">
+				var name = '<?php echo $student_name; ?>';
+				var fatherName = '<?php echo $fathers_name; ?>';
+				var mob = '<?php echo $mobile; ?>';
+				var reg = '<?php echo $reg_no; ?>';
+				$(".b1 div").text(name);
+				$(".b2 div").text(fatherName);
+				$(".b3 .sb1 div").text(mob);
+				$(".b3 .sb2 div").text(reg);
+			</script><?php
 		}
 		exit();
 	}

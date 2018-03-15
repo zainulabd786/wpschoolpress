@@ -267,6 +267,7 @@ a.add-parent { margin-bottom:15px; }
     padding-left: 5px;
     height: 30px;
     padding-top: 10px;
+    text-align: center;
 }
 .blank strong{
     float: left;
@@ -294,6 +295,7 @@ a.add-parent { margin-bottom:15px; }
     height: 30px;
     border: none;
     padding: 0;
+    text-align: left;
 }
 .b3 .sb2, .b4 .sb2, .b5 .sb2{
     float: right;
@@ -301,6 +303,7 @@ a.add-parent { margin-bottom:15px; }
     height: 30px;
     border: none;
     padding: 0;
+    text-align: left;
 }
 .b3 .sb1 strong{
     width: 14%;
