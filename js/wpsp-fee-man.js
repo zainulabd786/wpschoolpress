@@ -126,7 +126,12 @@ $(document).ready(function(){
 		console.log(totAmtArr);
 		console.log(paidAmtArr);
 	});
-
+	$('.expected, .paid').on("keyup",function(){
+		var charTest = /[A-Za-z]/g;
+		var specCharTest = /^[A-Za-z0-9]*$/g;
+		if(charTest.test($(this).val()) || specCharTest.test($(this).val()) == false) 
+			$.alert("<div class='alert alert-danger'>Error! Characters are not allowed here</div>");
+	});
 	$(".dep-adm-inp .expected").keyup(function(){
 		$(".adm-fees-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
 		var admBal = $(this).val()-$(".dep-adm-inp .paid").val();
