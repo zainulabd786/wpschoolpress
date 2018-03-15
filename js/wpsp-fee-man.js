@@ -90,7 +90,6 @@ $(document).ready(function(){
 		$(".rec-chg-tr-inv").hide();
 	});
 
-	
 	$(".dep-adm-inp .expected").keyup(function(){
 		$(".adm-fees-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
 	});

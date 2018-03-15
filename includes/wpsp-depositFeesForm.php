@@ -346,17 +346,17 @@
 														<tr class="inv-tab-bottom">
 															<td></td>
 															<td>Total</td>
-															<td colspan="4" class="inv-tot-amt amt">0</td>
+															<td colspan="4" class="inv-tot-amt">0</td>
 														</tr>
 														<tr class="inv-tab-bottom">
 															<td></td>
 															<td>Paid Amount</td>
-															<td colspan="4" class="inv-paid-amt amt">2</td>
+															<td colspan="4" class="inv-paid-amt">2</td>
 														</tr>
 														<tr class="inv-tab-bottom">
 															<td></td>
 															<td>Balance</td>
-															<td colspan="4" class="inv-bal-amt amt">0</td>
+															<td colspan="4" class="inv-bal-amt">0</td>
 														</tr>
 													</table>
 												</div>
