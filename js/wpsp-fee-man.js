@@ -140,28 +140,44 @@ $(document).ready(function(){
 
 	$(".dep-tf-inp .expected").keyup(function(){
 		$(".tution-fees-te-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(this).val()-$(".dep-tf-inp .paid").val();
+		$(".tution-fees-te-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});
 	$(".dep-tf-inp .paid").keyup(function(){
 		$(".tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(".dep-tf-inp .expected").val()-$(this).val();
+		$(".tution-fees-te-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});
 
 	$(".dep-tc-inp .expected").keyup(function(){
 		$(".trans-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(this).val()-$(".dep-tc-inp .paid").val();
+		$(".trans-chg-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});
 	$(".dep-tc-inp .paid").keyup(function(){
 		$(".trans-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(".dep-tc-inp .expected").val()-$(this).val();
+		$(".trans-chg-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});	
 
 	$(".dep-ac-inp .expected").keyup(function(){
 		$(".annual-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(this).val()-$(".dep-ac-inp .paid").val();
+		$(".annual-chg-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});
 	$(".dep-ac-inp .paid").keyup(function(){
 		$(".annual-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(".dep-ac-inp .expected").val()-$(this).val();
+		$(".annual-chg-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});	
 	$(".dep-rf-inp .expected").keyup(function(){
 		$(".rec-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(this).val()-$(".dep-rf-inp .paid").val();
+		$(".rec-chg-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});
 	$(".dep-rf-inp .paid").keyup(function(){
 		$(".rec-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		var admBal = $(".dep-rf-inp .expected").val()-$(this).val();
+		$(".rec-chg-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});	
 });
