@@ -235,16 +235,124 @@
 													<div class="invoice-header-doc-details row">
 														<div class="invoice-header-slip-no col-xs-4">
 															<strong>Slip No.</strong>
-															<div></div>
+															<div>91</div>
 														</div>
 														<div class="invoice-header-heading col-xs-4">
 															<div>FEE BILL CUM RECEIPT</div>
 														</div>
 														<div class="invoice-header-date col-xs-4">
 															<strong>Date:</strong>
+															<div> 11/10/17 </div>
+														</div>
+													</div>
+												</div>
+												<br>
+												<div class="invoice-details">
+
+													<div class="blank b1">
+														<strong>Name</strong>
+														<div>Zainul</div>
+													</div>
+													<div class="blank b2">
+														<strong>Father Name</strong>
+														<div></div>
+													</div>
+													<div class="blank b3">
+														<div class="sb1">
+															<strong>Mob No.</strong>
+															<div></div>
+														</div>
+														<div class="sb2">
+															<strong>Reg. No.</strong>
 															<div></div>
 														</div>
 													</div>
+													<div class="blank b4">
+														<div class="sb1">
+															<strong>From Month</strong>
+															<div></div>
+														</div>
+														<div class="sb2">
+															<strong>To Month</strong>
+															<div></div>
+														</div>
+													</div>
+													<div class="blank b5">
+														<div class="sb1">
+															<strong>Session</strong>
+															<div></div>
+														</div>
+														<div class="sb2">
+															<strong>Class/Section</strong>
+															<div></div>
+														</div>
+													</div>
+
+												</div>
+
+												<div class="invoice-body">
+													<table>
+														<tr class="tab-head">
+															<td>S NO.</td>
+															<td>Type Of Charges</td>
+															<td>Amount <i class="fa fa-inr"></i></td>
+															<td>Paid Amount <i class="fa fa-inr"></i></td>
+															<td>Balance <i class="fa fa-inr"></i></td>
+														</tr>
+														<tr class="adm-fees-tr-inv">
+															<td>1</td>
+															<td>Admission Fees</td>
+															<td>3000</td>
+															<td class="inv-adm-fees"></td>
+															<td></td>
+														</tr>
+														<tr class="tution-fees-te-inv">
+															<td>2</td>
+															<td>Tution Fees(Mothly)</td>
+															<td>1200</td>
+															<td class="inv-tution-fees"></td>
+															<td></td>
+														</tr>
+														<tr class="trans-chg-tr-inv">
+															<td>3</td>
+															<td>Transportation charges(Monthly)</td>
+															<td></td>
+															<td class="inv-trans-chg"></td>
+															<td></td>
+														</tr>
+														<tr class="annual-chg-tr-inv">
+															<td>4</td>
+															<td>Annual Charges<br>(Dress+Books+Copies+Stationary)</td>
+															<td></td>
+															<td class="inv-annual-chg"></td>
+															<td></td>
+														</tr>
+														<tr class="rec-chg-tr-inv">
+															<td>5</td>
+															<td>Recreation Charge</td>
+															<td>5000</td>
+															<td class="inv-rec-chg"></td>
+															<td></td>
+														</tr>
+														<tr class="inv-tab-bottom">
+															<td></td>
+															<td>Total</td>
+															<td></td>
+															<td colspan="3" class="inv-tot-amt"></td>
+														</tr>
+														<tr class="inv-tab-bottom">
+															<td></td>
+															<td>Paid Amount</td>
+															<td></td>
+															<td colspan="3" class="inv-paid-amt"></td>
+														</tr>
+														<tr class="inv-tab-bottom">
+															<td></td>
+															<td>Balance</td>
+															<td></td>
+															<td colspan="3" class="inv-bal-amt"></td>
+														</tr>
+													</table>
 												</div>
 
 											</div>

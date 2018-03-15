@@ -20,43 +20,64 @@ $(document).ready(function(){
 	$(".dep-tc-inp").hide();
 	$(".dep-ac-inp").hide();
 	$(".dep-rf-inp").hide();
+	$(".adm-fees-tr-inv").hide();
+	$(".tution-fees-te-inv").hide();
+	$(".trans-chg-tr-inv").hide();
+	$(".annual-chg-tr-inv").hide();
+	$(".rec-chg-tr-inv").hide();
+	$(".inv-tab-bottom").hide();
 	$(".dep-fee-type select").change(function(){
 		feesType = $(this).val()
 		switch(feesType){
 			case "AdmissionFees":
 				$(".dep-adm-inp").show();
+				$(".adm-fees-tr-inv").show();
+				$(".inv-tab-bottom").show();
 			break;
 
 			case "TuitionFees":
 				$(".dep-tf-inp").show();
+				$(".tution-fees-te-inv").show();
+				$(".inv-tab-bottom").show();
 			break;
 
 			case "TransportFees":
 				$(".dep-tc-inp").show();
+				$(".trans-chg-tr-inv").show();
+				$(".inv-tab-bottom").show();
 			break;
 
 			case "AnnualCharge":
 				$(".dep-ac-inp").show();
+				$(".annual-chg-tr-inv").show();
+				$(".inv-tab-bottom").show();
 			break;
 
 			case "RecreationCharge":
 				$(".dep-rf-inp").show();
+				$(".rec-chg-tr-inv").show();
+				$(".inv-tab-bottom").show();
 			break;
 		}
 	});
 	$(".dep-adm-inp .remove-inp").click(function(){
 		$(".dep-adm-inp").hide();
+		$(".adm-fees-tr-inv").hide();
 	});
 	$(".dep-tf-inp .remove-inp").click(function(){
 		$(".dep-tf-inp").hide();
+		$(".tution-fees-te-inv").hide();
 	});
 	$(".dep-tc-inp .remove-inp").click(function(){
 		$(".dep-tc-inp").hide();
+		$(".trans-chg-tr-inv").hide();
 	});
 	$(".dep-ac-inp .remove-inp").click(function(){
 		$(".dep-ac-inp").hide();
+		$(".annual-chg-tr-inv").hide();
 	});
 	$(".dep-rf-inp .remove-inp").click(function(){
 		$(".dep-rf-inp").hide();
+		$(".rec-chg-tr-inv").hide();
 	});
 });

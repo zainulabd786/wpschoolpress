@@ -239,27 +239,135 @@ a.add-parent { margin-bottom:15px; }
 .invoice-header-school-details b{
     font-size: 20px;
 }
-.invoice-header-slip-no strong{
-    width: 60px;
-}
 .invoice-header-slip-no, .invoice-header-date{
     margin-top: 15px;
 }
-.invoice-header-date strong{
-    width: 50px;
-}
-.invoice-header-date div{
-    width: 150px;
-    border-bottom: 1px dotted #000;
-    height: 15px;
-}
-.invoice-header-slip-no div{
-    width: 150px;
-    border-bottom: 1px dotted #000;
-    height: 15px;
-}
 .invoice-header-slip-no, .invoice-header-date{
-    display: inline-flex;
+    height: 30px;
+}
+.invoice-header-slip-no div, .invoice-header-date div{
+    width: 77.5%;
+    border-bottom: 1px dotted #000;
+    height: 15px;
+    float: right;
+    text-align: center;
+    font-size: 20px;
+    height: 25px;
+}
+.invoice-header-slip-no strong, .invoice-header-date strong{
+    width: 22%;
+    float: left;
+    height: 25px;
+    padding-top: 5px;
+    text-align: right;
+}
+.blank div{
+    border-bottom: 1px dotted #000;
+    float: right;
+    padding-left: 5px;
+    height: 30px;
+    padding-top: 10px;
+}
+.blank strong{
+    float: left;
+    height: 30px;
+    padding-top: 10px;
+}
+.b1 strong{
+    width: 5%;
+}
+.b1 div{
+    width: 95%;
+}
+
+.b2 strong{
+    width: 12%;
+}
+.b2 div{
+    width: 88%;
+}
+
+
+.b3 .sb1, .b4 .sb1, .b5 .sb1{
+    float: left;
+    width: 50%;
+    height: 30px;
+    border: none;
+    padding: 0;
+}
+.b3 .sb2, .b4 .sb2, .b5 .sb2{
+    float: right;
+    width: 49.5%;
+    height: 30px;
+    border: none;
+    padding: 0;
+}
+.b3 .sb1 strong{
+    width: 14%;
+}
+.b3 .sb1 div{
+    width: 86%;
+}
+.b3 .sb2 strong{
+    width: 14%;
+}
+.b3 .sb2 div{
+    width: 86%;
+}
+
+.b4 .sb1 strong{
+    width: 20%;
+}
+.b4 .sb1 div{
+    width: 80%;
+}
+.b4 .sb2 strong{
+    width: 18%;
+}
+.b4 .sb2 div{
+    width: 82%;
+}
+
+.b5 .sb1 strong{
+    width: 17%;
+}
+.b5 .sb1 div{
+    width: 83%;
+}
+.b5 .sb2 strong{
+    width: 25%;
+}
+.b5 .sb2 div{
+    width: 75%;
+}
+
+.b5 .sb1, .b5 .sb2{
+    margin-bottom: 20px;
+}
+
+.invoice-body table{
+    width: 100%;
+}
+.invoice-body table tr { 
+    border: none; 
+}
+.invoice-body table td {
+  border-right: solid 1px #000; 
+  border-left: solid 1px #000;
+  font-weight: 700;
+  padding: 10px;
+}
+.tab-head{
+    background-color: #000;
+    color: #fff;
+    font-weight: 900;
+    text-align: center;
+}
+.tab-head td{
+    padding: 10px;
+}
+.inv-tab-bottom td{
+    border: 1px solid #000;
 }
 .invoice-header-heading{
     border: 2px solid #000;
@@ -272,17 +380,6 @@ a.add-parent { margin-bottom:15px; }
     font-family: Impact, Charcoal, sans-serif;
     font-size: 25px;
 }
-.invoice-header-date{
-    position: relative;
-    right: 0;
-}
-@media screen(min-width: 1920px){
-    .invoice-header-date{
-        position: relative;
-        right: -100px;
-    }
-}
-
 
 
 
