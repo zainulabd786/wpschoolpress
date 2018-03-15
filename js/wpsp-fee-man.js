@@ -86,4 +86,38 @@ $(document).ready(function(){
 		$(".dep-rf-inp").hide();
 		$(".rec-chg-tr-inv").hide();
 	});
+
+	$(".dep-adm-inp .expected").keyup(function(){
+		$(".adm-fees-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});
+	$(".dep-adm-inp .paid").keyup(function(){
+		$(".adm-fees-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});
+
+	$(".dep-tf-inp .expected").keyup(function(){
+		$(".tution-fees-te-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});
+	$(".dep-tf-inp .paid").keyup(function(){
+		$(".tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});
+
+	$(".dep-tc-inp .expected").keyup(function(){
+		$(".trans-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});
+	$(".dep-tc-inp .paid").keyup(function(){
+		$(".trans-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});	
+
+	$(".dep-ac-inp .expected").keyup(function(){
+		$(".annual-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});
+	$(".dep-ac-inp .paid").keyup(function(){
+		$(".annual-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});	
+	$(".dep-rf-inp .expected").keyup(function(){
+		$(".rec-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});
+	$(".dep-rf-inp .paid").keyup(function(){
+		$(".rec-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+	});	
 });
