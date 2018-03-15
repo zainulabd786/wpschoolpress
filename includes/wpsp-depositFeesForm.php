@@ -88,40 +88,40 @@
 												<label>Admission Fees(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected">
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
 											<div class="dep-tf-inp" id="fees-inp">
 												<label>Tution Fees(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected">
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
 											<div class="dep-tc-inp" id="fees-inp">
 												<label>Transportation Chares(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected">
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
 											<div class="dep-ac-inp" id="fees-inp">
 												<label>Annual Charges(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected">
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
 											<div class="dep-rf-inp" id="fees-inp">
 												<label>Recreation Fees(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected">
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
 											<input type="button" class="btn btn-success btn-block" value="Submit" id="dep-fees-btn">
@@ -346,17 +346,17 @@
 														<tr class="inv-tab-bottom">
 															<td></td>
 															<td>Total</td>
-															<td colspan="4" class="inv-tot-amt">0</td>
+															<td colspan="4" class="inv-tot-amt amt">0</td>
 														</tr>
 														<tr class="inv-tab-bottom">
 															<td></td>
 															<td>Paid Amount</td>
-															<td colspan="4" class="inv-paid-amt">0</td>
+															<td colspan="4" class="inv-paid-amt amt">2</td>
 														</tr>
 														<tr class="inv-tab-bottom">
 															<td></td>
 															<td>Balance</td>
-															<td colspan="4" class="inv-bal-amt">0</td>
+															<td colspan="4" class="inv-bal-amt amt">0</td>
 														</tr>
 													</table>
 												</div>

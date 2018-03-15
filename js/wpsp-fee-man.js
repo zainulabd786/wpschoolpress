@@ -1,4 +1,7 @@
 $(document).ready(function(){
+	function getSum(total, num) {
+		return +total + +Math.round(num); 
+	}
 	$("#dep-amount-exp, #dep-amount-paid").keyup(function(){
 		expectedAmt = $("#dep-amount-exp").val();
 		paidAmt = $("#dep-amount-paid").val();
@@ -87,6 +90,7 @@ $(document).ready(function(){
 		$(".rec-chg-tr-inv").hide();
 	});
 
+	
 	$(".dep-adm-inp .expected").keyup(function(){
 		$(".adm-fees-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
 	});
