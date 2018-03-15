@@ -90,6 +90,43 @@ $(document).ready(function(){
 		$(".rec-chg-tr-inv").hide();
 	});
 
+	$(".expected").change(function(){
+		var totAmtArr = [];
+		var paidAmtArr = [];
+		for(var i=2;i<7;i++){
+			var tot = $(".invoice-body table tbody tr:nth-child("+i+") .inv-expected-amt").text().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '');
+			var paid = $(".invoice-body table tbody tr:nth-child("+i+") .inv-paid-amt").text().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '');
+			totAmtArr.push(tot);
+			paidAmtArr.push(paid);
+		}
+		totalAmount = totAmtArr.reduce(getSum);
+		paidAmount = paidAmtArr.reduce(getSum);
+		var balance = totalAmount - paidAmount;
+		$(".inv-tab-bottom .inv-tot-amt").html("<i class='fa fa-inr'></i>"+totalAmount+"/-");
+		$(".inv-tab-bottom .inv-paid-amt").html("<i class='fa fa-inr'></i>"+paidAmount+"/-");
+		$(".inv-tab-bottom .inv-bal-amt").html("<i class='fa fa-inr'></i>"+balance+"/-");
+		console.log(totAmtArr);
+		console.log(paidAmtArr);
+	});
+	$(".paid").change(function(){
+		var totAmtArr = [];
+		var paidAmtArr = [];
+		for(var i=2;i<7;i++){
+			var tot = $(".invoice-body table tbody tr:nth-child("+i+") .inv-expected-amt").text().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '');
+			var paid = $(".invoice-body table tbody tr:nth-child("+i+") .inv-paid-amt").text().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '');
+			totAmtArr.push(tot);
+			paidAmtArr.push(paid);
+		}
+		totalAmount = totAmtArr.reduce(getSum);
+		paidAmount = paidAmtArr.reduce(getSum);
+		var balance = totalAmount - paidAmount;
+		$(".inv-tab-bottom .inv-tot-amt").html("<i class='fa fa-inr'></i>"+totalAmount+"/-");
+		$(".inv-tab-bottom .inv-paid-amt").html("<i class='fa fa-inr'></i>"+paidAmount+"/-");
+		$(".inv-tab-bottom .inv-bal-amt").html("<i class='fa fa-inr'></i>"+balance+"/-");
+		console.log(totAmtArr);
+		console.log(paidAmtArr);
+	});
+
 	$(".dep-adm-inp .expected").keyup(function(){
 		$(".adm-fees-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
 	});
