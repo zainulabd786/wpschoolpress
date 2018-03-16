@@ -170,6 +170,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_ImportContents', 'wpsp_Import_Dummy_contents' );
 
 		//add_action( 'wp_ajax_nopriv_action_public', 'action_public_callback' );
+
+		add_action( 'wp_ajax_save_fees_settings', 'save_fees_settings' );
 }
 
 function tl_save_error() {

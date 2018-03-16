@@ -2636,4 +2636,47 @@ function wpsp_Import_Dummy_contents() {
 	echo $msg;
 	wp_die();
 }
+
+	function save_fees_settings(){
+		global $wpdb;
+		$class = $_POST['classId'];
+		$adm = $_POST['adm'];
+		$ttn = $_POST['ttn'];
+		$trans = $_POST['trans'];
+		$annual = $_POST['annual'];
+		$rec = $_POST['rec'];
+		$fees_table = $wpdb->prefix."wpsp_fees_settings";
+		$result = $wpdb->get_results("SELECT cid FROM ".$fees_table." WHERE cid = '".$class."'");
+		if($result->num_rows > 0){
+			$update_sql_res = $wpdb->update( $fees_table, 
+				array(
+					'admission_fees' => $adm,
+					'tution_fees' => $ttn,
+					'transport_chg' => $trans,
+					'annual_chg' => $annual,
+					'recreation_chg' => $rec
+				),
+				array( 'cid' => $class) 
+			);
+			if($update_sql_res){
+				echo "success";
+			}
+		}
+		else{
+			$insert_sql_res = $wpdb->insert( $fees_table, 
+				array(
+					'cid' => $class,
+					'admission_fees' => $adm,
+					'tution_fees' => $ttn,
+					'transport_chg' => $trans,
+					'annual_chg' => $annual,
+					'recreation_chg' => $rec
+				)
+			);
+			if($insert_sql_res){
+				echo "success";
+			}
+		}
+		wp_die();
+	}
 ?>

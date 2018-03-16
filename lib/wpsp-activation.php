@@ -276,6 +276,17 @@
 	$grade_settings_table     = $wpdb->prefix . 'wpsp_grade';
 	$import_history_table     = $wpdb->prefix . 'wpsp_import_history';
 	$leave_table              = $wpdb->prefix . 'wpsp_leavedays';
+	$fees_settings			  = $wpdb->prefix . 'wpsp_fees_settings';
+
+	$sql_fees_settings_table = "CREATE TABLE IF NOT EXISTS $fees_settings  (
+	  `cid` int(11) NOT NULL PRIMARY KEY,	  
+	  `admission_fees` int(11),
+	  `tution_fees` int(11),	 
+	  `transport_chg` int(11),	 
+	  `annual_chg` int(11),	 
+	  `recreation_chg` int(11)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
+	dbDelta($sql_fees_settings_table);
         $sql_teacher_attendance_table="CREATE TABLE IF NOT EXISTS $teacher_attendance_table (
                   `id` bigint(11) NOT NULL AUTO_INCREMENT,
                   `teacher_id` bigint(11) NOT NULL,

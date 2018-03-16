@@ -1,8 +1,8 @@
 <h2>Fees Settings</h2>
 <form class="feesSettings">
-	<div class="form-group">
+	<div class="form-group fs-class">
 		<label for="fs-class">Select Class</label>
-		<select name="ClassID" id="ClassID fs-class" class="form-control">
+		<select name="ClassID" id="ClassID" class="form-control">
 			<option value="">Select Class</option>
 			<?php 
 			$sel_classid	=	isset( $_POST['ClassID'] ) ? $_POST['ClassID'] : '';										

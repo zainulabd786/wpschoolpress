@@ -277,6 +277,37 @@ $(document).ready(function(){
 
 	//JS for FEES Settings by Zainul
 	$(".fs-save-btn").click(function(){
-		$.alert("<div class='alert alert-danger'>Sorry! This Module is still incomplete</div>");
+		var action= "save_fees_settings";
+		var adm= $("#fs-adm").val();
+		var	ttn= $("#fs-tution").val();
+		var	trans= $("#fs-trans").val();
+		var	annual= $("#fs-annual").val();
+		var	rec= $("#fs-recreation").val();
+		var	classId= $(".fs-class select").val();
+		var data=new Array();
+		data.push({name: 'action', value: action},{name: 'adm', value: adm},{name: 'ttn', value: ttn},{name: 'trans', value: trans},{name: 'annual', value: annual},{name: 'rec', value: rec},{name: 'classId', value: classId});
+		$.ajax({
+			method:"POST",
+			url:ajax_url, 
+			data:data, 
+			success:function(sfres) {
+				console.log(sfres);
+				if(sfres=='success'){
+					$.fn.notify('success',{'desc':'Information saved succesfully!'});
+					//window.location.reload();
+				}
+				else
+					$.fn.notify('error',{'desc':sfres});				
+			},
+			error:function(){
+				$.fn.notify('error',{'desc':'Something went wrong'});
+			},
+			beforeSend:function(){
+				$.fn.notify('loader',{'desc':'Saving Data...'});
+			},
+			complete:function(){
+				$('.pnloader').remove();
+			}
+		});
 	});
 });
