@@ -233,6 +233,8 @@ function wpsp_sidebar()
 			$settings_subfield_page="active";
 		else if(isset($_GET['sc']) && $_GET['sc']=='WrkHours')
 			$settings_wrkhours_page="active";		
+    else if(isset($_GET['sc']) && $_GET['sc']=='feesSettings')
+      $settings_fees_page="active"; 
 		else
 			$settings_general_page="active";
       break;
@@ -391,6 +393,7 @@ function wpsp_sidebar()
               </a>
               <ul class='treeview-menu'>
                 <li class='".$settings_general_page."'><a href='".site_url('sch-settings')."'><i class='fa fa-wrench'></i>".__('General Settings','WPSchoolPress')."</a></li>
+                <li class='".$settings_fees_page."'><a href='".site_url('sch-settings?sc=feesSettings')."'><i class='fa fa-inr'></i>".__('Fees Settings','WPSchoolPress')."</a></li>
                 <li class='".$settings_subfield_page."'><a href='".site_url('sch-settings?sc=subField')."'><i class='fa fa-check-square-o'></i>".__('Subject Mark Fields','WPSchoolPress')."</a></li>
 				<li class='".$settings_wrkhours_page."'><a href='".site_url('sch-settings?sc=WrkHours')."'><i class='fa fa-clock-o'></i>".__('Working Hours','WPSchoolPress')."</a></li>				
               </ul>

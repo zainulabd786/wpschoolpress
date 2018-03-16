@@ -276,7 +276,12 @@
 								</table>
 							</div>
 								<?php 
-							}else{
+							}
+							else if(isset($_GET['sc'])&& $_GET['sc']=='feesSettings'){
+								$redirect_to_fees_settings = WPSP_PLUGIN_PATH .'includes/wpsp-feesSettings.php';
+								include_once($redirect_to_fees_settings);
+							}
+							else{
 								//General Settings
 								$wpsp_settings_table	=	$wpdb->prefix."wpsp_settings";
 								$wpsp_settings_edit		=	$wpdb->get_results("SELECT * FROM $wpsp_settings_table" );							
