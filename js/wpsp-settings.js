@@ -1,4 +1,4 @@
-	$(document).ready(function(){
+$(document).ready(function(){
 		$('#wp-end-time').timepicker({
 			 showInputs: false,
 			 showMeridian:false
@@ -274,4 +274,9 @@
 					});
                 });
 		});
+
+	//JS for FEES Settings by Zainul
+	$(".fs-save-btn").click(function(){
+		$.alert("<div class='alert alert-danger'>Sorry! This Module is still incomplete</div>");
 	});
+});

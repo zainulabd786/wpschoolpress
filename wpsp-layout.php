@@ -47,6 +47,7 @@ function wpsp_header(){
 	
   if( is_page( 'sch-settings' ) ){
 	echo "<link href='".plugins_url('plugins/timepicker/bootstrap-timepicker.css', __FILE__ )."' rel='stylesheet' type='text/css' />";
+  echo "<link href='".plugins_url('plugins/jquery-confirm-master/css/jquery-confirm.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
   }
   
   echo "
@@ -476,9 +477,6 @@ function wpsp_footer()
   }
   if ( is_page( 'sch-fee-man' ) || is_page( 'sch-fee-man/?tab=DepositFees' ) ) 
   {
-      echo "<script src='".plugins_url("plugins/fileupload/jquery.fileupload.js",__FILE__)."' > </script>";
-      echo "<script src='".plugins_url("plugins/fileupload/jquery.iframe-transport.js",__FILE__)."' > </script>";
-      echo "<script src='".plugins_url("plugins/gallery/jquery.blueimp-gallery.min.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("js/wpsp-student.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("js/wpsp-fee-man.js",__FILE__)."' > </script>";
@@ -518,9 +516,9 @@ function wpsp_footer()
   }
    if ( is_page( 'sch-settings' ) ) 
   {
+  echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
 	echo "<script src='".plugins_url("plugins/timepicker/bootstrap-timepicker.js",__FILE__)."' type='text/javascript' > </script>";
 	echo "<script src='".plugins_url("js/wpsp-settings.js",__FILE__)."' > </script>";
-	
   }
    if (is_page('sch-importhistory')) 
   {
