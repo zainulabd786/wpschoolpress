@@ -277,6 +277,44 @@
 	$import_history_table     = $wpdb->prefix . 'wpsp_import_history';
 	$leave_table              = $wpdb->prefix . 'wpsp_leavedays';
 	$fees_settings			  = $wpdb->prefix . 'wpsp_fees_settings';
+	$fees_status			  = $wpdb->prefix . 'wpsp_fees_status';
+	$fees_payment_record	  = $wpdb->prefix . 'wpsp_fees_payment_record';
+	$fees_receipts			  = $wpdb->prefix . 'wpsp_fees_receipts';
+
+	$sql_fees_status_table = "CREATE TABLE IF NOT EXISTS $fees_status  (
+	  `sid` int(15) NOT NULL PRIMARY KEY,	  
+	  `admission_fees` int(11),
+	  `tution_fees` int(11),	 
+	  `transport_chg` int(11),	 
+	  `annual_chg` int(11),	 
+	  `recreation_chg` int(11)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
+	dbDelta($sql_fees_status_table);
+
+	$sql_fees_payment_record = "CREATE TABLE IF NOT EXISTS $fees_payment_record  (
+	  `tid` varchar(20) NOT NULL PRIMARY KEY,	  
+	  `date_time` datetime,
+	  `sid` int(15),	 
+	  `from` date,	 
+	  `to` date,	 
+	  `amount` int(11),
+	  `fees_type` varchar(50)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
+	dbDelta($sql_fees_payment_record);
+
+	$sql_fees_receipts = "CREATE TABLE IF NOT EXISTS $fees_receipts  (
+	  `slip_no` int(25) NOT NULL AUTO_INCREMENT PRIMARY KEY,	  
+	  `sid` int(15),
+	  `cid` int(10),	 
+	  `from` date,	 
+	  `to` date,	 
+	  `adm` int(11),
+	  `ttn` varchar(11),	 
+	  `trans` int(11),
+	  `ann` varchar(11),	 
+	  `rec` int(11)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
+	dbDelta($sql_fees_receipts);
 
 	$sql_fees_settings_table = "CREATE TABLE IF NOT EXISTS $fees_settings  (
 	  `cid` int(11) NOT NULL PRIMARY KEY,	  

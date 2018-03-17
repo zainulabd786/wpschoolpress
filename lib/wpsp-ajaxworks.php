@@ -2704,7 +2704,7 @@ function wpsp_Import_Dummy_contents() {
 				</script><?php
 			}
 		}
-		else{?>
+		else{ ?>
 			<script type="text/javascript">
 				$("#fs-adm").val("");
 				$("#fs-tution").val("");
