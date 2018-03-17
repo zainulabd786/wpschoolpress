@@ -2647,7 +2647,7 @@ function wpsp_Import_Dummy_contents() {
 		$rec = $_POST['rec'];
 		$fees_table = $wpdb->prefix."wpsp_fees_settings";
 		$result = $wpdb->get_results("SELECT cid FROM ".$fees_table." WHERE cid = '".$class."'");
-		if($result->num_rows > 0){
+		if($wpdb->num_rows > 0){
 			$update_sql_res = $wpdb->update( $fees_table, 
 				array(
 					'admission_fees' => $adm,
@@ -2656,7 +2656,15 @@ function wpsp_Import_Dummy_contents() {
 					'annual_chg' => $annual,
 					'recreation_chg' => $rec
 				),
-				array( 'cid' => $class) 
+				array( 'cid' => $class),
+				array(
+					'%d',
+					'%d',
+					'%d',
+					'%d',
+					'%d'
+				), 
+				array( '%d' )
 			);
 			if($update_sql_res){
 				echo "success";
@@ -2676,6 +2684,34 @@ function wpsp_Import_Dummy_contents() {
 			if($insert_sql_res){
 				echo "success";
 			}
+		}
+		wp_die();
+	}
+
+	function class_fees_settings(){
+		global $wpdb;
+		$class_id = $_POST['value'];
+		$fees_table = $wpdb->prefix."wpsp_fees_settings";
+		$sql_res = $wpdb->get_results("SELECT * FROM $fees_table WHERE cid = '$class_id'");
+		if($wpdb->num_rows>0){
+			foreach ($sql_res as $fee){ ?>
+				<script type="text/javascript">
+					$("#fs-adm").val("<?php echo $fee->admission_fees; ?>");
+					$("#fs-tution").val("<?php echo $fee->tution_fees; ?>");
+					$("#fs-trans").val("<?php echo $fee->transport_chg; ?>");
+					$("#fs-annual").val("<?php echo $fee->annual_chg; ?>");
+					$("#fs-recreation").val("<?php echo $fee->recreation_chg; ?>");
+				</script><?php
+			}
+		}
+		else{?>
+			<script type="text/javascript">
+				$("#fs-adm").val("");
+				$("#fs-tution").val("");
+				$("#fs-trans").val("");
+				$("#fs-annual").val("");
+				$("#fs-recreation").val("");
+			</script><?php
 		}
 		wp_die();
 	}

@@ -172,6 +172,7 @@ function ajax_actions(){
 		//add_action( 'wp_ajax_nopriv_action_public', 'action_public_callback' );
 
 		add_action( 'wp_ajax_save_fees_settings', 'save_fees_settings' );
+		add_action( 'wp_ajax_fetch_class_fees_settings', 'class_fees_settings' );
 }
 
 function tl_save_error() {

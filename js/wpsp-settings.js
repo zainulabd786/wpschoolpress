@@ -310,4 +310,8 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+	$(".fs-class select").change(function(){
+		$.post(ajax_url, {action:"fetch_class_fees_settings",value:$(this).val()}, function(data){ $(".execute-ajax-script").html(data); });
+	});
 });
