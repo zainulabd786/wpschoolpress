@@ -1,5 +1,20 @@
 <?php if (!defined('ABSPATH')) exit('No Such File'); ?>
+<?php if(isset( $_GET['sidff'] )){
+	$sidff = $_GET['sidff'];
+	$fees_status_table = $wpdb->prefix."wpsp_fees_status";
+	$student_table = $wpdb->prefix."wpsp_student";
+	
+	$sidff_sql = $wpdb->get_results("SELECT * FROM $fees_status_table a, $student_table b WHERE a.sid = '$sidff' AND b.sid = a.sid ");
+	$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $sfname_f = $smname_f = $slname_f = $pfname_f = $pmname_f = $plname_f = $sphone_f = $sregno = $class = "";
+	foreach ($sidff_sql as $fee) {
+		$adm_f = $fee->admission_fees;
+		$ttn_f = $fee->tution_fees;
+		$trans_f = $fee->transport_chg;
+		$ann_f = $fee->annual_chg;
+		$rec_f = $fee->recreation_chg;
 
+	}
+}  ?>
 <section class="content">
     <div class="row">
         <div class="col-md-12">

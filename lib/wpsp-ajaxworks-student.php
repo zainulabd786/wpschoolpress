@@ -1,7 +1,7 @@
 <?php
 // Add Student login with admin/teacher
 function wpsp_AddStudent() {
-	echo "hello";
+	//echo "hello";
     wpsp_Authenticate();	
 	if (! isset( $_POST['sregister_nonce'] ) || ! wp_verify_nonce( $_POST['sregister_nonce'], 'StudentRegister' )) {
 			echo "Unauthorized Submission";
@@ -47,7 +47,8 @@ function wpsp_AddStudent() {
 	global $wpdb;
 	$wpsp_student_table	=	$wpdb->prefix."wpsp_student";
 	$wpsp_class_table	=	$wpdb->prefix."wpsp_class";
-	
+	$wpsp_fees_status_table	=	$wpdb->prefix."wpsp_fees_status";
+	$wpsp_fees_settings_table	=	$wpdb->prefix."wpsp_fees_settings";
 	if( isset( $_POST['Class'] ) && !empty( $_POST['Class'] ) ) {
 		$classID	=	$_POST['Class'];
 		$capacity	=	$wpdb->get_var("SELECT c_capacity FROM $wpsp_class_table where cid=$classID"); 		
@@ -165,7 +166,23 @@ function wpsp_AddStudent() {
 						's_pcity' 			=> isset( $_POST['s_pcity'] ) ? esc_attr( $_POST['s_pcity'] ) :'',						
 						's_pzipcode'		=> isset( $_POST['s_pzipcode'] ) ? $_POST['s_pzipcode'] :''
 						 );
-		
+		$cid_for_fee = $_POST['Class'];
+		$fees_settings_sql = $wpdb->get_results("SELECT * FROM $wpsp_fees_settings_table WHERE cid='$cid_for_fee'");
+		$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = 0;
+		foreach ($fees_settings_sql as $fee) {
+			$adm_f = $fee->admission_fees;
+			$ttn_f = $fee->tution_fees;
+			$trans_f = $fee->transport_chg;
+			$ann_f = $fee->annual_chg;
+			//$rec_f = $fee->recreation_chg;
+		}
+		$fee_status_table_data = array(
+						'admission_fees' => $adm_f,
+						'tution_fees' => $ttn_f,
+						'transport_chg' => $trans_f,
+						'annual_chg' => $ann_f,
+						'recreation_chg' => $rec_f
+						);
 		if($sendEmailFlag){
 			$msg = 'Hello '.$first_name;
 			$msg .= '<br>Your are registered as student at <a href="'.site_url().'">School</a><br><br>';
@@ -179,6 +196,7 @@ function wpsp_AddStudent() {
 		}
 
 		$sp_stu_ins = $wpdb->insert( $wpsp_student_table , $studenttable );
+		$fee_status_ins = $wpdb->insert( $wpsp_fees_status_table , $fee_status_table_data );
 				//send registration mail
 			wpsp_send_user_register_mail( $userInfo, $user_id );
 			if (!empty( $_FILES['displaypicture']['name'])) {
@@ -535,6 +553,7 @@ function wpsp_checkRollNo(){
 		$standard = $_POST['value'];
 		$student_table	=	$wpdb->prefix."wpsp_student";
 		$students	=	$wpdb->get_results("select s_fname, s_mname, s_lname, p_fname, p_mname, p_lname, sid from $student_table where class_id='$standard' order by sid desc");
+		echo "<option value=''>Select Student</option>";
 		foreach ($students as $std) {
 			$student_name = $std->s_fname." ".$std->s_mname." ".$std->s_lname;
 			$fathers_name = $std->p_fname." ".$std->p_mname." ".$std->p_lname;

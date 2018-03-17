@@ -119,7 +119,7 @@ class Wpsp_Public{
 		
 		return $page_template;
 	}
-	
+	 
 	
 	
 	function add_hooks() {

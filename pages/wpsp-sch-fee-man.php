@@ -16,7 +16,12 @@ wpsp_header();
 			if( isset( $_GET['tab'] ) && $_GET['tab'] == 'DepositFees' ) {
 				$label	=	__( 'Deposit Fees', 'WPSchoolPress');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-depositFeesForm.php';
-			} else if( isset($_GET['id']) && is_numeric($_GET['id']) ) {
+			}
+			else if( isset( $_GET['sidff']  )){
+				$label	=	__( 'Deposit Fees', 'WPSchoolPress');
+				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-depositFeesForm.php';
+			}
+			 else if( isset($_GET['id']) && is_numeric($_GET['id']) ) {
 				$label	=	__( 'Update Student', 'WPSchoolPress');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-studentProfile.php';
 			} else if( isset( $_POST['ClassID'] ) && empty( $_POST['ClassID'] ) ) {

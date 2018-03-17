@@ -29,7 +29,7 @@
 				<div class="box box-solid bg-blue-gradient">
 					<div class="box-header ui-sortable-handle" style="cursor: move;">
 	                    <i class="fa fa-graph"></i>
-	                    <h3 class="box-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp; Payment details list by class </h3>
+	                    <h3 class="box-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp; List Of Fee Defaulters </h3>
 	                    <!-- tools box -->
 
 	                    <!-- /. tools -->
@@ -121,8 +121,9 @@
 										<th>Registration No.</th><?php // Bharatdan Gadhavi - 13th Feb 2018 ?>
 										<th>Full Name</th>
 										<th>Parent</th>
-										<th>Address</th>
+										<th>Class</th>
 										<th>Phone</th>
+										<th>Due Amount</th>
 										<th class="nosort">
 											<?php if ( in_array( 'administrator', $role ) ) { ?>
 											<select name="bulkaction" class="form-control" id="bulkaction">
@@ -137,6 +138,7 @@
 									<?php
 									$student_table	=	$wpdb->prefix."wpsp_student";							
 									$users_table	=	$wpdb->prefix."users";
+									$fee_status_table	=	$wpdb->prefix."wpsp_fees_status";
 									$class_id='';							
 									if( isset($_POST['ClassID'] ) ) {
 										$class_id=$_POST['ClassID'];
@@ -150,7 +152,8 @@
 										$classquery="";
 									}
 									
-									$students	=	$wpdb->get_results("select * from $student_table s, $users_table u where u.ID=s.wp_usr_id $classquery order by sid desc");
+									//$students	=	$wpdb->get_results("select * from $student_table s, $users_table u, $fee_status_table f where u.ID=s.wp_usr_id $classquery AND s.sid = f.sid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) order by sid desc");
+									$students	=	$wpdb->get_results("select * from $student_table s, $fee_status_table f where s.sid = f.sid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) order by s.sid desc");
 									
 									$plugins_url=plugins_url();
 									$teacherId = '';
@@ -175,20 +178,32 @@
 											echo $stinfo->s_fname .' '. $mname .' '.  $lname;?></td>
 											<td><?php  echo $stinfo->p_fname; ?>
 											</td>
-											<td><?php 
+											<td><?php /*
 												$country = !empty( $stinfo->s_country ) ? ", ".$stinfo->s_country : '';
 												$city    = !empty( $stinfo->s_city ) ? ", ".$stinfo->s_city : '';
 												$zipcode    = !empty( $stinfo->s_zipcode ) ? ", ".$stinfo->s_zipcode : '';
 												echo $stinfo->s_address.' '.$city. ' ' . $country.' '.$zipcode;
-
+												*/
+												echo $stinfo->class_id;
 											?></td>
 											<td><?php echo $stinfo->s_phone;?></td>
+											<td>
+												<?php
+													$sql_due = $wpdb->get_results("SELECT * FROM $fee_status_table WHERE sid='$stinfo->sid'");
+													$due = 0;
+													foreach ($sql_due as $due) {
+														$due = $due->admission_fees + $due->tution_fees + $due->transport_chg + $due->annual_chg + $due->recreation_chg;
+													}
+													echo "<i class='fa fa-inr'>".$due."/-";
+												?>
+											</td>
 											<td>
 												
 												<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										
 												<a href="javascript:;" data-id="<?php echo $stinfo->wp_usr_id;?>" class="viewAttendance" title="Attendance"><i class="fa fa-table btn btn-primary"></i></a>										
 												<?php if ( in_array( 'administrator', $role ) || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
-													<a href="?id=<?php echo $stinfo->wp_usr_id.'&edit=true';?>" title="Edit"><i class="fa fa-pencil btn btn-warning"></i></a> 
+													<a href="?id=<?php echo $stinfo->wp_usr_id.'&edit=true';?>" title="Edit"><i class="fa fa-pencil btn btn-warning"></i></a>
+													<a href="?sidff=<?php echo $stinfo->sid;?>" title="Deposit Fees"><i class="fa fa-plus btn btn-danger"></i></a> 
 												<?php } ?>
 											</td>
 										</tr>

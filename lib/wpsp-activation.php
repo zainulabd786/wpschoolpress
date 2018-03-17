@@ -282,7 +282,7 @@
 	$fees_receipts			  = $wpdb->prefix . 'wpsp_fees_receipts';
 
 	$sql_fees_status_table = "CREATE TABLE IF NOT EXISTS $fees_status  (
-	  `sid` int(15) NOT NULL PRIMARY KEY,	  
+	  `sid` int(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,	  
 	  `admission_fees` int(11),
 	  `tution_fees` int(11),	 
 	  `transport_chg` int(11),	 
