@@ -167,7 +167,7 @@ function wpsp_sidebar()
   global $current_user, $wp_roles, $current_user_name;
   $current_user_role=$current_user->roles[0];
   $page=get_the_title();
-  $dashboard_page=$message_page=$student_page=$teacher_page=$parent_page=$class_page=$attendance_page=$subject_page=$mark_page=$exam_page=$event_page=$timetable_page=$import_page=$notify_page=$sms_page=$transport_page=$settings_page=$settings_general_page=$settings_wrkhours_page=$settings_subfield_page=$leave_page=$teacher_attendance_page=$settings_chgpw_page = $viewpayment= $addpayment =$payment_page_main= $fees_page='';
+  $dashboard_page=$message_page=$student_page=$teacher_page=$parent_page=$class_page=$attendance_page=$subject_page=$mark_page=$exam_page=$event_page=$timetable_page=$import_page=$notify_page=$sms_page=$transport_page=$settings_page=$settings_general_page=$settings_wrkhours_page=$settings_subfield_page=$leave_page=$teacher_attendance_page=$settings_chgpw_page = $viewpayment= $addpayment =$payment_page_main= $fees_page=$settings_fees_page='';
   switch( $page )
   {
     case 'Dashboard':
@@ -234,7 +234,7 @@ function wpsp_sidebar()
 			$settings_subfield_page="active";
 		else if(isset($_GET['sc']) && $_GET['sc']=='WrkHours')
 			$settings_wrkhours_page="active";		
-    else if(isset($_GET['sc']) && $_GET['sc']=='feesSettings')
+    else if(isset($_GET['sc']) && $_GET['sc']=='feesSettings') 
       $settings_fees_page="active"; 
 		else
 			$settings_general_page="active";
