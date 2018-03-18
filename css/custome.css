@@ -386,9 +386,84 @@ a.add-parent { margin-bottom:15px; }
 .inv-tab-bottom{
     text-align: center;
 }
+ @media only screen and (max-width: 1480px){
+    .b4 .sb1 strong {
+        width: 22%;
+    }
+    .b4 .sb1 div {
+        width: 78%;
+    }
+    .b3 .sb2 strong{
+        width: 16%;
+    }
+    .b3 .sb2 div{
+        width: 84%;
+    }
+ }
+  @media only screen and (max-width: 1370px){
+    .invoice-header-slip-no strong, .invoice-header-date strong{
+        width: 28%;
+    }
+    .invoice-header-slip-no div, .invoice-header-date div{
+        width: 71.5%;
+    }
+    .invoice-header-heading div{
+        font-size: 18px;
+    }
+    .invoice-header-slip-no, .invoice-header-date{
+        margin-top: 4px;
+    }
+    .b3 .sb1 strong{
+        width: 19%;
+    }
+    .b3 .sb1 div{
+        width: 81%;
+    }
+    .b4 .sb1 strong{
+        width: 26%;
+    }
+    .b4 .sb1 div{
+        width: 74%;
+    }
+  }
+  @media only screen and (max-width: 1350px){
+    .invoice-header-logo-name .invoice-header-name h2{
+        font-size: 25px;
+    }
+  }
 
-
-
+@media only screen and (max-width: 1280px){
+    .b2 strong{
+        width: 15%;
+    }
+    .b2 div{
+        width: 85%;
+    }
+    .b3 .sb2 strong{
+        width: 20%;
+    }
+    .b3 .sb2 div{
+        width: 80%;
+    }
+    .b4 .sb2 strong{
+        width: 22%;
+    }
+    .b4 .sb2 div{
+        width: 78%;
+    }
+    .b4 .sb1 strong{
+        width: 28%;
+    }
+    .b4 .sb1 div{
+        width: 72%;
+    }
+    .invoice-header-slip-no strong, .invoice-header-date strong{
+        width: 32%;
+    }
+    .invoice-header-slip-no div, .invoice-header-date div{
+        width: 68%;
+    }
+}
 
 
 
