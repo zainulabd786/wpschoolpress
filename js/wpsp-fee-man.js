@@ -17,55 +17,55 @@ $(document).ready(function(){
 	});
 	$(".dep-class-select select").change(function(){
 		$.post(ajax_url, { action: "fetch_all_stydents_of_a_class", value: $(this).val() }, function(data){ $(".dep-student-select select").html(data); });
-		$(".b5 .sb2 div").text($(this).val());
+		$(".b5 .sb2 div").text($(".dep-class-select select option:selected").text());
 	});
 	$(".dep-student-select select").change(function(){
 		$.post(ajax_url, { action: "fetch_all_details_of_a_student_for_fee", studentId: $(this).val() }, function(data){
 		 	$(".script-to-fill-invoice").html(data); 
 		});
 	});
-	$(".dep-adm-inp").hide();
-	$(".dep-tf-inp").hide();
-	$(".dep-tc-inp").hide();
-	$(".dep-ac-inp").hide();
-	$(".dep-rf-inp").hide();
-	$(".adm-fees-tr-inv").hide();
-	$(".tution-fees-te-inv").hide();
-	$(".trans-chg-tr-inv").hide();
-	$(".annual-chg-tr-inv").hide();
-	$(".rec-chg-tr-inv").hide();
-	$(".inv-tab-bottom").hide();
+	//$(".dep-adm-inp").hide();
+	//$(".dep-tf-inp").hide();
+	//$(".dep-tc-inp").hide();
+	//$(".dep-ac-inp").hide();
+	//$(".dep-rf-inp").hide();
+	//$(".adm-fees-tr-inv").hide();
+	//$(".tution-fees-te-inv").hide();
+	//$(".trans-chg-tr-inv").hide();
+	//$(".annual-chg-tr-inv").hide();
+	//$(".rec-chg-tr-inv").hide();
+	//$(".inv-tab-bottom").hide();
 	$(".dep-fee-type select").change(function(){
 		feesType = $(this).val()
 		switch(feesType){
 			case "AdmissionFees":
-				$(".dep-adm-inp").show();
-				$(".adm-fees-tr-inv").show();
-				$(".inv-tab-bottom").show();
+				$(".dep-adm-inp").css("display","table-row");
+				$(".adm-fees-tr-inv").css("display","table-row");
+				$(".inv-tab-bottom").css("display","table-row");
 			break;
 
 			case "TuitionFees":
-				$(".dep-tf-inp").show();
-				$(".tution-fees-te-inv").show();
-				$(".inv-tab-bottom").show();
+				$(".dep-tf-inp").css("display","table-row");
+				$(".tution-fees-te-inv").css("display","table-row");
+				$(".inv-tab-bottom").css("display","table-row");
 			break;
 
 			case "TransportFees":
-				$(".dep-tc-inp").show();
-				$(".trans-chg-tr-inv").show();
-				$(".inv-tab-bottom").show();
+				$(".dep-tc-inp").css("display","table-row");
+				$(".trans-chg-tr-inv").css("display","table-row");
+				$(".inv-tab-bottom").css("display","table-row");
 			break;
 
 			case "AnnualCharge":
-				$(".dep-ac-inp").show();
-				$(".annual-chg-tr-inv").show();
-				$(".inv-tab-bottom").show();
+				$(".dep-ac-inp").css("display","table-row");
+				$(".annual-chg-tr-inv").css("display","table-row");
+				$(".inv-tab-bottom").css("display","table-row");
 			break;
 
 			case "RecreationCharge":
-				$(".dep-rf-inp").show();
-				$(".rec-chg-tr-inv").show();
-				$(".inv-tab-bottom").show();
+				$(".dep-rf-inp").css("display","table-row");
+				$(".rec-chg-tr-inv").css("display","table-row");
+				$(".inv-tab-bottom").css("display","table-row");
 			break;
 		}
 	});
@@ -185,4 +185,12 @@ $(document).ready(function(){
 		var admBal = $(".dep-rf-inp .expected").val()-$(this).val();
 		$(".rec-chg-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});	
+
+	$(".dep-from-select select").change(function(){
+		$(".b4 .sb1 div").text($(this).val());
+	});
+
+	$(".dep-to-select select").change(function(){
+		$(".b4 .sb2 div").text($(this).val());
+	});
 });

@@ -295,8 +295,8 @@
 	  `tid` varchar(20) NOT NULL PRIMARY KEY,	  
 	  `date_time` datetime,
 	  `sid` int(15),	 
-	  `from` date,	 
-	  `to` date,	 
+	  `from` varchar(20),	 
+	  `to` varchar(20),	 
 	  `amount` int(11),
 	  `fees_type` varchar(50)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
