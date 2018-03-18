@@ -20,21 +20,12 @@ $(document).ready(function(){
 		$(".b5 .sb2 div").text($(".dep-class-select select option:selected").text());
 	});
 	$(".dep-student-select select").change(function(){
-		$.post(ajax_url, { action: "fetch_all_details_of_a_student_for_fee", studentId: $(this).val() }, function(data){
-		 	$(".script-to-fill-invoice").html(data); 
-		});
+		var sid = $(this).val();
+		var curUrl = window.location.href;
+		var baseUrl = curUrl.substring(0, curUrl.indexOf('?'));
+		var newUrl = baseUrl+"?sidff="+sid;
+		window.location.href = newUrl;
 	});
-	//$(".dep-adm-inp").hide();
-	//$(".dep-tf-inp").hide();
-	//$(".dep-tc-inp").hide();
-	//$(".dep-ac-inp").hide();
-	//$(".dep-rf-inp").hide();
-	//$(".adm-fees-tr-inv").hide();
-	//$(".tution-fees-te-inv").hide();
-	//$(".trans-chg-tr-inv").hide();
-	//$(".annual-chg-tr-inv").hide();
-	//$(".rec-chg-tr-inv").hide();
-	//$(".inv-tab-bottom").hide();
 	$(".dep-fee-type select").change(function(){
 		feesType = $(this).val()
 		switch(feesType){
