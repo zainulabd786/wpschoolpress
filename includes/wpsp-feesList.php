@@ -118,7 +118,7 @@
 										<?php if ( in_array( 'administrator', $role ) ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
 										</th>
 										<th>Roll No.</th>
-										<th>Registration No.</th><?php // Bharatdan Gadhavi - 13th Feb 2018 ?>
+										<th>Registration No.</th>
 										<th>Full Name</th>
 										<th>Parent</th>
 										<th>Class</th>
@@ -139,21 +139,22 @@
 									$student_table	=	$wpdb->prefix."wpsp_student";							
 									$users_table	=	$wpdb->prefix."users";
 									$fee_status_table	=	$wpdb->prefix."wpsp_fees_status";
+									$class_table = $wpdb->prefix."wpsp_class";
 									$class_id='';							
 									if( isset($_POST['ClassID'] ) ) {
 										$class_id=$_POST['ClassID'];
 									}else if( !empty( $sel_class ) ) {
 										$class_id = $sel_class[0]->cid;
 									}
-									$classquery	=	" AND class_id='$class_id' ";
+									$classquery	=	" AND s.class_id='$class_id' ";
 									if($class_id=='NULL'){
-										$classquery	=	" AND isNULL(class_id) ";
+										$classquery	=	" AND isNULL(s.class_id) ";
 									}elseif($class_id=='all'){
 										$classquery="";
 									}
 									
 									//$students	=	$wpdb->get_results("select * from $student_table s, $users_table u, $fee_status_table f where u.ID=s.wp_usr_id $classquery AND s.sid = f.sid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) order by sid desc");
-									$students	=	$wpdb->get_results("select * from $student_table s, $fee_status_table f where s.sid = f.sid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) order by s.sid desc");
+									$students	=	$wpdb->get_results("select * from $student_table s, $fee_status_table f, $class_table c where s.sid = f.sid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) AND c.cid = s.class_id $classquery order by s.sid desc");
 									
 									$plugins_url=plugins_url();
 									$teacherId = '';
@@ -184,7 +185,7 @@
 												$zipcode    = !empty( $stinfo->s_zipcode ) ? ", ".$stinfo->s_zipcode : '';
 												echo $stinfo->s_address.' '.$city. ' ' . $country.' '.$zipcode;
 												*/
-												echo $stinfo->class_id;
+												echo $stinfo->c_name;
 											?></td>
 											<td><?php echo $stinfo->s_phone;?></td>
 											<td>
@@ -221,6 +222,7 @@
 									<th>Parent</th>
 									<th>Address</th>
 									<th>Phone</th>
+									<th>Due Amount</th>
 									<th>Action</th>
 								  </tr>
 								</tfoot>
