@@ -395,6 +395,13 @@ a.add-parent { margin-bottom:15px; }
     top: -8px;
     display: none;
 }
+#fees-details table{
+    width: 100%;
+    text-align: center;
+}
+#fees-details table tr{
+    border: 1px solid;
+}
 .col-print-1 {width:8%;  float:left;}
 .col-print-2 {width:16%; float:left;}
 .col-print-3 {width:25%; float:left;}

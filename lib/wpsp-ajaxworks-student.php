@@ -363,8 +363,10 @@ function wpsp_StudentPublicProfile(){
 	$student_table	=	$wpdb->prefix."wpsp_student";
 	$class_table	=	$wpdb->prefix."wpsp_class";
 	$users_table	=	$wpdb->prefix."users";
+	$fees_table 	=	$wpdb->prefix."wpsp_fees_payment_record";
 	$sid			=	$_POST['id'];
 	$stinfo			=	$wpdb->get_row("select a.*,b.c_name,d.user_email from $student_table a LEFT JOIN $class_table b ON a.class_id=b.cid LEFT JOIN $users_table d ON d.ID=a.wp_usr_id where a.wp_usr_id='$sid'");
+	$sql_fees = $wpdb->get_results("SELECT * FROM $fees_table WHERE uid = '$sid' ORDER BY date_time DESC");
 	if(!empty($stinfo) ) {
 		$loc_avatar		=	get_user_meta($stinfo->wp_usr_id,'simple_local_avatar',true);
 		$img_url		=	isset( $loc_avatar['full'] ) && !empty( $loc_avatar['full'] ) ? $loc_avatar['full'] : WPSP_PLUGIN_URL.'img/avatar.png';
@@ -374,105 +376,133 @@ function wpsp_StudentPublicProfile(){
 		if( !empty( $parentID )	) {
 			$parentInfo	=	get_userdata( $parentID );
 			$parentEmail	=	isset( $parentInfo->data->user_email ) ? $parentInfo->data->user_email :'';			
-		}
-		// Bharatdan Gadhavi - 13th Feb 2018 - Added TR with Registration No. After Roll no. TR
-		$profile = "<section class='content'>
+		} ?>
+			<section class='content'>
 				<div class='row'>
 					<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
 					  <div class='panel panel-info'>
 						<div class='panel-heading'>
-						  <h3 class='panel-title'>$stinfo->s_fname $stinfo->s_mname $stinfo->s_lname </h3>
+						  <h3 class='panel-title'><?php echo $stinfo->s_fname." ".$stinfo->s_mname." ".$stinfo->s_lname; ?></h3>
 						</div>
 						<div class='panel-body'>
 						<div class='row'>
 							<div class='col-md-3 col-lg-3'>
-								<img src='$img_url' height='150px' width='150px' class='img img-circle'/>							
+								<img src='<?php echo $img_url; ?>' height='150px' width='150px' class='img img-circle'/>							
 							</div>
 							<div class=' col-md-9 col-lg-9 '> 
 								<table class='table table-user-information'>
 									<tbody>
 										<tr>
 											<td class='bold'>Roll No.</td>
-											<td>$stinfo->s_rollno</td>
+											<td><?php echo $stinfo->s_rollno; ?></td>
 										</tr
 										<tr>
 											<td class='bold'>Registration No.</td>
-											<td>$stinfo->s_regno</td>
+											<td><?php echo $stinfo->s_regno; ?></td>
 										</tr>
 										<tr>
 											<td class='bold'>Class </td>
 											<td>
-												 $stinfo->c_name
+												<?php echo $stinfo->c_name; ?>
 											</td>
 										</tr>
 										<tr>
 											<td class='bold'>Gender</td>
 											<td>
-												 $stinfo->s_gender
+												<?php echo $stinfo->s_gender; ?>
 											</td>
 										</tr>
 										<tr>
 											<td class='bold'>Date of Birth</td>
 											<td>".
-											wpsp_ViewDate($stinfo->s_dob)
+											<?php echo wpsp_ViewDate($stinfo->s_dob); ?>
 											."</td>
 										</tr>
 										<tr>
 											<td class='bold'>Date of Join</td>
 											<td>".
-												 wpsp_ViewDate($stinfo->s_doj)
+												<?php echo wpsp_ViewDate($stinfo->s_doj); ?>
 											."</td>
 										</tr>
 										<tr>
 											<td class='bold'>Address</td>
-											<td>$stinfo->s_address</td>
+											<td><?php echo $stinfo->s_address; ?></td>
 										</tr>
 										<tr>
 											<td class='bold'>City</td>
-											<td>$stinfo->s_pcity</td>
+											<td><?php echo $stinfo->s_pcity; ?></td>
 										</tr>
 										<tr>
 											<td class='bold'>Country</td>
-											<td>$stinfo->s_country</td>
+											<td><?php echo $stinfo->s_country; ?></td>
 										</tr>
 										<tr>
 											<td class='bold'>ZipCode</td>
-											<td>$stinfo->s_zipcode</td>
+											<td><?php echo $stinfo->s_zipcode; ?></td>
 										</tr>
 										<tr>
 											<td class='bold'>Email</td>
-											<td>$stinfo->user_email</td>
+											<td><?php echo $stinfo->user_email; ?></td>
 										</tr>
 										<tr>
 											<td class='bold'>Blood Group</td>
-											<td>$stinfo->s_bloodgrp</td>
+											<td><?php echo $stinfo->s_bloodgrp; ?></td>
 										</tr>
 										<tr>
 											<td class='bold'>Phone Number</td>
 											<td>
-												$stinfo->s_phone
+												<?php echo $stinfo->s_phone; ?>
 											</td>
 										</tr>
 										<tr>
 											<td class='bold'>Parent Name</td>
 											<td>
-												$stinfo->p_fname  $stinfo->p_mname  $stinfo->p_lname
+												<?php echo	$stinfo->p_fname." ".$stinfo->p_mname." ".$stinfo->p_lname; ?>
 											</td>
 										</tr>
 										<tr>
 											<td class='bold'>Parent Gender</td>
-											<td>$stinfo->p_gender</td>
+											<td><?php echo $stinfo->p_gender; ?></td>
 										</tr>
 										<tr>
 											<td class='bold'>Parent Email</td>
-											<td>$parentEmail</td>
+											<td><?php echo $parentEmail; ?></td>
 										</tr>
 										<tr>
 											<td class='bold'>Parent Profession</td>
-											<td>$stinfo->p_profession</td>
+											<td><?php echo $stinfo->p_profession; ?></td>
 										</tr>
 									</tbody>
 								</table>
+							</div>
+						</div>
+						<div class='fee-records-container'>
+							<div class='panel-group' id='accordion'>
+								<div class='panel panel-primary'>
+									<h4 class='panel-title'>
+										<button type='button' class='btn btn-primary btn-block' id='collapse-button' data-parent='#accordion' data-toggle='collapse' href='#fees-details'><i class='fa fa-inr' aria-hidden='true'></i> View Fees Details</button>
+									</h4>
+									<div id='fees-details' class='panel-collapse collapse'>
+										<div id='panel-body' class='panel-body'>
+											<table>
+												<tr class='tab-head'>
+													<td>Date And Time</td>
+													<td>From</td>
+													<td>To</td>
+													<td>Amount</td>
+												</tr> <?php
+												foreach ($sql_fees as $fee) { ?>
+													<tr id='<?php echo $fee->tid; ?>'>
+														<td><?php echo date('d/m/y h:i:s', strtotime($fee->date_time)); ?></td>
+														<td><?php echo $fee->from; ?></td>
+														<td><?php echo $fee->to; ?></td>
+														<td><i class="fa fa-inr"></i><?php echo $fee->amount; ?>/-</td>
+													</tr>
+												<?php } ?>
+											</table>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						</div>
@@ -482,11 +512,16 @@ function wpsp_StudentPublicProfile(){
 					  </div>
 					</div>
 				</div>
-			</section>";
-	}else{
+			</section>
+			<?php
+	}
+
+	else{
 		$profile ="No date retrived";
 	}
 	echo $profile;
+
+
 	wp_die();
 }
 

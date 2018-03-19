@@ -303,7 +303,8 @@
 	dbDelta($sql_fees_payment_record);
 
 	$sql_fees_receipts = "CREATE TABLE IF NOT EXISTS $fees_receipts  (
-	  `slip_no` int(25) NOT NULL AUTO_INCREMENT PRIMARY KEY,	  
+	  `slip_no` int(25) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	  `tid` varchar(20),	  
 	  `uid` int(15),
 	  `cid` int(10),	 
 	  `from` varchar(20),	 

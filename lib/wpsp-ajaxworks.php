@@ -2734,13 +2734,14 @@ function wpsp_Import_Dummy_contents() {
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
 		$record_table = $wpdb->prefix."wpsp_fees_payment_record";
 		$status_table = $wpdb->prefix."wpsp_fees_status";
-		$tid .= date("dmyis").$sid;
+		$tid = date("dmyis").$uid;
 		if(!empty($admission_fees)) $fees_type .= "adm";
 		if(!empty($tution_fees)) $fees_type .= "/ttn";
 		if(!empty($transport_chg)) $fees_type .= "/trn";
 		if(!empty($annual_chg)) $fees_type .= "/ann";
 		if(!empty($recreation_chg)) $fees_type .= "/rec";
 		$sql_slip_data = array(
+				'tid' => $tid,
 				'uid' => $uid,
 				'cid' => $cid,
 				'from' => $from,
@@ -2769,7 +2770,7 @@ function wpsp_Import_Dummy_contents() {
 				echo "success";
 			}
 			else{
-				throw new Exception($db->print_error());
+				throw new Exception($wpdb->print_error());
 			}
 
 			$wpdb->query("COMMIT;");
