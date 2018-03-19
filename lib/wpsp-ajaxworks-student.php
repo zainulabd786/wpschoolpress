@@ -177,6 +177,7 @@ function wpsp_AddStudent() {
 			//$rec_f = $fee->recreation_chg;
 		}
 		$fee_status_table_data = array(
+						'uid' => $user_id,
 						'admission_fees' => $adm_f,
 						'tution_fees' => $ttn_f,
 						'transport_chg' => $trans_f,
@@ -552,12 +553,12 @@ function wpsp_checkRollNo(){
 		global $wpdb;
 		$standard = $_POST['value'];
 		$student_table	=	$wpdb->prefix."wpsp_student";
-		$students	=	$wpdb->get_results("select s_fname, s_mname, s_lname, p_fname, p_mname, p_lname, sid from $student_table where class_id='$standard' order by sid desc");
+		$students	=	$wpdb->get_results("select s_fname, s_mname, s_lname, p_fname, p_mname, p_lname, wp_usr_id from $student_table where class_id='$standard' order by sid desc");
 		echo "<option value=''>Select Student</option>";
 		foreach ($students as $std) {
 			$student_name = $std->s_fname." ".$std->s_mname." ".$std->s_lname;
 			$fathers_name = $std->p_fname." ".$std->p_mname." ".$std->p_lname;
-			echo "<option value='".$std->sid."'>".$student_name." S/O ".$fathers_name."</option>";
+			echo "<option value='".$std->wp_usr_id."'>".$student_name." S/O ".$fathers_name."</option>";
 		}
 		exit();
 	}

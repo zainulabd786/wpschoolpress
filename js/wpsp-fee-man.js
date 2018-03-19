@@ -20,7 +20,7 @@ $(document).ready(function(){
 		var sid = $(this).val();
 		var curUrl = window.location.href;
 		var baseUrl = curUrl.substring(0, curUrl.indexOf('?'));
-		var newUrl = baseUrl+"?sidff="+sid;
+		var newUrl = baseUrl+"?uidff="+sid;
 		window.location.href = newUrl;
 	});
 	$(".dep-fee-type select").change(function(){
@@ -187,7 +187,7 @@ $(document).ready(function(){
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";
 		var slip = $(".invoice-header-slip-no div").text();
-		var sid = $(".dep-student-select select").val();
+		var uid = $(".dep-student-select select").val();
 		var cid = $(".dep-class-select select").val();
 		var from = $(".dep-from-select select").val();
 		var to = $(".dep-to-select select").val();
@@ -200,7 +200,7 @@ $(document).ready(function(){
 		data.push(
 			{name: 'action', value: action},
 			{name: 'slip', value: slip},
-			{name: 'studentId', value: sid},
+			{name: 'studentId', value: uid},
 			{name: 'classId', value: cid},
 			{name: 'fromDate', value: from},
 			{name: 'toDate', value: to},

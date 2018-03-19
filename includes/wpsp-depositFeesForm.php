@@ -2,14 +2,14 @@
 	if (!defined('ABSPATH')) exit('No Such File');
 	$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $sfname_f = $smname_f = $slname_f = $pfname_f = $pmname_f = $plname_f = $sphone_f = $sregno = $class = $cid = $to_f = $from = $to = "";
 	$months_array = array("January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
- 	if(isset( $_GET['sidff'] )){
-		$sidff = $_GET['sidff'];
+ 	if(isset( $_GET['uidff'] )){
+		$uidff = $_GET['uidff'];
 		$fees_status_table = $wpdb->prefix."wpsp_fees_status";
 		$student_table = $wpdb->prefix."wpsp_student";
 		$fees_rec_table = $wpdb->prefix."wpsp_fees_payment_record";
 		$class_table = $wpdb->prefix."wpsp_class";
-		$sidff_sql = $wpdb->get_results("SELECT * FROM $fees_status_table a, $student_table b, $class_table c WHERE a.sid = '$sidff' AND b.sid = a.sid AND c.cid = b.class_id");
-		foreach ($sidff_sql as $fee) {
+		$uidff_sql = $wpdb->get_results("SELECT * FROM $fees_status_table a, $student_table b, $class_table c WHERE a.uid = '$uidff' AND b.wp_usr_id = a.uid AND c.cid = b.class_id");
+		foreach ($uidff_sql as $fee) {
 			$adm_f = $fee->admission_fees;
 			$ttn_f = $fee->tution_fees;
 			$trans_f = $fee->transport_chg;
@@ -26,7 +26,7 @@
 			$class = $fee->c_name;
 			$cid = $fee->cid;
 		}
-		$sql_month = $wpdb->get_results("SELECT `to` FROM $fees_rec_table WHERE sid = '$sidff' ORDER BY date_time DESC LIMIT 1");
+		$sql_month = $wpdb->get_results("SELECT `to` FROM $fees_rec_table WHERE uid = '$uidff' ORDER BY date_time DESC LIMIT 1");
 		foreach ($sql_month as $mo) {
 			$to_f = $mo->to;
 		}
@@ -95,7 +95,7 @@
 													<option value="">Select Student</option>
 													<?php 
 														if(!empty($student_full_name))
-															echo "<option selected value='".$sidff."'>".$student_full_name." S/O ".$father_full_name."</option>";
+															echo "<option selected value='".$uidff."'>".$student_full_name." S/O ".$father_full_name."</option>";
 													 ?>
 												</select>
 											</div>

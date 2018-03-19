@@ -2719,7 +2719,7 @@ function wpsp_Import_Dummy_contents() {
 	function submit_deposit_form(){
 		global $wpdb;
 		$slip_no = $_POST['slip'];
-		$sid = $_POST['studentId'];
+		$uid = $_POST['studentId'];
 		$cid = $_POST['classId'];
 		$from = $_POST['fromDate'];
 		$to = $_POST['toDate'];
@@ -2741,7 +2741,7 @@ function wpsp_Import_Dummy_contents() {
 		if(!empty($annual_chg)) $fees_type .= "/ann";
 		if(!empty($recreation_chg)) $fees_type .= "/rec";
 		$sql_slip_data = array(
-				'sid' => $sid,
+				'uid' => $uid,
 				'cid' => $cid,
 				'from' => $from,
 				'to' => $to,
@@ -2754,13 +2754,13 @@ function wpsp_Import_Dummy_contents() {
 		$sql_record_data = array(
 				'tid' => $tid,
 				'date_time' => $current_date_time,
-				'sid' => $sid,
+				'uid' => $uid,
 				'from' => $from,
 				'to' => $to,
 				'amount' => $total_amount,
 				'fees_type' => $fees_type
 		);
-		$sql_status_update = "UPDATE $status_table SET admission_fees=admission_fees-'$admission_fees', tution_fees=tution_fees-'$tution_fees', transport_chg=transport_chg-'$transport_chg', annual_chg=annual_chg-'$annual_chg', recreation_chg=recreation_chg-'$recreation_chg' WHERE sid = '$sid' ";
+		$sql_status_update = "UPDATE $status_table SET admission_fees=admission_fees-'$admission_fees', tution_fees=tution_fees-'$tution_fees', transport_chg=transport_chg-'$transport_chg', annual_chg=annual_chg-'$annual_chg', recreation_chg=recreation_chg-'$recreation_chg' WHERE uid = '$uid' ";
 
 		try{
 			$wpdb->query("BEGIN;");
