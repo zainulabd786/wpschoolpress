@@ -2782,4 +2782,58 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function load_detailed_transaction(){
+		global $wpdb;
+		$tid = $_POST['tid'];
+		$slip_table = $wpdb->prefix."wpsp_fees_receipts";
+		$slip = $wpdb->get_results("SELECT * FROM $slip_table WHERE tid='$tid'"); ?>
+		<table class="detailed-transaction"> <?php
+		foreach ($slip as $slip) {
+			$total_amt = $slip->adm+$slip->ttn+$slip->trans+$slip->ann+$slip->rec; ?>
+			<tr>
+				<td>Transaction Id:</td>
+				<td><?php echo $slip->tid ?></td>
+			</tr>
+			<tr>
+				<td>Slip No:</td>
+				<td><?php echo $slip->slip_no; ?></td>
+			</tr>
+			<tr>
+				<td>From:</td>
+				<td><?php echo $slip->from; ?></td>
+			</tr>
+			<tr>
+				<td>To:</td>
+				<td><?php echo $slip->to; ?></td>
+			</tr>
+			<tr>
+				<td>Admission Fees:</td>
+				<td><i class="fa fa-inr"></i><?php echo $slip->adm; ?>/-</td>
+			</tr>
+			<tr>
+				<td>Tution Fees:</td>
+				<td><i class="fa fa-inr"></i><?php echo $slip->ttn; ?>/-</td>
+			</tr>
+			<tr>
+				<td>Transaportation Charges:</td>
+				<td><i class="fa fa-inr"></i><?php echo $slip->trans; ?>/-</td>
+			</tr>
+			<tr>
+				<td>Annual Charges:</td>
+				<td><i class="fa fa-inr"></i><?php echo $slip->ann; ?>/-</td>
+			</tr>
+			<tr>
+				<td>Recreation Charges:</td>
+				<td><i class="fa fa-inr"></i><?php echo $slip->rec; ?>/-</td>
+			</tr>
+			<tr>
+				<td>Total Amount:</td>
+				<td><i class="fa fa-inr"></i><?php echo $total_amt; ?>/-</td>
+			</tr>
+			<?php
+		} ?>
+		</table> <?php
+		wp_die();
+	}
 ?>

@@ -175,6 +175,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_fetch_class_fees_settings', 'class_fees_settings' );
 
 		add_action( 'wp_ajax_submit_deposit_form', 'submit_deposit_form' );
+
+		add_action( 'wp_ajax_load_detailed_transaction', 'load_detailed_transaction' );
 }
 
 function tl_save_error() {

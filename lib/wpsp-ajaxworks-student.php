@@ -492,7 +492,7 @@ function wpsp_StudentPublicProfile(){
 													<td>Amount</td>
 												</tr> <?php
 												foreach ($sql_fees as $fee) { ?>
-													<tr id='<?php echo $fee->tid; ?>'>
+													<tr class="fees-single-row" id='<?php echo $fee->tid; ?>'>
 														<td><?php echo date('d/m/y h:i:s', strtotime($fee->date_time)); ?></td>
 														<td><?php echo $fee->from; ?></td>
 														<td><?php echo $fee->to; ?></td>
@@ -500,6 +500,12 @@ function wpsp_StudentPublicProfile(){
 													</tr>
 												<?php } ?>
 											</table>
+											<script type="text/javascript">
+												$(".fees-single-row").click(function(){
+													var tid = $(this).attr('id');
+													$.post(ajax_url,{action: "load_detailed_transaction", tid: tid},function(data){ $.alert(data); });
+												});
+											</script>
 										</div>
 									</div>
 								</div>
