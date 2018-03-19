@@ -176,7 +176,7 @@
 								</header>
 							</div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-8" class="invoice-panel">
                             <div class="panel-group">
 								<header class="panel panel-primary">
 									<div class="panel-heading"> Invoice Preview </div>
