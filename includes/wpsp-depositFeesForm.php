@@ -272,10 +272,10 @@
 												<div class="invoice-header">
 													<div class="invoice-header-logo-name row">
 
-														<div class="invoice-header-logo col-md-3">
+														<div class="invoice-header-logo col-md-3 col-print-3">
 															<img src="<?php if(!empty($school_logo)) echo $school_logo; ?>" height=90 width=90>
 														</div>
-														<div class="invoice-header-name col-md-9">
+														<div class="invoice-header-name col-md-9 col-print-9">
 															<h2><?php if(!empty($school_name)) echo $school_name; ?></h2>
 														</div>
 

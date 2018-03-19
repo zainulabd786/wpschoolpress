@@ -361,8 +361,8 @@ a.add-parent { margin-bottom:15px; }
   padding: 10px;
 }
 .tab-head{
-    background-color: #000;
-    color: #fff;
+    background-color: #000 !important;
+    color: #fff !important;
     font-weight: 900;
     text-align: center;
 }
@@ -394,6 +394,39 @@ a.add-parent { margin-bottom:15px; }
     position: relative;
     top: -8px;
     display: none;
+}
+.col-print-1 {width:8%;  float:left;}
+.col-print-2 {width:16%; float:left;}
+.col-print-3 {width:25%; float:left;}
+.col-print-4 {width:33%; float:left;}
+.col-print-5 {width:42%; float:left;}
+.col-print-6 {width:50%; float:left;}
+.col-print-7 {width:58%; float:left;}
+.col-print-8 {width:66%; float:left;}
+.col-print-9 {width:75%; float:left;}
+.col-print-10{width:83%; float:left;}
+.col-print-11{width:92%; float:left;}
+.col-print-12{width:100%; float:left;}
+@media print{
+    .invoice-prev{
+         -webkit-print-color-adjust: exact !important;
+    }
+    .tab-head td{
+        color: #fff !important;
+    }
+    .b3 .sb2 strong{
+        width: 16%;
+    }
+    .b3 .sb2 div{
+        width: 84%;
+    }
+
+    .b4 .sb1 strong{
+        width: 22%;
+    }
+    .b4 .sb1 div{
+        width: 78%;
+    }
 }
  @media only screen and (max-width: 1480px){
     .b4 .sb1 strong {
@@ -473,6 +506,7 @@ a.add-parent { margin-bottom:15px; }
         width: 68%;
     }
 }
+
 
 
 
