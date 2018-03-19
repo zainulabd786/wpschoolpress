@@ -12,9 +12,6 @@ $(document).ready(function(){
 		$(".inv-entries table tr .inv-entries-due").html("<i class='fa fa-inr'></i>"+dueAmt+"/-");
 		$(".inv-entries table tr .inv-entries-amt").html("<i class='fa fa-inr'></i>"+paidAmt+"/-");
 	});
-	$("#dep-fees-btn").click(function(){
-		$.alert("<div class='alert alert-danger'>Sorry! This Module is still Incomplete</div>");
-	});
 	$(".dep-class-select select").change(function(){
 		$.post(ajax_url, { action: "fetch_all_stydents_of_a_class", value: $(this).val() }, function(data){ $(".dep-student-select select").html(data); });
 		$(".b5 .sb2 div").text($(".dep-class-select select option:selected").text());
@@ -183,5 +180,55 @@ $(document).ready(function(){
 
 	$(".dep-to-select select").change(function(){
 		$(".b4 .sb2 div").text($(this).val());
+	});
+	$("#dep-fees-btn").click(function(){
+		var action = "submit_deposit_form";
+		var slip = $(".invoice-header-slip-no div").text();
+		var sid = $(".dep-student-select select").val();
+		var cid = $(".dep-class-select select").val();
+		var from = $(".dep-from-select select").val();
+		var to = $(".dep-to-select select").val();
+		var adm = $(".dep-adm-inp .paid").val();
+		var ttn = $(".dep-tf-inp .paid").val();
+		var trans = $(".dep-tc-inp .paid").val();
+		var ann = $(".dep-ac-inp .paid").val();
+		var rec = $(".dep-rf-inp .paid").val();
+		var data=new Array();
+		data.push(
+			{name: 'action', value: action},
+			{name: 'slip', value: slip},
+			{name: 'studentId', value: sid},
+			{name: 'classId', value: cid},
+			{name: 'fromDate', value: from},
+			{name: 'toDate', value: to},
+			{name: 'admissionFees', value: adm},
+			{name: 'tutionFees', value: ttn},
+			{name: 'transportChg', value: trans},
+			{name: 'annualChg', value: ann},
+			{name: 'recreationChg', value: rec}
+		);
+		$.ajax({
+			method:"POST",
+			url:ajax_url, 
+			data:data, 
+			success:function(sfres) {
+				console.log(sfres);
+				if(sfres=='success'){
+					$.fn.notify('success',{'desc':'Information saved succesfully!'});
+					//window.location.reload();
+				}
+				else
+					$.fn.notify('error',{'desc':sfres});				
+			},
+			error:function(){
+				$.fn.notify('error',{'desc':'Something went wrong'});
+			},
+			beforeSend:function(){
+				$.fn.notify('loader',{'desc':'Saving Data...'});
+			},
+			complete:function(){
+				$('.pnloader').remove();
+			}
+		});
 	});
 });

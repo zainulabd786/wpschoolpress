@@ -173,6 +173,8 @@ function ajax_actions(){
 
 		add_action( 'wp_ajax_save_fees_settings', 'save_fees_settings' );
 		add_action( 'wp_ajax_fetch_class_fees_settings', 'class_fees_settings' );
+
+		add_action( 'wp_ajax_submit_deposit_form', 'submit_deposit_form' );
 }
 
 function tl_save_error() {

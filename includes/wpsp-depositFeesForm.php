@@ -65,7 +65,7 @@
                         <div class="col-md-4">
                             <div class="panel-group">
 								<header class="panel panel-primary">
-									<div class="panel-heading"> Record Transaction </div>
+									<div class="panel-heading"> Fees Deposit Form </div>
 						                <div class="panel-body">
 						                	<?php $current_date = date("d-m-Y"); ?>
 						                	<div class="form-group">

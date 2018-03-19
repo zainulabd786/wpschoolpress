@@ -2715,4 +2715,11 @@ function wpsp_Import_Dummy_contents() {
 		}
 		wp_die();
 	}
+
+	function submit_deposit_form(){
+		$slip_no = $_POST['slip'];
+		
+
+		wp_die();
+	}
 ?>
