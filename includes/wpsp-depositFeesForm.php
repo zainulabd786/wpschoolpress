@@ -289,11 +289,11 @@
 															<strong>Slip No.</strong>
 															<div><?php
 																$receipts_table = $wpdb->prefix."wpsp_fees_receipts";
-																$sql_slip_no = $wpdb->get_results("SELECT slip_no FROM $receipts_table ORDER BY slip_no DESC");
+																$sql_slip_no = $wpdb->get_results("SELECT slip_no FROM $receipts_table ORDER BY slip_no DESC LIMIT 1");
 																$slip_no = 0;
 																if($wpdb->num_rows>0){
 																	foreach ($sql_slip_no as $slip) {
-																		$slip_no = $slip->slip_no;
+																		$slip_no = $slip->slip_no + 1;
 																	}
 																}
 																else{
