@@ -181,6 +181,9 @@ $(document).ready(function(){
 	$(".dep-to-select select").change(function(){
 		$(".b4 .sb2 div").text($(this).val());
 	});
+	$(".btn-print").click(function(){
+		$.print(".invoice-prev");
+	});
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";
 		var slip = $(".invoice-header-slip-no div").text();

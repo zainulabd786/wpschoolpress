@@ -479,6 +479,7 @@ function wpsp_footer()
   {
       echo "<script src='".plugins_url("plugins/fileupload/jquery.fileupload.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
+      echo "<script src='".plugins_url("plugins/jQuery-Print/jQuery.print.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("js/wpsp-student.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("js/wpsp-fee-man.js",__FILE__)."' > </script>";
   }
