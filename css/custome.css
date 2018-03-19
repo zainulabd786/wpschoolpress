@@ -389,6 +389,12 @@ a.add-parent { margin-bottom:15px; }
 .dep-adm-inp, .dep-tf-inp, .dep-tc-inp, .dep-ac-inp, .dep-rf-inp, .adm-fees-tr-inv, .tution-fees-te-inv, .trans-chg-tr-inv, .annual-chg-tr-inv, .rec-chg-tr-inv, .inv-tab-bottom{
     display: none;
 }
+.btn-print{
+    float: right;
+    position: relative;
+    top: -8px;
+    display: none;
+}
  @media only screen and (max-width: 1480px){
     .b4 .sb1 strong {
         width: 22%;

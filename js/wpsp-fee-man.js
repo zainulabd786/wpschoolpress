@@ -212,7 +212,6 @@ $(document).ready(function(){
 			url:ajax_url, 
 			data:data, 
 			success:function(sfres) {
-				console.log(sfres);
 				if(sfres=='success'){
 					$.fn.notify('success',{'desc':'Information saved succesfully!'});
 					//window.location.reload();
@@ -228,6 +227,7 @@ $(document).ready(function(){
 			},
 			complete:function(){
 				$('.pnloader').remove();
+				$(".btn-print").show();
 			}
 		});
 	});

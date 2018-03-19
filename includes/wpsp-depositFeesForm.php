@@ -179,7 +179,9 @@
                         <div class="col-md-8" class="invoice-panel">
                             <div class="panel-group">
 								<header class="panel panel-primary">
-									<div class="panel-heading"> Invoice Preview </div>
+									<div class="panel-heading"> Invoice Preview 
+										<button type="button" class="btn btn-success btn-print"><i class="fa fa-print"></i> Print Invoice</button>
+									</div>
 						                <div class="panel-body">
 											<div class="invoice-prev">
 												<!--Old Invoice Format By Zainul Abideen -->
