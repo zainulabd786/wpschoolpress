@@ -2717,8 +2717,67 @@ function wpsp_Import_Dummy_contents() {
 	}
 
 	function submit_deposit_form(){
+		global $wpdb;
 		$slip_no = $_POST['slip'];
-		
+		$sid = $_POST['studentId'];
+		$cid = $_POST['classId'];
+		$from = $_POST['fromDate'];
+		$to = $_POST['toDate'];
+		$admission_fees = $_POST['admissionFees'];
+		$tution_fees = $_POST['tutionFees'];
+		$transport_chg = $_POST['transportChg'];
+		$annual_chg = $_POST['annualChg'];
+		$recreation_chg = $_POST['recreationChg'];
+		$total_amount = $admission_fees+$tution_fees+$transport_chg+$annual_chg+$recreation_chg;
+		$current_date_time = date("Y-m-d H:i:s");
+		$fees_type = "";
+		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
+		$record_table = $wpdb->prefix."wpsp_fees_payment_record";
+		$status_table = $wpdb->prefix."wpsp_fees_status";
+		$tid .= date("dmyis").$sid;
+		if(!empty($admission_fees)) $fees_type .= "adm";
+		if(!empty($tution_fees)) $fees_type .= "/ttn";
+		if(!empty($transport_chg)) $fees_type .= "/trn";
+		if(!empty($annual_chg)) $fees_type .= "/ann";
+		if(!empty($recreation_chg)) $fees_type .= "/rec";
+		$sql_slip_data = array(
+				'sid' => $sid,
+				'cid' => $cid,
+				'from' => $from,
+				'to' => $to,
+				'adm' => $admission_fees,
+				'ttn' => $tution_fees,
+				'trans' => $transport_chg,
+				'ann' => $annual_chg,
+				'rec' => $recreation_chg
+		);
+		$sql_record_data = array(
+				'tid' => $tid,
+				'date_time' => $current_date_time,
+				'sid' => $sid,
+				'from' => $from,
+				'to' => $to,
+				'amount' => $total_amount,
+				'fees_type' => $fees_type
+		);
+		$sql_status_update = "UPDATE $status_table SET admission_fees=admission_fees-'$admission_fees', tution_fees=tution_fees-'$tution_fees', transport_chg=transport_chg-'$transport_chg', annual_chg=annual_chg-'$annual_chg', recreation_chg=recreation_chg-'$recreation_chg' WHERE sid = '$sid' ";
+
+		try{
+			$wpdb->query("BEGIN;");
+
+			if( $wpdb->insert($rec_table, $sql_slip_data) && $wpdb->insert($record_table, $sql_record_data) && $wpdb->query($sql_status_update) ){
+				echo "success";
+			}
+			else{
+				throw new Exception($db->print_error());
+			}
+
+			$wpdb->query("COMMIT;");
+		}
+		catch(Exception $e){
+			$wpdb->query("ROLLBACK;");
+			echo "error".$e->getMessage();
+		}
 
 		wp_die();
 	}
