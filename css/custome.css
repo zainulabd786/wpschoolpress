@@ -467,6 +467,12 @@ a.add-parent { margin-bottom:15px; }
     .b4 .sb1 div{
         width: 74%;
     }
+    .b2 strong{
+        width: 14%;
+    }
+    .b2 div{
+        width: 86%;
+    }
   }
   @media only screen and (max-width: 1350px){
     .invoice-header-logo-name .invoice-header-name h2{
