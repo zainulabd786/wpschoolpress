@@ -24,6 +24,7 @@ function wpsp_header(){
 		echo "<link href='".plugins_url('plugins/datatables/dataTables.bootstrap.css', __FILE__ )."'  rel='stylesheet' type='text/css' />"; 
 	} 
   if ( is_page( 'sch-student' ) ) {
+    echo "<link href='".plugins_url('plugins/jquery-confirm-master/css/jquery-confirm.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
     echo "<link href='".plugins_url('plugins/gallery/blueimp-gallery.min.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
   }
 
@@ -473,6 +474,7 @@ function wpsp_footer()
       echo "<script src='".plugins_url("plugins/fileupload/jquery.fileupload.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("plugins/fileupload/jquery.iframe-transport.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("plugins/gallery/jquery.blueimp-gallery.min.js",__FILE__)."' > </script>";
+      echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("js/wpsp-student.js",__FILE__)."' > </script>";
   }
   if ( is_page( 'sch-fee-man' ) || is_page( 'sch-fee-man/?tab=DepositFees' ) ) 
