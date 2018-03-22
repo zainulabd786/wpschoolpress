@@ -2718,6 +2718,8 @@ function wpsp_Import_Dummy_contents() {
 
 	function submit_deposit_form(){
 		global $wpdb;
+		$wpdb->show_errors();
+		$months_array = array("January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 		$slip_no = $_POST['slip'];
 		$uid = $_POST['studentId'];
 		$cid = $_POST['classId'];
@@ -2733,7 +2735,7 @@ function wpsp_Import_Dummy_contents() {
 		$fees_type = "";
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
 		$record_table = $wpdb->prefix."wpsp_fees_payment_record";
-		$status_table = $wpdb->prefix."wpsp_fees_status";
+		//$status_table = $wpdb->prefix."wpsp_fees_status";
 		$tid = date("dmyis").$uid;
 		if(!empty($admission_fees)) $fees_type .= "adm";
 		if(!empty($tution_fees)) $fees_type .= "/ttn";
@@ -2741,7 +2743,7 @@ function wpsp_Import_Dummy_contents() {
 		if(!empty($annual_chg)) $fees_type .= "/ann";
 		if(!empty($recreation_chg)) $fees_type .= "/rec";
 		$sql_slip_data = array(
-				'tid' => $tid,
+				'slip_no' => $slip_no,
 				'uid' => $uid,
 				'cid' => $cid,
 				'from' => $from,
@@ -2752,21 +2754,32 @@ function wpsp_Import_Dummy_contents() {
 				'ann' => $annual_chg,
 				'rec' => $recreation_chg
 		);
-		$sql_record_data = array(
-				'tid' => $tid,
-				'date_time' => $current_date_time,
-				'uid' => $uid,
-				'from' => $from,
-				'to' => $to,
-				'amount' => $total_amount,
-				'fees_type' => $fees_type
-		);
-		$sql_status_update = "UPDATE $status_table SET admission_fees=admission_fees-'$admission_fees', tution_fees=tution_fees-'$tution_fees', transport_chg=transport_chg-'$transport_chg', annual_chg=annual_chg-'$annual_chg', recreation_chg=recreation_chg-'$recreation_chg' WHERE uid = '$uid' ";
+		
+		//$sql_status_update = "UPDATE $status_table SET admission_fees=admission_fees-'$admission_fees', tution_fees=tution_fees-'$tution_fees', transport_chg=transport_chg-'$transport_chg', annual_chg=annual_chg-'$annual_chg', recreation_chg=recreation_chg-'$recreation_chg' WHERE uid = '$uid' ";
 
 		try{
 			$wpdb->query("BEGIN;");
 
-			if( $wpdb->insert($rec_table, $sql_slip_data) && $wpdb->insert($record_table, $sql_record_data) && $wpdb->query($sql_status_update) ){
+			for($i=$from; $i<=$to; $i++){
+				$month = $i;
+				$sql_record_data = array(
+						'tid' => $tid.$i,
+						'slip_no' => $slip_no,
+						'date_time' => $current_date_time,
+						'uid' => $uid,
+						'month' => $month,
+						'amount' => $total_amount,
+						'fees_type' => $fees_type
+				);
+				if($wpdb->insert($record_table, $sql_record_data)){
+					$ok = 1;
+				}
+				else{
+					$ok = 0;
+					throw new Exception($wpdb->print_error());
+				}
+			}
+			if($wpdb->insert($rec_table, $sql_slip_data) && $ok == 1){
 				echo "success";
 			}
 			else{

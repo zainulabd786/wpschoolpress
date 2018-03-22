@@ -1,8 +1,8 @@
 <?php 
 	if (!defined('ABSPATH')) exit('No Such File');
+	$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
 	$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $sfname_f = $smname_f = $slname_f = $pfname_f = $pmname_f = $plname_f = $sphone_f = $sregno = $class = $cid = $to_f = $from = $to = "";
-	$months_array = array("January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
- 	if(isset( $_GET['uidff'] )){
+	if(isset( $_GET['uidff'] )){
 		$uidff = $_GET['uidff'];
 		$fees_status_table = $wpdb->prefix."wpsp_fees_status";
 		$student_table = $wpdb->prefix."wpsp_student";
@@ -82,7 +82,7 @@
 													$sel_class		=	$wpdb->get_results("select cid,c_name from $class_table Order By cid ASC");
 													foreach( $sel_class as $classes ) {
 													?> 
-														<option <?php if(!empty($cid) && $cid == $classes->cid) echo "selected"; ?> value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
+														<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 													<?php } ?>
 													 <?php if ( in_array( 'administrator', $role ) ) { ?>
 														<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
@@ -102,23 +102,25 @@
 											<label for="dep-amount">Select Month<sup>*</sup></label>
 											<div class="form-inline">
 												<div class="form-group dep-from-select">
-													<select class="form-control">
-														<option>Select From Month</option><?php
-														for ($m=0; $m<12; $m++) { ?>
-															<option <?php  if($months_array[$m] == $from) echo "selected" ?> value="<?php echo $months_array[$m]; ?>"><?php echo $months_array[$m]; ?></option>;
+													<select class="form-control"><?php
+														for ($m=1; $m<=13; $m++) { ?>
+															<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
 														<?php } ?>
 													</select>
 													<label>From</label>
 												</div>
 												<div class="form-group dep-to-select">
-													<select class="form-control">
-														<option>Select To Month</option><?php
-														for ($m=0; $m<12; $m++) { ?>
-															<option <?php  if($months_array[$m] == $to) echo "selected" ?> value="<?php echo $months_array[$m]; ?>"><?php echo $months_array[$m]; ?></option>;
+													<select class="form-control"><?php
+														for ($m=1; $m<=13; $m++) { ?>
+															<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
 														<?php } ?>
 													</select>
 													<label>To</label>
 												</div>
+											</div>
+											<div class="form-group">
+												<label>Session</label>
+												<input type="text" class="dep-session form-control" placeholder="Session">
 											</div>
 											<div class="form-group dep-fee-type">
 												<label>Fees Type</label>
@@ -131,44 +133,44 @@
 													<option value="RecreationCharge">Recreation Charges</option>
 												</select>
 											</div>
-											<div class="dep-adm-inp" <?php if(!empty($adm_f)) echo "style='display:block'"; ?> id="fees-inp">
+											<div class="dep-adm-inp" id="fees-inp">
 												<label>Admission Fees(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control expected" value="<?php if(!empty($adm_f)) echo $adm_f; ?>" placeholder="Amount Expected" disabled >
-													<input type="text" class="form-control paid" value="<?php if(!empty($adm_f)) echo $adm_f; ?>" placeholder="Paid Amount">
+													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" >
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
-											<div class="dep-tf-inp" <?php if(!empty($ttn_f)) echo "style='display:block'"; ?> id="fees-inp">
+											<div class="dep-tf-inp" id="fees-inp">
 												<label>Tution Fees(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control expected" value="<?php if(!empty($ttn_f)) echo $ttn_f; ?>" placeholder="Amount Expected" disabled >
-													<input type="text" class="form-control paid" value="<?php if(!empty($ttn_f)) echo $ttn_f; ?>" placeholder="Paid Amount">
+													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" >
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
-											<div class="dep-tc-inp" <?php if(!empty($trans_f)) echo "style='display:block'"; ?> id="fees-inp">
+											<div class="dep-tc-inp" id="fees-inp">
 												<label>Transportation Chares(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control expected" value="<?php if(!empty($trans_f)) echo $trans_f; ?>" placeholder="Amount Expected" disabled >
-													<input type="text" class="form-control paid" value="<?php if(!empty($trans_f)) echo $trans_f; ?>" placeholder="Paid Amount">
+													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" >
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
-											<div class="dep-ac-inp" <?php if(!empty($ann_f)) echo "style='display:block'"; ?> id="fees-inp">
+											<div class="dep-ac-inp" id="fees-inp">
 												<label>Annual Charges(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control expected" value="<?php if(!empty($ann_f)) echo $ann_f; ?>" placeholder="Amount Expected" disabled >
-													<input type="text" class="form-control paid" value="<?php if(!empty($ann_f)) echo $ann_f; ?>" placeholder="Paid Amount">
+													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" >
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
-											<div class="dep-rf-inp" <?php if(!empty($rec_f)) echo "style='display:block'"; ?> id="fees-inp">
+											<div class="dep-rf-inp" id="fees-inp">
 												<label>Recreation Fees(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control expected" value="<?php if(!empty($rec_f)) echo $rec_f; ?>" placeholder="Amount Expected" disabled >
-													<input type="text" class="form-control paid" value="<?php if(!empty($rec_f)) echo $rec_f; ?>" placeholder="Paid Amount">
+													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" disabled >
+													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
 											<input type="button" class="btn btn-success btn-block" value="Submit" id="dep-fees-btn">
@@ -370,58 +372,52 @@
 															<td>Paid Amount <i class="fa fa-inr"></i></td>
 															<td>Balance <i class="fa fa-inr"></i></td>
 														</tr>
-														<tr class="adm-fees-tr-inv" <?php if(!empty($adm_f)) echo "style='display:table-row'"; ?> >
+														<tr class="adm-fees-tr-inv" >
 															<td>1</td>
 															<td>Admission Fees</td>
-															<td class="inv-expected-amt"><?php if(!empty($adm_f)) echo "<i class='fa fa-inr'></i>".$adm_f."/-"; else "0"; ?></td>
-															<td class="inv-paid-amt"><?php if(!empty($adm_f)) echo "<i class='fa fa-inr'></i>".$adm_f."/-"; else "0"; ?></td>
-															<td class="inv-bal-amt"></td>
+															<td class="inv-expected-amt">0</td>
+															<td class="inv-paid-amt">0</td>
+															<td class="inv-bal-amt">0</td>
 														</tr>
-														<tr class="tution-fees-te-inv" <?php if(!empty($ttn_f)) echo "style='display:table-row'"; ?>>
+														<tr class="tution-fees-te-inv" >
 															<td>2</td>
 															<td>Tution Fees(Mothly)</td>
-															<td class="inv-expected-amt"><?php if(!empty($ttn_f)) echo "<i class='fa fa-inr'></i>".$ttn_f."/-"; else "0"; ?></td>
-															<td class="inv-paid-amt"><?php if(!empty($ttn_f)) echo "<i class='fa fa-inr'></i>".$ttn_f."/-"; else "0"; ?></td>
-															<td class="inv-bal-amt"></td>
+															<td class="inv-expected-amt">0</td>
+															<td class="inv-paid-amt">0</td>
+															<td class="inv-bal-amt">0</td>
 														</tr>
-														<tr class="trans-chg-tr-inv" <?php if(!empty($trans_f)) echo "style='display:table-row'"; ?>>
+														<tr class="trans-chg-tr-inv" >
 															<td>3</td>
 															<td>Transportation charges(Monthly)</td>
-															<td class="inv-expected-amt"><?php if(!empty($trans_f)) echo "<i class='fa fa-inr'></i>".$trans_f."/-"; else "0"; ?></td>
-															<td class="inv-paid-amt"><?php if(!empty($trans_f)) echo "<i class='fa fa-inr'></i>".$trans_f."/-"; else "0"; ?></td>
-															<td class="inv-bal-amt"></td>
+															<td class="inv-expected-amt">0</td>
+															<td class="inv-paid-amt">0</td>
+															<td class="inv-bal-amt">0</td>
 														</tr>
-														<tr class="annual-chg-tr-inv" <?php if(!empty($ann_f)) echo "style='display:table-row'"; ?>>
+														<tr class="annual-chg-tr-inv" >
 															<td>4</td>
 															<td>Annual Charges<br>(Dress+Books+Copies+Stationary)</td>
-															<td class="inv-expected-amt"><?php if(!empty($ann_f)) echo "<i class='fa fa-inr'></i>".$ann_f."/-"; else "0"; ?></td>
-															<td class="inv-paid-amt"><?php if(!empty($ann_f)) echo "<i class='fa fa-inr'></i>".$ann_f."/-"; else "0"; ?></td>
-															<td class="inv-bal-amt"></td>
+															<td class="inv-expected-amt">0</td>
+															<td class="inv-paid-amt">0</td>
+															<td class="inv-bal-amt">0</td>
 														</tr>
-														<tr class="rec-chg-tr-inv" <?php if(!empty($rec_f)) echo "style='display:table-row'"; ?>>
+														<tr class="rec-chg-tr-inv" >
 															<td>5</td>
 															<td>Recreation Charge</td>
-															<td class="inv-expected-amt"><?php if(!empty($rec_f)) echo "<i class='fa fa-inr'></i>".$rec_f."/-"; else "0"; ?></td>
-															<td class="inv-paid-amt"><?php if(!empty($rec_f)) echo "<i class='fa fa-inr'></i>".$rec_f."/-"; else "0"; ?></td>
-															<td class="inv-bal-amt"></td>
+															<td class="inv-expected-amt">0</td>
+															<td class="inv-paid-amt">0</td>
+															<td class="inv-bal-amt">0</td>
 														</tr>
-														<tr class="inv-tab-bottom" <?php if( !empty($rec_f) || !empty($ann_f) || !empty($trans_f) || !empty($ttn_f) || !empty($adm_f)) echo "style='display:table-row'"; ?>>
+														<tr class="inv-tab-bottom" >
 															<td></td>
 															<td>Total</td>
-															<td colspan="4" class="inv-tot-amt">
-																 <?php if( !empty($rec_f) || !empty($ann_f) || !empty($trans_f) || !empty($ttn_f) || !empty($adm_f)) echo "<i class='fa fa-inr'></i>".$total_amount_f."/-"; 
-																 else echo "0"; ?>
-															</td>
+															<td colspan="4" class="inv-tot-amt">0</td>
 														</tr>
-														<tr class="inv-tab-bottom" <?php if( !empty($rec_f) || !empty($ann_f) || !empty($trans_f) || !empty($ttn_f) || !empty($adm_f)) echo "style='display:table-row'"; ?>>
+														<tr class="inv-tab-bottom" >
 															<td></td>
 															<td>Paid Amount</td>
-															<td colspan="4" class="inv-paid-amt">
-																<?php if( !empty($rec_f) || !empty($ann_f) || !empty($trans_f) || !empty($ttn_f) || !empty($adm_f)) echo "<i class='fa fa-inr'></i>".$total_amount_f."/-"; 
-																else echo "0"; ?>
-															</td>
+															<td colspan="4" class="inv-paid-amt">0</td>
 														</tr>
-														<tr class="inv-tab-bottom" <?php if( !empty($rec_f) || !empty($ann_f) || !empty($trans_f) || !empty($ttn_f) || !empty($adm_f)) echo "style='display:table-row'"; ?>>
+														<tr class="inv-tab-bottom" >
 															<td></td>
 															<td>Balance</td>
 															<td colspan="4" class="inv-bal-amt">0</td>

@@ -173,7 +173,9 @@ $(document).ready(function(){
 		var admBal = $(".dep-rf-inp .expected").val()-$(this).val();
 		$(".rec-chg-tr-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
 	});	
-
+	$(".dep-session").keyup(function(){
+		$(".b5 .sb1 div").text($(this).val());
+	});
 	$(".dep-from-select select").change(function(){
 		$(".b4 .sb1 div").text($(this).val());
 	});

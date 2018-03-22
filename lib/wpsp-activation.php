@@ -281,7 +281,7 @@
 	$fees_payment_record	  = $wpdb->prefix . 'wpsp_fees_payment_record';
 	$fees_receipts			  = $wpdb->prefix . 'wpsp_fees_receipts';
 
-	$sql_fees_status_table = "CREATE TABLE IF NOT EXISTS $fees_status  (
+	/*$sql_fees_status_table = "CREATE TABLE IF NOT EXISTS $fees_status  (
 	  `uid` int(15) NOT NULL PRIMARY KEY,	  
 	  `admission_fees` int(11),
 	  `tution_fees` int(11),	 
@@ -289,22 +289,21 @@
 	  `annual_chg` int(11),	 
 	  `recreation_chg` int(11)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
-	dbDelta($sql_fees_status_table);
+	dbDelta($sql_fees_status_table);*/
 
 	$sql_fees_payment_record = "CREATE TABLE IF NOT EXISTS $fees_payment_record  (
 	  `tid` varchar(20) NOT NULL PRIMARY KEY,	  
+	  `slip_no` int(9),
 	  `date_time` datetime,
 	  `uid` int(15),	 
-	  `from` varchar(20),	 
-	  `to` varchar(20),	 
+	  `month` int(2),	 
 	  `amount` int(11),
 	  `fees_type` varchar(50)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_payment_record);
 
 	$sql_fees_receipts = "CREATE TABLE IF NOT EXISTS $fees_receipts  (
-	  `slip_no` int(25) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	  `tid` varchar(20),	  
+	  `slip_no` int(25) NOT NULL PRIMARY KEY,
 	  `uid` int(15),
 	  `cid` int(10),	 
 	  `from` varchar(20),	 
