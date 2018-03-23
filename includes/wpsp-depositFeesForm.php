@@ -169,7 +169,7 @@
 												<label>Recreation Fees(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
-													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" disabled >
+													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" >
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>

@@ -2744,7 +2744,6 @@ function wpsp_Import_Dummy_contents() {
 		if(!empty($annual_chg)) $fees_type .= "/ann";
 		if(!empty($recreation_chg)) $fees_type .= "/rec";
 		$fees_type_arr = explode("/", $fees_type);
-		print_r($fees_type_arr);
 		$sql_slip_data = array(
 				'slip_no' => $slip_no,
 				'uid' => $uid,
@@ -2782,10 +2781,11 @@ function wpsp_Import_Dummy_contents() {
 			}
 			for($j=0;$j<count($fees_type_arr);$j++){
 				$month = "N/A";
+				echo $fees_type_arr[$j]."<br/>";
 				switch ($fees_type_arr[$j]) {
 					case 'adm':
 						$sql_record_data = array(
-								'tid' => $tid.$j+1,
+								'tid' => $tid.$j."1",
 								'slip_no' => $slip_no,
 								'date_time' => $current_date_time,
 								'uid' => $uid,
@@ -2804,7 +2804,7 @@ function wpsp_Import_Dummy_contents() {
 
 					case "trn":
 						$sql_record_data = array(
-								'tid' => $tid.$j+1,
+								'tid' => $tid.$j."1",
 								'slip_no' => $slip_no,
 								'date_time' => $current_date_time,
 								'uid' => $uid,
@@ -2823,7 +2823,7 @@ function wpsp_Import_Dummy_contents() {
 
 					case "ann":
 						$sql_record_data = array(
-								'tid' => $tid.$j+1,
+								'tid' => $tid.$j."1",
 								'slip_no' => $slip_no,
 								'date_time' => $current_date_time,
 								'uid' => $uid,
@@ -2842,7 +2842,7 @@ function wpsp_Import_Dummy_contents() {
 
 					case "rec":
 						$sql_record_data = array(
-								'tid' => $tid.$j+1,
+								'tid' => $tid.$j."1",
 								'slip_no' => $slip_no,
 								'date_time' => $current_date_time,
 								'uid' => $uid,
