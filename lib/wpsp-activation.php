@@ -298,6 +298,7 @@
 	  `uid` int(15),	 
 	  `month` int(2),	 
 	  `amount` int(11),
+	  'session' varchar(20),
 	  `fees_type` varchar(50)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_payment_record);
@@ -307,7 +308,8 @@
 	  `uid` int(15),
 	  `cid` int(10),	 
 	  `from` varchar(20),	 
-	  `to` varchar(20),	 
+	  `to` varchar(20),	
+	  'session' varchar(20), 
 	  `adm` int(11),
 	  `ttn` varchar(11),	 
 	  `trans` int(11),
