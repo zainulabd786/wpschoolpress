@@ -198,6 +198,7 @@ $(document).ready(function(){
 		var trans = $(".dep-tc-inp .paid").val();
 		var ann = $(".dep-ac-inp .paid").val();
 		var rec = $(".dep-rf-inp .paid").val();
+		var session = $(".dep-session").val();
 		var data=new Array();
 		data.push(
 			{name: 'action', value: action},
@@ -210,7 +211,8 @@ $(document).ready(function(){
 			{name: 'tutionFees', value: ttn},
 			{name: 'transportChg', value: trans},
 			{name: 'annualChg', value: ann},
-			{name: 'recreationChg', value: rec}
+			{name: 'recreationChg', value: rec},
+			{name: 'session', value: session}
 		);
 		$.ajax({
 			method:"POST",

@@ -2731,6 +2731,7 @@ function wpsp_Import_Dummy_contents() {
 		$transport_chg = $_POST['transportChg'];
 		$annual_chg = $_POST['annualChg'];
 		$recreation_chg = $_POST['recreationChg'];
+		$session = $_POST["session"];
 		//$total_amount = $admission_fees+$tution_fees+$transport_chg+$annual_chg+$recreation_chg;
 		$current_date_time = date("Y-m-d H:i:s");
 		$fees_type = "";
@@ -2750,6 +2751,7 @@ function wpsp_Import_Dummy_contents() {
 				'cid' => $cid,
 				'from' => $from,
 				'to' => $to,
+				'session' => $session,
 				'adm' => $admission_fees,
 				'ttn' => $tution_fees,
 				'trans' => $transport_chg,
@@ -2769,6 +2771,7 @@ function wpsp_Import_Dummy_contents() {
 						'uid' => $uid,
 						'month' => $month,
 						'amount' => $tution_fees/$num_months,
+						'session' => $session,
 						'fees_type' => 'ttn'
 				);
 				if($wpdb->insert($record_table, $sql_record_data)){
@@ -2791,6 +2794,7 @@ function wpsp_Import_Dummy_contents() {
 								'uid' => $uid,
 								'month' => $month,
 								'amount' => $admission_fees,
+								'session' => $session,
 								'fees_type' => 'adm'
 						);
 						if($wpdb->insert($record_table, $sql_record_data)){
@@ -2810,6 +2814,7 @@ function wpsp_Import_Dummy_contents() {
 								'uid' => $uid,
 								'month' => $month,
 								'amount' => $transport_chg,
+								'session' => $session,
 								'fees_type' => 'trn'
 						);
 						if($wpdb->insert($record_table, $sql_record_data)){
@@ -2829,6 +2834,7 @@ function wpsp_Import_Dummy_contents() {
 								'uid' => $uid,
 								'month' => $month,
 								'amount' => $annual_chg,
+								'session' => $session,
 								'fees_type' => 'ann'
 						);
 						if($wpdb->insert($record_table, $sql_record_data)){
@@ -2848,6 +2854,7 @@ function wpsp_Import_Dummy_contents() {
 								'uid' => $uid,
 								'month' => $month,
 								'amount' => $recreation_chg,
+								'session' => $session,
 								'fees_type' => 'rec'
 						);
 						if($wpdb->insert($record_table, $sql_record_data)){
