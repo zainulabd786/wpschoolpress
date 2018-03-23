@@ -2784,7 +2784,6 @@ function wpsp_Import_Dummy_contents() {
 			}
 			for($j=0;$j<count($fees_type_arr);$j++){
 				$month = "N/A";
-				echo $fees_type_arr[$j]."<br/>";
 				switch ($fees_type_arr[$j]) {
 					case 'adm':
 						$sql_record_data = array(

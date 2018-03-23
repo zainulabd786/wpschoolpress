@@ -277,7 +277,7 @@
 	$import_history_table     = $wpdb->prefix . 'wpsp_import_history';
 	$leave_table              = $wpdb->prefix . 'wpsp_leavedays';
 	$fees_settings			  = $wpdb->prefix . 'wpsp_fees_settings';
-	$fees_status			  = $wpdb->prefix . 'wpsp_fees_status';
+	//$fees_status			  = $wpdb->prefix . 'wpsp_fees_status';
 	$fees_payment_record	  = $wpdb->prefix . 'wpsp_fees_payment_record';
 	$fees_receipts			  = $wpdb->prefix . 'wpsp_fees_receipts';
 
@@ -298,7 +298,7 @@
 	  `uid` int(15),	 
 	  `month` int(2),	 
 	  `amount` int(11),
-	  'session' varchar(20),
+	  `session` varchar(20),
 	  `fees_type` varchar(50)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_payment_record);
@@ -309,7 +309,7 @@
 	  `cid` int(10),	 
 	  `from` varchar(20),	 
 	  `to` varchar(20),	
-	  'session' varchar(20), 
+	  `session` varchar(20), 
 	  `adm` int(11),
 	  `ttn` varchar(11),	 
 	  `trans` int(11),
