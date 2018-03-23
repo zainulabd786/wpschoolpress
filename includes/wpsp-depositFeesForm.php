@@ -4,11 +4,10 @@
 	$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $sfname_f = $smname_f = $slname_f = $pfname_f = $pmname_f = $plname_f = $sphone_f = $sregno = $class = $cid = $to_f = $from = $to = "";
 	if(isset( $_GET['uidff'] )){
 		$uidff = $_GET['uidff'];
-		$fees_status_table = $wpdb->prefix."wpsp_fees_status";
 		$student_table = $wpdb->prefix."wpsp_student";
 		$fees_rec_table = $wpdb->prefix."wpsp_fees_payment_record";
 		$class_table = $wpdb->prefix."wpsp_class";
-		$uidff_sql = $wpdb->get_results("SELECT * FROM $fees_status_table a, $student_table b, $class_table c WHERE a.uid = '$uidff' AND b.wp_usr_id = a.uid AND c.cid = b.class_id");
+		$uidff_sql = $wpdb->get_results("SELECT * FROM $student_table b, $class_table c WHERE b.wp_usr_id = $uidff AND c.cid = b.class_id");
 		foreach ($uidff_sql as $fee) {
 			$adm_f = $fee->admission_fees;
 			$ttn_f = $fee->tution_fees;
@@ -25,20 +24,6 @@
 			$regno = $fee->s_regno;
 			$class = $fee->c_name;
 			$cid = $fee->cid;
-		}
-		$sql_month = $wpdb->get_results("SELECT `to` FROM $fees_rec_table WHERE uid = '$uidff' ORDER BY date_time DESC LIMIT 1");
-		foreach ($sql_month as $mo) {
-			$to_f = $mo->to;
-		}
-		if(!empty($to_f)){
-			$paid_mo_index = array_search($to_f, $months_array) + 1 ;
-			if($paid_mo_index > 11) $paid_mo_index = 0;
-			$from = $months_array[$paid_mo_index];
-			$to = date("F");
-		}
-		else{
-			$from = date("F");
-			$to = date("F");
 		}
 		$total_amount_f = $adm_f+$ttn_f+$trans_f+$ann_f+$rec_f;
 		$student_full_name = $sfname_f." ".$smname_f." ".$slname_f;
@@ -339,11 +324,11 @@
 													<div class="blank b4">
 														<div class="sb1">
 															<strong>From Month</strong>
-															<div><?php if(!empty($from)) echo $from; ?></div>
+															<div></div>
 														</div>
 														<div class="sb2">
 															<strong>To Month</strong>
-															<div><?php if(!empty($to)) echo $to; ?></div>
+															<div></div>
 														</div>
 													</div>
 													<div class="blank b5">
