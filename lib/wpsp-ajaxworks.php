@@ -2718,7 +2718,7 @@ function wpsp_Import_Dummy_contents() {
 
 	function submit_deposit_form(){
 		global $wpdb;
-		$wpdb->show_errors();
+		//$wpdb->show_errors();
 		$months_array = array("none","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 		$slip_no = $_POST['slip'];
 		$uid = $_POST['studentId'];
@@ -2885,52 +2885,42 @@ function wpsp_Import_Dummy_contents() {
 
 	function load_detailed_transaction(){
 		global $wpdb;
-		$tid = $_POST['tid'];
-		$slip_table = $wpdb->prefix."wpsp_fees_receipts";
-		$slip = $wpdb->get_results("SELECT * FROM $slip_table WHERE tid='$tid'"); ?>
+		$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
+		$slid = $_POST['slid'];
+		$slip_table = $wpdb->prefix."wpsp_fees_payment_record";
+		$slip = $wpdb->get_results("SELECT * FROM $slip_table WHERE slip_no='$slid' ORDER BY fees_type"); ?>
 		<table class="detailed-transaction"> <?php
-		foreach ($slip as $slip) {
-			$total_amt = $slip->adm+$slip->ttn+$slip->trans+$slip->ann+$slip->rec; ?>
-			<tr>
-				<td>Transaction Id:</td>
-				<td><?php echo $slip->tid ?></td>
-			</tr>
-			<tr>
-				<td>Slip No:</td>
-				<td><?php echo $slip->slip_no; ?></td>
-			</tr>
-			<tr>
-				<td>From:</td>
-				<td><?php echo $slip->from; ?></td>
-			</tr>
-			<tr>
-				<td>To:</td>
-				<td><?php echo $slip->to; ?></td>
-			</tr>
+		foreach ($slip as $slip) { ?>
+			<?php if($slip->fees_type == "adm") { ?>
 			<tr>
 				<td>Admission Fees:</td>
-				<td><i class="fa fa-inr"></i><?php echo $slip->adm; ?>/-</td>
+				<td><i class="fa fa-inr"></i><?php echo number_format($slip->amount); ?>/-</td>
 			</tr>
+			<?php }
+			if($slip->fees_type == "ttn"){ ?>
 			<tr>
-				<td>Tution Fees:</td>
-				<td><i class="fa fa-inr"></i><?php echo $slip->ttn; ?>/-</td>
+				<td>Tution Fees(<?php echo $months_array[$slip->month]." ".$slip->session; ?>):</td>
+				<td><i class="fa fa-inr"></i><?php echo number_format($slip->amount); ?>/-</td>
 			</tr>
+			<?php }
+			if($slip->fees_type == "trans"){ ?>
 			<tr>
 				<td>Transaportation Charges:</td>
-				<td><i class="fa fa-inr"></i><?php echo $slip->trans; ?>/-</td>
+				<td><i class="fa fa-inr"></i><?php if($slip->fees_type == "trans") echo number_format($slip->amount); ?>/-</td>
 			</tr>
+			<?php }
+			if($slip->fees_type == "ann"){ ?>
 			<tr>
 				<td>Annual Charges:</td>
-				<td><i class="fa fa-inr"></i><?php echo $slip->ann; ?>/-</td>
+				<td><i class="fa fa-inr"></i><?php if($slip->fees_type == "ann") echo number_format($slip->amount); ?>/-</td>
 			</tr>
+			<?php }
+			if($slip->fees_type == "rec"){ ?>
 			<tr>
 				<td>Recreation Charges:</td>
-				<td><i class="fa fa-inr"></i><?php echo $slip->rec; ?>/-</td>
+				<td><i class="fa fa-inr"></i><?php if($slip->fees_type == "rec") echo number_format($slip->amount); ?>/-</td>
 			</tr>
-			<tr>
-				<td>Total Amount:</td>
-				<td><i class="fa fa-inr"></i><?php echo $total_amt; ?>/-</td>
-			</tr>
+			<?php } ?>
 			<?php
 		} ?>
 		</table> <?php

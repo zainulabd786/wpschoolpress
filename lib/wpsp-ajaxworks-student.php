@@ -360,13 +360,14 @@ function wpsp_UpdateStudent(){
 /* Student Functions */
 function wpsp_StudentPublicProfile(){
 	global $wpdb;
+	$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
 	$student_table	=	$wpdb->prefix."wpsp_student";
 	$class_table	=	$wpdb->prefix."wpsp_class";
 	$users_table	=	$wpdb->prefix."users";
-	$fees_table 	=	$wpdb->prefix."wpsp_fees_payment_record";
+	$fees_table 	=	$wpdb->prefix."wpsp_fees_receipts";
 	$sid			=	$_POST['id'];
 	$stinfo			=	$wpdb->get_row("select a.*,b.c_name,d.user_email from $student_table a LEFT JOIN $class_table b ON a.class_id=b.cid LEFT JOIN $users_table d ON d.ID=a.wp_usr_id where a.wp_usr_id='$sid'");
-	$sql_fees = $wpdb->get_results("SELECT * FROM $fees_table WHERE uid = '$sid' ORDER BY date_time DESC");
+	$sql_fees = $wpdb->get_results("SELECT * FROM $fees_table WHERE uid = '$sid' ORDER BY slip_no DESC");
 	if(!empty($stinfo) ) {
 		$loc_avatar		=	get_user_meta($stinfo->wp_usr_id,'simple_local_avatar',true);
 		$img_url		=	isset( $loc_avatar['full'] ) && !empty( $loc_avatar['full'] ) ? $loc_avatar['full'] : WPSP_PLUGIN_URL.'img/avatar.png';
@@ -489,21 +490,24 @@ function wpsp_StudentPublicProfile(){
 													<td>Date And Time</td>
 													<td>From</td>
 													<td>To</td>
+													<td>Session</td>
 													<td>Amount</td>
 												</tr> <?php
-												foreach ($sql_fees as $fee) { ?>
-													<tr class="fees-single-row" id='<?php echo $fee->tid; ?>'>
+												foreach ($sql_fees as $fee) {
+													$total_amt = $fee->adm+$fee->ttn+$fee->trans+$fee->ann+$fee->rec; ?>
+													<tr class="fees-single-row" id='<?php echo $fee->slip_no; ?>'>
 														<td><?php echo date('d/m/y h:i:s', strtotime($fee->date_time)); ?></td>
-														<td><?php echo $fee->from; ?></td>
-														<td><?php echo $fee->to; ?></td>
-														<td><i class="fa fa-inr"></i><?php echo $fee->amount; ?>/-</td>
+														<td><?php echo $months_array[$fee->from]; ?></td>
+														<td><?php echo $months_array[$fee->to]; ?></td>
+														<td><?php echo $fee->session; ?></td>
+														<td><i class="fa fa-inr"></i><?php echo $total_amt; ?>/-</td>
 													</tr>
 												<?php } ?>
 											</table>
 											<script type="text/javascript">
 												$(".fees-single-row").click(function(){
-													var tid = $(this).attr('id');
-													$.post(ajax_url,{action: "load_detailed_transaction", tid: tid},function(data){ $.alert(data); });
+													var slid = $(this).attr('id');
+													$.post(ajax_url,{action: "load_detailed_transaction", slid: slid},function(data){ $.alert(data); });
 												});
 											</script>
 										</div>
