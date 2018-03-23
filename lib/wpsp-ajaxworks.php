@@ -2719,18 +2719,19 @@ function wpsp_Import_Dummy_contents() {
 	function submit_deposit_form(){
 		global $wpdb;
 		$wpdb->show_errors();
-		$months_array = array("January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
+		$months_array = array("none","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 		$slip_no = $_POST['slip'];
 		$uid = $_POST['studentId'];
 		$cid = $_POST['classId'];
 		$from = $_POST['fromDate'];
 		$to = $_POST['toDate'];
+		$num_months = ($to - $from) + 1;
 		$admission_fees = $_POST['admissionFees'];
 		$tution_fees = $_POST['tutionFees'];
 		$transport_chg = $_POST['transportChg'];
 		$annual_chg = $_POST['annualChg'];
 		$recreation_chg = $_POST['recreationChg'];
-		$total_amount = $admission_fees+$tution_fees+$transport_chg+$annual_chg+$recreation_chg;
+		//$total_amount = $admission_fees+$tution_fees+$transport_chg+$annual_chg+$recreation_chg;
 		$current_date_time = date("Y-m-d H:i:s");
 		$fees_type = "";
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
@@ -2738,10 +2739,12 @@ function wpsp_Import_Dummy_contents() {
 		//$status_table = $wpdb->prefix."wpsp_fees_status";
 		$tid = date("dmyis").$uid;
 		if(!empty($admission_fees)) $fees_type .= "adm";
-		if(!empty($tution_fees)) $fees_type .= "/ttn";
+		//if(!empty($tution_fees)) $fees_type .= "/ttn";
 		if(!empty($transport_chg)) $fees_type .= "/trn";
 		if(!empty($annual_chg)) $fees_type .= "/ann";
 		if(!empty($recreation_chg)) $fees_type .= "/rec";
+		$fees_type_arr = explode("/", $fees_type);
+		print_r($fees_type_arr);
 		$sql_slip_data = array(
 				'slip_no' => $slip_no,
 				'uid' => $uid,
@@ -2754,8 +2757,6 @@ function wpsp_Import_Dummy_contents() {
 				'ann' => $annual_chg,
 				'rec' => $recreation_chg
 		);
-		
-		//$sql_status_update = "UPDATE $status_table SET admission_fees=admission_fees-'$admission_fees', tution_fees=tution_fees-'$tution_fees', transport_chg=transport_chg-'$transport_chg', annual_chg=annual_chg-'$annual_chg', recreation_chg=recreation_chg-'$recreation_chg' WHERE uid = '$uid' ";
 
 		try{
 			$wpdb->query("BEGIN;");
@@ -2768,8 +2769,8 @@ function wpsp_Import_Dummy_contents() {
 						'date_time' => $current_date_time,
 						'uid' => $uid,
 						'month' => $month,
-						'amount' => $total_amount,
-						'fees_type' => $fees_type
+						'amount' => $tution_fees/$num_months,
+						'fees_type' => 'ttn'
 				);
 				if($wpdb->insert($record_table, $sql_record_data)){
 					$ok = 1;
@@ -2777,6 +2778,86 @@ function wpsp_Import_Dummy_contents() {
 				else{
 					$ok = 0;
 					throw new Exception($wpdb->print_error());
+				}
+			}
+			for($j=0;$j<count($fees_type_arr);$j++){
+				$month = "N/A";
+				switch ($fees_type_arr[$j]) {
+					case 'adm':
+						$sql_record_data = array(
+								'tid' => $tid.$j+1,
+								'slip_no' => $slip_no,
+								'date_time' => $current_date_time,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $admission_fees,
+								'fees_type' => 'adm'
+						);
+						if($wpdb->insert($record_table, $sql_record_data)){
+							$ok = 1;
+						}
+						else{
+							$ok = 0;
+							throw new Exception($wpdb->print_error());
+						}
+					break;
+
+					case "trn":
+						$sql_record_data = array(
+								'tid' => $tid.$j+1,
+								'slip_no' => $slip_no,
+								'date_time' => $current_date_time,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $transport_chg,
+								'fees_type' => 'trn'
+						);
+						if($wpdb->insert($record_table, $sql_record_data)){
+							$ok = 1;
+						}
+						else{
+							$ok = 0;
+							throw new Exception($wpdb->print_error());
+						}
+					break;
+
+					case "ann":
+						$sql_record_data = array(
+								'tid' => $tid.$j+1,
+								'slip_no' => $slip_no,
+								'date_time' => $current_date_time,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $annual_chg,
+								'fees_type' => 'ann'
+						);
+						if($wpdb->insert($record_table, $sql_record_data)){
+							$ok = 1;
+						}
+						else{
+							$ok = 0;
+							throw new Exception($wpdb->print_error());
+						}
+					break;
+
+					case "rec":
+						$sql_record_data = array(
+								'tid' => $tid.$j+1,
+								'slip_no' => $slip_no,
+								'date_time' => $current_date_time,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $recreation_chg,
+								'fees_type' => 'rec'
+						);
+						if($wpdb->insert($record_table, $sql_record_data)){
+							$ok = 1;
+						}
+						else{
+							$ok = 0;
+							throw new Exception($wpdb->print_error());
+						}
+					break;
 				}
 			}
 			if($wpdb->insert($rec_table, $sql_slip_data) && $ok == 1){
