@@ -20,7 +20,7 @@ wpsp_header();
 		
 		<?php 
 			if( !empty( $protitle ) ){
-				echo '<h2>To use this feature upgrade to pro version</h2>';
+				echo '<h2>Upcomong Module</h2>';
 			} else {
 				do_action( 'wpsp_payment_service' );
 			}
