@@ -122,8 +122,8 @@
 										<th>Full Name</th>
 										<th>Parent</th>
 										<th>Class</th>
-										<th>Phone</th>
-										<th>Due Amount</th>
+										<th>Amount</th>
+										<th>Slip Number</th>
 										<th class="nosort">
 											<?php if ( in_array( 'administrator', $role ) ) { ?>
 											<select name="bulkaction" class="form-control" id="bulkaction">
@@ -138,7 +138,7 @@
 									<?php
 									$student_table	=	$wpdb->prefix."wpsp_student";							
 									$users_table	=	$wpdb->prefix."users";
-									$fee_status_table	=	$wpdb->prefix."wpsp_fees_status";
+									$fee_rec_table	=	$wpdb->prefix."wpsp_fees_payment_record";
 									$class_table = $wpdb->prefix."wpsp_class";
 									$class_id='';							
 									if( isset($_POST['ClassID'] ) ) {
@@ -154,7 +154,7 @@
 									}
 									
 									//$students	=	$wpdb->get_results("select * from $student_table s, $users_table u, $fee_status_table f where u.ID=s.wp_usr_id $classquery AND s.sid = f.sid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) order by sid desc");
-									$students	=	$wpdb->get_results("select * from $student_table s, $fee_status_table f, $class_table c where s.wp_usr_id = f.uid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) AND c.cid = s.class_id $classquery order by s.wp_usr_id desc");
+									$students	=	$wpdb->get_results("select * from $student_table s, $fee_rec_table f, $class_table c where s.wp_usr_id = f.uid AND c.cid = s.class_id $classquery order by f.slip_no desc");
 									
 									$plugins_url=plugins_url();
 									$teacherId = '';
@@ -187,16 +187,9 @@
 												*/
 												echo $stinfo->c_name;
 											?></td>
-											<td><?php echo $stinfo->s_phone;?></td>
+											<td><?php echo "<i class='fa fa-inr'></i>".number_format($stinfo->amount)."/-";?></td>
 											<td>
-												<?php
-													$sql_due = $wpdb->get_results("SELECT * FROM $fee_status_table WHERE uid='$stinfo->uid'");
-													$due = 0;
-													foreach ($sql_due as $due) {
-														$due = $due->admission_fees + $due->tution_fees + $due->transport_chg + $due->annual_chg + $due->recreation_chg;
-													}
-													echo "<i class='fa fa-inr'>".$due."/-";
-												?>
+												<?php echo $stinfo->slip_no; ?>
 											</td>
 											<td>
 												
@@ -204,7 +197,7 @@
 												<a href="javascript:;" data-id="<?php echo $stinfo->wp_usr_id;?>" class="viewAttendance" title="Attendance"><i class="fa fa-table btn btn-primary"></i></a>										
 												<?php if ( in_array( 'administrator', $role ) || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
 													<a href="?id=<?php echo $stinfo->wp_usr_id.'&edit=true';?>" title="Edit"><i class="fa fa-pencil btn btn-warning"></i></a>
-													<a href="?uidff=<?php echo $stinfo->uid;?>" title="Deposit Fees"><i class="fa fa-plus btn btn-danger"></i></a> 
+													<!--<a href="?uidff=<?php echo $stinfo->uid;?>" title="Deposit Fees"><i class="fa fa-plus btn btn-danger"></i></a> -->
 												<?php } ?>
 											</td>
 										</tr>

@@ -500,7 +500,7 @@ function wpsp_StudentPublicProfile(){
 														<td><?php echo $months_array[$fee->from]; ?></td>
 														<td><?php echo $months_array[$fee->to]; ?></td>
 														<td><?php echo $fee->session; ?></td>
-														<td><i class="fa fa-inr"></i><?php echo $total_amt; ?>/-</td>
+														<td><i class="fa fa-inr"></i><?php echo number_format($total_amt); ?>/-</td>
 													</tr>
 												<?php } ?>
 											</table>
