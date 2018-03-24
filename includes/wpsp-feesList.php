@@ -138,7 +138,7 @@
 									<?php
 									$student_table	=	$wpdb->prefix."wpsp_student";							
 									$users_table	=	$wpdb->prefix."users";
-									$fee_rec_table	=	$wpdb->prefix."wpsp_fees_payment_record";
+									$fee_rec_table	=	$wpdb->prefix."wpsp_fees_receipts";
 									$class_table = $wpdb->prefix."wpsp_class";
 									$class_id='';							
 									if( isset($_POST['ClassID'] ) ) {
@@ -163,7 +163,8 @@
 									$key =0;
 									foreach($students as $stinfo)
 									{	
-										$key++;						
+										$key++;	
+										$amount = $stinfo->adm+$stinfo->ttn+$stinfo->trans+$stinfo->ann+$stinfo->rec;					
 									?>
 											<tr>
 											<td>
@@ -187,7 +188,7 @@
 												*/
 												echo $stinfo->c_name;
 											?></td>
-											<td><?php echo "<i class='fa fa-inr'></i>".number_format($stinfo->amount)."/-";?></td>
+											<td><?php echo "<i class='fa fa-inr'></i>".number_format($amount)."/-";?></td>
 											<td>
 												<?php echo $stinfo->slip_no; ?>
 											</td>
@@ -213,9 +214,9 @@
 									<th>Registration No.</th><?php // Bharatdan Gadhavi - 16th Feb 2018 ?>							
 									<th>Name</th>
 									<th>Parent</th>
-									<th>Address</th>
-									<th>Phone</th>
-									<th>Due Amount</th>
+									<th>Class</th>
+									<th>Amount</th>
+									<th>Slip Number</th>
 									<th>Action</th>
 								  </tr>
 								</tfoot>

@@ -415,15 +415,15 @@ function wpsp_StudentPublicProfile(){
 										</tr>
 										<tr>
 											<td class='bold'>Date of Birth</td>
-											<td>".
+											<td>
 											<?php echo wpsp_ViewDate($stinfo->s_dob); ?>
-											."</td>
+											</td>
 										</tr>
 										<tr>
 											<td class='bold'>Date of Join</td>
-											<td>".
+											<td>
 												<?php echo wpsp_ViewDate($stinfo->s_doj); ?>
-											."</td>
+											</td>
 										</tr>
 										<tr>
 											<td class='bold'>Address</td>
