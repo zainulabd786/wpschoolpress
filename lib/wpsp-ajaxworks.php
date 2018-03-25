@@ -2926,4 +2926,47 @@ function wpsp_Import_Dummy_contents() {
 		</table> <?php
 		wp_die();
 	}
+
+	function cal_expected_amount(){
+		global $wpdb;
+		
+		$from = $_POST['from'];
+		$to = $_POST['to'];
+		$class = $_POST['classId'];
+		$num_months = ($to - $from) + 1;
+		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$sql_fees = $wpdb->get_results("SELECT tution_fees, transport_chg FROM $fees_settings_table WHERE cid = '$class'");
+		$tf = $tc = 0;
+		foreach ($sql_fees as $amount) {
+			$tf = $amount->tution_fees * $num_months;
+			$tc = $amount->transport_chg * $num_months;
+		} ?>
+		<script type="text/javascript">
+			function getSum(total, num) {
+				return +total + +Math.round(num); 
+			}
+			$(".dep-tf-inp, .tution-fees-te-inv, .inv-tab-bottom, .dep-tc-inp, .trans-chg-tr-inv").css("display","table-row");
+			$(".tution-fees-te-inv .inv-expected-amt").html("<i class='fa fa-inr'></i><?php echo $tf; ?>/-");
+			$(".tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i><?php echo $tf; ?>/-");
+			$(".trans-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i><?php echo $tc; ?>/-");
+			$(".trans-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i><?php echo $tc; ?>/-");
+			$(".dep-tf-inp .expected, .dep-tf-inp .paid").val("<?php echo $tf; ?>");
+			$(".dep-tc-inp .expected, .dep-tc-inp .paid").val("<?php echo $tc; ?>");
+			var totAmtArr = [];
+			var paidAmtArr = [];
+			for(var i=2;i<7;i++){
+				var tot = $(".invoice-body table tbody tr:nth-child("+i+") .inv-expected-amt").text().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '');
+				var paid = $(".invoice-body table tbody tr:nth-child("+i+") .inv-paid-amt").text().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '');
+				totAmtArr.push(tot);
+				paidAmtArr.push(paid);
+			}
+			totalAmount = totAmtArr.reduce(getSum);
+			paidAmount = paidAmtArr.reduce(getSum);
+			var balance = totalAmount - paidAmount;
+			$(".inv-tab-bottom .inv-tot-amt").html("<i class='fa fa-inr'></i>"+totalAmount+"/-");
+			$(".inv-tab-bottom .inv-paid-amt").html("<i class='fa fa-inr'></i>"+paidAmount+"/-");
+			$(".inv-tab-bottom .inv-bal-amt").html("<i class='fa fa-inr'></i>"+balance+"/-");
+		</script> <?php
+		wp_die();
+	}
 ?>
