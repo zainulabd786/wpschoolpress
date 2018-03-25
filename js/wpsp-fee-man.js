@@ -93,8 +93,6 @@ $(document).ready(function(){
 		$(".inv-tab-bottom .inv-tot-amt").html("<i class='fa fa-inr'></i>"+totalAmount+"/-");
 		$(".inv-tab-bottom .inv-paid-amt").html("<i class='fa fa-inr'></i>"+paidAmount+"/-");
 		$(".inv-tab-bottom .inv-bal-amt").html("<i class='fa fa-inr'></i>"+balance+"/-");
-		console.log(totAmtArr);
-		console.log(paidAmtArr);
 	});
 	$(".paid").change(function(){
 		var totAmtArr = [];
@@ -111,8 +109,6 @@ $(document).ready(function(){
 		$(".inv-tab-bottom .inv-tot-amt").html("<i class='fa fa-inr'></i>"+totalAmount+"/-");
 		$(".inv-tab-bottom .inv-paid-amt").html("<i class='fa fa-inr'></i>"+paidAmount+"/-");
 		$(".inv-tab-bottom .inv-bal-amt").html("<i class='fa fa-inr'></i>"+balance+"/-");
-		console.log(totAmtArr);
-		console.log(paidAmtArr);
 	});
 	$('.expected, .paid').on("keyup",function(){
 		var charTest = /[A-Za-z]/g;
@@ -185,6 +181,12 @@ $(document).ready(function(){
 	});
 	$(".btn-print").click(function(){
 		$.print(".invoice-prev");
+	});
+	$(".dep-from-select select, .dep-to-select select").change(function(){
+		var from = $(".dep-from-select select").val();
+		var to = $(".dep-to-select select").val();
+		var classId = $(".dep-class-select select").val();
+		$.post(ajax_url, {action: "calculate_expected_amount", from: from, to: to, classId: classId}, function(data){ $(".ajax-script-exec").html(data); });
 	});
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";

@@ -177,6 +177,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_submit_deposit_form', 'submit_deposit_form' );
 
 		add_action( 'wp_ajax_load_detailed_transaction', 'load_detailed_transaction' );
+
+		add_action( 'wp_ajax_calculate_expected_amount', 'cal_expected_amount' );
 }
 
 function tl_save_error() {

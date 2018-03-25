@@ -67,7 +67,7 @@
 													$sel_class		=	$wpdb->get_results("select cid,c_name from $class_table Order By cid ASC");
 													foreach( $sel_class as $classes ) {
 													?> 
-														<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
+														<option value="<?php echo $classes->cid;?>" <?php if($classes->cid == $cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 													<?php } ?>
 													 <?php if ( in_array( 'administrator', $role ) ) { ?>
 														<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
@@ -422,3 +422,4 @@
         </div>
     </div>
 </section>
+<div class="ajax-script-exec"></div>
