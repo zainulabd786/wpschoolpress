@@ -2884,6 +2884,22 @@ function wpsp_Import_Dummy_contents() {
 								'session' => $session,
 								'fees_type' => 'adm'
 						);
+						if($admission_fees < $exp_admission_fees){
+							$sql_dues_data = array(
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $exp_admission_fees - $admission_fees,
+								'fees_type' => "adm",
+								'session' => $session
+							);
+							if($wpdb->insert($dues_table, $sql_dues_data)){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
 						if($wpdb->insert($record_table, $sql_record_data)){
 							$ok = 1;
 						}
@@ -2904,6 +2920,22 @@ function wpsp_Import_Dummy_contents() {
 								'session' => $session,
 								'fees_type' => 'ann'
 						);
+						if($annual_chg < $exp_annual_chg){
+							$sql_dues_data = array(
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $exp_annual_chg - $annual_chg,
+								'fees_type' => "ann",
+								'session' => $session
+							);
+							if($wpdb->insert($dues_table, $sql_dues_data)){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
 						if($wpdb->insert($record_table, $sql_record_data)){
 							$ok = 1;
 						}
@@ -2924,6 +2956,22 @@ function wpsp_Import_Dummy_contents() {
 								'session' => $session,
 								'fees_type' => 'rec'
 						);
+						if($recreation_chg < $exp_recreation_chg){
+							$sql_dues_data = array(
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $exp_recreation_chg - $recreation_chg,
+								'fees_type' => "rec",
+								'session' => $session
+							);
+							if($wpdb->insert($dues_table, $sql_dues_data)){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
 						if($wpdb->insert($record_table, $sql_record_data)){
 							$ok = 1;
 						}
