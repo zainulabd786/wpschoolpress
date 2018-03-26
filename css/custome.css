@@ -395,7 +395,7 @@ a.add-parent { margin-bottom:15px; }
     top: -8px;
     display: none;
 }
-#fees-details table{
+#fees-details table, #due-fees-details table{
     width: 100%;
     text-align: center;
 }

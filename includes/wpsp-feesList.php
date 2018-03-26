@@ -122,8 +122,7 @@
 										<th>Full Name</th>
 										<th>Parent</th>
 										<th>Class</th>
-										<th>Amount</th>
-										<th>Slip Number</th>
+										<th>Amount Due</th>
 										<th class="nosort">
 											<?php if ( in_array( 'administrator', $role ) ) { ?>
 											<select name="bulkaction" class="form-control" id="bulkaction">
@@ -140,7 +139,8 @@
 									$users_table	=	$wpdb->prefix."users";
 									$fee_rec_table	=	$wpdb->prefix."wpsp_fees_receipts";
 									$class_table = $wpdb->prefix."wpsp_class";
-									$class_id='';							
+									$dues_table = $wpdb->prefix."wpsp_fees_dues";
+									$class_id='';						
 									if( isset($_POST['ClassID'] ) ) {
 										$class_id=$_POST['ClassID'];
 									}else if( !empty( $sel_class ) ) {
@@ -173,7 +173,7 @@
 											<?php }else echo $key; ?>
 											</td>
 											<td><?php echo $stinfo->s_rollno;?></td>
-											<td><?php echo $stinfo->s_regno;?></td> <?php // Bharatdan Gadhavi - 13th Feb 2018 ?>
+											<td><?php echo $stinfo->s_regno;?></td>
 											<td><?php 
 												$mname = $stinfo->s_mname;
 									            $lname = $stinfo->s_lname;
@@ -188,17 +188,20 @@
 												*/
 												echo $stinfo->c_name;
 											?></td>
-											<td><?php echo "<i class='fa fa-inr'></i>".number_format($amount)."/-";?></td>
 											<td>
-												<?php echo $stinfo->slip_no; ?>
+												<?php
+													$sql_dues = $wpdb->get_results("SELECT SUM(amount) AS amount FROM $dues_table WHERE uid='$stinfo->uid'");
+													foreach ($sql_dues as $due) {
+														echo "<i class='fa fa-inr'></i>".number_format($due->amount)."/-";
+													}
+												?>
 											</td>
 											<td>
-												
 												<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										
 												<a href="javascript:;" data-id="<?php echo $stinfo->wp_usr_id;?>" class="viewAttendance" title="Attendance"><i class="fa fa-table btn btn-primary"></i></a>										
 												<?php if ( in_array( 'administrator', $role ) || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
 													<a href="?id=<?php echo $stinfo->wp_usr_id.'&edit=true';?>" title="Edit"><i class="fa fa-pencil btn btn-warning"></i></a>
-													<!--<a href="?uidff=<?php echo $stinfo->uid;?>" title="Deposit Fees"><i class="fa fa-plus btn btn-danger"></i></a> -->
+													<a href="?uidff=<?php echo $stinfo->uid;?>" title="Deposit Fees"><i class="fa fa-plus btn btn-danger"></i></a> 
 												<?php } ?>
 											</td>
 										</tr>
@@ -215,8 +218,7 @@
 									<th>Name</th>
 									<th>Parent</th>
 									<th>Class</th>
-									<th>Amount</th>
-									<th>Slip Number</th>
+									<th>Amount Due</th>
 									<th>Action</th>
 								  </tr>
 								</tfoot>
