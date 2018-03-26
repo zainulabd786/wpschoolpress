@@ -352,6 +352,7 @@ function wpsp_UpdateStudent(){
 function wpsp_StudentPublicProfile(){
 	global $wpdb;
 	$months_array = array("N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
+	$due_amount = 0;
 	$student_table	=	$wpdb->prefix."wpsp_student";
 	$class_table	=	$wpdb->prefix."wpsp_class";
 	$users_table	=	$wpdb->prefix."users";
@@ -473,14 +474,14 @@ function wpsp_StudentPublicProfile(){
 							$due = "";
 							$sql_dues = $wpdb->get_results("SELECT SUM(amount) AS amount FROM $dues_table WHERE uid='$stinfo->wp_usr_id'");
 							foreach ($sql_dues as $due) {
-								$due = "<i class='fa fa-inr'></i>".number_format($due->amount)."/-";
+								$due = $due->amount;
 							}
-							if(!empty($due) || $due != 0){ ?>
+							if(!empty($due)){ ?>
 								<div class='due-container'>
 									<div class='panel-group' id='accordion'>
 										<div class='panel panel-primary'>
 											<h4 class='panel-title'>
-												<button type='button' class='btn btn-danger btn-block' id='collapse-button' data-parent='#accordion' data-toggle='collapse' href='#due-fees-details'><?php echo $due." is due to this student"; ?></button>
+												<button type='button' class='btn btn-danger btn-block' id='collapse-button' data-parent='#accordion' data-toggle='collapse' href='#due-fees-details'><?php echo "<i class='fa fa-inr'></i>".number_format($due)." is due to this student"; ?></button>
 											</h4>
 											<div id='due-fees-details' class='panel-collapse collapse'>
 												<div id='panel-body' class='panel-body'>
