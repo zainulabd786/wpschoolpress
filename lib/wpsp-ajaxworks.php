@@ -3019,10 +3019,10 @@ function wpsp_Import_Dummy_contents() {
 				<td><i class="fa fa-inr"></i><?php echo number_format($slip->amount); ?>/-</td>
 			</tr>
 			<?php }
-			if($slip->fees_type == "trans"){ ?>
+			if($slip->fees_type == "trans" || $slip->fees_type == "trn"){ ?>
 			<tr>
-				<td>Transaportation Charges:</td>
-				<td><i class="fa fa-inr"></i><?php if($slip->fees_type == "trans") echo number_format($slip->amount); ?>/-</td>
+				<td>Transaportation Charges(<?php echo $months_array[$slip->month]." ".$slip->session; ?>):</td>
+				<td><i class="fa fa-inr"></i><?php if($slip->fees_type == "trans" || $slip->fees_type == "trn") echo number_format($slip->amount); ?>/-</td>
 			</tr>
 			<?php }
 			if($slip->fees_type == "ann"){ ?>

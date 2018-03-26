@@ -176,14 +176,6 @@ function wpsp_AddStudent() {
 			$ann_f = $fee->annual_chg;
 			//$rec_f = $fee->recreation_chg;
 		}
-		$fee_status_table_data = array(
-						'uid' => $user_id,
-						'admission_fees' => $adm_f,
-						'tution_fees' => $ttn_f,
-						'transport_chg' => $trans_f,
-						'annual_chg' => $ann_f,
-						'recreation_chg' => $rec_f
-						);
 		if($sendEmailFlag){
 			$msg = 'Hello '.$first_name;
 			$msg .= '<br>Your are registered as student at <a href="'.site_url().'">School</a><br><br>';
@@ -197,7 +189,6 @@ function wpsp_AddStudent() {
 		}
 
 		$sp_stu_ins = $wpdb->insert( $wpsp_student_table , $studenttable );
-		$fee_status_ins = $wpdb->insert( $wpsp_fees_status_table , $fee_status_table_data );
 				//send registration mail
 			wpsp_send_user_register_mail( $userInfo, $user_id );
 			if (!empty( $_FILES['displaypicture']['name'])) {
@@ -360,7 +351,7 @@ function wpsp_UpdateStudent(){
 /* Student Functions */
 function wpsp_StudentPublicProfile(){
 	global $wpdb;
-	$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
+	$months_array = array("N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
 	$student_table	=	$wpdb->prefix."wpsp_student";
 	$class_table	=	$wpdb->prefix."wpsp_class";
 	$users_table	=	$wpdb->prefix."users";
@@ -374,6 +365,7 @@ function wpsp_StudentPublicProfile(){
 		$stinfo->imgurl	=	$img_url;
 		$parentID		=	$stinfo->parent_wp_usr_id;
 		$parentEmail	=	'';
+		$dues_table = $wpdb->prefix."wpsp_fees_dues";
 		if( !empty( $parentID )	) {
 			$parentInfo	=	get_userdata( $parentID );
 			$parentEmail	=	isset( $parentInfo->data->user_email ) ? $parentInfo->data->user_email :'';			
@@ -477,6 +469,68 @@ function wpsp_StudentPublicProfile(){
 								</table>
 							</div>
 						</div>
+						<?php 
+							$due = "";
+							$sql_dues = $wpdb->get_results("SELECT SUM(amount) AS amount FROM $dues_table WHERE uid='$stinfo->wp_usr_id'");
+							foreach ($sql_dues as $due) {
+								$due = "<i class='fa fa-inr'></i>".number_format($due->amount)."/-";
+							}
+							if(!empty($due) || $due != 0){ ?>
+								<div class='due-container'>
+									<div class='panel-group' id='accordion'>
+										<div class='panel panel-primary'>
+											<h4 class='panel-title'>
+												<button type='button' class='btn btn-danger btn-block' id='collapse-button' data-parent='#accordion' data-toggle='collapse' href='#due-fees-details'><?php echo $due." is due to this student"; ?></button>
+											</h4>
+											<div id='due-fees-details' class='panel-collapse collapse'>
+												<div id='panel-body' class='panel-body'>
+													<table>
+														<tr class='tab-head'>
+															<td>Fees Type</td>
+															<td>Amount</td>
+															<td>Month</td>
+															<td>Session</td>
+														</tr> <?php
+														$sql_dues_det = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid='$stinfo->wp_usr_id'");
+														foreach ($sql_dues_det as $due_fee) {
+															if(!empty($due_fee->amount)){
+																switch ($due_fee->fees_type) {
+																 	case 'adm':
+																 		$fees_type = "Admission Fees";
+																 	break;
+																 	
+																 	case "ttn":
+																 		$fees_type = "Tution Fees";
+																 	break;
+
+																 	case 'trn':
+																 		$fees_type = "Transport Charges";
+																 	break;
+																 	
+																 	case "ann":
+																 		$fees_type = "Annual Charges";
+																 	break;
+
+																 	case "rec":
+																 		$fees_type = "Recreation Charges";
+																 	break;
+																 } ?>
+																<tr id='<?php echo $due_fee->id; ?>'>
+																	<td><?php echo $fees_type ?></td>
+																	<td><?php echo "<i class='fa fa-inr'></i>".number_format($due_fee->amount)."/-"; ?></td>
+																	<td><?php echo $months_array[$due_fee->month]; ?></td>
+																	<td><?php echo $due_fee->session; ?></td>
+																</tr>
+															<?php } 
+														} ?>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div> <?php
+							}
+						?>
 						<div class='fee-records-container'>
 							<div class='panel-group' id='accordion'>
 								<div class='panel panel-primary'>
