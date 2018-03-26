@@ -250,4 +250,20 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+	$('#student_table, #history_table').dataTable({
+        "order": [],
+        "columnDefs": [{
+                "targets": 'nosort',
+                "orderable": false,
+            }],
+        responsive: true,
+    });
+
+	$(".view-transaction").click(function(){
+		var slid = $(this).attr('id');
+		$.post(ajax_url,{action: "load_detailed_transaction", slid: slid},function(data){ $.alert(data); });
+												
+	});
+
 });
