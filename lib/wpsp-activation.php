@@ -277,19 +277,19 @@
 	$import_history_table     = $wpdb->prefix . 'wpsp_import_history';
 	$leave_table              = $wpdb->prefix . 'wpsp_leavedays';
 	$fees_settings			  = $wpdb->prefix . 'wpsp_fees_settings';
-	//$fees_status			  = $wpdb->prefix . 'wpsp_fees_status';
+	$fees_dues			  	  = $wpdb->prefix . 'wpsp_fees_dues';
 	$fees_payment_record	  = $wpdb->prefix . 'wpsp_fees_payment_record';
 	$fees_receipts			  = $wpdb->prefix . 'wpsp_fees_receipts';
 
-	/*$sql_fees_status_table = "CREATE TABLE IF NOT EXISTS $fees_status  (
-	  `uid` int(15) NOT NULL PRIMARY KEY,	  
-	  `admission_fees` int(11),
-	  `tution_fees` int(11),	 
-	  `transport_chg` int(11),	 
-	  `annual_chg` int(11),	 
-	  `recreation_chg` int(11)
-	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
-	dbDelta($sql_fees_status_table);*/
+	$sql_fees_dues_table = "CREATE TABLE IF NOT EXISTS $fees_dues  (
+	  `id` int(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	  `uid` int(15),	  
+	  `month` int(2),
+	  `amount` int(11),	 
+	  `fees_type` varchar(11),	 
+	  `session` varchar(11)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+	dbDelta($sql_fees_dues_table);
 
 	$sql_fees_payment_record = "CREATE TABLE IF NOT EXISTS $fees_payment_record  (
 	  `tid` varchar(20) NOT NULL PRIMARY KEY,	  
