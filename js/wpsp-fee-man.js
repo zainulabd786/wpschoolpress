@@ -201,6 +201,11 @@ $(document).ready(function(){
 		var ann = $(".dep-ac-inp .paid").val();
 		var rec = $(".dep-rf-inp .paid").val();
 		var session = $(".dep-session").val();
+		var expadm = $(".dep-adm-inp .expected").val();
+		var expttn = $(".dep-tf-inp .expected").val();
+		var exptrans = $(".dep-tc-inp .expected").val();
+		var expann = $(".dep-ac-inp .expected").val();
+		var exprec = $(".dep-rf-inp .expected").val();
 		var data=new Array();
 		data.push(
 			{name: 'action', value: action},
@@ -214,7 +219,12 @@ $(document).ready(function(){
 			{name: 'transportChg', value: trans},
 			{name: 'annualChg', value: ann},
 			{name: 'recreationChg', value: rec},
-			{name: 'session', value: session}
+			{name: 'session', value: session},
+			{name: 'expadmissionFees', value: expadm},
+			{name: 'exptutionFees', value: expttn},
+			{name: 'exptransportChg', value: exptrans},
+			{name: 'expannualChg', value: expann},
+			{name: 'exprecreationChg', value: exprec},
 		);
 		$.ajax({
 			method:"POST",
