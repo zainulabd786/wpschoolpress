@@ -399,7 +399,10 @@ a.add-parent { margin-bottom:15px; }
     width: 100%;
     text-align: center;
 }
-#fees-details table tr{
+#due-fees-details table{
+    color: #DD4B39;
+}
+#fees-details table tr, #due-fees-details table tr{
     border: 1px solid;
 }
 #fees-details .fees-single-row:hover{
