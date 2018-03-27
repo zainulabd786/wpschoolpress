@@ -38,7 +38,7 @@
 						</div>
 
 						<div class="col-md-12 table-responsive">
-							<table id="history_table" class="table table-bordered table-striped table-responsive" style="margin-top:10px">
+							<table id="student_table" class="table table-bordered table-striped table-responsive" style="margin-top:10px">
 								<thead>
 									<tr>
 										<th class="nosort">
