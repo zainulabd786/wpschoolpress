@@ -60,7 +60,7 @@
 								<div class="button-group btn-pro" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
 
 									<a class="btn btn-primary" href="?tab=DepositFees"><i class="fa fa-plus"></i> Deposit Fees</a>
-									<a class="btn btn-primary" href="?tab=PaymentHistory"><i class="fa fa-plus"></i> Payment History</a>
+									<a class="btn btn-primary" href="?tab=PaymentHistory"><i class="fa fa-history"></i> Payment History</a>
 									<!--<div class="dropdown"> 
 										<a class="btn btn-primary st-btn add-student-btn" href="?tab=addstudent"><i class="fa fa-plus"></i> Add student</a>
 										<button type="button" class="btn btn-primary dropdown-toggle print" id="PrintStudent" data-toggle="dropdown" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
@@ -124,14 +124,7 @@
 										<th>Parent</th>
 										<th>Class</th>
 										<th>Amount Due</th>
-										<th class="nosort">
-											<?php if ( in_array( 'administrator', $role ) ) { ?>
-											<select name="bulkaction" class="form-control" id="bulkaction">
-												<option value="">Select Action</option>
-												<option value="bulkUsersDelete">Delete</option>
-											</select>
-											<?php } else  echo 'Select Action'; ?>
-										</th>
+										<th class="nosort">Action</th>
 									</tr>
 								</thead>
 								<tbody>

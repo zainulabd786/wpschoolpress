@@ -60,22 +60,37 @@ $(document).ready(function(){
 	$(".dep-adm-inp .remove-inp").click(function(){
 		$(".dep-adm-inp").hide();
 		$(".adm-fees-tr-inv").hide();
+		$(".dep-adm-inp .expected, .dep-adm-inp .paid").val("0");
+		$(".dep-adm-inp .expected, .dep-adm-inp .paid").trigger("keyup");
+		$(".dep-adm-inp .expected, .dep-adm-inp .paid").trigger("change");
 	});
 	$(".dep-tf-inp .remove-inp").click(function(){
 		$(".dep-tf-inp").hide();
 		$(".tution-fees-te-inv").hide();
+		$(".dep-tf-inp .expected, .dep-tf-inp .paid").val("0");
+		$(".dep-tf-inp .expected, .dep-tf-inp .paid").trigger("keyup");
+		$(".dep-tf-inp .expected, .dep-tf-inp .paid").trigger("change");
 	});
 	$(".dep-tc-inp .remove-inp").click(function(){
 		$(".dep-tc-inp").hide();
 		$(".trans-chg-tr-inv").hide();
+		$(".dep-tc-inp .expected, .dep-tc-inp .paid").val("0");
+		$(".dep-tc-inp .expected, .dep-tc-inp .paid").trigger("keyup");
+		$(".dep-tc-inp .expected, .dep-tc-inp .paid").trigger("change");
 	});
 	$(".dep-ac-inp .remove-inp").click(function(){
 		$(".dep-ac-inp").hide();
 		$(".annual-chg-tr-inv").hide();
+		$(".dep-ac-inp .expected, .dep-ac-inp .paid").val("0");
+		$(".dep-ac-inp .expected, .dep-ac-inp .paid").trigger("keyup");
+		$(".dep-ac-inp .expected, .dep-ac-inp .paid").trigger("change");
 	});
 	$(".dep-rf-inp .remove-inp").click(function(){
 		$(".dep-rf-inp").hide();
 		$(".rec-chg-tr-inv").hide();
+		$(".dep-rf-inp .expected, .dep-rf-inp .paid").val("0");
+		$(".dep-rf-inp .expected, .dep-rf-inp .paid").trigger("keyup");
+		$(".dep-rf-inp .expected, .dep-rf-inp .paid").trigger("change");
 	});
 
 	$(".expected").change(function(){
