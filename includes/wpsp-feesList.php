@@ -155,7 +155,8 @@
 									}
 									
 									//$students	=	$wpdb->get_results("select * from $student_table s, $users_table u, $fee_status_table f where u.ID=s.wp_usr_id $classquery AND s.sid = f.sid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) order by sid desc");
-									$students	=	$wpdb->get_results("select * from $student_table s, $fee_rec_table f, $class_table c where s.wp_usr_id = f.uid AND c.cid = s.class_id $classquery order by f.slip_no desc");
+									echo $classquery;
+									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, SUM(d.amount) AS due_amount, c.c_name FROM $student_table s, $dues_table d, $class_table c WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id $classquery");
 									
 									$plugins_url=plugins_url();
 									$teacherId = '';
@@ -191,17 +192,15 @@
 											?></td>
 											<td>
 												<?php
-													$sql_dues = $wpdb->get_results("SELECT SUM(amount) AS amount FROM $dues_table WHERE uid='$stinfo->uid'");
-													foreach ($sql_dues as $due) {
-														echo "<i class='fa fa-inr'></i>".number_format($due->amount)."/-";
-													}
+													
+													echo "<i class='fa fa-inr'></i>".number_format($stinfo->due_amount)."/-";
+													
 												?>
 											</td>
 											<td>
 												<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										
-												<a href="javascript:;" data-id="<?php echo $stinfo->wp_usr_id;?>" class="viewAttendance" title="Attendance"><i class="fa fa-table btn btn-primary"></i></a>										
+																					
 												<?php if ( in_array( 'administrator', $role ) || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
-													<a href="?id=<?php echo $stinfo->wp_usr_id.'&edit=true';?>" title="Edit"><i class="fa fa-pencil btn btn-warning"></i></a>
 													<a href="?uidff=<?php echo $stinfo->uid;?>" title="Deposit Fees"><i class="fa fa-plus btn btn-danger"></i></a> 
 												<?php } ?>
 											</td>
