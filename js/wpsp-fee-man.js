@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	var months_array = ["N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"];
 	function getSum(total, num) {
 		return +total + +Math.round(num); 
 	}
@@ -188,11 +189,11 @@ $(document).ready(function(){
 		$(".b5 .sb1 div").text($(this).val());
 	});
 	$(".dep-from-select select").change(function(){
-		$(".b4 .sb1 div").text($(this).val());
+		$(".b4 .sb1 div").text(months_array[$(this).val()]);
 	});
 
 	$(".dep-to-select select").change(function(){
-		$(".b4 .sb2 div").text($(this).val());
+		$(".b4 .sb2 div").text(months_array[$(this).val()]);
 	});
 	$(".btn-print").click(function(){
 		$.print(".invoice-prev");
