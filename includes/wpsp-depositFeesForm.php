@@ -88,7 +88,7 @@
 											<div class="form-inline">
 												<div class="form-group dep-from-select">
 													<select class="form-control"><?php
-														for ($m=1; $m<=13; $m++) { ?>
+														for ($m=0; $m<=12; $m++) { ?>
 															<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
 														<?php } ?>
 													</select>
@@ -96,7 +96,7 @@
 												</div>
 												<div class="form-group dep-to-select">
 													<select class="form-control"><?php
-														for ($m=1; $m<=13; $m++) { ?>
+														for ($m=0; $m<=12; $m++) { ?>
 															<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
 														<?php } ?>
 													</select>
