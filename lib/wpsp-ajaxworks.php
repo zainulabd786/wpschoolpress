@@ -2719,7 +2719,9 @@ function wpsp_Import_Dummy_contents() {
 	function submit_deposit_form(){
 		global $wpdb;
 		$wpdb->show_errors();
+		$current_date_time = date("Y-m-d H:i:s");
 		$months_array = array("none","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
+		$tid = date("dmyis").$uid;
 		$slip_no = $_POST['slip'];
 		$uid = $_POST['studentId'];
 		$cid = $_POST['classId'];
@@ -2737,14 +2739,18 @@ function wpsp_Import_Dummy_contents() {
 		$exp_annual_chg = $_POST['expannualChg'];
 		$exp_recreation_chg = $_POST['exprecreationChg'];
 		$session = $_POST["session"];
-		$pm_tf = $exp_tution_fees/$num_months;
-		$pm_tc = $exp_transport_chg/$num_months;
-		$current_date_time = date("Y-m-d H:i:s");
 		$fees_type = "";
+		$pm_tf = 0;
+		$pm_tc = 0;
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
 		$record_table = $wpdb->prefix."wpsp_fees_payment_record";
 		$dues_table = $wpdb->prefix."wpsp_fees_dues";
-		$tid = date("dmyis").$uid;
+		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$sql_expected_amounts = $wpdb->get_results("SELECT * FROM $fees_settings_table WHERE cid='$cid' ");
+		foreach ($sql_expected_amounts as $amt) {
+			$pm_tf = $amt->tution_fees;
+			$pm_tc = $amt->transport_chg;
+		}
 		if(!empty($admission_fees)) $fees_type .= "adm";
 		if(!empty($transport_chg)) $fees_type .= "/trn";
 		if(!empty($annual_chg)) $fees_type .= "/ann";
@@ -2799,6 +2805,7 @@ function wpsp_Import_Dummy_contents() {
 								$ok = 0;
 								throw new Exception($wpdb->print_error());
 							}
+							$outstanding_amt = 0;
 						}
 						else{
 							$tution_fees -= $outstanding_amt;
@@ -2915,6 +2922,7 @@ function wpsp_Import_Dummy_contents() {
 								$ok = 0;
 								throw new Exception($wpdb->print_error());
 							}
+							$outstanding_amt_trn = 0;
 						}
 						else{
 							$transport_chg -= $outstanding_amt_trn;
