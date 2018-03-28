@@ -202,7 +202,8 @@ $(document).ready(function(){
 		var from = $(".dep-from-select select").val();
 		var to = $(".dep-to-select select").val();
 		var classId = $(".dep-class-select select").val();
-		$.post(ajax_url, {action: "calculate_expected_amount", from: from, to: to, classId: classId}, function(data){ $(".ajax-script-exec").html(data); });
+		var uid = $(".dep-student-select select").val();
+		$.post(ajax_url, {action: "calculate_expected_amount", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
 	});
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";
