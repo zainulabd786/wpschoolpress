@@ -2763,60 +2763,63 @@ function wpsp_Import_Dummy_contents() {
 				'ann' => $annual_chg,
 				'rec' => $recreation_chg
 		);
-
 		$outstanding_amt = 0;
-		$sql_due_month = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$uid' AND fees_type='ttn' ORDER BY month DESC");
+		$outstanding_amt_trn = 0;
+		$sql_due_month = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$uid' AND (fees_type='ttn' || fees_type='trn') ORDER BY month DESC");
 		foreach ($sql_due_month as $due_months) {
 			if(!empty($due_months->amount)){
 				$from = $due_months->month;
-				$outstanding_amt = $due_months->amount;
+				if($due_months->fees_type='ttn') $outstanding_amt = $due_months->amount;
+				if($due_months->fees_type='trn') $outstanding_amt_trn = $due_months->amount;
 			}
 		}
 		try{
 			$wpdb->query("BEGIN;");
 
 			for($i=$from; $i<=$to; $i++){
-				if($i == $from){
-					if($outstanding_amt<=$tution_fees){
-						$tution_fees -= $outstanding_amt;
-						$month = $i;
-						$sql_record_data = array(
-								'tid' => $tid.$i."0",
-								'slip_no' => $slip_no,
-								'date_time' => $current_date_time,
-								'uid' => $uid,
-								'month' => $month,
-								'amount' => $outstanding_amt,
-								'session' => $session,
-								'fees_type' => 'ttn'
-						);
-						if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("DELETE FROM $dues_table WHERE amount='$outstanding_amt' AND fees_type='ttn' AND month='$i' AND session='$session' ")){
-							$ok = 1;
+				if(!empty($outstanding_amt)){
+					if($i == $from){
+						if($outstanding_amt<=$tution_fees){
+							$tution_fees -= $outstanding_amt;
+							$month = $i;
+							$sql_record_data = array(
+									'tid' => $tid.$i."0",
+									'slip_no' => $slip_no,
+									'date_time' => $current_date_time,
+									'uid' => $uid,
+									'month' => $month,
+									'amount' => $outstanding_amt,
+									'session' => $session,
+									'fees_type' => 'ttn'
+							);
+							if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("DELETE FROM $dues_table WHERE amount='$outstanding_amt' AND fees_type='ttn' AND month='$i' AND session='$session' ")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
 						}
 						else{
-							$ok = 0;
-							throw new Exception($wpdb->print_error());
-						}
-					}
-					else{
-						$tution_fees -= $outstanding_amt;
-						$month = $i;
-						$sql_record_data = array(
-								'tid' => $tid.$i."0",
-								'slip_no' => $slip_no,
-								'date_time' => $current_date_time,
-								'uid' => $uid,
-								'month' => $month,
-								'amount' => $tution_fees,
-								'session' => $session,
-								'fees_type' => 'ttn'
-						);
-						if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("UPDATE $dues_table SET amount=amount-'$tution_fees' WHERE amount='$outstanding_amt' AND fees_type='ttn' AND month='$i' AND session='$session' ")){
-							$ok = 1;
-						}
-						else{
-							$ok = 0;
-							throw new Exception($wpdb->print_error());
+							$tution_fees -= $outstanding_amt;
+							$month = $i;
+							$sql_record_data = array(
+									'tid' => $tid.$i."0",
+									'slip_no' => $slip_no,
+									'date_time' => $current_date_time,
+									'uid' => $uid,
+									'month' => $month,
+									'amount' => $tution_fees,
+									'session' => $session,
+									'fees_type' => 'ttn'
+							);
+							if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("UPDATE $dues_table SET amount=amount-'$tution_fees' WHERE amount='$outstanding_amt' AND fees_type='ttn' AND month='$i' AND session='$session' ")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
 						}
 					}
 				}
@@ -2834,12 +2837,21 @@ function wpsp_Import_Dummy_contents() {
 								'session' => $session,
 								'fees_type' => 'ttn'
 						);
-						if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tf' AND fees_type='ttn' AND month='$i' AND session='$session' ")){
+						if($wpdb->insert($record_table, $sql_record_data)){
 							$ok = 1;
 						}
 						else{
 							$ok = 0;
 							throw new Exception($wpdb->print_error());
+						}
+						if(!empty($outstanding_amt)){
+							if($wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tf' AND fees_type='ttn' AND month='$i' AND session='$session' ")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
 						}
 					}
 					else{
@@ -2862,7 +2874,16 @@ function wpsp_Import_Dummy_contents() {
 								'fees_type' => "ttn",
 								'session' => $session
 						);
-						if($wpdb->insert($record_table, $sql_record_data) && $wpdb->insert($dues_table, $sql_dues_data)  && $wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tf' AND fees_type='ttn' AND month='$i' AND session='$session' ")){
+						if(!empty($outstanding_amt)){
+							if($wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tf' AND fees_type='ttn' AND month='$i' AND session='$session' ")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
+						if($wpdb->insert($record_table, $sql_record_data) && $wpdb->insert($dues_table, $sql_dues_data)){
 							$ok = 1;
 						}
 						else{
@@ -2872,56 +2893,121 @@ function wpsp_Import_Dummy_contents() {
 					}
 				}
 
-				if($pm_tc<=$transport_chg){
-					$transport_chg -= $pm_tc;
-					$month = $i;
-					$sql_record_data = array(
-							'tid' => $tid.$i."2",
-							'slip_no' => $slip_no,
-							'date_time' => $current_date_time,
-							'uid' => $uid,
-							'month' => $month,
-							'amount' => $pm_tc,
-							'session' => $session,
-							'fees_type' => 'trn'
-					);
-					if($wpdb->insert($record_table, $sql_record_data)){
-						$ok = 1;
-					}
-					else{
-						$ok = 0;
-						throw new Exception($wpdb->print_error());
+				if(!empty($outstanding_amt_trn)){
+					if($i == $from){
+						if($outstanding_amt_trn<=$transport_chg){
+							$transport_chg -= $outstanding_amt_trn;
+							$month = $i;
+							$sql_record_data = array(
+									'tid' => $tid.$i."1",
+									'slip_no' => $slip_no,
+									'date_time' => $current_date_time,
+									'uid' => $uid,
+									'month' => $month,
+									'amount' => $outstanding_amt_trn,
+									'session' => $session,
+									'fees_type' => 'trn'
+							);
+							if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("DELETE FROM $dues_table WHERE amount='$outstanding_amt_trn' AND fees_type='trn' AND month='$i' AND session='$session' ")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
+						else{
+							$transport_chg -= $outstanding_amt_trn;
+							$month = $i;
+							$sql_record_data = array(
+									'tid' => $tid.$i."1",
+									'slip_no' => $slip_no,
+									'date_time' => $current_date_time,
+									'uid' => $uid,
+									'month' => $month,
+									'amount' => $transport_chg,
+									'session' => $session,
+									'fees_type' => 'trn'
+							);
+							if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("UPDATE $dues_table SET amount=amount-'$transport_chg' WHERE amount='$outstanding_amt_trn' AND fees_type='trn' AND month='$i' AND session='$session' ")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
 					}
 				}
 				else{
-					$due_tr = $pm_tc - $transport_chg;
-					$month = $i;
-					$sql_record_data = array(
-							'tid' => $tid.$i."2",
-							'slip_no' => $slip_no,
-							'date_time' => $current_date_time,
-							'uid' => $uid,
-							'month' => $month,
-							'amount' => $transport_chg,
-							'session' => $session,
-							'fees_type' => 'trn'
-					);
-					$sql_dues_data = array(
-							'uid' => $uid,
-							'month' => $month,
-							'amount' => $due_tr,
-							'fees_type' => "trn",
-							'session' => $session
-					);
-					if($wpdb->insert($record_table, $sql_record_data) && $wpdb->insert($dues_table, $sql_dues_data)){
-						$ok = 1;
+					if($pm_tc<=$transport_chg){
+						$transport_chg -= $pm_tc;
+						$month = $i;
+						$sql_record_data = array(
+								'tid' => $tid.$i."1",
+								'slip_no' => $slip_no,
+								'date_time' => $current_date_time,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $pm_tc,
+								'session' => $session,
+								'fees_type' => 'trn'
+						);
+						if($wpdb->insert($record_table, $sql_record_data)){
+							$ok = 1;
+						}
+						else{
+							$ok = 0;
+							throw new Exception($wpdb->print_error());
+						}
+						if(!empty($outstanding_amt_trn)){
+							if($wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tc' AND fees_type='trn' AND month='$i' AND session='$session' ")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
 					}
 					else{
-						$ok = 0;
-						throw new Exception($wpdb->print_error());
+						$due = $pm_tc - $transport_chg;
+						$month = $i;
+						$sql_record_data = array(
+								'tid' => $tid.$i."1",
+								'slip_no' => $slip_no,
+								'date_time' => $current_date_time,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $transport_chg,
+								'session' => $session,
+								'fees_type' => 'trn'
+						);
+						$sql_dues_data = array(
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $due,
+								'fees_type' => "trn",
+								'session' => $session
+						);
+						if(!empty($outstanding_amt)){
+							if($wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tc' AND fees_type='trn' AND month='$i' AND session='$session' ")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
+						if($wpdb->insert($record_table, $sql_record_data) && $wpdb->insert($dues_table, $sql_dues_data)){
+							$ok = 1;
+						}
+						else{
+							$ok = 0;
+							throw new Exception($wpdb->print_error());
+						}
 					}
-
-				}
+				}				
 			}
 			for($j=0;$j<count($fees_type_arr);$j++){
 				$month = "N/A";
