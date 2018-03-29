@@ -50,7 +50,13 @@
                         <div class="col-md-4">
                             <div class="panel-group">
 								<header class="panel panel-primary">
-									<div class="panel-heading"> Fees Deposit Form </div>
+									<div class="panel-heading"> 
+										Fees Deposit Form
+										<?php if(isset( $_GET['uidff'] )){ ?>
+										<button style="float: right;" type="button" class="btn btn-danger btn-xs dues-chart-btn" data-toggle="tooltip" title="Dues Chart"><i class="fa fa-table"></i></button> 
+										<div class="due-chart-container"></div>
+										<?php } ?>
+									</div>
 						                <div class="panel-body">
 						                	<?php $current_date = date("d-m-Y"); ?>
 						                	<div class="form-group">

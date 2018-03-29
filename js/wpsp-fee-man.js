@@ -272,5 +272,7 @@ $(document).ready(function(){
 		$.post(ajax_url,{action: "load_detailed_transaction", slid: slid},function(data){ $.alert(data); });
 												
 	});
-
+	$(".dues-chart-btn").click(function(){
+		$(".due-chart-container").slideToggle();
+	});
 });
