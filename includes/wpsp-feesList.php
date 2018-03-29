@@ -193,7 +193,7 @@
 												<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										
 																					
 												<?php if ( in_array( 'administrator', $role ) || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
-													<a href="?uidff=<?php echo $stinfo->uid;?>" title="Deposit Fees"><i class="fa fa-plus btn btn-danger"></i></a> 
+													<a href="?uidff=<?php echo $stinfo->wp_usr_id; ?>" title="Deposit Fees"><i class="fa fa-plus btn btn-danger"></i></a> 
 												<?php } ?>
 											</td>
 										</tr>
