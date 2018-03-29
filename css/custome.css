@@ -190,30 +190,11 @@ a.add-parent { margin-bottom:15px; }
 .remove-inp:hover{
     background-color: #afbdd3;
 }
-/* Old Invoice Format By Zainul Abideen */
-/*.inv-header-left, .inv-des-left{
-    text-align: left;
-}
-.inv-header-right, .inv-des-right{
-    text-align: right;
-    padding: 25px 10px 25px 10px;
-}
-.invoice-prev .inv-entries table{
-    width: 100%;
-    border: 1px solid grey; 
-    padding: 10px;
-    text-align: center;
-}
-.invoice-prev .inv-entries table td{
-    border: 1px dotted grey;
-    padding: 8px;
-}*/
-/* Old Invoice Format By Zainul Abideen ends */
 #FeesDepositForm sup{
     color: red;
 }
 #FeesDepositForm .form-inline .form-group{
-    width: 43.5%;
+    width: 49.4%;
 }
 #FeesDepositForm .form-inline .form-group label{
     font-size: 10px;
@@ -577,6 +558,9 @@ a.add-parent { margin-bottom:15px; }
     }
     .invoice-header-slip-no div, .invoice-header-date div{
         width: 68%;
+    }
+    #FeesDepositForm .form-inline .form-group{
+        width: 49.2%;
     }
 }
 

@@ -138,25 +138,6 @@
 													 ?>
 												</select>
 											</div>
-											<label for="dep-amount">Select Month<sup>*</sup></label>
-											<div class="form-inline">
-												<div class="form-group dep-from-select">
-													<select class="form-control"><?php
-														for ($m=0; $m<=12; $m++) { ?>
-															<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
-														<?php } ?>
-													</select>
-													<label>From</label>
-												</div>
-												<div class="form-group dep-to-select">
-													<select class="form-control"><?php
-														for ($m=0; $m<=12; $m++) { ?>
-															<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
-														<?php } ?>
-													</select>
-													<label>To</label>
-												</div>
-											</div>
 											<div class="form-group">
 												<label>Session</label>
 												<input type="text" class="dep-session form-control" placeholder="Session">
@@ -183,17 +164,53 @@
 											<div class="dep-tf-inp" id="fees-inp">
 												<label>Tution Fees(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
-													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
+													<div class="form-inline">
+														<div class="form-group dep-from-select">
+															<select class="form-control"><?php
+																for ($m=0; $m<=12; $m++) {
+																	if($m == 0) $months_array[0] = "From";	 ?>
+																	<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
+																<?php } ?>
+															</select>
+														</div>
+														<div class="form-group dep-to-select">
+															<select class="form-control"><?php
+																for ($m=0; $m<=12; $m++) { 
+																	if($m == 0) $months_array[0] = "To"; ?>
+																	<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
+																<?php } ?>
+															</select>
+														</div>
+													</div>
 													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" >
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
+													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
 												</div>
 											</div>
 											<div class="dep-tc-inp" id="fees-inp">
 												<label>Transportation Chares(<i class="fa fa-inr"></i>)</label>
 												<div class="input-group">
-													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
+													<div class="form-inline">
+														<div class="form-group dep-trans-from-select">
+															<select class="form-control"><?php
+																for ($m=0; $m<=12; $m++) {
+																	if($m == 0) $months_array[0] = "From";	 ?>
+																	<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
+																<?php } ?>
+															</select>
+														</div>
+														<div class="form-group dep-trans-to-select">
+															<select class="form-control"><?php
+																for ($m=0; $m<=12; $m++) { 
+																	if($m == 0) $months_array[0] = "To"; ?>
+																	<option value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
+																<?php } ?>
+															</select>
+														</div>
+													</div>
 													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" >
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
+													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
 												</div>
 											</div>
 											<div class="dep-ac-inp" id="fees-inp">
@@ -212,10 +229,10 @@
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
-											<div class="form-group">
+											<!--<div class="form-group">
 												<label for="dep-concession">Concession(<i class="fa-inr"></i>)</label>
 												<input type="text" id="dep-concession" class="form-control">
-											</div>
+											</div>-->
 											<input type="button" class="btn btn-success btn-block" value="Submit" id="dep-fees-btn">
 						                </div>
 								</header>
