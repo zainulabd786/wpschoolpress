@@ -3082,40 +3082,31 @@ function wpsp_Import_Dummy_contents() {
 		$uid = $_POST['uid'];
 		$num_months = ($to - $from) + 1;
 		$pm_tf = 0;
-		$pm_tc = 0;
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$fees_dues_table = $wpdb->prefix."wpsp_fees_dues";
-		$sql_fees = $wpdb->get_results("SELECT tution_fees, transport_chg FROM $fees_settings_table WHERE cid = '$class'");
+		$sql_fees = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid = '$class'");
 		$tf = $tc = 0;
 		foreach ($sql_fees as $amount) {
 			$pm_tf = $amount->tution_fees;
-			$pm_tc = $amount->transport_chg;
 			$tf = $pm_tf * $num_months;
-			$tc = $pm_tc * $num_months;
 		}
 		for($i=$from; $i<=$to; $i++){
-			$sql_due_month = $wpdb->get_results("SELECT * FROM $fees_dues_table WHERE month='$i' AND uid='$uid' AND (fees_type='ttn' OR fees_type='trn') ");
+			$sql_due_month = $wpdb->get_results("SELECT * FROM $fees_dues_table WHERE month='$i' AND uid='$uid' AND fees_type='ttn' ");
 			foreach ($sql_due_month as $due_amt) {
 				if(!empty($due_amt->amount)){
 					if($due_amt->fees_type == "ttn") $tf = ($tf - $pm_tf) + $due_amt->amount;
-					if($due_amt->fees_type == "trn") $tc = ($tc - $pm_tc) + $due_amt->amount;
-					
 				}
 			}
-			//echo "i=".$i."- uid=".$uid;
 		}
 		?>
 		<script type="text/javascript">
 			function getSum(total, num) {
 				return +total + +Math.round(num); 
 			}
-			$(".dep-tf-inp, .tution-fees-te-inv, .inv-tab-bottom, .dep-tc-inp, .trans-chg-tr-inv").css("display","table-row");
+			$(".dep-tf-inp, .tution-fees-te-inv, .inv-tab-bottom").css("display","table-row");
 			$(".tution-fees-te-inv .inv-expected-amt").html("<i class='fa fa-inr'></i><?php echo $tf; ?>/-");
 			$(".tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i><?php echo $tf; ?>/-");
-			$(".trans-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i><?php echo $tc; ?>/-");
-			$(".trans-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i><?php echo $tc; ?>/-");
 			$(".dep-tf-inp .expected, .dep-tf-inp .paid").val("<?php echo $tf; ?>");
-			$(".dep-tc-inp .expected, .dep-tc-inp .paid").val("<?php echo $tc; ?>");
 			var totAmtArr = [];
 			var paidAmtArr = [];
 			for(var i=2;i<7;i++){

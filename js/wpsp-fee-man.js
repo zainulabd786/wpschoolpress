@@ -205,6 +205,14 @@ $(document).ready(function(){
 		var uid = $(".dep-student-select select").val();
 		$.post(ajax_url, {action: "calculate_expected_amount", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
 	});
+	$("#dep-concession").keyup(function(){
+		var discountedAmt = parseInt($(".dep-tc-inp .expected").val())-parseInt($(this).val());
+		alert($(".dep-tc-inp .expected").val());
+		$(".dep-tc-inp .expected").val(discountedAmt);
+		$(".trans-chg-tr-inv").html("<i class='fa fa-inr'></i>"+discountedAmt+"/-");
+		$(".expected, .paid").trigger("change");
+
+	});
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";
 		var slip = $(".invoice-header-slip-no div").text();

@@ -212,6 +212,10 @@
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
+											<div class="form-group">
+												<label for="dep-concession">Concession(<i class="fa-inr"></i>)</label>
+												<input type="text" id="dep-concession" class="form-control">
+											</div>
 											<input type="button" class="btn btn-success btn-block" value="Submit" id="dep-fees-btn">
 						                </div>
 								</header>
@@ -225,64 +229,6 @@
 									</div>
 						                <div class="panel-body">
 											<div class="invoice-prev">
-												<!--Old Invoice Format By Zainul Abideen -->
-												<!--<div class="inv-header row">
-													<div class="inv-header-left col-sm-6">
-														<h3><b>School Management System</b></h3>
-														<i style="font-size:100px" class="fa fa-graduation-cap"></i>
-													</div>
-													<div class="inv-header-right col-sm-6">
-														<b>Issue Date: <?php echo $current_date; ?></b><br>
-														<b style="display: inline-flex;">Status: &nbsp; <div class="inv-status"></div></b>
-													</div>
-												</div>
-												<hr>
-												<div class="inv-description row">
-													<div class="inv-des-left col-sm-6">
-														<strong>Payment To</strong>
-														<p>School Management System</p>
-														<p>588 6th, Delhi, India</p>
-														<p>96986877452</p>
-													</div>
-													<div class="inv-des-right col-sm-6">
-														<strong>Bill To</strong>
-														<p>Zainul Abideen</p>
-														<p>9/727 A, Deenanath Bazar</p>
-													</div>
-												</div>
-												<hr>
-												<div class="inv-entries">
-													<table>
-														<tr>
-															<td><strong>#</strong></td>
-															<td><strong>Date</strong></td>
-															<td><strong>Entry</strong></td>
-															<td><strong>Amount</strong></td>
-															<td><strong>Username</strong></td>
-														</tr>
-														<tr>
-															<td>1</td>
-															<td><?php echo $current_date; ?></td>
-															<td class="inv-entries-entry"></td>
-															<td class="inv-entries-amt"></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td colspan="3">Grand Total:</td>
-															<td class="inv-entries-total" colspan="2"></td>
-														</tr>
-														<tr>
-															<td colspan="3">Paid:</td>
-															<td class="inv-entries-paid" colspan="2"></td>
-														</tr>
-														<tr>
-															<td colspan="3">Due:</td>
-															<td class="inv-entries-due" colspan="2"></td>
-														</tr>
-													</table>
-												</div>-->
-												<!--Old Invoice Format By Zainul Abideen ends -->
-
 												<?php 
 													//fetch School Details From Database										
 													$settings_table	=	$wpdb->prefix."wpsp_settings";
