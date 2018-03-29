@@ -417,7 +417,7 @@ a.add-parent { margin-bottom:15px; }
 }
 .due-chart-container{
     height: 200px;
-    width: 250px;
+    width: 350px;
     border: 1px solid #000;
     position: absolute;
     right: 0;
@@ -427,6 +427,40 @@ a.add-parent { margin-bottom:15px; }
     display: none;
     border-radius: 5px;
     background-color: #fce5f4;
+    color: #D63C25;
+    overflow-x: hidden;
+    overflow-y: scroll; 
+}
+.due-chart-container table{
+    width: 100%;  
+    text-align: center;
+}
+.due-chart-container table td, .due-chart-container table th{
+    text-align: center;
+}
+.due-chart-container table tr{
+    border-bottom: 1px solid; 
+}
+/* width */
+.due-chart-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.due-chart-container::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+ 
+/* Handle */
+.due-chart-container::-webkit-scrollbar-thumb {
+    background: red; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.due-chart-container::-webkit-scrollbar-thumb:hover {
+    background: #D63C25; 
 }
 .col-print-1 {width:8%;  float:left;}
 .col-print-2 {width:16%; float:left;}

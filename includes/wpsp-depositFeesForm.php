@@ -7,6 +7,7 @@
 		$student_table = $wpdb->prefix."wpsp_student";
 		$fees_rec_table = $wpdb->prefix."wpsp_fees_payment_record";
 		$class_table = $wpdb->prefix."wpsp_class";
+		$dues_table = $wpdb->prefix."wpsp_fees_dues";
 		$uidff_sql = $wpdb->get_results("SELECT * FROM $student_table b, $class_table c WHERE b.wp_usr_id = $uidff AND c.cid = b.class_id");
 		foreach ($uidff_sql as $fee) {
 			$adm_f = $fee->admission_fees;
@@ -54,7 +55,54 @@
 										Fees Deposit Form
 										<?php if(isset( $_GET['uidff'] )){ ?>
 										<button style="float: right;" type="button" class="btn btn-danger btn-xs dues-chart-btn" data-toggle="tooltip" title="Dues Chart"><i class="fa fa-table"></i></button> 
-										<div class="due-chart-container"></div>
+										<div class="due-chart-container">
+											<table>
+											<tr>
+												<th>Fees Type</th>
+												<th>Amount</th>
+											</tr>
+											<?php
+												$sql_dues_chart = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid='$uidff' ORDER BY month DESC ");
+												if(count($sql_dues_chart) > 0){
+													foreach ($sql_dues_chart as $due) {
+														if($due->fees_type == "adm") { ?>
+														<tr>
+															<td>Admission Fees:</td>
+															<td><i class="fa fa-inr"></i><?php echo number_format($due->amount); ?>/-</td>
+														</tr>
+														<?php }
+														if($due->fees_type == "ttn"){ ?>
+														<tr>
+															<td>Tution Fees(<?php echo $months_array[$due->month]." ".$due->session; ?>):</td>
+															<td><i class="fa fa-inr"></i><?php echo number_format($due->amount); ?>/-</td>
+														</tr>
+														<?php }
+														if($due->fees_type == "trans" || $due->fees_type == "trn"){ ?>
+														<tr>
+															<td>Transaportation Charges(<?php echo $months_array[$due->month]." ".$due->session; ?>):</td>
+															<td><i class="fa fa-inr"></i><?php if($due->fees_type == "trans" || $due->fees_type == "trn") echo number_format($due->amount); ?>/-</td>
+														</tr>
+														<?php }
+														if($due->fees_type == "ann"){ ?>
+														<tr>
+															<td>Annual Charges:</td>
+															<td><i class="fa fa-inr"></i><?php if($due->fees_type == "ann") echo number_format($due->amount); ?>/-</td>
+														</tr>
+														<?php }
+														if($due->fees_type == "rec"){ ?>
+														<tr>
+															<td>Recreation Charges:</td>
+															<td><i class="fa fa-inr"></i><?php if($due->fees_type == "rec") echo number_format($due->amount); ?>/-</td>
+														</tr>
+														<?php }
+													}
+												}
+												else{ ?>
+													<tr><td class="alert alert-success" colspan="2">No Dues!</td></tr> <?php
+												}
+											?>
+											</table>
+										</div>
 										<?php } ?>
 									</div>
 						                <div class="panel-body">
