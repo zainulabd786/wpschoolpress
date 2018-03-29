@@ -140,7 +140,7 @@
 											</div>
 											<div class="form-group">
 												<label>Session</label>
-												<input type="text" class="dep-session form-control" placeholder="Session">
+												<input type="text" class="dep-session form-control" value="2018-19" placeholder="Session">
 											</div>
 											<div class="form-group dep-fee-type">
 												<label>Fees Type</label>

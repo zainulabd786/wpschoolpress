@@ -379,6 +379,104 @@ function wpsp_StudentPublicProfile(){
 						  <h3 class='panel-title'><?php echo $stinfo->s_fname." ".$stinfo->s_mname." ".$stinfo->s_lname; ?></h3>
 						</div>
 						<div class='panel-body'>
+							<div class='fee-records-container'>
+								<div class='panel-group' id='accordion'>
+									<div class='panel panel-primary'>
+										<h4 class='panel-title'>
+											<button type='button' class='btn btn-primary btn-block' id='collapse-button' data-toggle='collapse' href='#fees-details'><i class='fa fa-inr' aria-hidden='true'></i> View Fees Details</button>
+										</h4>
+										<div id='fees-details' class='panel-collapse collapse in'>
+											<div id='panel-body' class='panel-body'>
+												<table>
+													<tr class='tab-head'>
+														<td>Date And Time</td>
+														<td>Slip Number</td>
+														<td>Session</td>
+														<td>Amount</td>
+													</tr> <?php
+													foreach ($sql_fees as $fee) {
+														$total_amt = $fee->adm+$fee->ttn+$fee->trans+$fee->ann+$fee->rec; ?>
+														<tr class="fees-single-row" id='<?php echo $fee->slip_no; ?>'>
+															<td><?php echo date('d/m/Y h:i:s', strtotime($fee->date_time)); ?></td>
+															<td><?php echo $fee->slip_no; ?></td>
+															<td><?php echo $fee->session; ?></td>
+															<td><i class="fa fa-inr"></i><?php echo number_format($total_amt); ?>/-</td>
+														</tr>
+													<?php } ?>
+												</table>
+												<script type="text/javascript">
+													$(".fees-single-row").click(function(){
+														var slid = $(this).attr('id');
+														$.post(ajax_url,{action: "load_detailed_transaction", slid: slid},function(data){ $.alert(data); });
+													});
+												</script>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<?php 
+								$due = "";
+								$sql_dues = $wpdb->get_results("SELECT SUM(amount) AS amount FROM $dues_table WHERE uid='$stinfo->wp_usr_id'");
+								foreach ($sql_dues as $due) {
+									$due = $due->amount;
+								}
+								if(!empty($due)){ ?>
+									<div class='due-container'>
+										<div class='panel-group' id='accordion'>
+											<div class='panel panel-primary'>
+												<h4 class='panel-title'>
+													<button type='button' class='btn btn-danger btn-block' id='collapse-button' data-toggle='collapse' href='#due-fees-details'><?php echo "<i class='fa fa-inr'></i>".number_format($due)." is due to this student"; ?></button>
+												</h4>
+												<div id='due-fees-details' class='panel-collapse collapse'>
+													<div id='panel-body' class='panel-body'>
+														<table>
+															<tr class='tab-head'>
+																<td>Fees Type</td>
+																<td>Amount</td>
+																<td>Month</td>
+																<td>Session</td>
+															</tr> <?php
+															$sql_dues_det = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid='$stinfo->wp_usr_id'");
+															foreach ($sql_dues_det as $due_fee) {
+																if(!empty($due_fee->amount)){
+																	switch ($due_fee->fees_type) {
+																	 	case 'adm':
+																	 		$fees_type = "Admission Fees";
+																	 	break;
+																	 	
+																	 	case "ttn":
+																	 		$fees_type = "Tution Fees";
+																	 	break;
+
+																	 	case 'trn':
+																	 		$fees_type = "Transport Charges";
+																	 	break;
+																	 	
+																	 	case "ann":
+																	 		$fees_type = "Annual Charges";
+																	 	break;
+
+																	 	case "rec":
+																	 		$fees_type = "Recreation Charges";
+																	 	break;
+																	 } ?>
+																	<tr id='<?php echo $due_fee->id; ?>'>
+																		<td><?php echo $fees_type ?></td>
+																		<td><?php echo "<i class='fa fa-inr'></i>".number_format($due_fee->amount)."/-"; ?></td>
+																		<td><?php echo $months_array[$due_fee->month]; ?></td>
+																		<td><?php echo $due_fee->session; ?></td>
+																	</tr>
+																<?php } 
+															} ?>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div> <?php
+								}
+							?>
 						<div class='row'>
 							<div class='col-md-3 col-lg-3'>
 								<img src='<?php echo $img_url; ?>' height='150px' width='150px' class='img img-circle'/>							
@@ -468,106 +566,6 @@ function wpsp_StudentPublicProfile(){
 										</tr>
 									</tbody>
 								</table>
-							</div>
-						</div>
-						<?php 
-							$due = "";
-							$sql_dues = $wpdb->get_results("SELECT SUM(amount) AS amount FROM $dues_table WHERE uid='$stinfo->wp_usr_id'");
-							foreach ($sql_dues as $due) {
-								$due = $due->amount;
-							}
-							if(!empty($due)){ ?>
-								<div class='due-container'>
-									<div class='panel-group' id='accordion'>
-										<div class='panel panel-primary'>
-											<h4 class='panel-title'>
-												<button type='button' class='btn btn-danger btn-block' id='collapse-button' data-parent='#accordion' data-toggle='collapse' href='#due-fees-details'><?php echo "<i class='fa fa-inr'></i>".number_format($due)." is due to this student"; ?></button>
-											</h4>
-											<div id='due-fees-details' class='panel-collapse collapse'>
-												<div id='panel-body' class='panel-body'>
-													<table>
-														<tr class='tab-head'>
-															<td>Fees Type</td>
-															<td>Amount</td>
-															<td>Month</td>
-															<td>Session</td>
-														</tr> <?php
-														$sql_dues_det = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid='$stinfo->wp_usr_id'");
-														foreach ($sql_dues_det as $due_fee) {
-															if(!empty($due_fee->amount)){
-																switch ($due_fee->fees_type) {
-																 	case 'adm':
-																 		$fees_type = "Admission Fees";
-																 	break;
-																 	
-																 	case "ttn":
-																 		$fees_type = "Tution Fees";
-																 	break;
-
-																 	case 'trn':
-																 		$fees_type = "Transport Charges";
-																 	break;
-																 	
-																 	case "ann":
-																 		$fees_type = "Annual Charges";
-																 	break;
-
-																 	case "rec":
-																 		$fees_type = "Recreation Charges";
-																 	break;
-																 } ?>
-																<tr id='<?php echo $due_fee->id; ?>'>
-																	<td><?php echo $fees_type ?></td>
-																	<td><?php echo "<i class='fa fa-inr'></i>".number_format($due_fee->amount)."/-"; ?></td>
-																	<td><?php echo $months_array[$due_fee->month]; ?></td>
-																	<td><?php echo $due_fee->session; ?></td>
-																</tr>
-															<?php } 
-														} ?>
-													</table>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div> <?php
-							}
-						?>
-						<div class='fee-records-container'>
-							<div class='panel-group' id='accordion'>
-								<div class='panel panel-primary'>
-									<h4 class='panel-title'>
-										<button type='button' class='btn btn-primary btn-block' id='collapse-button' data-parent='#accordion' data-toggle='collapse' href='#fees-details'><i class='fa fa-inr' aria-hidden='true'></i> View Fees Details</button>
-									</h4>
-									<div id='fees-details' class='panel-collapse collapse'>
-										<div id='panel-body' class='panel-body'>
-											<table>
-												<tr class='tab-head'>
-													<td>Date And Time</td>
-													<td>From</td>
-													<td>To</td>
-													<td>Session</td>
-													<td>Amount</td>
-												</tr> <?php
-												foreach ($sql_fees as $fee) {
-													$total_amt = $fee->adm+$fee->ttn+$fee->trans+$fee->ann+$fee->rec; ?>
-													<tr class="fees-single-row" id='<?php echo $fee->slip_no; ?>'>
-														<td><?php echo date('d/m/y h:i:s', strtotime($fee->date_time)); ?></td>
-														<td><?php echo $months_array[$fee->from]; ?></td>
-														<td><?php echo $months_array[$fee->to]; ?></td>
-														<td><?php echo $fee->session; ?></td>
-														<td><i class="fa fa-inr"></i><?php echo number_format($total_amt); ?>/-</td>
-													</tr>
-												<?php } ?>
-											</table>
-											<script type="text/javascript">
-												$(".fees-single-row").click(function(){
-													var slid = $(this).attr('id');
-													$.post(ajax_url,{action: "load_detailed_transaction", slid: slid},function(data){ $.alert(data); });
-												});
-											</script>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 						</div>

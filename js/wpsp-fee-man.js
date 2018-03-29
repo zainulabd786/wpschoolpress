@@ -205,13 +205,19 @@ $(document).ready(function(){
 		var uid = $(".dep-student-select select").val();
 		$.post(ajax_url, {action: "calculate_expected_amount", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
 	});
+	$(".dep-trans-from-select select, .dep-trans-to-select select").change(function(){
+		var from = $(".dep-trans-from-select select").val();
+		var to = $(".dep-trans-to-select select").val();
+		var classId = $(".dep-class-select select").val();
+		var uid = $(".dep-student-select select").val();
+		$.post(ajax_url, {action: "calculate_expected_amount_transport", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
+	});
 	$("#dep-concession").keyup(function(){
 		var discountedAmt = parseInt($(".dep-tc-inp .expected").val())-parseInt($(this).val());
 		alert($(".dep-tc-inp .expected").val());
 		$(".dep-tc-inp .expected").val(discountedAmt);
 		$(".trans-chg-tr-inv").html("<i class='fa fa-inr'></i>"+discountedAmt+"/-");
 		$(".expected, .paid").trigger("change");
-
 	});
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";
@@ -220,6 +226,8 @@ $(document).ready(function(){
 		var cid = $(".dep-class-select select").val();
 		var from = $(".dep-from-select select").val();
 		var to = $(".dep-to-select select").val();
+		var fromTrn = $(".dep-trans-from-select select").val();
+		var toTrn = $(".dep-trans-to-select select").val();
 		var adm = $(".dep-adm-inp .paid").val();
 		var ttn = $(".dep-tf-inp .paid").val();
 		var trans = $(".dep-tc-inp .paid").val();
@@ -239,6 +247,8 @@ $(document).ready(function(){
 			{name: 'classId', value: cid},
 			{name: 'fromDate', value: from},
 			{name: 'toDate', value: to},
+			{name: 'fromDateTrn', value: fromTrn},
+			{name: 'toDateTrn', value: toTrn},
 			{name: 'admissionFees', value: adm},
 			{name: 'tutionFees', value: ttn},
 			{name: 'transportChg', value: trans},

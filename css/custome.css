@@ -423,18 +423,18 @@ a.add-parent { margin-bottom:15px; }
     border-bottom: 1px solid; 
 }
 /* width */
-.due-chart-container::-webkit-scrollbar {
+.due-chart-container::-webkit-scrollbar, .fee-records-container .panel-body::-webkit-scrollbar {
     width: 10px;
 }
 
 /* Track */
-.due-chart-container::-webkit-scrollbar-track {
+.due-chart-container::-webkit-scrollbar-track, .fee-records-container .panel-body::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
     border-radius: 10px;
 }
  
 /* Handle */
-.due-chart-container::-webkit-scrollbar-thumb {
+.due-chart-container::-webkit-scrollbar-thumb, .fee-records-container .panel-body::-webkit-scrollbar-thumb {
     background: red; 
     border-radius: 10px;
 }
@@ -442,6 +442,14 @@ a.add-parent { margin-bottom:15px; }
 /* Handle on hover */
 .due-chart-container::-webkit-scrollbar-thumb:hover {
     background: #D63C25; 
+}
+.due-chart-container::-webkit-scrollbar-thumb:hover{
+    background: #1E6EB5;
+}
+.fee-records-container .panel-body{
+    padding: 0;
+    max-height: 250px;
+    overflow-y: scroll;
 }
 .col-print-1 {width:8%;  float:left;}
 .col-print-2 {width:16%; float:left;}
