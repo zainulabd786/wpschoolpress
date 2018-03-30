@@ -185,7 +185,7 @@
 															</select>
 														</div>
 													</div>
-													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" >
+													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected"  disabled>
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
 												</div>
@@ -211,7 +211,7 @@
 															</select>
 														</div>
 													</div>
-													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" >
+													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected" disabled>
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
 												</div>
@@ -232,10 +232,10 @@
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
-											<!--<div class="form-group">
-												<label for="dep-concession">Concession(<i class="fa-inr"></i>)</label>
+											<div class="form-group">
+												<label for="dep-concession">Concession(<i class="fa fa-inr"></i>)</label>
 												<input type="text" id="dep-concession" class="form-control">
-											</div>-->
+											</div>
 											<input type="button" class="btn btn-success btn-block" value="Submit" id="dep-fees-btn">
 						                </div>
 								</header>
