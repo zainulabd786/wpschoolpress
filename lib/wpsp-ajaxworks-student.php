@@ -357,6 +357,7 @@ function wpsp_StudentPublicProfile(){
 	$class_table	=	$wpdb->prefix."wpsp_class";
 	$users_table	=	$wpdb->prefix."users";
 	$fees_table 	=	$wpdb->prefix."wpsp_fees_receipts";
+	$record_table 	=	$wpdb->prefix."wpsp_fees_payment_record";
 	$sid			=	$_POST['id'];
 	$stinfo			=	$wpdb->get_row("select a.*,b.c_name,d.user_email from $student_table a LEFT JOIN $class_table b ON a.class_id=b.cid LEFT JOIN $users_table d ON d.ID=a.wp_usr_id where a.wp_usr_id='$sid'");
 	$sql_fees = $wpdb->get_results("SELECT * FROM $fees_table WHERE uid = '$sid' ORDER BY slip_no DESC");
@@ -397,7 +398,14 @@ function wpsp_StudentPublicProfile(){
 													foreach ($sql_fees as $fee) {
 														$total_amt = $fee->adm+$fee->ttn+$fee->trans+$fee->ann+$fee->rec; ?>
 														<tr class="fees-single-row" id='<?php echo $fee->slip_no; ?>'>
-															<td><?php echo date('d/m/Y h:i:s', strtotime($fee->date_time)); ?></td>
+															<td>
+																<?php
+																$sql_slip_date = $wpdb->get_results("SELECT date_time FROM $record_table WHERE slip_no='$fee->slip_no' LIMIT 1");
+																foreach ($sql_slip_date as $date_time) {
+																	echo date('d/m/Y h:i:s', strtotime($date_time->date_time));
+																} ?>
+																	
+															</td>
 															<td><?php echo $fee->slip_no; ?></td>
 															<td><?php echo $fee->session; ?></td>
 															<td><i class="fa fa-inr"></i><?php echo number_format($total_amt); ?>/-</td>
