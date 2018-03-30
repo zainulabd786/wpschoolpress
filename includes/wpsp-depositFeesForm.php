@@ -54,7 +54,8 @@
 									<div class="panel-heading"> 
 										Fees Deposit Form
 										<?php if(isset( $_GET['uidff'] )){ ?>
-										<button style="float: right;" type="button" class="btn btn-danger btn-xs dues-chart-btn" data-toggle="tooltip" title="Dues Chart"><i class="fa fa-table"></i></button> 
+										<button style="float: right;" type="button" class="btn btn-danger btn-xs dues-chart-btn" data-toggle="tooltip" title="Dues Chart"><i class="fa fa-table"></i>
+										</button> 
 										<div class="due-chart-container">
 											<table>
 											<tr>
@@ -103,7 +104,9 @@
 											?>
 											</table>
 										</div>
+										<a style="float: right;" href="<?php echo "?id=".$uidff;?>" class="ViewStudent" data-id="<?php echo $uidff;?>" title="View Student Details"><i style="font-size: 17px;" class="fa fa-eye btn btn-success btn-xs"></i></a>
 										<?php } ?>
+
 									</div>
 						                <div class="panel-body">
 						                	<?php $current_date = date("d-m-Y"); ?>
