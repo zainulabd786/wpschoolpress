@@ -214,11 +214,10 @@ $(document).ready(function(){
 		$.post(ajax_url, {action: "calculate_expected_amount_transport", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
 		$(".trans-chg-tr-inv .months").html(months_array[from]+"-"+months_array[to]);
 	});
-	$("#dep-concession").keyup(function(){
-		var discountedAmt = parseInt($(".dep-tc-inp .expected").val())-parseInt($(this).val());
-		alert($(".dep-tc-inp .expected").val());
-		$(".dep-tc-inp .expected").val(discountedAmt);
-		$(".trans-chg-tr-inv").html("<i class='fa fa-inr'></i>"+discountedAmt+"/-");
+	$("#dep-concession").change(function(){
+		var discountedAmt = parseInt($(".dep-tf-inp .expected").val())-parseInt($(this).val());
+		$(".dep-tf-inp .expected, .dep-tf-inp .paid").val(discountedAmt);
+		$(".tution-fees-te-inv .inv-expected-amt, .tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+discountedAmt+"/-");
 		$(".expected, .paid").trigger("change");
 	});
 	$("#dep-fees-btn").click(function(){
@@ -241,6 +240,7 @@ $(document).ready(function(){
 		var exptrans = $(".dep-tc-inp .expected").val();
 		var expann = $(".dep-ac-inp .expected").val();
 		var exprec = $(".dep-rf-inp .expected").val();
+		var concession = $("#dep-concession").val();
 		var data=new Array();
 		data.push(
 			{name: 'action', value: action},
@@ -262,6 +262,7 @@ $(document).ready(function(){
 			{name: 'exptransportChg', value: exptrans},
 			{name: 'expannualChg', value: expann},
 			{name: 'exprecreationChg', value: exprec},
+			{name: 'concession', value: concession}
 		);
 		$.ajax({
 			method:"POST",

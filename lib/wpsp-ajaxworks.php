@@ -2741,6 +2741,7 @@ function wpsp_Import_Dummy_contents() {
 		$exp_annual_chg = $_POST['expannualChg'];
 		$exp_recreation_chg = $_POST['exprecreationChg'];
 		$session = $_POST["session"];
+		$concession = $_POST['concession']/$num_months;
 		$fees_type = "";
 		$pm_tf = 0;
 		$pm_tc = 0;
@@ -2750,7 +2751,7 @@ function wpsp_Import_Dummy_contents() {
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$sql_expected_amounts = $wpdb->get_results("SELECT * FROM $fees_settings_table WHERE cid='$cid' ");
 		foreach ($sql_expected_amounts as $amt) {
-			$pm_tf = $amt->tution_fees;
+			$pm_tf = $amt->tution_fees-$concession;
 			$pm_tc = $amt->transport_chg;
 		}
 		if(!empty($admission_fees)) $fees_type .= "adm";
@@ -2771,7 +2772,8 @@ function wpsp_Import_Dummy_contents() {
 				'ttn' => $tution_fees,
 				'trans' => $transport_chg,
 				'ann' => $annual_chg,
-				'rec' => $recreation_chg
+				'rec' => $recreation_chg,
+				'concession' => $concession
 		);
 		$outstanding_amt = 0;
 		$outstanding_amt_trn = 0;

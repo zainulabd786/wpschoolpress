@@ -316,7 +316,8 @@
 	  `ttn` varchar(11),	 
 	  `trans` int(11),
 	  `ann` varchar(11),	 
-	  `rec` int(11)
+	  `rec` int(11),
+	  `concession` int(11)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_receipts);
 
