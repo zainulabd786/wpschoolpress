@@ -386,14 +386,14 @@
 														</tr>
 														<tr class="tution-fees-te-inv" >
 															<td>2</td>
-															<td>Tution Fees(Mothly)</td>
+															<td>Tution Fees(<div style="display: inline;" class="months">Monthly</div>)</td>
 															<td class="inv-expected-amt">0</td>
 															<td class="inv-paid-amt">0</td>
 															<td class="inv-bal-amt">0</td>
 														</tr>
 														<tr class="trans-chg-tr-inv" >
 															<td>3</td>
-															<td>Transportation charges(Monthly)</td>
+															<td>Transportation charges(<div style="display: inline;" class="months">Monthly</div>)</td>
 															<td class="inv-expected-amt">0</td>
 															<td class="inv-paid-amt">0</td>
 															<td class="inv-bal-amt">0</td>

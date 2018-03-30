@@ -204,6 +204,7 @@ $(document).ready(function(){
 		var classId = $(".dep-class-select select").val();
 		var uid = $(".dep-student-select select").val();
 		$.post(ajax_url, {action: "calculate_expected_amount", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
+		$(".tution-fees-te-inv .months").html(months_array[from]+"-"+months_array[to]);
 	});
 	$(".dep-trans-from-select select, .dep-trans-to-select select").change(function(){
 		var from = $(".dep-trans-from-select select").val();
@@ -211,6 +212,7 @@ $(document).ready(function(){
 		var classId = $(".dep-class-select select").val();
 		var uid = $(".dep-student-select select").val();
 		$.post(ajax_url, {action: "calculate_expected_amount_transport", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
+		$(".trans-chg-tr-inv .months").html(months_array[from]+"-"+months_array[to]);
 	});
 	$("#dep-concession").keyup(function(){
 		var discountedAmt = parseInt($(".dep-tc-inp .expected").val())-parseInt($(this).val());
