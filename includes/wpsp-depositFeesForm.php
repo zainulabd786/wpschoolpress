@@ -1,7 +1,8 @@
 <?php 
 	if (!defined('ABSPATH')) exit('No Such File');
 	$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
-	$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $sfname_f = $smname_f = $slname_f = $pfname_f = $pmname_f = $plname_f = $sphone_f = $sregno = $class = $cid = $to_f = $from = $to = "";
+	$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $sfname_f = $smname_f = $slname_f = $pfname_f = $pmname_f = $plname_f = $sphone_f = $sregno = $class = $cid = $to_f = $from = $to = $session = "";
+	$settings_table	=	$wpdb->prefix."wpsp_settings";
 	if(isset( $_GET['uidff'] )){
 		$uidff = $_GET['uidff'];
 		$student_table = $wpdb->prefix."wpsp_student";
@@ -30,6 +31,10 @@
 		$student_full_name = $sfname_f." ".$smname_f." ".$slname_f;
 		$father_full_name = $pfname_f." ".$pmname_f." ".$plname_f;
 	}  
+	$sql_session = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'session'");
+	foreach ($sql_session as $session) {
+		$session = $session->option_value;
+	}
 ?>
 <section class="content">
     <div class="row">
@@ -143,7 +148,7 @@
 											</div>
 											<div class="form-group">
 												<label>Session</label>
-												<input type="text" class="dep-session form-control" value="2018-19" placeholder="Session">
+												<input type="text" value="<?php if(!empty($session)) echo $session; ?>" class="dep-session form-control" placeholder="Session">
 											</div>
 											<div class="form-group dep-fee-type">
 												<label>Fees Type</label>
@@ -252,8 +257,8 @@
 											<div class="invoice-prev">
 												<?php 
 													//fetch School Details From Database										
-													$settings_table	=	$wpdb->prefix."wpsp_settings";
-													$sel_setting		=	$wpdb->get_results("select * from $settings_table");
+													
+													$sel_setting	=	$wpdb->get_results("select * from $settings_table");
 													$school_name = "";
 													$school_logo = "";
 													$school_add = "";
@@ -355,7 +360,7 @@
 													<div class="blank b5">
 														<div class="sb1">
 															<strong>Session</strong>
-															<div></div>
+															<div><?php if(!empty($session)) echo $session; ?></div>
 														</div>
 														<div class="sb2">
 															<strong>Class/Section</strong>
