@@ -284,8 +284,9 @@ $(document).ready(function(){
 		var	annual= $("#fs-annual").val();
 		var	rec= $("#fs-recreation").val();
 		var	classId= $(".fs-class select").val();
+		var dueDate = $(".due-date select").val();
 		var data=new Array();
-		data.push({name: 'action', value: action},{name: 'adm', value: adm},{name: 'ttn', value: ttn},{name: 'trans', value: trans},{name: 'annual', value: annual},{name: 'rec', value: rec},{name: 'classId', value: classId});
+		data.push({name: 'action', value: action},{name: 'adm', value: adm},{name: 'ttn', value: ttn},{name: 'trans', value: trans},{name: 'annual', value: annual},{name: 'rec', value: rec},{name: 'classId', value: classId},{name: 'dueDate', value: dueDate});
 		$.ajax({
 			method:"POST",
 			url:ajax_url, 

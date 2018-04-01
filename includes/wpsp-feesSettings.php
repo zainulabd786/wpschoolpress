@@ -37,6 +37,22 @@
 		<label for="fs-recreation">Recreation Charges</label>
 		<input type="text" class="form-control" id="fs-recreation">
 	</div>
+	<hr>
+	<div class="form-group due-date">
+		<label for="due-date">Monthly Due Date(For All Classes)</label>
+		<select class="form-control" id="due-date">
+			<option value="">Select Due Date</option><?php
+			$settings_table = $wpdb->prefix."wpsp_settings";
+			$due_date_sql = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name = 'due_date'");
+			$due_date = 0;
+			foreach ($due_date_sql as $due_date) {
+				$due_date = $due_date->option_value;
+			}
+			for($i=1;$i<=28;$i++){  ?>
+				<option <?php if(!empty($due_date) && $due_date == $i) echo "selected" ?> value="<?php echo $i; ?>"><?php echo $i; ?></option> <?php
+			} ?>
+		</select>
+	</div>
 	<button type="button" class="btn btn-primary btn-block fs-save-btn">Save</button>
 </form>
 <div class="execute-ajax-script"></div>

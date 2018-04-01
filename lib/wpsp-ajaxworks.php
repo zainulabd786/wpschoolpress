@@ -2639,50 +2639,78 @@ function wpsp_Import_Dummy_contents() {
 
 	function save_fees_settings(){
 		global $wpdb;
-		$class = $_POST['classId'];
-		$adm = $_POST['adm'];
-		$ttn = $_POST['ttn'];
-		$trans = $_POST['trans'];
-		$annual = $_POST['annual'];
-		$rec = $_POST['rec'];
-		$fees_table = $wpdb->prefix."wpsp_fees_settings";
-		$result = $wpdb->get_results("SELECT cid FROM ".$fees_table." WHERE cid = '".$class."'");
-		if($wpdb->num_rows > 0){
-			$update_sql_res = $wpdb->update( $fees_table, 
-				array(
-					'admission_fees' => $adm,
-					'tution_fees' => $ttn,
-					'transport_chg' => $trans,
-					'annual_chg' => $annual,
-					'recreation_chg' => $rec
-				),
-				array( 'cid' => $class),
-				array(
-					'%d',
-					'%d',
-					'%d',
-					'%d',
-					'%d'
-				), 
-				array( '%d' )
-			);
-			if($update_sql_res){
-				echo "success";
+		$wpdb->show_errors();
+		if(!empty($_POST['classId'])){
+			$class = $_POST['classId'];
+			$adm = $_POST['adm'];
+			$ttn = $_POST['ttn'];
+			$trans = $_POST['trans'];
+			$annual = $_POST['annual'];
+			$rec = $_POST['rec'];
+			$fees_table = $wpdb->prefix."wpsp_fees_settings";
+			$result = $wpdb->get_results("SELECT cid FROM ".$fees_table." WHERE cid = '".$class."'");
+			if($wpdb->num_rows > 0){
+				$update_sql_res = $wpdb->update( $fees_table, 
+					array(
+						'admission_fees' => $adm,
+						'tution_fees' => $ttn,
+						'transport_chg' => $trans,
+						'annual_chg' => $annual,
+						'recreation_chg' => $rec
+					),
+					array( 'cid' => $class),
+					array(
+						'%d',
+						'%d',
+						'%d',
+						'%d',
+						'%d'
+					), 
+					array( '%d' )
+				);
+				if($update_sql_res){
+					echo "success";
+				}
+			}
+			else{
+				$insert_sql_res = $wpdb->insert( $fees_table, 
+					array(
+						'cid' => $class,
+						'admission_fees' => $adm,
+						'tution_fees' => $ttn,
+						'transport_chg' => $trans,
+						'annual_chg' => $annual,
+						'recreation_chg' => $rec
+					)
+				);
+				if($insert_sql_res){
+					echo "success";
+				}
+				else echo $wpdb->print_error();
 			}
 		}
-		else{
-			$insert_sql_res = $wpdb->insert( $fees_table, 
-				array(
-					'cid' => $class,
-					'admission_fees' => $adm,
-					'tution_fees' => $ttn,
-					'transport_chg' => $trans,
-					'annual_chg' => $annual,
-					'recreation_chg' => $rec
-				)
-			);
-			if($insert_sql_res){
-				echo "success";
+
+		if(!empty($_POST['dueDate'])){
+			$settings_table = $wpdb->prefix."wpsp_settings";
+			$due_date = $_POST['dueDate'];
+			$setting_val = 0;
+			$settings_sql = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name = 'due_date' ");
+			if($wpdb->num_rows > 0){
+				foreach ($settings_sql as $setting) {
+					$setting_val = $setting->option_value;
+				}
+				if($due_date != $setting_val){
+					if($wpdb->query("UPDATE $settings_table SET option_value='$due_date' WHERE option_name='due_date'")) echo "success"; 
+					else echo "error".$wpdb->print_error();
+				}
+				else{
+					echo "success";
+				}
+			}
+			else{
+				$due_date_array = array('option_name'=>'due_date', 'option_value'=>$due_date);
+				if($wpdb->insert($settings_table, $due_date_array)) echo "success"; 
+				else echo "error".$wpdb->print_error();
 			}
 		}
 		wp_die();
