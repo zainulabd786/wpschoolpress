@@ -159,7 +159,7 @@
 
                                 <div class="form-group opt-transport">
                                     <label for="transport">Transport</label><br/>
-                                    <input type="checkbox" id="transport" data-toggle="toggle" data-on="Required" data-off="Not Required">
+                                    <input type="checkbox" name="opt_transport" id="transport" data-toggle="toggle" data-on="Required" data-off="Not Required">
                                 </div>
 
                                <div class="form-group">
