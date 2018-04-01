@@ -148,8 +148,7 @@
 									}
 									
 									//$students	=	$wpdb->get_results("select * from $student_table s, $users_table u, $fee_status_table f where u.ID=s.wp_usr_id $classquery AND s.sid = f.sid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) order by sid desc");
-									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, SUM(d.amount) AS due_amount, c.c_name FROM $student_table s, $dues_table d, $class_table c WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id $classquery");
-									
+									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, d.amount AS due_amount, d.fees_type, c.c_name FROM $student_table s, $dues_table d, $class_table c WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id $classquery");
 									$plugins_url=plugins_url();
 									$teacherId = '';
 									if( $currentSelectClass != 'all' )
@@ -184,8 +183,12 @@
 											?></td>
 											<td>
 												<?php
-													
-													echo "<i class='fa fa-inr'></i>".number_format($stinfo->due_amount)."/-";
+													if($stinfo->fees_type == "adm") $fees_type = "Admission Fees";
+													if($stinfo->fees_type == "ttn") $fees_type = "Tution Fees";
+													if($stinfo->fees_type == "trn") $fees_type = "Transportation Charges";
+													if($stinfo->fees_type == "ann") $fees_type = "Annual Charges";
+													if($stinfo->fees_type == "rec") $fees_type = "Recreation Charges";
+													echo "<i class='fa fa-inr'></i>".number_format($stinfo->due_amount)."(".$fees_type.")";
 													
 												?>
 											</td>

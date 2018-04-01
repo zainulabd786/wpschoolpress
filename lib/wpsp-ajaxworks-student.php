@@ -47,8 +47,9 @@ function wpsp_AddStudent() {
 	global $wpdb;
 	$wpsp_student_table	=	$wpdb->prefix."wpsp_student";
 	$wpsp_class_table	=	$wpdb->prefix."wpsp_class";
-	$wpsp_fees_status_table	=	$wpdb->prefix."wpsp_fees_status";
+	$wpsp_settings_table	=	$wpdb->prefix."wpsp_settings";
 	$wpsp_fees_settings_table	=	$wpdb->prefix."wpsp_fees_settings";
+	$dues_table	=	$wpdb->prefix."wpsp_fees_dues";
 	if( isset( $_POST['Class'] ) && !empty( $_POST['Class'] ) ) {
 		$classID	=	$_POST['Class'];
 		$capacity	=	$wpdb->get_var("SELECT c_capacity FROM $wpsp_class_table where cid=$classID"); 		
@@ -75,6 +76,7 @@ function wpsp_AddStudent() {
 	$pprofession		=	esc_attr($_POST['p_profession']);      
 	$pbloodgroup	    = 	esc_attr($_POST['p_bloodgrp']);  
 	$transport 			= 	$_POST['opt_transport'];
+	$current_date		=	date("Y-m-d");
 	if( $transport == "on" ) $transport = 1;
 	else $transport = 0;
 	
@@ -172,13 +174,37 @@ function wpsp_AddStudent() {
 						 );
 		$cid_for_fee = $_POST['Class'];
 		$fees_settings_sql = $wpdb->get_results("SELECT * FROM $wpsp_fees_settings_table WHERE cid='$cid_for_fee'");
-		$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = 0;
+		$session_sql = $wpdb->get_results("SELECT * FROM $wpsp_settings_table WHERE option_name='session';");
+		$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $session = 0;
+		foreach ($session_sql as $session) {
+			$session = $session->option_value;
+		}
 		foreach ($fees_settings_sql as $fee) {
 			$adm_f = $fee->admission_fees;
 			$ttn_f = $fee->tution_fees;
 			$trans_f = $fee->transport_chg;
 			$ann_f = $fee->annual_chg;
-			//$rec_f = $fee->recreation_chg;
+		}
+		if($transport == 1){
+			$trans_due_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>$curr_month, "amount"=>$trans_f, "fees_type"=>"trn", "session"=>$session);
+			$wpdb->insert($dues_table, $trans_due_data);
+		}
+		$fees_type_array = array("adm","ttn","ann");
+		for($i=0;$i<count($fees_type_array);$i++){
+			switch($fees_type_array[$i]){
+				case "adm":
+					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>$curr_month, "amount"=>$adm_f, "fees_type"=>"adm", "session"=>$session);
+					$wpdb->insert($dues_table, $fd_data);
+				break;
+				case "ttn":
+					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>$curr_month, "amount"=>$ttn_f, "fees_type"=>"ttn", "session"=>$session);
+					$wpdb->insert($dues_table, $fd_data);
+				break;
+				case "ann":
+					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "amount"=>$ann_f, "fees_type"=>"ann", "session"=>$session);
+					$wpdb->insert($dues_table, $fd_data);
+				break;
+			}
 		}
 		if($sendEmailFlag){
 			$msg = 'Hello '.$first_name;

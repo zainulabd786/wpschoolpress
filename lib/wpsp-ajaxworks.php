@@ -2703,12 +2703,33 @@ function wpsp_Import_Dummy_contents() {
 					if($wpdb->query("UPDATE $settings_table SET option_value='$due_date' WHERE option_name='due_date'")) echo "success"; 
 					else echo "error".$wpdb->print_error();
 				}
+			}
+			else{
+				$due_date_array = array('option_name'=>'due_date', 'option_value'=>$due_date);
+				if($wpdb->insert($settings_table, $due_date_array)) echo "success"; 
+				else echo "error".$wpdb->print_error();
+			}
+		}
+
+		if(!empty($_POST['session'])){
+			$settings_table = $wpdb->prefix."wpsp_settings";
+			$session = $_POST['session'];
+			$setting_val = 0;
+			$settings_sql = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name = 'session' ");
+			if($wpdb->num_rows > 0){
+				foreach ($settings_sql as $setting) {
+					$setting_val = $setting->option_value;
+				}
+				if($session != $setting_val){
+					if($wpdb->query("UPDATE $settings_table SET option_value='$session' WHERE option_name='session'")) echo "success"; 
+					else echo "error".$wpdb->print_error();
+				}
 				else{
 					echo "success";
 				}
 			}
 			else{
-				$due_date_array = array('option_name'=>'due_date', 'option_value'=>$due_date);
+				$due_date_array = array('option_name'=>'session', 'option_value'=>$session);
 				if($wpdb->insert($settings_table, $due_date_array)) echo "success"; 
 				else echo "error".$wpdb->print_error();
 			}
@@ -2748,6 +2769,7 @@ function wpsp_Import_Dummy_contents() {
 		global $wpdb;
 		$wpdb->show_errors();
 		$current_date_time = date("Y-m-d H:i:s");
+		$todays_date		=	date("Y-m-d");
 		$months_array = array("none","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 		$tid = date("dmyis").$uid;
 		$slip_no = $_POST['slip'];
@@ -2914,6 +2936,7 @@ function wpsp_Import_Dummy_contents() {
 									'fees_type' => 'ttn'
 							);
 							$sql_dues_data = array(
+									'date' => $todays_date,
 									'uid' => $uid,
 									'month' => $month,
 									'amount' => $due,
@@ -3035,6 +3058,7 @@ function wpsp_Import_Dummy_contents() {
 									'fees_type' => 'trn'
 							);
 							$sql_dues_data = array(
+									'date' => $todays_date,
 									'uid' => $uid,
 									'month' => $month,
 									'amount' => $due,
@@ -3078,6 +3102,7 @@ function wpsp_Import_Dummy_contents() {
 						);
 						if($admission_fees < $exp_admission_fees){
 							$sql_dues_data = array(
+								'date' => $todays_date,
 								'uid' => $uid,
 								'month' => $month,
 								'amount' => $exp_admission_fees - $admission_fees,
@@ -3114,6 +3139,7 @@ function wpsp_Import_Dummy_contents() {
 						);
 						if($annual_chg < $exp_annual_chg){
 							$sql_dues_data = array(
+								'date' => $todays_date,
 								'uid' => $uid,
 								'month' => $month,
 								'amount' => $exp_annual_chg - $annual_chg,
@@ -3150,6 +3176,7 @@ function wpsp_Import_Dummy_contents() {
 						);
 						if($recreation_chg < $exp_recreation_chg){
 							$sql_dues_data = array(
+								'date' => $todays_date,
 								'uid' => $uid,
 								'month' => $month,
 								'amount' => $exp_recreation_chg - $recreation_chg,

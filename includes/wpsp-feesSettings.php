@@ -49,9 +49,23 @@
 				$due_date = $due_date->option_value;
 			}
 			for($i=1;$i<=28;$i++){  ?>
-				<option <?php if(!empty($due_date) && $due_date == $i) echo "selected" ?> value="<?php echo $i; ?>"><?php echo $i; ?></option> <?php
+				<option <?php if(!empty($due_date) && $due_date == $i) echo "selected" ?> value="<?php if(strlen($i)<2) echo "0".$i; else echo $i; ?>"><?php echo $i; ?></option> <?php
 			} ?>
 		</select>
+	</div>
+	<hr>
+	<div class="form-group">
+		<?php 
+			$session_sql = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name = 'session'");
+			$session = 0;
+			if($wpdb->num_rows>0){
+				foreach ($session_sql as $session) {
+					$session = $session->option_value;
+				}
+			}
+		?>
+		<label for="session-setting">Current Session</label>
+		<input type="text" value="<?php if(!empty($session)) echo $session; ?>" class="form-control" id="session-setting">
 	</div>
 	<button type="button" class="btn btn-primary btn-block fs-save-btn">Save</button>
 </form>

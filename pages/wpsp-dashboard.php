@@ -137,4 +137,80 @@
  } else {
     include_once( WPSP_PLUGIN_PATH .'/includes/wpsp-login.php');
 	}
+
+	//due monthly fees
+	$settings_table		=	$wpdb->prefix."wpsp_settings";
+	$script_status = 0;
+	$sql_exec_script = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name='due_php_script_status'");
+	if($wpdb->num_rows==0){
+		$script_status_data = array("option_name"=>"due_php_script_status", "option_value"=>"0");
+		$wpdb->insert($settings_table, $script_status_data);
+	}
+	else{
+		foreach ($sql_exec_script as $status) {
+			$script_status = $status->option_value;
+		}
+	}
+	$wpdb->show_errors();
+	if($script_status == 0){
+		$curr_date			=	date('d');
+		$curr_month			=	date('m');
+		$todays_date		=	date("Y-m-d");
+		$student_table		=	$wpdb->prefix."wpsp_student";
+		$fees_settings_table=	$wpdb->prefix."wpsp_fees_settings";
+		$dues_table			=	$wpdb->prefix."wpsp_fees_dues";
+		$session 			=	0;
+		$sql_session		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'session'");
+		foreach ($sql_session as $session) {
+			$session = $session->option_value;
+		}
+		$sql_due_date		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'due_date' AND option_value = '$curr_date' ");
+		if($wpdb->num_rows>0){
+			try{
+				$student_sql = $wpdb->get_results("SELECT wp_usr_id, class_id, transport FROM $student_table");
+
+				foreach ($student_sql as $student) {
+					$tf = 0;
+					$tc = 0;
+					$sql_fees = $wpdb->get_results("SELECT tution_fees, transport_chg FROM $fees_settings_table WHERE cid='$student->class_id' ");
+					foreach ($sql_fees as $f) {
+						$tf = $f->tution_fees;
+						$tc = $f->transport_chg;
+					}
+					$sql_tf_data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$curr_month, 'amount'=>$tf, 'fees_type'=>'ttn', 'session'=>$session);
+					if($student->transport == 1){
+						$sql_tc_data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$curr_month, 'amount'=>$tc, 'fees_type'=>'trn', 'session'=>$session);
+					}
+				
+					$wpdb->query("BEGIN;");
+
+					if($wpdb->insert($dues_table, $sql_tf_data) == false) throw new Exception($wpdb->print_error());
+					
+					if($student->transport == 1){
+						if($wpdb->insert($dues_table, $sql_tc_data) == false) throw new Exception($wpdb->print_error());
+					}
+					
+
+				}
+
+				//echo "<div  style='float:right;' class='alert alert-success'>Success</div>";
+				if($wpdb->query("UPDATE $settings_table SET option_value='1' WHERE option_name='due_php_script_status'")==false) throw new Exception($wpdb->print_error());
+				$wpdb->query("COMMIT;");
+			}
+			catch(Exception $e){
+				$wpdb->query("ROLLBACK;");
+				echo "<div  style='float:right;' class='alert alert-danger'>ERROR!".$e->getMessage()."</div>";
+			}
+		}
+	}
+	$due_date_scr = 0;
+	$sql_due_date_scr	= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'due_php_script_status'");
+	foreach ($sql_due_date_scr as $due_date_scr) {
+		$due_date_scr = $due_date_scr->option_value;
+	}
+	if(!empty($due_date_scr)){
+		if(date("d") == $due_date_scr + 1){
+			$wpdb->query("UPDATE $settings_table SET option_value = '0' WHERE option_name = 'due_php_script_status' ");
+		}
+	}
 ?>

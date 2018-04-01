@@ -282,6 +282,7 @@
 	$fees_receipts			  = $wpdb->prefix . 'wpsp_fees_receipts';
 
 	$sql_fees_dues_table = "CREATE TABLE IF NOT EXISTS $fees_dues  (
+	  `date` date,
 	  `id` int(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	  `uid` int(15),	  
 	  `month` int(2),

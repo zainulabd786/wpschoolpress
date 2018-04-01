@@ -285,14 +285,14 @@ $(document).ready(function(){
 		var	rec= $("#fs-recreation").val();
 		var	classId= $(".fs-class select").val();
 		var dueDate = $(".due-date select").val();
+		var session = $("#session-setting").val();
 		var data=new Array();
-		data.push({name: 'action', value: action},{name: 'adm', value: adm},{name: 'ttn', value: ttn},{name: 'trans', value: trans},{name: 'annual', value: annual},{name: 'rec', value: rec},{name: 'classId', value: classId},{name: 'dueDate', value: dueDate});
+		data.push({name: 'action', value: action},{name: 'adm', value: adm},{name: 'ttn', value: ttn},{name: 'trans', value: trans},{name: 'annual', value: annual},{name: 'rec', value: rec},{name: 'classId', value: classId},{name: 'dueDate', value: dueDate},{name: 'session', value: session});
 		$.ajax({
 			method:"POST",
 			url:ajax_url, 
 			data:data, 
 			success:function(sfres) {
-				console.log(sfres);
 				if(sfres=='success'){
 					$.fn.notify('success',{'desc':'Information saved succesfully!'});
 					//window.location.reload();
