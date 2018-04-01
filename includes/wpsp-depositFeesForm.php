@@ -187,6 +187,7 @@
 													</div>
 													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected"  disabled>
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
+													<input type="hidden" id="original-amount">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
 												</div>
 											</div>

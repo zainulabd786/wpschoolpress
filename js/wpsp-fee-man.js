@@ -215,10 +215,18 @@ $(document).ready(function(){
 		$(".trans-chg-tr-inv .months").html(months_array[from]+"-"+months_array[to]);
 	});
 	$("#dep-concession").change(function(){
+		const ORIG_AMT = $(".dep-tf-inp #original-amount").val();
+		console.log(ORIG_AMT);
 		var discountedAmt = parseInt($(".dep-tf-inp .expected").val())-parseInt($(this).val());
 		$(".dep-tf-inp .expected, .dep-tf-inp .paid").val(discountedAmt);
 		$(".tution-fees-te-inv .inv-expected-amt, .tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+discountedAmt+"/-");
 		$(".expected, .paid").trigger("change");
+		if($(this).val() == ""){
+			$(".dep-tf-inp .expected, .dep-tf-inp .paid").val(ORIG_AMT);
+			$(".tution-fees-te-inv .inv-expected-amt, .tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+ORIG_AMT+"/-");
+			$(".expected, .paid").trigger("change");
+			$(this).val("0");
+		}
 	});
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";

@@ -3296,6 +3296,7 @@ function wpsp_Import_Dummy_contents() {
 			$(".tution-fees-te-inv .inv-expected-amt").html("<i class='fa fa-inr'></i><?php echo $tf; ?>/-");
 			$(".tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i><?php echo $tf; ?>/-");
 			$(".dep-tf-inp .expected, .dep-tf-inp .paid").val("<?php echo $tf; ?>");
+			$(".dep-tf-inp #original-amount").val("<?php echo $tf; ?>");
 			var totAmtArr = [];
 			var paidAmtArr = [];
 			for(var i=2;i<7;i++){

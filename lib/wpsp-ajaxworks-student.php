@@ -77,6 +77,7 @@ function wpsp_AddStudent() {
 	$pbloodgroup	    = 	esc_attr($_POST['p_bloodgrp']);  
 	$transport 			= 	$_POST['opt_transport'];
 	$current_date		=	date("Y-m-d");
+	$curr_month			=	date("m");
 	if( $transport == "on" ) $transport = 1;
 	else $transport = 0;
 	
@@ -193,7 +194,7 @@ function wpsp_AddStudent() {
 		for($i=0;$i<count($fees_type_array);$i++){
 			switch($fees_type_array[$i]){
 				case "adm":
-					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>$curr_month, "amount"=>$adm_f, "fees_type"=>"adm", "session"=>$session);
+					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "amount"=>$adm_f, "fees_type"=>"adm", "session"=>$session);
 					$wpdb->insert($dues_table, $fd_data);
 				break;
 				case "ttn":
