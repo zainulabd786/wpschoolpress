@@ -156,6 +156,12 @@
                                         <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm Password">
                                     </div>
                                 </div>
+
+                                <div class="form-group opt-transport">
+                                    <label for="transport">Transport</label><br/>
+                                    <input type="checkbox" id="transport" data-toggle="toggle" data-on="Required" data-off="Not Required">
+                                </div>
+
                                <div class="form-group">
                                      <label for="displaypicture">
                                       Profile Image
@@ -295,7 +301,7 @@
                                  <div class="form-group">
                                      <label for="p_displaypicture">
                                       Profile Image
-                                  </label> </br>
+                                    </label> </br>
                                     <label class="customUpload btnUpload  btn btn-success"  style="color: #ffffff;  margin-right: 10px;">
                                         <span class="logo-label"><i class="fa fa-upload" aria-hidden="true"></i>  Choose File </span>
                                         <input name="p_displaypicture" class="upload" type="file" id="p_displaypicture">
@@ -304,6 +310,7 @@
                                     <p class="help-block">* Only JPEG and JPG supported </p>
                                     <p class="help-block">* Max 3 MB Upload </p>
                                 </div>
+
                             </div>
                         </div>
                     </div>
