@@ -22,6 +22,7 @@
 	global $current_user;	
 	$role		=	 $current_user->roles;
 	$cuserId	=	 $current_user->ID;
+	$months_array = array("N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 ?>
 	<section class="content">
 		<div class="row">
@@ -124,6 +125,7 @@
 										<th>Parent</th>
 										<th>Class</th>
 										<th>Amount Due</th>
+										<th>Month</th>
 										<th class="nosort">Action</th>
 									</tr>
 								</thead>
@@ -148,7 +150,7 @@
 									}
 									
 									//$students	=	$wpdb->get_results("select * from $student_table s, $users_table u, $fee_status_table f where u.ID=s.wp_usr_id $classquery AND s.sid = f.sid AND (f.admission_fees != 0 OR f.tution_fees != 0 OR f.transport_chg != 0 OR annual_chg != 0 OR recreation_chg != 0) order by sid desc");
-									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, d.amount AS due_amount, d.fees_type, c.c_name FROM $student_table s, $dues_table d, $class_table c WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id $classquery");
+									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, d.amount AS due_amount, d.fees_type, d.month, c.c_name FROM $student_table s, $dues_table d, $class_table c WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id $classquery");
 									$plugins_url=plugins_url();
 									$teacherId = '';
 									if( $currentSelectClass != 'all' )
@@ -157,7 +159,7 @@
 									foreach($students as $stinfo)
 									{	
 										$key++;	
-										$amount = $stinfo->adm+$stinfo->ttn+$stinfo->trans+$stinfo->ann+$stinfo->rec;					
+										if(!empty($stinfo->due_amount)){				
 									?>
 											<tr>
 											<td>
@@ -192,6 +194,7 @@
 													
 												?>
 											</td>
+											<td><?php echo $months_array[$stinfo->month]; ?></td>
 											<td>
 												<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										
 																					
@@ -200,7 +203,7 @@
 												<?php } ?>
 											</td>
 										</tr>
-									<?php
+									<?php }
 									}
 									?>
 								</tbody>
@@ -214,6 +217,7 @@
 									<th>Parent</th>
 									<th>Class</th>
 									<th>Amount Due</th>
+									<th>Month</th>
 									<th>Action</th>
 								  </tr>
 								</tfoot>
