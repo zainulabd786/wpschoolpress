@@ -11,11 +11,6 @@
 		$dues_table = $wpdb->prefix."wpsp_fees_dues";
 		$uidff_sql = $wpdb->get_results("SELECT * FROM $student_table b, $class_table c WHERE b.wp_usr_id = $uidff AND c.cid = b.class_id");
 		foreach ($uidff_sql as $fee) {
-			$adm_f = $fee->admission_fees;
-			$ttn_f = $fee->tution_fees;
-			$trans_f = $fee->transport_chg;
-			$ann_f = $fee->annual_chg;
-			$rec_f = $fee->recreation_chg;
 			$sfname_f = $fee->s_fname;
 			$smname_f = $fee->s_mname;
 			$slname_f = $fee->s_lname;

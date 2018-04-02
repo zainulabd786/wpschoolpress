@@ -3109,7 +3109,36 @@ function wpsp_Import_Dummy_contents() {
 								'fees_type' => "adm",
 								'session' => $session
 							);
-							if($wpdb->insert($dues_table, $sql_dues_data)){
+							if($wpdb->insert($dues_table, $sql_dues_data) && $wpdb->query("UPDATE $dues_table SET amount=amount-'$admission_fees' WHERE fees_type='adm' AND session='$session' amount='$exp_admission_fees'")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
+						else{
+							$sql_record_data = array(
+								'tid' => $tid.$j."1",
+								'slip_no' => $slip_no,
+								'date_time' => $current_date_time,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $admission_fees,
+								'session' => $session,
+								'fees_type' => 'adm'
+							);
+						}
+						if($admission_fees < $exp_admission_fees){
+							$sql_dues_data = array(
+								'date' => $todays_date,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $admission_fees,
+								'fees_type' => "adm",
+								'session' => $session
+							);
+							if($wpdb->insert($dues_table, $sql_dues_data) && $wpdb->query("DELETE FROM $dues_table WHERE fees_type='adm' AND session='$session' amount='$admission_fees'")){
 								$ok = 1;
 							}
 							else{
