@@ -3145,7 +3145,7 @@ function wpsp_Import_Dummy_contents() {
 
 					case "ann":
 						$sql_record_data = array(
-								'tid' => $tid.$j."1",
+								'tid' => $tid.$j."2",
 								'slip_no' => $slip_no,
 								'date_time' => $current_date_time,
 								'uid' => $uid,
@@ -3163,7 +3163,24 @@ function wpsp_Import_Dummy_contents() {
 								'fees_type' => "ann",
 								'session' => $session
 							);
-							if($wpdb->insert($dues_table, $sql_dues_data)){
+							if($wpdb->query("UPDATE $dues_table SET amount=amount-'$annual_chg' WHERE fees_type='ann' AND session='$session' AND amount='$exp_annual_chg' AND uid='$uid'")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
+						else{
+							$sql_dues_data = array(
+								'date' => $todays_date,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $exp_annual_chg - $annual_chg,
+								'fees_type' => "ann",
+								'session' => $session
+							);
+							if($wpdb->insert($dues_table, $sql_dues_data) && $wpdb->query("DELETE FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid' ")){
 								$ok = 1;
 							}
 							else{
@@ -3200,7 +3217,24 @@ function wpsp_Import_Dummy_contents() {
 								'fees_type' => "rec",
 								'session' => $session
 							);
-							if($wpdb->insert($dues_table, $sql_dues_data)){
+							if($wpdb->query("UPDATE $dues_table SET amount=amount-'$recreation_chg' WHERE fees_type='rec' AND session='$session' AND amount='$exp_recreation_chg' AND uid='$uid'")){
+								$ok = 1;
+							}
+							else{
+								$ok = 0;
+								throw new Exception($wpdb->print_error());
+							}
+						}
+						else{
+							$sql_dues_data = array(
+								'date' => $todays_date,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $exp_recreation_chg - $recreation_chg,
+								'fees_type' => "rec",
+								'session' => $session
+							);
+							if($wpdb->insert($dues_table, $sql_dues_data) && $wpdb->query("DELETE FROM $dues_table WHERE fees_type='rec' AND session='$session' AND amount='$recreation_chg' AND uid='$uid' ")){
 								$ok = 1;
 							}
 							else{
