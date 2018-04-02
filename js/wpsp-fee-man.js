@@ -216,7 +216,6 @@ $(document).ready(function(){
 	});
 	$("#dep-concession").change(function(){
 		const ORIG_AMT = $(".dep-tf-inp #original-amount").val();
-		console.log(ORIG_AMT);
 		var discountedAmt = parseInt($(".dep-tf-inp .expected").val())-parseInt($(this).val());
 		$(".dep-tf-inp .expected, .dep-tf-inp .paid").val(discountedAmt);
 		$(".tution-fees-te-inv .inv-expected-amt, .tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+discountedAmt+"/-");
@@ -226,6 +225,14 @@ $(document).ready(function(){
 			$(".tution-fees-te-inv .inv-expected-amt, .tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+ORIG_AMT+"/-");
 			$(".expected, .paid").trigger("change");
 			$(this).val("0");
+		}
+	});
+	$("#dep-concession").keyup(function(){
+		const ORIG_AMT = $(".dep-tf-inp #original-amount").val();
+		if($(this).val() == ""){
+			$(".dep-tf-inp .expected, .dep-tf-inp .paid").val(ORIG_AMT);
+			$(".tution-fees-te-inv .inv-expected-amt, .tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+ORIG_AMT+"/-");
+			$(".expected, .paid").trigger("change");
 		}
 	});
 	$("#dep-fees-btn").click(function(){
