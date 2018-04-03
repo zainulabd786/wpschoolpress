@@ -188,6 +188,8 @@
 													<input type="text" class="form-control expected" value="0" placeholder="Amount Expected"  disabled>
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 													<input type="hidden" id="original-amount">
+													<label for="dep-concession">Concession(<i class="fa fa-inr"></i>)</label>
+													<input type="text" id="dep-concession" class="form-control">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
 												</div>
 											</div>
@@ -233,10 +235,7 @@
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 												</div>
 											</div>
-											<div class="form-group">
-												<label for="dep-concession">Concession(<i class="fa fa-inr"></i>)</label>
-												<input type="text" id="dep-concession" class="form-control">
-											</div>
+											
 											<input type="button" class="btn btn-success btn-block" value="Submit" id="dep-fees-btn">
 						                </div>
 								</header>
@@ -274,7 +273,6 @@
 															case ("sch_pno"): $school_number = $setting->option_value; break;
 															case ("sch_email"): $school_email = $setting->option_value; break;
 															case ("sch_website"): $school_site = $setting->option_value; break;
-															
 														}
 													endforeach; ?>
 												<div class="invoice-header">
