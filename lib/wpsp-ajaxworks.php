@@ -3416,4 +3416,206 @@ function wpsp_Import_Dummy_contents() {
 		</script> <?php
 		wp_die();
 	}
+
+	function view_invoice(){
+		global $wpdb;
+
+		$id = $_POST['sId'];
+		$receipts_table = $wpdb->prefix."wpsp_fees_receipts";
+		$student_table = $wpdb->prefix."wpsp_student";
+		$class_table = $wpdb->prefix."wpsp_class";
+		$settings_table = $wpdb->prefix."wpsp_settings";
+		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name FROM $receipts_table a, $student_table b, $class_table c WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id'");
+		
+		foreach ($receipts as $slip) {
+			$student_full_name = $slip->s_fname." ".$slip->s_mname." ".$slip->s_lname;
+			$father_full_name = $slip->p_fname." ".$slip->p_mname." ".$slip->p_lname; ?>
+
+			<div class="col-md-12" class="invoice-panel">
+                <div class="panel-group">
+					<header class="panel panel-primary">
+						<div class="panel-heading"> Invoice Preview 
+							<button type="button" class="btn btn-success btn-print"><i class="fa fa-print"></i> Print Invoice</button>
+						</div>
+						<div class="panel-body">
+							<div class="invoice-prev">
+								<?php 
+									//fetch School Details From Database										
+													
+									$sel_setting	=	$wpdb->get_results("select * from $settings_table");
+									$school_name = "";
+									$school_logo = "";
+									$school_add = "";
+									$school_city = "";
+									$school_state = "";
+									$school_country = "";
+									$school_number = "";
+									$school_email = "";
+									$school_site = "";
+									foreach( $sel_setting as $setting ) :
+										switch ($setting->option_name) {
+											case ("sch_name"): $school_name = $setting->option_value; break;
+											case ("sch_logo"): $school_logo = $setting->option_value; break;
+											case ("sch_addr"): $school_add = $setting->option_value; break;
+											case ("sch_city"): $school_city = $setting->option_value; break;
+											case ("sch_state"): $school_state = $setting->option_value; break;
+											case ("sch_counter"): $school_country = $setting->option_value; break;
+											case ("sch_pno"): $school_number = $setting->option_value; break;
+											case ("sch_email"): $school_email = $setting->option_value; break;
+											case ("sch_website"): $school_site = $setting->option_value; break;
+										}
+									endforeach; ?>
+								<div class="invoice-header">
+									<div class="invoice-header-logo-name row">
+
+										<div class="invoice-header-logo col-md-3 col-print-3">
+											<img src="<?php if(!empty($school_logo)) echo $school_logo; ?>" height=90 width=90>
+										</div>
+										<div class="invoice-header-name col-md-9 col-print-9">
+											<h2><?php if(!empty($school_name)) echo $school_name; ?></h2>
+										</div>
+
+									</div>
+
+									<div class="invoice-header-school-details">
+										<b><?php echo $school_add.", ".$school_city; ?></b>
+										<p><?php echo "Web: ".$school_site." | Email: ".$school_email; ?></p>
+									</div>
+
+									<div class="invoice-header-doc-details row">
+										<div class="invoice-header-slip-no col-xs-4">
+											<strong>Slip No.</strong>
+											<div><?php
+												echo $slip->slip_no;
+											?></div>
+										</div>
+										<div class="invoice-header-heading col-xs-4">
+											<div>FEE BILL CUM RECEIPT</div>
+										</div>
+										<div class="invoice-header-date col-xs-4">
+											<strong>Date:</strong>
+											<div><?php echo $current_date; ?></div>
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="invoice-details">
+
+									<div class="blank b1">
+										<strong>Name</strong>
+										<div><?php if(!empty($student_full_name)) echo $student_full_name; ?></div>
+									</div>
+									<div class="blank b2">
+										<strong>Father Name</strong>
+										<div><?php if(!empty($father_full_name)) echo $father_full_name; ?></div>
+									</div>
+									<div class="blank b3">
+										<div class="sb1">
+											<strong>Mob No.</strong>
+											<div><?php if(!empty($sphone_f)) echo $sphone_f; ?></div>
+										</div>
+										<div class="sb2">
+											<strong>Reg. No.</strong>
+											<div><?php if(!empty($regno)) echo $regno; ?></div>
+										</div>
+									</div>
+									<div class="blank b4">
+										<div class="sb1">
+											<strong>From Month</strong>
+											<div></div>
+										</div>
+										<div class="sb2">
+											<strong>To Month</strong>
+										
+											<div></div>
+										</div>
+									</div>
+									<div class="blank b5">
+										
+										<div class="sb1">
+											<strong>Session</strong>
+											<div><?php if(!empty($session)) echo $session; ?></div>
+										</div>
+										<div class="sb2">
+											<strong>Class/Section</strong>
+											<div><?php if(!empty($class)) echo $class; ?></div>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="script-to-fill-invoice">
+													
+								</div>
+
+								<div class="invoice-body">
+									<table>
+										<tr class="tab-head">
+											<td>S NO.</td>
+											<td>Type Of Charges</td>
+											<td>Amount <i class="fa fa-inr"></i></td>
+											<td>Paid Amount <i class="fa fa-inr"></i></td>
+											<td>Balance <i class="fa fa-inr"></i></td>
+										</tr>
+										<tr class="adm-fees-tr-inv" >
+											<td>1</td>
+											<td>Admission Fees</td>
+											<td class="inv-expected-amt">0</td>
+											<td class="inv-paid-amt">0</td>
+											<td class="inv-bal-amt">0</td>
+										</tr>
+										<tr class="tution-fees-te-inv" >
+										<td>2</td>
+											<td>Tution Fees(<div style="display: inline;" class="months">Monthly</div>)</td>
+											<td class="inv-expected-amt">0</td>
+											<td class="inv-paid-amt">0</td>
+											<td class="inv-bal-amt">0</td>
+										</tr>
+										<tr class="trans-chg-tr-inv" >
+											<td>3</td>
+											<td>Transportation charges(<div style="display: inline;" class="months">Monthly</div>)</td>
+											<td class="inv-expected-amt">0</td>
+											<td class="inv-paid-amt">0</td>
+											<td class="inv-bal-amt">0</td>
+										</tr>
+										<tr class="annual-chg-tr-inv" >
+											<td>4</td>
+											<td>Annual Charges<br>(Dress+Books+Copies+Stationary)</td>
+											<td class="inv-expected-amt">0</td>
+											<td class="inv-paid-amt">0</td>
+											<td class="inv-bal-amt">0</td>
+										</tr>
+										<tr class="rec-chg-tr-inv" >
+											<td>5</td>
+											<td>Recreation Charge</td>
+											<td class="inv-expected-amt">0</td>
+											<td class="inv-paid-amt">0</td>
+											<td class="inv-bal-amt">0</td>
+										</tr>
+										<tr class="inv-tab-bottom" >
+											<td></td>
+											<td>Total</td>
+											<td colspan="4" class="inv-tot-amt">0</td>
+										</tr>
+										<tr class="inv-tab-bottom" >
+											<td></td>
+											<td>Paid Amount</td>
+											<td colspan="4" class="inv-paid-amt">0</td>
+										</tr>
+										<tr class="inv-tab-bottom" >
+											<td></td>
+											<td>Balance</td>
+											<td colspan="4" class="inv-bal-amt">0</td>
+										</tr>
+									</table>
+								</div>
+
+							</div>
+						</div>
+				</header>
+			</div>
+        </div><?php
+		}
+		wp_die();
+	}
 ?>
