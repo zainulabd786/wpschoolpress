@@ -194,7 +194,7 @@ function wpsp_AddStudent() {
 		for($i=0;$i<count($fees_type_array);$i++){
 			switch($fees_type_array[$i]){
 				case "adm":
-					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "amount"=>$adm_f, "fees_type"=>"adm", "session"=>$session);
+					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>"0", "amount"=>$adm_f, "fees_type"=>"adm", "session"=>$session);
 					$wpdb->insert($dues_table, $fd_data);
 				break;
 				case "ttn":
@@ -202,7 +202,7 @@ function wpsp_AddStudent() {
 					$wpdb->insert($dues_table, $fd_data);
 				break;
 				case "ann":
-					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "amount"=>$ann_f, "fees_type"=>"ann", "session"=>$session);
+					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>"0", "amount"=>$ann_f, "fees_type"=>"ann", "session"=>$session);
 					$wpdb->insert($dues_table, $fd_data);
 				break;
 			}
