@@ -309,4 +309,27 @@ $(document).ready(function(){
 	$(".dues-chart-btn").click(function(){
 		$(".due-chart-container").slideToggle();
 	});
+
+	$(".view-invoice").click(function(){
+		var slipId = $(this).attr("id");
+		$.post(ajax_url, {
+			action: "view_invoice_to_print", 
+			sId: slipId
+		}, function(resp){
+		 	$.confirm({
+				title: "Receipt Details", 
+				type: 'green',
+				typeAnimated: true,
+				columnClass: 'col-md-12 col-md-offset-0',
+				buttons: {
+					close: function () {text: 'Close'}
+				},
+				content: resp,
+				contentLoaded: function(data, status, xhr){
+					// data is already set in content
+					this.setContentAppend('<br>Status: ' + status);
+				}
+			});
+		});
+	});
 });

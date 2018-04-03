@@ -51,7 +51,7 @@
 										<th>Parent</th>
 										<th>Class</th>
 										<th>Amount</th>
-										<th>View Details</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -123,7 +123,8 @@
 												<?php echo "<i class='fa fa-inr'></i>".number_format($amount)."/-"; ?>
 											</td>
 											<td>
-												<a class="view-transaction" id="<?php echo $stinfo->slip_no; ?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 	
+												<a class="view-transaction" id="<?php echo $stinfo->slip_no; ?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 
+												<button class="btn btn-basic view-invoice" id="<?php echo $stinfo->slip_no; ?>" type="button">Invoice</button> 	
 											</td>
 										</tr>
 									<?php
@@ -141,7 +142,7 @@
 									<th>Parent</th>
 									<th> Class</th>
 									<th>Amount</th>
-									<th>View Details</th>
+									<th>Action</th>
 								  </tr>
 								</tfoot>
 							  </table>
