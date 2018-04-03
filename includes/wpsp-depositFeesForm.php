@@ -264,16 +264,16 @@
 													$school_email = "";
 													$school_site = "";
 													foreach( $sel_setting as $setting ) :
-														switch ($setting->id) {
-															case (1): $school_name = $setting->option_value; break;
-															case (2): $school_logo = $setting->option_value; break;
-															case (6): $school_add = $setting->option_value; break;
-															case (7): $school_city = $setting->option_value; break;
-															case (8): $school_state = $setting->option_value; break;
-															case (9): $school_country = $setting->option_value; break;
-															case (10): $school_number = $setting->option_value; break;
-															case (12): $school_email = $setting->option_value; break;
-															case (13): $school_site = $setting->option_value; break;
+														switch ($setting->option_name) {
+															case ("sch_name"): $school_name = $setting->option_value; break;
+															case ("sch_logo"): $school_logo = $setting->option_value; break;
+															case ("sch_addr"): $school_add = $setting->option_value; break;
+															case ("sch_city"): $school_city = $setting->option_value; break;
+															case ("sch_state"): $school_state = $setting->option_value; break;
+															case ("sch_counter"): $school_country = $setting->option_value; break;
+															case ("sch_pno"): $school_number = $setting->option_value; break;
+															case ("sch_email"): $school_email = $setting->option_value; break;
+															case ("sch_website"): $school_site = $setting->option_value; break;
 															
 														}
 													endforeach; ?>
