@@ -78,7 +78,8 @@
 									
 									$plugins_url=plugins_url();
 									$teacherId = '';
-									if( $currentSelectClass != 'all' )
+									$currentSelectClass =	isset($_POST['ClassID']) ? $_POST['ClassID'] : $sel_class[0]->cid;
+									if( $currentSelectClass != 'all' ) 
 										$teacherId	=	$wpdb->get_var("select teacher_id from $class_table WHERE cid=$currentSelectClass");
 									$key =0;
 									foreach($students as $stinfo)
