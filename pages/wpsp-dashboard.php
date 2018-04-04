@@ -159,6 +159,7 @@
 		$student_table		=	$wpdb->prefix."wpsp_student";
 		$fees_settings_table=	$wpdb->prefix."wpsp_fees_settings";
 		$dues_table			=	$wpdb->prefix."wpsp_fees_dues";
+		$transport_table	=	$wpdb->prefix."wpsp_transport";
 		$session 			=	0;
 		$sql_session		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'session'");
 		foreach ($sql_session as $session) {
@@ -172,10 +173,13 @@
 				foreach ($student_sql as $student) {
 					$tf = 0;
 					$tc = 0;
-					$sql_fees = $wpdb->get_results("SELECT tution_fees, transport_chg FROM $fees_settings_table WHERE cid='$student->class_id' ");
+					$sql_fees = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$student->class_id' ");
 					foreach ($sql_fees as $f) {
 						$tf = $f->tution_fees;
-						$tc = $f->transport_chg;
+					}
+					$sql_trans_fees = $wpdb->get_results("SELECT a.route_fees FROM $transport_table a, $student_table b WHERE a.id=b.route_id AND b.transport = 1 ");
+					foreach ($sql_trans_fees as $trf) {
+						$tc = $trf->route_fees;
 					}
 					$sql_tf_data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$curr_month, 'amount'=>$tf, 'fees_type'=>'ttn', 'session'=>$session);
 					if($student->transport == 1){
