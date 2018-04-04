@@ -549,7 +549,8 @@ $sql_student = "CREATE TABLE $student_table  (
 	  `p_edu` varchar(50), 
 	  `p_profession` varchar(60),
 	  `p_bloodgrp` varchar(10),
-	  `transport` int(1)
+	  `transport` int(1),
+	  `route_id` int(9)
 	  )ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ";
 	dbDelta($sql_student);
 	

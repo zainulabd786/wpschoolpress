@@ -229,10 +229,11 @@ $(document).ready(function () {
     });	
     $("#transport").change(function(){
         if($(this).prop("checked") == false){
-            $(".transport-charge").attr("disabled", true);
+            $(".transport-route").attr("disabled", true);
         }
         else{
-            $(".transport-charge").attr("disabled", false);
+            $(".transport-route").attr("disabled", false);
+            $.post(ajax_url, {action: "get_transport_routes"}, function(response){ $(".transport-route").html(response); });
         }
     });
 	$(document).on('click','.ViewStudent',function(e) {

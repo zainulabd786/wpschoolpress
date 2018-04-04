@@ -3649,4 +3649,16 @@ function wpsp_Import_Dummy_contents() {
 		}
 		wp_die();
 	}
+
+	function get_transport_routes(){
+		global $wpdb;
+
+		$transport_table = $wpdb->prefix."wpsp_transport";
+        $transport_sql = $wpdb->get_results("SELECT id, bus_route FROM $transport_table");
+        foreach ($transport_sql as $route) { ?>
+        	<option value="<?php echo $route->id; ?>"><?php echo $route->bus_route; ?></option><?php
+        }
+
+		wp_die();
+	}
 ?>

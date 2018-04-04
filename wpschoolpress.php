@@ -183,6 +183,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_calculate_expected_amount_transport', 'cal_trans_expected_amount' );
 
 		add_action( 'wp_ajax_view_invoice_to_print', 'view_invoice' );
+
+		add_action( 'wp_ajax_get_transport_routes', 'get_transport_routes' );
 }
 
 function tl_save_error() {

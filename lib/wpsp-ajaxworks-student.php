@@ -78,7 +78,11 @@ function wpsp_AddStudent() {
 	$transport 			= 	$_POST['opt_transport'];
 	$current_date		=	date("Y-m-d");
 	$curr_month			=	date("m");
-	if( $transport == "on" ) $transport = 1;
+	$trn_route			=	0;
+	if( $transport == "on" ){
+		$transport = 1;
+		$trn_route = $_POST['transport_route'];
+	} 
 	else $transport = 0;
 	
 	$email	=	empty( $email ) ? wpsp_EmailGen($username) : $email;
@@ -171,7 +175,8 @@ function wpsp_AddStudent() {
 						's_pcountry'		=> isset( $_POST['s_pcountry'] ) ? esc_attr( $_POST['s_pcountry'] ) : '',
 						's_pcity' 			=> isset( $_POST['s_pcity'] ) ? esc_attr( $_POST['s_pcity'] ) :'',						
 						's_pzipcode'		=> isset( $_POST['s_pzipcode'] ) ? $_POST['s_pzipcode'] :'',
-						'transport'			=> $transport
+						'transport'			=> $transport,
+						'route_id'			=> $trn_route
 						 );
 		$cid_for_fee = $_POST['Class'];
 		$fees_settings_sql = $wpdb->get_results("SELECT * FROM $wpsp_fees_settings_table WHERE cid='$cid_for_fee'");
