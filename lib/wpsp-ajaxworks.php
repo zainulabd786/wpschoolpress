@@ -3419,18 +3419,42 @@ function wpsp_Import_Dummy_contents() {
 
 	function view_invoice(){
 		global $wpdb;
-
+		$school_name = $school_add = $school_city = $school_state = $school_country = $school_number = $school_email = $school_site = $exp_adm = $exp_ttn = $exp_trn = $exp_ann = $exp_rec = "";
+		$months_array = array("N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
+		$total_amt = 0;
 		$id = $_POST['sId'];
 		$receipts_table = $wpdb->prefix."wpsp_fees_receipts";
+		$records_table = $wpdb->prefix."wpsp_fees_payment_record";
 		$student_table = $wpdb->prefix."wpsp_student";
 		$class_table = $wpdb->prefix."wpsp_class";
 		$settings_table = $wpdb->prefix."wpsp_settings";
-		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name FROM $receipts_table a, $student_table b, $class_table c WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id'");
-		
+		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time) AS date FROM $receipts_table a, $student_table b, $class_table c, $records_table d WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no LIMIT 1");
 		foreach ($receipts as $slip) {
 			$student_full_name = $slip->s_fname." ".$slip->s_mname." ".$slip->s_lname;
-			$father_full_name = $slip->p_fname." ".$slip->p_mname." ".$slip->p_lname; ?>
-
+			$father_full_name = $slip->p_fname." ".$slip->p_mname." ".$slip->p_lname; 
+			$num_months_ttn = ($slip->to_ttn - $slip->from_ttn) + 1;
+			$num_months_trn = ($slip->to_trn - $slip->from_trn) + 1;
+			$expected_fees = $wpdb->get_results("SELECT * FROM $fees_settings_table WHERE cid = '$slip->class_id'");
+			foreach ($expected_fees as $exp_amt) {
+			 	$exp_adm = $exp_amt->admission_fees;
+			 	$exp_ttn = $exp_amt->tution_fees * $num_months_ttn;
+			 	$exp_trn = $exp_amt->transport_chg * $num_months_trn;
+			 	$exp_ann = $exp_amt->annual_chg;
+			 	$exp_rec = $exp_amt->recreation_chg;
+			 }
+			$due_adm = $exp_adm - $slip->adm;
+			$due_ttn = $exp_ttn - $slip->ttn;
+			$due_trn = $exp_trn - $slip->trans;
+			$due_ann = $exp_ann - $slip->ann;
+			$due_rec = $exp_rec - $slip->rec;
+			if(!empty($slip->adm)) $total_amt += $exp_adm;
+			if(!empty($slip->ttn)) $total_amt += $exp_ttn;
+			if(!empty($slip->trans)) $total_amt += $exp_trn;
+			if(!empty($slip->ann)) $total_amt += $exp_ann;
+			if(!empty($slip->rec)) $total_amt += $exp_rec;
+			$paid_amt = $slip->adm + $slip->ttn + $slip->trans + $slip->ann + $slip->rec;
+			$balance = $total_amt - $paid_amt; ?>
 			<div class="col-md-12" class="invoice-panel">
                 <div class="panel-group">
 					<header class="panel panel-primary">
@@ -3443,15 +3467,6 @@ function wpsp_Import_Dummy_contents() {
 									//fetch School Details From Database										
 													
 									$sel_setting	=	$wpdb->get_results("select * from $settings_table");
-									$school_name = "";
-									$school_logo = "";
-									$school_add = "";
-									$school_city = "";
-									$school_state = "";
-									$school_country = "";
-									$school_number = "";
-									$school_email = "";
-									$school_site = "";
 									foreach( $sel_setting as $setting ) :
 										switch ($setting->option_name) {
 											case ("sch_name"): $school_name = $setting->option_value; break;
@@ -3494,7 +3509,7 @@ function wpsp_Import_Dummy_contents() {
 										</div>
 										<div class="invoice-header-date col-xs-4">
 											<strong>Date:</strong>
-											<div><?php echo $current_date; ?></div>
+											<div><?php echo $slip->date; ?></div>
 										</div>
 									</div>
 								</div>
@@ -3512,33 +3527,32 @@ function wpsp_Import_Dummy_contents() {
 									<div class="blank b3">
 										<div class="sb1">
 											<strong>Mob No.</strong>
-											<div><?php if(!empty($sphone_f)) echo $sphone_f; ?></div>
+											<div><?php if(!empty($slip->s_phone)) echo $slip->s_phone; ?></div>
 										</div>
 										<div class="sb2">
 											<strong>Reg. No.</strong>
-											<div><?php if(!empty($regno)) echo $regno; ?></div>
+											<div><?php if(!empty($slip->s_regno)) echo $slip->s_regno; ?></div>
 										</div>
 									</div>
 									<div class="blank b4">
 										<div class="sb1">
 											<strong>From Month</strong>
-											<div></div>
+											<div><?php echo $months_array[$slip->from_ttn]; ?></div>
 										</div>
 										<div class="sb2">
 											<strong>To Month</strong>
 										
-											<div></div>
+											<div><?php echo $months_array[$slip->to_ttn]; ?></div>
 										</div>
 									</div>
 									<div class="blank b5">
-										
 										<div class="sb1">
 											<strong>Session</strong>
-											<div><?php if(!empty($session)) echo $session; ?></div>
+											<div><?php if(!empty($slip->session)) echo $slip->session; ?></div>
 										</div>
 										<div class="sb2">
 											<strong>Class/Section</strong>
-											<div><?php if(!empty($class)) echo $class; ?></div>
+											<div><?php if(!empty($slip->c_name)) echo $slip->c_name; ?></div>
 										</div>
 									</div>
 
@@ -3557,56 +3571,68 @@ function wpsp_Import_Dummy_contents() {
 											<td>Paid Amount <i class="fa fa-inr"></i></td>
 											<td>Balance <i class="fa fa-inr"></i></td>
 										</tr>
-										<tr class="adm-fees-tr-inv" >
+										<?php if(!empty($slip->adm)){ ?>
+										<tr <?php if(!empty($slip->adm)) echo "style='display:table-row'"; ?> class="adm-fees-tr-inv" >
 											<td>1</td>
 											<td>Admission Fees</td>
-											<td class="inv-expected-amt">0</td>
-											<td class="inv-paid-amt">0</td>
-											<td class="inv-bal-amt">0</td>
+											<td class="inv-expected-amt"><?php if(!empty($exp_adm)) echo "<i class='fa fa-inr'></i>".$exp_adm."/-"; ?></td>
+											<td class="inv-paid-amt"><?php if(!empty($slip->adm)) echo "<i class='fa fa-inr'></i>".$slip->adm."/-"; ?></td>
+											<td class="inv-bal-amt"><?php echo "<i class='fa fa-inr'></i>".$due_adm."/-"; ?></td>
 										</tr>
-										<tr class="tution-fees-te-inv" >
+										<?php }
+										if(!empty($slip->ttn)){ ?>
+										<tr <?php if(!empty($slip->ttn)) echo "style='display:table-row'"; ?> class="tution-fees-te-inv" >
 										<td>2</td>
 											<td>Tution Fees(<div style="display: inline;" class="months">Monthly</div>)</td>
-											<td class="inv-expected-amt">0</td>
-											<td class="inv-paid-amt">0</td>
-											<td class="inv-bal-amt">0</td>
+											<td class="inv-expected-amt"><?php if(!empty($exp_ttn)) echo "<i class='fa fa-inr'></i>".$exp_ttn."/-"; ?></td>
+											<td class="inv-paid-amt"><?php if(!empty($slip->ttn)) echo "<i class='fa fa-inr'></i>".$slip->ttn."/-"; ?></td>
+											<td class="inv-bal-amt"><?php echo "<i class='fa fa-inr'></i>".$due_ttn."/-"; ?></td>
 										</tr>
-										<tr class="trans-chg-tr-inv" >
+										<?php }
+										if(!empty($slip->trans)){ ?>
+										<tr <?php if(!empty($slip->trans)) echo "style='display:table-row'"; ?> class="trans-chg-tr-inv" >
 											<td>3</td>
 											<td>Transportation charges(<div style="display: inline;" class="months">Monthly</div>)</td>
-											<td class="inv-expected-amt">0</td>
-											<td class="inv-paid-amt">0</td>
-											<td class="inv-bal-amt">0</td>
+											<td class="inv-expected-amt"><?php if(!empty($exp_trn)) echo "<i class='fa fa-inr'></i>".$exp_trn."/-"; ?></td>
+											<td class="inv-paid-amt"><?php if(!empty($slip->trans)) echo "<i class='fa fa-inr'></i>".$slip->trans."/-"; ?></td>
+											<td class="inv-bal-amt"><?php echo "<i class='fa fa-inr'></i>".$due_trn."/-"; ?></td>
 										</tr>
-										<tr class="annual-chg-tr-inv" >
+										<?php } 
+										if(!empty($slip->ann)){ ?>
+										<tr <?php if(!empty($slip->ann)) echo "style='display:table-row'"; ?> class="annual-chg-tr-inv" >
 											<td>4</td>
 											<td>Annual Charges<br>(Dress+Books+Copies+Stationary)</td>
-											<td class="inv-expected-amt">0</td>
-											<td class="inv-paid-amt">0</td>
-											<td class="inv-bal-amt">0</td>
+											<td class="inv-expected-amt"><?php if(!empty($exp_ann)) echo "<i class='fa fa-inr'></i>".$exp_ann."/-"; ?></td>
+											<td class="inv-paid-amt"><?php if(!empty($slip->ann)) echo "<i class='fa fa-inr'></i>".$slip->ann."/-"; ?></td>
+											<td class="inv-bal-amt"><?php echo "<i class='fa fa-inr'></i>".$due_ann."/-"; ?></td>
 										</tr>
-										<tr class="rec-chg-tr-inv" >
+										<?php }
+										if(!empty($slip->rec)){ ?>
+										<tr <?php if(!empty($slip->rec)) echo "style='display:table-row'"; ?> class="rec-chg-tr-inv" >
 											<td>5</td>
 											<td>Recreation Charge</td>
-											<td class="inv-expected-amt">0</td>
-											<td class="inv-paid-amt">0</td>
-											<td class="inv-bal-amt">0</td>
+											<td class="inv-expected-amt"><?php if(!empty($exp_rec)) echo "<i class='fa fa-inr'></i>".$exp_rec."/-"; ?></td>
+											<td class="inv-paid-amt"><?php if(!empty($slip->rec)) echo "<i class='fa fa-inr'></i>".$slip->rec."/-"; ?></td>
+											<td class="inv-bal-amt"><?php echo "<i class='fa fa-inr'></i>".$due_rec."/-"; ?></td>
 										</tr>
-										<tr class="inv-tab-bottom" >
+										<?php } 
+										if(!empty($slip->rec) || !empty($slip->ann) || !empty($slip->trans) || !empty($slip->ttn) || !empty($slip->adm)){	?>
+										<tr <?php if(!empty($slip->rec) || !empty($slip->ann) || !empty($slip->trans) || !empty($slip->ttn) || !empty($slip->adm)) echo "style='display:table-row'"; ?> class="inv-tab-bottom" >
 											<td></td>
 											<td>Total</td>
-											<td colspan="4" class="inv-tot-amt">0</td>
+											<td colspan="4" class="inv-tot-amt"><?php echo "<i class='fa fa-inr'></i>".$total_amt."/-"; ?></td>
 										</tr>
-										<tr class="inv-tab-bottom" >
+										<tr <?php if(!empty($slip->rec) || !empty($slip->ann) || !empty($slip->trans) || !empty($slip->ttn) || !empty($slip->adm)) echo "style='display:table-row'"; ?> class="inv-tab-bottom" >
 											<td></td>
 											<td>Paid Amount</td>
-											<td colspan="4" class="inv-paid-amt">0</td>
+											<td colspan="4" class="inv-paid-amt"><?php echo "<i class='fa fa-inr'></i>".$paid_amt."/-"; ?></td>
 										</tr>
-										<tr class="inv-tab-bottom" >
+										<tr <?php if(!empty($slip->rec) || !empty($slip->ann) || !empty($slip->trans) || !empty($slip->ttn) || !empty($slip->adm)) echo "style='display:table-row'"; ?> class="inv-tab-bottom" >
 											<td></td>
 											<td>Balance</td>
-											<td colspan="4" class="inv-bal-amt">0</td>
+											<td colspan="4" class="inv-bal-amt"><?php echo "<i class='fa fa-inr'></i>".$balance."/-"; ?></td>
 										</tr>
+										<?php } ?>
 									</table>
 								</div>
 
