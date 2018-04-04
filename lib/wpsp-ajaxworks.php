@@ -3458,8 +3458,8 @@ function wpsp_Import_Dummy_contents() {
 			<div class="col-md-12" class="invoice-panel">
                 <div class="panel-group">
 					<header class="panel panel-primary">
-						<div class="panel-heading"> Invoice Preview 
-							<button type="button" class="btn btn-success btn-print"><i class="fa fa-print"></i> Print Invoice</button>
+						<div class="panel-heading"> 
+							<button type="button" class="btn btn-success btn-reprint btn-block"><i class="fa fa-print"></i> Reprint Invoice</button>
 						</div>
 						<div class="panel-body">
 							<div class="invoice-prev">
@@ -3640,7 +3640,12 @@ function wpsp_Import_Dummy_contents() {
 						</div>
 				</header>
 			</div>
-        </div><?php
+        </div>
+        <script>
+        	$(".btn-reprint").click(function(){
+        		$.print(".invoice-prev");
+        	});
+        </script> <?php
 		}
 		wp_die();
 	}
