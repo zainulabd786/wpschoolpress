@@ -3438,7 +3438,7 @@ function wpsp_Import_Dummy_contents() {
 			$expected_fees = $wpdb->get_results("SELECT * FROM $fees_settings_table WHERE cid = '$slip->class_id'");
 			foreach ($expected_fees as $exp_amt) {
 			 	$exp_adm = $exp_amt->admission_fees;
-			 	$exp_ttn = $exp_amt->tution_fees * $num_months_ttn;
+			 	$exp_ttn = ($exp_amt->tution_fees * $num_months_ttn) - ($slip->concession * $num_months_ttn);
 			 	$exp_trn = $exp_amt->transport_chg * $num_months_trn;
 			 	$exp_ann = $exp_amt->annual_chg;
 			 	$exp_rec = $exp_amt->recreation_chg;
