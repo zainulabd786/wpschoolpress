@@ -2799,10 +2799,15 @@ function wpsp_Import_Dummy_contents() {
 		$record_table = $wpdb->prefix."wpsp_fees_payment_record";
 		$dues_table = $wpdb->prefix."wpsp_fees_dues";
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
-		$sql_expected_amounts = $wpdb->get_results("SELECT * FROM $fees_settings_table WHERE cid='$cid' ");
+		$student_table = $wpdb->prefix."wpsp_student";
+		$transport_table = $wpdb->prefix."wpsp_transport";
+		$sql_expected_amounts = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$cid' ");
 		foreach ($sql_expected_amounts as $amt) {
 			$pm_tf = $amt->tution_fees-$concession;
-			$pm_tc = $amt->transport_chg;
+		}
+		$sql_trans_fees = $wpdb->get_results("SELECT a.route_fees FROM $transport_table a, $student_table b WHERE b.wp_usr_id='$uid' AND a.id=b.route_id ");
+		foreach ($sql_trans_fees as $trans_amount) {
+			$pm_tc = $trans_amount->route_fees;
 		}
 		if(!empty($admission_fees)) $fees_type .= "adm";
 		if(!empty($transport_chg)) $fees_type .= "/trn";
@@ -2869,7 +2874,7 @@ function wpsp_Import_Dummy_contents() {
 								$outstanding_amt = 0;
 							}
 							else{
-								$tution_fees -= $outstanding_amt;
+								//$tution_fees -= $outstanding_amt;
 								$month = $i;
 								$sql_record_data = array(
 										'tid' => $tid.$i."0",
@@ -2991,7 +2996,7 @@ function wpsp_Import_Dummy_contents() {
 								$outstanding_amt_trn = 0;
 							}
 							else{
-								$transport_chg -= $outstanding_amt_trn;
+								//$transport_chg -= $outstanding_amt_trn;
 								$month = $i;
 								$sql_record_data = array(
 										'tid' => $tid.$i."1",
@@ -3118,15 +3123,7 @@ function wpsp_Import_Dummy_contents() {
 							}
 						}
 						else{
-							$sql_dues_data = array(
-								'date' => $todays_date,
-								'uid' => $uid,
-								'month' => $month,
-								'amount' => $exp_admission_fees - $admission_fees,
-								'fees_type' => "adm",
-								'session' => $session
-							);
-							if($wpdb->insert($dues_table, $sql_dues_data) && $wpdb->query("DELETE FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$admission_fees' AND uid='$uid' ")){
+							if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$admission_fees' AND uid='$uid' ")){
 								$ok = 1;
 							}
 							else{
@@ -3172,15 +3169,7 @@ function wpsp_Import_Dummy_contents() {
 							}
 						}
 						else{
-							$sql_dues_data = array(
-								'date' => $todays_date,
-								'uid' => $uid,
-								'month' => $month,
-								'amount' => $exp_annual_chg - $annual_chg,
-								'fees_type' => "ann",
-								'session' => $session
-							);
-							if($wpdb->insert($dues_table, $sql_dues_data) && $wpdb->query("DELETE FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid' ")){
+							if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid' ")){
 								$ok = 1;
 							}
 							else{
@@ -3226,15 +3215,7 @@ function wpsp_Import_Dummy_contents() {
 							}
 						}
 						else{
-							$sql_dues_data = array(
-								'date' => $todays_date,
-								'uid' => $uid,
-								'month' => $month,
-								'amount' => $exp_recreation_chg - $recreation_chg,
-								'fees_type' => "rec",
-								'session' => $session
-							);
-							if($wpdb->insert($dues_table, $sql_dues_data) && $wpdb->query("DELETE FROM $dues_table WHERE fees_type='rec' AND session='$session' AND amount='$recreation_chg' AND uid='$uid' ")){
+							if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='rec' AND session='$session' AND amount='$recreation_chg' AND uid='$uid' ")){
 								$ok = 1;
 							}
 							else{
@@ -3375,12 +3356,13 @@ function wpsp_Import_Dummy_contents() {
 		$uid = $_POST['uid'];
 		$num_months = ($to - $from) + 1;
 		$pm_tc = 0;
-		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$student_table = $wpdb->prefix."wpsp_student";
+		$transport_table = $wpdb->prefix."wpsp_transport";
 		$fees_dues_table = $wpdb->prefix."wpsp_fees_dues";
-		$sql_fees = $wpdb->get_results("SELECT transport_chg FROM $fees_settings_table WHERE cid = '$class'");
+		$sql_fees = $wpdb->get_results("SELECT a.route_fees FROM $transport_table a, $student_table b WHERE b.wp_usr_id='$uid' AND a.id=b.route_id ");
 		$tc = 0;
 		foreach ($sql_fees as $amount) {
-			$pm_tc = $amount->transport_chg;
+			$pm_tc = $amount->route_fees;
 			$tc = $pm_tc * $num_months;
 		}
 		for($i=$from; $i<=$to; $i++){

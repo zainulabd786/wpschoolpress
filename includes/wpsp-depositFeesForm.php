@@ -189,7 +189,7 @@
 													<input type="text" class="form-control paid" value="0" placeholder="Paid Amount">
 													<input type="hidden" id="original-amount">
 													<label for="dep-concession">Concession(<i class="fa fa-inr"></i>)</label>
-													<input type="text" id="dep-concession" class="form-control">
+													<input type="text" id="dep-concession" value="0" class="form-control">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
 												</div>
 											</div>
