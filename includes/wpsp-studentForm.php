@@ -159,7 +159,10 @@
 
                                 <div class="form-group opt-transport">
                                     <label for="transport">Transport</label><br/>
-                                    <input type="checkbox" name="opt_transport" id="transport" data-toggle="toggle" data-on="Required" data-off="Not Required">
+                                    <div class="form-inline">
+                                        <input type="checkbox" name="opt_transport" id="transport" data-toggle="toggle" data-on="Required" data-off="Not Required">
+                                        <input type="text" name="transport_charge" class="form-control transport-charge" placeholder="Transport Charges" disabled>
+                                    </div>
                                 </div>
 
                                <div class="form-group">

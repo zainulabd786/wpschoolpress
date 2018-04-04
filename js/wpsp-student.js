@@ -227,7 +227,14 @@ $(document).ready(function () {
     $('#ClassID').change(function () {
         $('#StudentClass').submit();
     });	
-    
+    $("#transport").change(function(){
+        if($(this).prop("checked") == false){
+            $(".transport-charge").attr("disabled", true);
+        }
+        else{
+            $(".transport-charge").attr("disabled", false);
+        }
+    });
 	$(document).on('click','.ViewStudent',function(e) {
         e.preventDefault();
         var data = [];
@@ -548,4 +555,3 @@ function checkRollNo(){
 	}
 	
 }
-// Bharatdan Gadhavi - 16th Feb - End 
