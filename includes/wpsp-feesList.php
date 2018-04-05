@@ -62,6 +62,7 @@
 
 									<a class="btn btn-primary" href="?tab=DepositFees"><i class="fa fa-plus"></i> Deposit Fees</a>
 									<a class="btn btn-primary" href="?tab=PaymentHistory"><i class="fa fa-history"></i> Payment History</a>
+									<a class="btn btn-primary" href="?tab=concession"><i class="fa fa-tag"></i> Concessions</a>
 									<!--<div class="dropdown"> 
 										<a class="btn btn-primary st-btn add-student-btn" href="?tab=addstudent"><i class="fa fa-plus"></i> Add student</a>
 										<button type="button" class="btn btn-primary dropdown-toggle print" id="PrintStudent" data-toggle="dropdown" <?php echo $prodisable;?> title="<?php echo $protitle;?>">

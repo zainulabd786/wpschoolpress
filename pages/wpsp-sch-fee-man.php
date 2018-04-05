@@ -21,6 +21,10 @@ wpsp_header();
 				$label	=	__( 'Payment History', 'WPSchoolPress');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-paymentHistory.php';
 			}
+			else if( isset( $_GET['tab'] ) && $_GET['tab'] == 'concession' ) {
+				$label	=	__( 'Concession', 'WPSchoolPress');
+				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-concession.php';
+			}
 			else if( isset( $_GET['uidff']  )){
 				$label	=	__( 'Deposit Fees', 'WPSchoolPress');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-depositFeesForm.php';
