@@ -1,8 +1,41 @@
+var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
 $(document).ready(function(){
 	var months_array = ["N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"];
 	function getSum(total, num) {
 		return +total + +Math.round(num); 
 	}
+
+	function inWords (num) {
+	    if ((num = num.toString()).length > 9) return 'overflow';
+	    n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+		if (!n) return; var str = '';
+	    str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+	    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+	    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+	    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + ' ' : '';
+	    return str;
+	}
+
+	function cleanArray(actual) {
+	  	var newArray = new Array();
+	  	for (var i = 0; i < actual.length; i++) {
+	    	if (actual[i]) {
+	     	 newArray.push(actual[i]);
+	    	}
+	  	}
+	  	return newArray;
+	}
+
+	function capitalLetter(str) {
+	    str = cleanArray(str.split(" "));
+	    for (var i = 0, x = str.length; i < x; i++) {
+	        str[i] = str[i][0].toUpperCase() + str[i].substr(1);
+	    }
+	    return str.join(" ");
+	}
+
 	$("#dep-amount-exp, #dep-amount-paid").keyup(function(){
 		expectedAmt = $("#dep-amount-exp").val();
 		paidAmt = $("#dep-amount-paid").val();
@@ -227,20 +260,30 @@ $(document).ready(function(){
 	});
 	$("#dep-concession").keyup(function(){
 		const ORIG_AMT = $(".dep-tf-inp #original-amount").val();
+		$(".b7 .d2").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
+		$(".b7 .d1").html(capitalLetter(inWords($(this).val()))+" Rupees Only");
 		if($(this).val() == ""){
 			$(".dep-tf-inp .expected, .dep-tf-inp .paid").val(ORIG_AMT);
 			$(".tution-fees-te-inv .inv-expected-amt, .tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+ORIG_AMT+"/-");
 			$(".expected, .paid").trigger("change");
+			$(".b7 .d2").text("0");
+			$(".b7 .d1").text(" ");
 		}
 	});
 	$(".pno-group").hide();
 	$(".mop select").change(function(){
+		$(".b6 .sb1 div").text($(this).val());
 		if($(this).val() != "Cash"){
 			$(".pno-group").show("slide");
+			$(".b6 .sb2 div").text("N/A");
 		}
 		else{
 			$(".pno-group").hide("slide");
 		}
+	});
+
+	$("#pno").keyup(function(){
+		$(".b6 .sb2 div").text($(this).val());
 	});
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";
@@ -346,9 +389,10 @@ $(document).ready(function(){
 		});
 	});
 
-	$("#to-concession").change(function(){
+	$("#to-concession").on("change",function(){
 		if($("#from-concession").val() != ""){
 			$(".date-filter-form").submit();
+			//document.forms[myFormName].submit();
 		}
 		else{
 			$.alert("Please Select From date");
