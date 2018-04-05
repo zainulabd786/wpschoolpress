@@ -149,9 +149,9 @@
 												<label>Mode Of Payment</label>
 												<select class="form-control">
 													<option value="">Select one</option>
-													<option value="cash">Cash</option>
-													<option value="cheque">Cheque</option>
-													<option value="neft">NEFT</option>
+													<option value="Cash">Cash</option>
+													<option value="Cheque">Cheque</option>
+													<option value="NEFT">NEFT</option>
 												</select>
 											</div>
 											<div class="form-group pno-group">
@@ -372,6 +372,21 @@
 															<strong>Class/Section</strong>
 															<div><?php if(!empty($class)) echo $class; ?></div>
 														</div>
+													</div>
+
+													<div class="blank b6">
+														<div class="sb1">
+															<strong>Mode Of Payment</strong>
+															<div></div>
+														</div>
+														<div class="sb2">
+															<strong>Cheque/NEFT Number</strong>
+															<div>N/A</div>
+														</div>
+													</div>
+													<div class="blank b7">
+														<strong>Concession</strong>
+														<div></div>
 													</div>
 
 												</div>

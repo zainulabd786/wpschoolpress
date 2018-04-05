@@ -235,7 +235,7 @@ $(document).ready(function(){
 	});
 	$(".pno-group").hide();
 	$(".mop select").change(function(){
-		if($(this).val() != "cash"){
+		if($(this).val() != "Cash"){
 			$(".pno-group").show("slide");
 		}
 		else{

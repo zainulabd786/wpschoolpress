@@ -242,6 +242,11 @@ a.add-parent { margin-bottom:15px; }
     padding-top: 5px;
     text-align: right;
 }
+.b1:after, .b2:after, .b3:after, .b4:after, .b5:after, .b6:after, .b7:after{
+    content: '';
+    display: table;
+    clear: both;
+}
 .blank div{
     border-bottom: 1px dotted #000;
     float: right;
@@ -270,7 +275,7 @@ a.add-parent { margin-bottom:15px; }
 }
 
 
-.b3 .sb1, .b4 .sb1, .b5 .sb1{
+.b3 .sb1, .b4 .sb1, .b5 .sb1, .b6 .sb1{
     float: left;
     width: 50%;
     height: 30px;
@@ -278,7 +283,7 @@ a.add-parent { margin-bottom:15px; }
     padding: 0;
     text-align: left;
 }
-.b3 .sb2, .b4 .sb2, .b5 .sb2{
+.b3 .sb2, .b4 .sb2, .b5 .sb2, .b6 .sb2{
     float: right;
     width: 49.5%;
     height: 30px;
@@ -325,8 +330,18 @@ a.add-parent { margin-bottom:15px; }
     width: 75%;
 }
 
-.b5 .sb1, .b5 .sb2{
+.b6 .sb1 div{
+    width: 68%;
+}
+.b6 .sb2 div{
+    width: 60%;
+}
+
+.b7{
     margin-bottom: 20px;
+}
+.b7 div{
+    width: 90%;
 }
 
 .invoice-body table{
@@ -589,6 +604,15 @@ input:checked + .slider:before {
     }
     .b2 div{
         width: 86%;
+    }
+    .b6 .sb1 div {
+        width: 65%;
+    }
+    .b6 .sb2 div {
+        width: 56%;
+    }
+    .b7 div {
+        width: 88%;
     }
   }
   @media only screen and (max-width: 1350px){
