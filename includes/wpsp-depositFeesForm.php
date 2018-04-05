@@ -386,7 +386,8 @@
 													</div>
 													<div class="blank b7">
 														<strong>Concession</strong>
-														<div></div>
+														<div class="d1"></div>
+														<div class="d2"></div>
 													</div>
 
 												</div>

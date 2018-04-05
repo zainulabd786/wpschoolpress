@@ -340,8 +340,11 @@ a.add-parent { margin-bottom:15px; }
 .b7{
     margin-bottom: 20px;
 }
-.b7 div{
-    width: 90%;
+.b7 .d1{
+    width: 65%;
+}
+.b7 .d2{
+    width: 25%;
 }
 
 .invoice-body table{
@@ -611,8 +614,11 @@ input:checked + .slider:before {
     .b6 .sb2 div {
         width: 56%;
     }
-    .b7 div {
-        width: 88%;
+    .b7 .d2 {
+        width: 23%;
+    }
+    .b7 .d1 {
+        width: 63%;
     }
   }
   @media only screen and (max-width: 1350px){
