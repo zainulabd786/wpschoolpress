@@ -145,6 +145,19 @@
 												<label>Session</label>
 												<input type="text" value="<?php if(!empty($session)) echo $session; ?>" class="dep-session form-control" placeholder="Session">
 											</div>
+											<div class="form-group mop">
+												<label>Mode Of Payment</label>
+												<select class="form-control">
+													<option value="">Select one</option>
+													<option value="cash">Cash</option>
+													<option value="cheque">Cheque</option>
+													<option value="neft">NEFT</option>
+												</select>
+											</div>
+											<div class="form-group pno-group">
+												<label for="pno">Cheque/NEFT Number</label>
+												<input type="text" value="0" class="form-control" id="pno">
+											</div>
 											<div class="form-group dep-fee-type">
 												<label>Fees Type</label>
 												<select class="form-control">

@@ -11,7 +11,7 @@
 				<div class="box box-solid bg-blue-gradient">
 					<div class="box-header ui-sortable-handle" style="cursor: move;">
 	                    <i class="fa fa-graph"></i>
-	                    <h3 class="box-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp; List Of Fee Defaulters </h3>
+	                    <h3 class="box-title"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp; Concession Alloted </h3>
 	                    <!-- tools box -->
 
 	                    <!-- /. tools -->
@@ -39,13 +39,16 @@
 							</div>
 							<div class="col-md-8 col-sm-12 col-lg-8 ">
 									
-								<div class="button-group btn-pro" >
-
-									<a class="btn btn-primary" href="?tab=DepositFees"><i class="fa fa-plus"></i> Deposit Fees</a>
-									<a class="btn btn-primary" href="?tab=PaymentHistory"><i class="fa fa-history"></i> Payment History</a>
-									<a class="btn btn-primary" href="?tab=concession"><i class="fa fa-tag"></i> Concessions</a>
-					
-								</div>
+								<from action="" method="post" id="date-filter-form" class="form-inline">
+									<div class="form-group">
+										<label for="from-concession">From: </label>
+										<input name="from-date" type="date" class="form-control" id="from-concession">
+									</div>
+									<div class="form-group">
+										<label for="to-concession"> To: </label>
+										<input name="to-date" type="date" class="form-control" id="to-concession">
+									</div>
+								</form>
 										
 							</div>
 						</div>
@@ -73,7 +76,8 @@
 									$fee_rec_table	=	$wpdb->prefix."wpsp_fees_receipts";
 									$class_table = $wpdb->prefix."wpsp_class";
 									$dues_table = $wpdb->prefix."wpsp_fees_dues";
-									$class_id='';						
+									$records_table = $wpdb->prefix."wpsp_fees_payment_record";
+									$class_id='';					
 									if( isset($_POST['ClassID'] ) ) {
 										$class_id=$_POST['ClassID'];
 									}else if( !empty( $sel_class ) ) {
@@ -85,7 +89,16 @@
 									}elseif($class_id=='all'){
 										$classquery="";
 									}
-									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, c.c_name, d.concession, d.slip_no FROM $student_table s, $class_table c, $fee_rec_table d WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id AND d.concession > 0 $classquery");
+
+									if(isset($_POST["from-date"]) && isset($_POST["to-date"])){
+										$from_date = date("Y-m-d", strtotime($_POST["from-date"]));
+										$to_date = date("Y-m-d", strtotime($_POST["to-date"]));
+										$date_query = "AND DATE(e.date_time) BETWEEN '$from_date' AND 'to_date' GROUP BY d.slip_no";
+									}
+									else{
+										$date_query = "";	
+									}
+									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, c.c_name, d.concession, d.slip_no FROM $student_table s, $class_table c, $fee_rec_table d, $records_table e WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id AND d.concession > 0 $classquery $date_query");
 									//echo "SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, c.c_name FROM $student_table s, $class_table c, $fee_rec_table d WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id AND d.concession > 0";
 									$plugins_url=plugins_url();
 									$teacherId = '';
@@ -112,14 +125,10 @@
 											echo $stinfo->s_fname .' '. $mname .' '.  $lname;?></td>
 											<td><?php  echo $stinfo->p_fname; ?>
 											</td>
-											<td><?php /*
-												$country = !empty( $stinfo->s_country ) ? ", ".$stinfo->s_country : '';
-												$city    = !empty( $stinfo->s_city ) ? ", ".$stinfo->s_city : '';
-												$zipcode    = !empty( $stinfo->s_zipcode ) ? ", ".$stinfo->s_zipcode : '';
-												echo $stinfo->s_address.' '.$city. ' ' . $country.' '.$zipcode;
-												*/
+											<td><?php 
 												echo $stinfo->c_name;
-											?></td>
+											?>
+											</td>
 											<td><?php echo "<i class='fa fa-inr'></i>".number_format($stinfo->concession)."/-"; ?></td>
 											<td>
 												<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										

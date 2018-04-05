@@ -233,6 +233,15 @@ $(document).ready(function(){
 			$(".expected, .paid").trigger("change");
 		}
 	});
+	$(".pno-group").hide();
+	$(".mop select").change(function(){
+		if($(this).val() != "cash"){
+			$(".pno-group").show("slide");
+		}
+		else{
+			$(".pno-group").hide("slide");
+		}
+	});
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";
 		var slip = $(".invoice-header-slip-no div").text();
@@ -254,6 +263,8 @@ $(document).ready(function(){
 		var expann = $(".dep-ac-inp .expected").val();
 		var exprec = $(".dep-rf-inp .expected").val();
 		var concession = $("#dep-concession").val();
+		var mop = $(".mop select").val();
+		var pno = $("#pno").val();
 		var data=new Array();
 		data.push(
 			{name: 'action', value: action},
@@ -275,7 +286,9 @@ $(document).ready(function(){
 			{name: 'exptransportChg', value: exptrans},
 			{name: 'expannualChg', value: expann},
 			{name: 'exprecreationChg', value: exprec},
-			{name: 'concession', value: concession}
+			{name: 'concession', value: concession},
+			{name: 'mop', value: mop},
+			{name: 'pno', value: pno}
 		);
 		$.ajax({
 			method:"POST",
@@ -331,5 +344,14 @@ $(document).ready(function(){
 				}
 			});
 		});
+	});
+
+	$("#to-concession").change(function(){
+		if($("#from-concession").val() != ""){
+			$(".date-filter-form").submit();
+		}
+		else{
+			$.alert("Please Select From date");
+		}
 	});
 });

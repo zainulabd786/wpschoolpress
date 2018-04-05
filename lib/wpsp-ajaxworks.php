@@ -2792,6 +2792,8 @@ function wpsp_Import_Dummy_contents() {
 		$exp_recreation_chg = $_POST['exprecreationChg'];
 		$session = $_POST["session"];
 		$concession = $_POST['concession']/$num_months;
+		$mop = $_POST['mop'];
+		$pno = $_POST['pno'];
 		$fees_type = "";
 		$pm_tf = 0;
 		$pm_tc = 0;
@@ -2816,6 +2818,7 @@ function wpsp_Import_Dummy_contents() {
 		$fees_type_arr = explode("/", $fees_type);
 		$sql_slip_data = array(
 				'slip_no' => $slip_no,
+				'date' => $todays_date,
 				'uid' => $uid,
 				'cid' => $cid,
 				'from_ttn' => $from,
@@ -2828,7 +2831,9 @@ function wpsp_Import_Dummy_contents() {
 				'trans' => $transport_chg,
 				'ann' => $annual_chg,
 				'rec' => $recreation_chg,
-				'concession' => $concession*$num_months
+				'concession' => $concession*$num_months,
+				'mop' => $mop,
+				'pno' => $pno
 		);
 		$outstanding_amt = 0;
 		$outstanding_amt_trn = 0;
