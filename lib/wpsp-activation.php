@@ -306,6 +306,7 @@
 
 	$sql_fees_receipts = "CREATE TABLE IF NOT EXISTS $fees_receipts  (
 	  `slip_no` int(25) NOT NULL PRIMARY KEY,
+	  `date` date,
 	  `uid` int(15),
 	  `cid` int(10),	 
 	  `from_ttn` int(2),	 
@@ -318,7 +319,9 @@
 	  `trans` int(11),
 	  `ann` varchar(11),	 
 	  `rec` int(11),
-	  `concession` int(11)
+	  `concession` int(11),
+	  `mop` varchar(20),
+	  `pno` varchar(50)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_receipts);
 
