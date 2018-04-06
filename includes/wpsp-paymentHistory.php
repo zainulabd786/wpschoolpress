@@ -54,6 +54,7 @@
 						</div>
 
 						<div class="col-md-12 table-responsive">
+							<h3 style="text-align: center;" id="record-dates"></h3>
 							<table id="student_table" class="table table-bordered table-striped table-responsive" style="margin-top:10px">
 								<thead>
 									<tr>
@@ -95,9 +96,14 @@
 										$from_date = date("Y-m-d", strtotime($_POST["from-date"]));
 										$to_date = date("Y-m-d", strtotime($_POST["to-date"]));
 										$date_query = "AND f.date BETWEEN '$from_date' AND '$to_date'";
+										$showing_records = "Showing Records From $from_date To $to_date"; ?>
+										<script type="text/javascript">
+											document.getElementById("record-dates").innerHTML = "<?php echo $showing_records; ?>";
+										</script><?php
 									}
 									else{
 										$date_query = "";	
+										$showing_records = "";
 									}
 									$students	=	$wpdb->get_results("select * from $student_table s, $fee_rec_table f, $class_table c where s.wp_usr_id = f.uid AND c.cid = s.class_id $classquery $date_query order by f.slip_no desc");
 									
