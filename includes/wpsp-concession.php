@@ -39,7 +39,8 @@
 							</div>
 							<div class="col-md-8 col-sm-12 col-lg-8 ">
 									
-								<from action="" method="post" id="date-filter-form" class="form-inline">
+								<form style="float: left" action="" method="post" name="date-filter-form" id="date-filter-form" class="form-inline">
+
 									<div class="form-group">
 										<label for="from-concession">From: </label>
 										<input name="from-date" type="date" class="form-control" id="from-concession">
@@ -48,7 +49,10 @@
 										<label for="to-concession"> To: </label>
 										<input name="to-date" type="date" class="form-control" id="to-concession">
 									</div>
+
 								</form>
+
+								<div style="float: right;" id="total-concession" class="well">Total Concessions Alloted: 20000</div>
 										
 							</div>
 						</div>
@@ -60,6 +64,7 @@
 										<th class="nosort">
 										<?php if ( in_array( 'administrator', $role ) ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
 										</th>
+										<th>Date</th>
 										<th>Slip No.</th>
 										<th>Registration No.</th>
 										<th>Full Name</th>
@@ -71,6 +76,7 @@
 								</thead>
 								<tbody>
 									<?php
+									$total_concession = 0;
 									$student_table	=	$wpdb->prefix."wpsp_student";							
 									$users_table	=	$wpdb->prefix."users";
 									$fee_rec_table	=	$wpdb->prefix."wpsp_fees_receipts";
@@ -93,13 +99,22 @@
 									if(isset($_POST["from-date"]) && isset($_POST["to-date"])){
 										$from_date = date("Y-m-d", strtotime($_POST["from-date"]));
 										$to_date = date("Y-m-d", strtotime($_POST["to-date"]));
-										$date_query = "AND DATE(e.date_time) BETWEEN '$from_date' AND 'to_date' GROUP BY d.slip_no";
+										$date_query = "AND d.date BETWEEN '$from_date' AND '$to_date' GROUP BY d.slip_no";
 									}
 									else{
 										$date_query = "";	
 									}
-									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, c.c_name, d.concession, d.slip_no FROM $student_table s, $class_table c, $fee_rec_table d, $records_table e WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id AND d.concession > 0 $classquery $date_query");
-									//echo "SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, c.c_name FROM $student_table s, $class_table c, $fee_rec_table d WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id AND d.concession > 0";
+									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, c.c_name, d.concession, d.slip_no, d.date FROM $student_table s, $class_table c, $fee_rec_table d WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id AND d.concession > 0 $classquery $date_query");
+									//echo "SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, c.c_name, d.concession, d.slip_no FROM $student_table s, $class_table c, $fee_rec_table d WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id AND d.concession > 0 $classquery $date_query";
+									$total_concession_sql = $wpdb->get_results("SELECT SUM(d.concession) AS sum_concession FROM $fee_rec_table d, $student_table s WHERE d.concession>0 AND s.wp_usr_id=d.uid $classquery $date_query");
+								//	echo "SELECT SUM(d.concession) AS sum_concession FROM $fee_rec_table d, $student_table s WHERE d.concession>0 AND s.wp_usr_id=d.uid $classquery $date_query";
+									foreach ($total_concession_sql as $concession) {
+										$total_concession = $concession->sum_concession; ?>
+										
+										<script type="text/javascript">
+											document.getElementById("total-concession").innerHTML = "Total Concessions Alloted: <?php echo $total_concession; ?>";
+										</script> <?php
+									}
 									$plugins_url=plugins_url();
 									$teacherId = '';
 									$currentSelectClass =	isset($_POST['ClassID']) ? $_POST['ClassID'] : $sel_class[0]->cid;
@@ -117,6 +132,7 @@
 												<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $stinfo->wp_usr_id;?>">
 											<?php }else echo $key; ?>
 											</td>
+											<td><?php echo date("d/m/Y", strtotime($stinfo->date)); ?></td>
 											<td><?php echo $stinfo->slip_no;?></td>
 											<td><?php echo $stinfo->s_regno;?></td>
 											<td><?php 
@@ -146,6 +162,7 @@
 								  <tr>
 									<th><?php if ( in_array( 'administrator', $role ) ) { } 
 										else echo 'Sr. No'; ?></th>
+									<th>Date</th>
 									<th>Slip No.</th>	
 									<th>Registration No.</th><?php // Bharatdan Gadhavi - 16th Feb 2018 ?>							
 									<th>Name</th>

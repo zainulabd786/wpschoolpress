@@ -391,8 +391,7 @@ $(document).ready(function(){
 
 	$("#to-concession").on("change",function(){
 		if($("#from-concession").val() != ""){
-			$(".date-filter-form").submit();
-			//document.forms[myFormName].submit();
+			$("#date-filter-form").submit();
 		}
 		else{
 			$.alert("Please Select From date");
