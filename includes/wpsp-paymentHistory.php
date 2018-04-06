@@ -35,6 +35,22 @@
 									</select>
 								</form>								
 							</div>
+							<div class="col-md-8 col-sm-12 col-lg-8 ">
+									
+								<form style="float: left" action="" method="post" name="date-filter-form" id="date-filter-form" class="form-inline">
+
+									<div class="form-group">
+										<label for="from-concession">From: </label>
+										<input name="from-date" type="date" class="form-control" id="from-concession">
+									</div>
+									<div class="form-group">
+										<label for="to-concession"> To: </label>
+										<input name="to-date" type="date" class="form-control" id="to-concession">
+									</div>
+
+								</form>
+										
+							</div>
 						</div>
 
 						<div class="col-md-12 table-responsive">
@@ -74,7 +90,16 @@
 									}elseif($class_id=='all'){
 										$classquery="";
 									}
-									$students	=	$wpdb->get_results("select * from $student_table s, $fee_rec_table f, $class_table c where s.wp_usr_id = f.uid AND c.cid = s.class_id $classquery order by f.slip_no desc");
+
+									if(isset($_POST["from-date"]) && isset($_POST["to-date"])){
+										$from_date = date("Y-m-d", strtotime($_POST["from-date"]));
+										$to_date = date("Y-m-d", strtotime($_POST["to-date"]));
+										$date_query = "AND f.date BETWEEN '$from_date' AND '$to_date'";
+									}
+									else{
+										$date_query = "";	
+									}
+									$students	=	$wpdb->get_results("select * from $student_table s, $fee_rec_table f, $class_table c where s.wp_usr_id = f.uid AND c.cid = s.class_id $classquery $date_query order by f.slip_no desc");
 									
 									$plugins_url=plugins_url();
 									$teacherId = '';
@@ -96,10 +121,7 @@
 											<td><?php echo $stinfo->slip_no;?></td>
 											<td>
 												<?php 
-												$sql_slip_date = $wpdb->get_results("SELECT date_time FROM $fee_record_table WHERE slip_no='$stinfo->slip_no' LIMIT 1");
-												foreach ($sql_slip_date as $date_time) {
-													echo date("d/m/Y h:i:s", strtotime($date_time->date_time));
-												}
+												echo $stinfo->date;
 												?>
 											</td>
 											<td>
