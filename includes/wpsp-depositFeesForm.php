@@ -34,7 +34,6 @@
 		}
 
 		$total_amount_f = $adm_f+$ttn_f+$trn_f+$ann_f+$rec_f;
-		$sql_session = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'session'");
 
 		$get_due_months_sql = $wpdb->get_results("SELECT MIN(CASE WHEN fees_type='ttn' THEN month ELSE NULL END) AS from_ttn, MAX(CASE WHEN fees_type='ttn' THEN month ELSE 0 END) AS to_ttn, MIN(CASE WHEN fees_type='trn' THEN month ELSE NULL END) AS from_trn, MAX(CASE WHEN fees_type='trn' THEN month ELSE 0 END) AS to_trn FROM $dues_table WHERE uid='$uidff'");
 		foreach ($get_due_months_sql as $due_month) {
@@ -44,10 +43,10 @@
 			$to_trn_month_due = $due_month->to_trn;
 		}
 	}  
+	$sql_session = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'session'");
 	foreach ($sql_session as $session) {
 		$session = $session->option_value;
 	}
-	echo $from_ttn_month_due."-".$to_ttn_month_due;
 ?>
 <section class="content">
     <div class="row">

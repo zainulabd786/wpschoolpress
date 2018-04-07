@@ -2841,7 +2841,7 @@ function wpsp_Import_Dummy_contents() {
 		foreach ($sql_due_month as $due_months) {
 			if(!empty($due_months->amount)){
 				if($due_months->fees_type=='ttn'){
-					$outstanding_amt = $due_months->amount;
+					$outstanding_amt = $due_months->amount - $concession;
 					$from = $due_months->month;
 				} 
 				if($due_months->fees_type=='trn'){
@@ -2869,7 +2869,8 @@ function wpsp_Import_Dummy_contents() {
 										'session' => $session,
 										'fees_type' => 'ttn'
 								);
-								if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("DELETE FROM $dues_table WHERE amount='$outstanding_amt' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
+								$del_amt = $outstanding_amt+$concession;
+								if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("DELETE FROM $dues_table WHERE amount='$del_amt' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
 									$ok = 1;
 								}
 								else{
