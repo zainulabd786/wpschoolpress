@@ -49,6 +49,7 @@ function wpsp_AddStudent() {
 	$wpsp_class_table	=	$wpdb->prefix."wpsp_class";
 	$wpsp_settings_table	=	$wpdb->prefix."wpsp_settings";
 	$wpsp_fees_settings_table	=	$wpdb->prefix."wpsp_fees_settings";
+	$transport_table = $wpdb->prefix."wpsp_transport";
 	$dues_table	=	$wpdb->prefix."wpsp_fees_dues";
 	if( isset( $_POST['Class'] ) && !empty( $_POST['Class'] ) ) {
 		$classID	=	$_POST['Class'];
@@ -188,10 +189,15 @@ function wpsp_AddStudent() {
 		foreach ($fees_settings_sql as $fee) {
 			$adm_f = $fee->admission_fees;
 			$ttn_f = $fee->tution_fees;
-			$trans_f = $fee->transport_chg;
+			//$trans_f = $fee->transport_chg;
 			$ann_f = $fee->annual_chg;
 		}
 		if($transport == 1){
+			$trans_f = 0;
+			$get_transport_fees = $wpdb->get_results("SELECT route_fees FROM $transport_table WHERE id='$trn_route'");
+			foreach ($get_transport_fees as $key => $transport_fees) {
+				$trans_f = $transport_fees->route_fees;
+			}
 			$trans_due_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>$curr_month, "amount"=>$trans_f, "fees_type"=>"trn", "session"=>$session);
 			$wpdb->insert($dues_table, $trans_due_data);
 		}
