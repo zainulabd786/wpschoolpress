@@ -49,7 +49,7 @@
 									</div>
 
 								</form>
-										
+								<div style="float: right;" class="well" id="total-payments"></div>
 							</div>
 						</div>
 
@@ -104,6 +104,12 @@
 									else{
 										$date_query = "";	
 										$showing_records = "";
+									}
+									$filter_sql = $wpdb->get_results("SELECT SUM(a.amount) AS total_payments FROM $fee_record_table a, $student_table s, $class_table c WHERE s.wp_usr_id=a.uid AND c.cid=s.class_id $classquery $date_query");
+									foreach ($filter_sql as $payments) { ?>
+										<script type="text/javascript">
+											document.getElementById("total-payments").innerHTML = "Total Payments Collected: <?php echo "<i class='fa fa-inr'></i>".number_format($payments->total_payments)."/-"; ?>";
+										</script> <?php
 									}
 									$students	=	$wpdb->get_results("select * from $student_table s, $fee_rec_table f, $class_table c where s.wp_usr_id = f.uid AND c.cid = s.class_id $classquery $date_query order by f.slip_no desc");
 									
