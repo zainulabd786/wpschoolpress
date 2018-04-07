@@ -52,7 +52,7 @@
 
 								</form>
 
-								<div style="float: right;" id="total-concession" class="well">Total Concessions Alloted: 20000</div>
+								<div style="float: right;" id="total-concession" class="well"></div>
 										
 							</div>
 						</div>
@@ -112,7 +112,7 @@
 										$total_concession = $concession->sum_concession; ?>
 										
 										<script type="text/javascript">
-											document.getElementById("total-concession").innerHTML = "Total Concessions Alloted: <?php echo $total_concession; ?>";
+											document.getElementById("total-concession").innerHTML = "Total Concessions Alloted: <?php echo "<i class='fa fa-inr'></i>".$total_concession."/-"; ?>";
 										</script> <?php
 									}
 									$plugins_url=plugins_url();
