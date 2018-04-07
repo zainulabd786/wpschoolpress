@@ -185,6 +185,12 @@ $(document).ready(function(){
 		$(".tution-fees-te-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+$(this).val()+"/-");
 		var admBal = $(".dep-tf-inp .expected").val()-$(this).val();
 		$(".tution-fees-te-inv .inv-bal-amt").html("<i class='fa fa-inr'></i>"+admBal+"/-");
+		if($(this).val() != $(".dep-tf-inp .expected").val()){
+			$("#dep-concession").attr("disabled", true);
+		}
+		else{
+			$("#dep-concession").attr("disabled", false);
+		}
 	});
 
 	$(".dep-tc-inp .expected").keyup(function(){
