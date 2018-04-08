@@ -530,6 +530,10 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+.detailed-transaction .concession-tr{
+    color: #F44336;
+}
+
 .col-print-1 {width:8%;  float:left;}
 .col-print-2 {width:16%; float:left;}
 .col-print-3 {width:25%; float:left;}

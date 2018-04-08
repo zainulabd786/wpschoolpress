@@ -3261,7 +3261,9 @@ function wpsp_Import_Dummy_contents() {
 		$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
 		$slid = $_POST['slid'];
 		$slip_table = $wpdb->prefix."wpsp_fees_payment_record";
-		$slip = $wpdb->get_results("SELECT * FROM $slip_table WHERE slip_no='$slid' ORDER BY fees_type"); ?>
+		$receipts_table = $wpdb->prefix."wpsp_fees_receipts";
+		$concession = 0;
+		$slip = $wpdb->get_results("SELECT * FROM $slip_table a WHERE slip_no='$slid' ORDER BY fees_type"); ?>
 		<table class="detailed-transaction"> <?php
 		foreach ($slip as $slip) { ?>
 			<?php if($slip->fees_type == "adm") { ?>
@@ -3293,9 +3295,18 @@ function wpsp_Import_Dummy_contents() {
 				<td>Recreation Charges:</td>
 				<td><i class="fa fa-inr"></i><?php if($slip->fees_type == "rec") echo number_format($slip->amount); ?>/-</td>
 			</tr>
+			<?php } 
+		}
+			$sql_concession = $wpdb->get_results("SELECT concession FROM $receipts_table WHERE slip_no='$slid'");
+			foreach ($sql_concession as $con) {
+				$concession = $con->concession;
+			}
+			if(!empty($concession)){ ?>
+			<tr class="concession-tr">
+				<td>Concession</td>
+				<td><i class="fa fa-inr"></i><?php echo number_format($concession); ?>/-</td>
+			</tr>
 			<?php } ?>
-			<?php
-		} ?>
 		</table> <?php
 		wp_die();
 	}
