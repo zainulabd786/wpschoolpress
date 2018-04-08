@@ -3428,7 +3428,9 @@ function wpsp_Import_Dummy_contents() {
 		$class_table = $wpdb->prefix."wpsp_class";
 		$settings_table = $wpdb->prefix."wpsp_settings";
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
-		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time) AS date FROM $receipts_table a, $student_table b, $class_table c, $records_table d WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no LIMIT 1");
+		$transport_table = $wpdb->prefix."wpsp_transport";
+		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time), a.concession, a.mop, a.pno AS date, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND b.route_id=e.id LIMIT 1");
+		//echo "SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time), a.concession, a.mop, a.pno AS date FROM $receipts_table a, $student_table b, $class_table c, $records_table d WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no LIMIT 1";
 		foreach ($receipts as $slip) {
 			$student_full_name = $slip->s_fname." ".$slip->s_mname." ".$slip->s_lname;
 			$father_full_name = $slip->p_fname." ".$slip->p_mname." ".$slip->p_lname; 
@@ -3438,10 +3440,11 @@ function wpsp_Import_Dummy_contents() {
 			foreach ($expected_fees as $exp_amt) {
 			 	$exp_adm = $exp_amt->admission_fees;
 			 	$exp_ttn = ($exp_amt->tution_fees * $num_months_ttn) - $slip->concession;
-			 	$exp_trn = $exp_amt->transport_chg * $num_months_trn;
+			 //	$exp_trn = $exp_amt->transport_chg * $num_months_trn;
 			 	$exp_ann = $exp_amt->annual_chg;
 			 	$exp_rec = $exp_amt->recreation_chg;
 			 }
+			$exp_trn = $slip->route_fees;
 			$due_adm = $exp_adm - $slip->adm;
 			$due_ttn = $exp_ttn - $slip->ttn;
 			$due_trn = $exp_trn - $slip->trans;
@@ -3553,6 +3556,22 @@ function wpsp_Import_Dummy_contents() {
 											<strong>Class/Section</strong>
 											<div><?php if(!empty($slip->c_name)) echo $slip->c_name; ?></div>
 										</div>
+									</div>
+
+									<div class="blank b6">
+										<div class="sb1">
+											<strong>Mode Of Payment</strong>
+											<div><?php if(!empty($slip->mop)) echo $slip->mop; ?></div>
+										</div>
+										<div class="sb2">
+											<strong>Cheque/NEFT Number</strong>
+											<div><?php if(!empty($slip->pno)) echo $slip->pno; else "N/A"; ?></div>
+										</div>
+									</div>
+									<div class="blank b7">
+										<strong>Concession</strong>
+										<div class="d1"></div>
+										<div class="d2"><?php if(!empty($slip->concession)) echo "<i class='fa fa-inr'></i>".number_format($slip->concession)."/-"; ?></div>
 									</div>
 
 								</div>
