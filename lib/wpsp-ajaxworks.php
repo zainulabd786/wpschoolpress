@@ -3429,8 +3429,8 @@ function wpsp_Import_Dummy_contents() {
 		$settings_table = $wpdb->prefix."wpsp_settings";
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$transport_table = $wpdb->prefix."wpsp_transport";
-		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time), a.concession, a.mop, a.pno AS date, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND b.route_id=e.id LIMIT 1");
-		//echo "SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time), a.concession, a.mop, a.pno AS date FROM $receipts_table a, $student_table b, $class_table c, $records_table d WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no LIMIT 1";
+		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time), a.concession, a.mop, a.pno AS date, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND (IF(b.transport > 0, b.route_id=e.id, b.route_id=0)) LIMIT 1");
+		//echo "SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time), a.concession, a.mop, a.pno AS date, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND b.route_id=e.id LIMIT 1";
 		foreach ($receipts as $slip) {
 			$student_full_name = $slip->s_fname." ".$slip->s_mname." ".$slip->s_lname;
 			$father_full_name = $slip->p_fname." ".$slip->p_mname." ".$slip->p_lname; 
