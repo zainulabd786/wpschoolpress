@@ -95,23 +95,25 @@
 									if(isset($_POST["from-date"]) && isset($_POST["to-date"])){
 										$from_date = date("Y-m-d", strtotime($_POST["from-date"]));
 										$to_date = date("Y-m-d", strtotime($_POST["to-date"]));
-										$date_query = "AND a.date BETWEEN '$from_date' AND '$to_date'";
+										$date_query_sum = "AND DATE(a.date_time) BETWEEN '$from_date' AND '$to_date'";
+										$date_query_rec = "AND DATE(a.date) BETWEEN '$from_date' AND '$to_date'";
 										$showing_records = "Showing Records From $from_date To $to_date"; ?>
 										<script type="text/javascript">
 											document.getElementById("record-dates").innerHTML = "<?php echo $showing_records; ?>";
 										</script><?php
 									}
 									else{
-										$date_query = "";
+										$date_query_sum = "";
 										$showing_records = "";
+										$date_query_rec = "";
 									}
-									$filter_sql = $wpdb->get_results("SELECT SUM(a.amount) AS total_payments FROM $fee_record_table a, $student_table s, $class_table c WHERE s.wp_usr_id=a.uid AND c.cid=s.class_id $classquery $date_query");
+									$filter_sql = $wpdb->get_results("SELECT SUM(a.amount) AS total_payments FROM $fee_record_table a, $student_table s, $class_table c WHERE s.wp_usr_id=a.uid AND c.cid=s.class_id $classquery $date_query_sum");
 									foreach ($filter_sql as $payments) { ?>
 										<script type="text/javascript">
 											document.getElementById("total-payments").innerHTML = "Total Payments Collected: <?php echo "<i class='fa fa-inr'></i>".number_format($payments->total_payments)."/-"; ?>";
 										</script> <?php
 									}
-									$students	=	$wpdb->get_results("select * from $student_table s, $fee_rec_table f, $class_table c where s.wp_usr_id = f.uid AND c.cid = s.class_id $classquery $date_query order by f.slip_no desc");
+									$students	=	$wpdb->get_results("select * from $student_table s, $fee_rec_table a, $class_table c where s.wp_usr_id = a.uid AND c.cid = s.class_id $classquery $date_query_rec order by a.slip_no desc");
 
 									$plugins_url=plugins_url();
 									$teacherId = '';
