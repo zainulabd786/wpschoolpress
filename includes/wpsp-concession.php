@@ -106,7 +106,7 @@
 									}
 									$students	=	$wpdb->get_results("SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, c.c_name, d.concession, d.slip_no, d.date FROM $student_table s, $class_table c, $fee_rec_table d WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id AND d.concession > 0 $classquery $date_query");
 									//echo "SELECT s.s_fname, s.s_mname, s.s_lname, s.p_fname, s.p_mname, s.p_lname, s.s_rollno, s.s_regno, s.wp_usr_id, c.c_name, d.concession, d.slip_no FROM $student_table s, $class_table c, $fee_rec_table d WHERE s.wp_usr_id=d.uid AND c.cid=s.class_id AND d.concession > 0 $classquery $date_query";
-									$total_concession_sql = $wpdb->get_results("SELECT SUM(d.concession) AS sum_concession FROM $fee_rec_table d, $student_table s WHERE d.concession>0 AND s.wp_usr_id=d.uid $classquery $date_query");
+									$total_concession_sql = $wpdb->get_results("SELECT SUM(d.concession) AS sum_concession FROM $fee_rec_table d, $student_table s WHERE d.concession>0 $classquery $date_query");
 								//	echo "SELECT SUM(d.concession) AS sum_concession FROM $fee_rec_table d, $student_table s WHERE d.concession>0 AND s.wp_usr_id=d.uid $classquery $date_query";
 									foreach ($total_concession_sql as $concession) {
 										$total_concession = $concession->sum_concession; ?>
