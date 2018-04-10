@@ -3444,7 +3444,7 @@ function wpsp_Import_Dummy_contents() {
 			 	$exp_ann = $exp_amt->annual_chg;
 			 	$exp_rec = $exp_amt->recreation_chg;
 			 }
-			$exp_trn = $slip->route_fees;
+			$exp_trn = $slip->route_fees * $num_months_trn;
 			$due_adm = $exp_adm - $slip->adm;
 			$due_ttn = $exp_ttn - $slip->ttn;
 			$due_trn = $exp_trn - $slip->trans;
