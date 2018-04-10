@@ -3601,7 +3601,7 @@ function wpsp_Import_Dummy_contents() {
 										if(!empty($slip->ttn)){ ?>
 										<tr <?php if(!empty($slip->ttn)) echo "style='display:table-row'"; ?> class="tution-fees-te-inv" >
 										<td>2</td>
-											<td>Tution Fees(<div style="display: inline;" class="months">Monthly</div>)</td>
+											<td>Tution Fees(<div style="display: inline;" class="months"><?php echo $months_array[$slip->from_ttn]."-".$months_array[$slip->to_ttn]; ?></div>)</td>
 											<td class="inv-expected-amt"><?php if(!empty($exp_ttn)) echo "<i class='fa fa-inr'></i>".$exp_ttn."/-"; ?></td>
 											<td class="inv-paid-amt"><?php if(!empty($slip->ttn)) echo "<i class='fa fa-inr'></i>".$slip->ttn."/-"; ?></td>
 											<td class="inv-bal-amt"><?php echo "<i class='fa fa-inr'></i>".$due_ttn."/-"; ?></td>
@@ -3610,7 +3610,7 @@ function wpsp_Import_Dummy_contents() {
 										if(!empty($slip->trans)){ ?>
 										<tr <?php if(!empty($slip->trans)) echo "style='display:table-row'"; ?> class="trans-chg-tr-inv" >
 											<td>3</td>
-											<td>Transportation charges(<div style="display: inline;" class="months">Monthly</div>)</td>
+											<td>Transportation charges(<div style="display: inline;" class="months"><?php echo $months_array[$slip->from_trn]."-".$months_array[$slip->to_trn]; ?></div>)</td>
 											<td class="inv-expected-amt"><?php if(!empty($exp_trn)) echo "<i class='fa fa-inr'></i>".$exp_trn."/-"; ?></td>
 											<td class="inv-paid-amt"><?php if(!empty($slip->trans)) echo "<i class='fa fa-inr'></i>".$slip->trans."/-"; ?></td>
 											<td class="inv-bal-amt"><?php echo "<i class='fa fa-inr'></i>".$due_trn."/-"; ?></td>
