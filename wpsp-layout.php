@@ -289,13 +289,16 @@ function wpsp_sidebar()
                 <i class='fa fa-users'></i>
                 <span>".__('Students','WPSchoolPress')."</span>
               </a>
-            </li>
-            <li class=".$fees_page.">
-              <a href='".site_url('sch-fee-man')."'>
-                <i class='fa fa-inr'></i>
-                <span>".__('Fees Management','WPSchoolPress')."</span>
-              </a>
-            </li>
+            </li>";
+            if($current_user_role=='administrator' || $current_user_role=='teacher') {  
+            echo "<li class=".$fees_page.">
+                    <a href='".site_url('sch-fee-man')."'>
+                      <i class='fa fa-inr'></i>
+                      <span>".__('Fees Management','WPSchoolPress')."</span>
+                    </a>
+                  </li>";
+            }
+            echo "
             <li class=".$teacher_page.">
               <a href='".site_url('sch-teacher')."'>
                 <i class='fa fa-users'></i>
