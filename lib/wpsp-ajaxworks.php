@@ -2842,11 +2842,15 @@ function wpsp_Import_Dummy_contents() {
 			if(!empty($due_months->amount)){
 				if($due_months->fees_type=='ttn'){
 					$outstanding_amt = $due_months->amount - $concession;
-					$from = $due_months->month;
+					if($due_months->month<$from){
+						$from = $due_months->month;
+					}
 				} 
 				if($due_months->fees_type=='trn'){
 					$outstanding_amt_trn = $due_months->amount;
-					$from_trn = $due_months->month;
+					if($due_months->month<$from_trn){
+						$from_trn = $due_months->month;
+					}
 				} 
 			}
 		}
