@@ -510,6 +510,10 @@ $(document).ready(function () {
 	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	  return regex.test(email);
 	}
+    $(".fees-single-row").click(function(){
+        var slid = $(this).attr('id');
+        $.post(ajax_url,{action: "load_detailed_transaction", slid: slid},function(data){ $.alert(data); });
+    });
     
 });
 // Bharatdan Gadhavi - 16th Feb - Start - function to call on blur of RollNo field to check if rollno is exists in database for selected class

@@ -403,4 +403,6 @@ $(document).ready(function(){
 			$.alert("Please Select From date");
 		}
 	});
+
+	
 });
