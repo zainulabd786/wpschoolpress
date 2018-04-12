@@ -344,6 +344,12 @@ function wpsp_UpdateStudent(){
 	$pedu 				=	esc_attr($_POST['p_edu']);
 	$pprofession		=	esc_attr($_POST['p_profession']);      
 	$pbloodgroup	      =  esc_attr($_POST['p_bloodgrp']);
+	if($_POST['opt_transport'] == "on"){
+		$transport = 1;
+	}
+	else{
+		$transport = 0;
+	}
 	
 	$studenttable	=	array(
 						'class_id'			=>	isset( $_POST['Class'] ) ? esc_attr( $_POST['Class'] ) : '',						
@@ -371,7 +377,9 @@ function wpsp_UpdateStudent(){
 						's_city' 			=> isset( $_POST['s_city'] ) ? esc_attr( $_POST['s_city'] ) :'',
 						's_pcountry'		=> isset( $_POST['s_pcountry'] ) ? esc_attr( $_POST['s_pcountry'] ) : '',
 						's_pcity' 			=> isset( $_POST['s_pcity'] ) ? esc_attr( $_POST['s_pcity'] ) :'',						
-						's_pzipcode'		=> isset( $_POST['s_pzipcode'] ) ? $_POST['s_pzipcode'] :''
+						's_pzipcode'		=> isset( $_POST['s_pzipcode'] ) ? $_POST['s_pzipcode'] :'',
+						'transport'			=> $transport,
+						'route_id'			=> isset( $_POST['transport_route'] ) ? $_POST['transport_route'] :'',
 						 );						 
 	$stu_upd 		=	$wpdb->update( $wpsp_student_table , $studenttable, array('wp_usr_id'=>$user_id) );    	
 	if (!empty( $_FILES['displaypicture']['name'])) {
