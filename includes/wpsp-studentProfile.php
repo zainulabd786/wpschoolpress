@@ -2,6 +2,7 @@
 $student_table	=	$wpdb->prefix."wpsp_student";
 $class_table	=	$wpdb->prefix."wpsp_class";
 $users_table	=	$wpdb->prefix."users";
+$transport_table=	$wpdb->prefix."wpsp_transport";
 $sid			=	$_GET['id'];
 $edit			=	true;
 $msg			=	'';
@@ -165,6 +166,20 @@ if( !empty( $stinfo ) ) {
 										</select>
 									
 								</div>
+								<div class="form-group opt-transport">
+                                    <label for="transport">Transport</label><br/>
+                                    <div class="form-inline">
+                                        <input type="checkbox" name="opt_transport" id="transport" data-toggle="toggle" data-on="Required" data-off="Not Required"<?php if(!empty($stinfo->transport)) echo "checked"; ?>>
+                                        <select name="transport_route" class="form-control transport-route" <?php if(empty($stinfo->transport)) echo "disabled" ?>>
+                                            <?php 
+                                            	$get_routes_sql = $wpdb->get_results("SELECT id, bus_route FROM $transport_table");
+                                            	foreach ($get_routes_sql as $route) { ?>
+                                            		<option <?php if($stinfo->route_id == $route->id) echo "selected"; ?> value="<?php echo $route->id; ?>"><?php echo $route->bus_route; ?></option> <?php
+                                            	}
+                                             ?>
+                                        </select>
+                                    </div>
+                                </div>
 							</div>
 						</div>
                         
@@ -187,7 +202,7 @@ if( !empty( $stinfo ) ) {
 											<?php
 											foreach ($classes as $class) {
 												?>
-												<option value="<?php echo $class->cid; ?>" <?php if ($stinfo->class_id == $class->cid) echo 'selected'; ?>><?php echo $class->c_name; ?></option>
+												<option  value="<?php echo $class->cid; ?>" <?php if ($stinfo->class_id == $class->cid) echo 'selected'; ?>><?php echo $class->c_name; ?></option>
 												<?php
 											}
 											?>
