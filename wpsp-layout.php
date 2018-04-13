@@ -290,27 +290,27 @@ function wpsp_sidebar()
                 <span>".__('Students','WPSchoolPress')."</span>
               </a>
             </li>";
-            if($current_user_role=='administrator' || $current_user_role=='teacher') {  
+          if($current_user_role=='administrator' || $current_user_role=='teacher') {  
             echo "<li class=".$fees_page.">
                     <a href='".site_url('sch-fee-man')."'>
                       <i class='fa fa-inr'></i>
                       <span>".__('Fees Management','WPSchoolPress')."</span>
                     </a>
                   </li>";
-            }
-            echo "
-            <li class=".$teacher_page.">
-              <a href='".site_url('sch-teacher')."'>
-                <i class='fa fa-users'></i>
-                <span>".__('Teachers','WPSchoolPress')."</span>
-              </a>
-            </li>
-            <li class=".$parent_page.">
-              <a href='".site_url('sch-parent')."'>
-                <i class='fa fa-users'></i>
-                <span>".__('Parents','WPSchoolPress')."</span>
-              </a>
-            </li>
+          }
+          echo "
+          <li class=".$teacher_page.">
+            <a href='".site_url('sch-teacher')."'>
+              <i class='fa fa-users'></i>
+              <span>".__('Teachers','WPSchoolPress')."</span>
+            </a>
+          </li>
+          <li class=".$parent_page.">
+            <a href='".site_url('sch-parent')."'>
+              <i class='fa fa-users'></i>
+              <span>".__('Parents','WPSchoolPress')."</span>
+            </a>
+          </li>
       <li class=".$class_page.">
         <a href='".site_url('sch-class')."'>
           <i class='fa fa-bell'></i><span>".__('Classes','WPSchoolPress')."</span>

@@ -3124,21 +3124,28 @@ function wpsp_Import_Dummy_contents() {
 								'fees_type' => "adm",
 								'session' => $session
 							);
-							if($wpdb->query("UPDATE $dues_table SET amount=amount-'$admission_fees' WHERE fees_type='adm' AND session='$session' AND amount='$exp_admission_fees' AND uid='$uid'")){
-								$ok = 1;
+							$find_adm_dues = $wpdb->get_resulte("SELECT * FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$exp_admission_fees' AND uid='$uid'");
+								if($wpdb->num_rows>0){
+									if($wpdb->query("UPDATE $dues_table SET amount=amount-'$admission_fees' WHERE fees_type='adm' AND session='$session' AND amount='$exp_admission_fees' AND uid='$uid'")){
+									$ok = 1;
+								}
+								else{
+									$ok = 0;
+									throw new Exception($wpdb->print_error());
+								}
 							}
-							else{
-								$ok = 0;
-								throw new Exception($wpdb->print_error());
-							}
+							
 						}
 						else{
-							if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$admission_fees' AND uid='$uid' ")){
-								$ok = 1;
-							}
-							else{
-								$ok = 0;
-								throw new Exception($wpdb->print_error());
+							$find_adm_dues = $pwdb->get_results("SELECT * FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$admission_fees' AND uid='$uid'");
+							if($wpdb->num_rows>0){
+								if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$admission_fees' AND uid='$uid' ")){
+									$ok = 1;
+								}
+								else{
+									$ok = 0;
+									throw new Exception($wpdb->print_error());
+								}
 							}
 						}
 						if($wpdb->insert($record_table, $sql_record_data)){
@@ -3170,22 +3177,30 @@ function wpsp_Import_Dummy_contents() {
 								'fees_type' => "ann",
 								'session' => $session
 							);
-							if($wpdb->query("UPDATE $dues_table SET amount=amount-'$annual_chg' WHERE fees_type='ann' AND session='$session' AND amount='$exp_annual_chg' AND uid='$uid'")){
-								$ok = 1;
+							$find_ann_dues = $wpdb->get_results("SELECT * FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$exp_annual_chg' AND uid='$uid'");
+							if($wpdb->num_rows>0){
+								if($wpdb->query("UPDATE $dues_table SET amount=amount-'$annual_chg' WHERE fees_type='ann' AND session='$session' AND amount='$exp_annual_chg' AND uid='$uid'")){
+									$ok = 1;
+								}
+								else{
+									$ok = 0;
+									throw new Exception($wpdb->print_error());
+								}
 							}
-							else{
-								$ok = 0;
-								throw new Exception($wpdb->print_error());
-							}
+							
 						}
 						else{
-							if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid' ")){
-								$ok = 1;
+							$find_ann_dues = $wpdb->get_results("SELECT * FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid'");
+							if($wpdb->num_rows>0){
+								if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid' ")){
+									$ok = 1;
+								}
+								else{
+									$ok = 0;
+									throw new Exception($wpdb->print_error());
+								}
 							}
-							else{
-								$ok = 0;
-								throw new Exception($wpdb->print_error());
-							}
+							
 						}
 						if($wpdb->insert($record_table, $sql_record_data)){
 							$ok = 1;
@@ -3216,22 +3231,30 @@ function wpsp_Import_Dummy_contents() {
 								'fees_type' => "rec",
 								'session' => $session
 							);
-							if($wpdb->query("UPDATE $dues_table SET amount=amount-'$recreation_chg' WHERE fees_type='rec' AND session='$session' AND amount='$exp_recreation_chg' AND uid='$uid'")){
-								$ok = 1;
+							$fnd_rec_dues = $wpdb->get_results("SELECT * FROM $dues_table WHERE fees_type='rec' AND session='$session' AND amount='$exp_recreation_chg' AND uid='$uid'");
+							if($wpdb->num_rows>0){
+								if($wpdb->query("UPDATE $dues_table SET amount=amount-'$recreation_chg' WHERE fees_type='rec' AND session='$session' AND amount='$exp_recreation_chg' AND uid='$uid'")){
+									$ok = 1;
+								}
+								else{
+									$ok = 0;
+									throw new Exception($wpdb->print_error());
+								}
 							}
-							else{
-								$ok = 0;
-								throw new Exception($wpdb->print_error());
-							}
+							
 						}
 						else{
-							if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='rec' AND session='$session' AND amount='$recreation_chg' AND uid='$uid' ")){
-								$ok = 1;
+							$fnd_rec_dues = $wpdb->get_results("SELECT * FROM $dues_table WHERE fees_type='rec' AND session='$session' AND amount='$recreation_chg' AND uid='$uid'");
+							if($wpdb->num_rows>0){
+								if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='rec' AND session='$session' AND amount='$recreation_chg' AND uid='$uid' ")){
+									$ok = 1;
+								}
+								else{
+									$ok = 0;
+									throw new Exception($wpdb->print_error());
+								}
 							}
-							else{
-								$ok = 0;
-								throw new Exception($wpdb->print_error());
-							}
+							
 						}
 						if($wpdb->insert($record_table, $sql_record_data)){
 							$ok = 1;
@@ -3680,6 +3703,54 @@ function wpsp_Import_Dummy_contents() {
         foreach ($transport_sql as $route) { ?>
         	<option value="<?php echo $route->id; ?>"><?php echo $route->bus_route; ?></option><?php
         }
+
+		wp_die();
+	}
+
+	function cal_admission_fees(){
+		global $wpdb;
+
+		$cid = $_POST['cid'];
+		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$results = $wpdb->get_results("SELECT admission_fees FROM $fees_settings_table WHERE cid='$cid'");
+		if($wpdb->num_rows>0){
+			foreach ($results as $value) {
+				echo $value->admission_fees;
+			}
+		}
+		else echo "0";
+
+		wp_die();
+	}
+
+	function cal_annual_charge(){
+		global $wpdb;
+
+		$cid = $_POST['cid'];
+		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$results = $wpdb->get_results("SELECT annual_chg FROM $fees_settings_table WHERE cid='$cid'");
+		if($wpdb->num_rows>0){
+			foreach ($results as $value) {
+				echo $value->annual_chg;
+			}
+		}
+		else echo "0";
+
+		wp_die();
+	}
+
+	function cal_recreation_charge(){
+		global $wpdb;
+
+		$cid = $_POST['cid'];
+		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$results = $wpdb->get_results("SELECT recreation_chg FROM $fees_settings_table WHERE cid='$cid'");
+		if($wpdb->num_rows>0){
+			foreach ($results as $value) {
+				echo $value->recreation_chg;
+			}
+		}
+		else echo "0";
 
 		wp_die();
 	}

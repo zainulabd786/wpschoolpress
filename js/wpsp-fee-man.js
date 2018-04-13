@@ -64,6 +64,14 @@ $(document).ready(function(){
 				$(".dep-adm-inp").css("display","table-row");
 				$(".adm-fees-tr-inv").css("display","table-row");
 				$(".inv-tab-bottom").css("display","table-row");
+				$.post(ajax_url, {action: "get_expected_admission_fees", cid: $(".dep-class-select select").val()}, function(data){
+					$(".dep-adm-inp .expected").val(data); 
+					$(".dep-adm-inp .paid").val(data); 
+					$(".adm-fees-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+data+"/-");
+					$(".adm-fees-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+data+"/-");
+					$(".dep-adm-inp .expected, .dep-adm-inp .paid").trigger("keyup");
+					$(".dep-adm-inp .expected, .dep-adm-inp .paid").trigger("change");
+				});
 			break;
 
 			case "TuitionFees":
@@ -82,12 +90,28 @@ $(document).ready(function(){
 				$(".dep-ac-inp").css("display","table-row");
 				$(".annual-chg-tr-inv").css("display","table-row");
 				$(".inv-tab-bottom").css("display","table-row");
+				$.post(ajax_url, {action: "get_expected_annual_charge", cid: $(".dep-class-select select").val()}, function(data){
+					$(".dep-ac-inp .expected").val(data); 
+					$(".dep-ac-inp .paid").val(data); 
+					$(".annual-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+data+"/-");
+					$(".annual-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+data+"/-");
+					$(".dep-ac-inp .expected, .dep-ac-inp .paid").trigger("keyup");
+					$(".dep-ac-inp .expected, .dep-ac-inp .paid").trigger("change");
+				});
 			break;
 
 			case "RecreationCharge":
 				$(".dep-rf-inp").css("display","table-row");
 				$(".rec-chg-tr-inv").css("display","table-row");
 				$(".inv-tab-bottom").css("display","table-row");
+				$.post(ajax_url, {action: "get_expected_recreation_charge", cid: $(".dep-class-select select").val()}, function(data){
+					$(".dep-rf-inp .expected").val(data); 
+					$(".dep-rf-inp .paid").val(data); 
+					$(".rec-chg-tr-inv .inv-expected-amt").html("<i class='fa fa-inr'></i>"+data+"/-");
+					$(".rec-chg-tr-inv .inv-paid-amt").html("<i class='fa fa-inr'></i>"+data+"/-");
+					$(".dep-rf-inp .expected, .dep-rf-inp .paid").trigger("keyup");
+					$(".dep-rf-inp .expected, .dep-rf-inp .paid").trigger("change");
+				});
 			break;
 		}
 	});

@@ -185,6 +185,9 @@ function ajax_actions(){
 		add_action( 'wp_ajax_view_invoice_to_print', 'view_invoice' );
 
 		add_action( 'wp_ajax_get_transport_routes', 'get_transport_routes' );
+		add_action( 'wp_ajax_get_expected_admission_fees', 'cal_admission_fees' );
+		add_action( 'wp_ajax_get_expected_annual_charge', 'cal_annual_charge' );
+		add_action( 'wp_ajax_get_expected_recreation_charge', 'cal_recreation_charge' );
 }
 
 function tl_save_error() {
