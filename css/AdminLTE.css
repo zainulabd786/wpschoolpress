@@ -10530,4 +10530,9 @@ div#receiverUsers li.optgroup span.label {
 #receiverUsers .ms-options-wrap div.ms-options ul{
 	padding:0px;
 }
-/*Harsh Code For Print Test*/
+
+/*CSS for layout design changes by Amir*/
+.bg-FeeManagement
+{
+	background:violet;
+}
