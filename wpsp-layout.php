@@ -250,6 +250,10 @@ function wpsp_sidebar()
 		$teacher_attendance_page="active";
 		break;
   } 
+  //Menu item background color
+  $bgFeeManagement="bg-FeeManagement";
+  $bgDashboard="bg-Dashboard";
+  $bgStudent="bg-Student";
   
   $loc_avatar=get_user_meta($current_user->ID,'simple_local_avatar',true);
   if( $current_user->ID == 1 )
@@ -273,7 +277,7 @@ function wpsp_sidebar()
           </div>
            <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class='sidebar-menu'>       
-            <li class=".$dashboard_page.">
+            <li class=".$dashboard_page.' '.$bgDashboard.">
              <a href='".site_url('sch-dashboard')."'>
                 <i class='fa fa-dashboard'></i>
         <span>".__('Dashboard','WPSchoolPress')."</span>
@@ -285,7 +289,7 @@ function wpsp_sidebar()
         <span>".__('Messages','WPSchoolPress')."</span><span class='pull-right label label-primary pull-right'>".wpsp_UnreadCount()."</span>
               </a>
             </li>
-            <li class=".$student_page.">
+            <li class=".$student_page.' '.$bgStudent.">
               <a href='".site_url('sch-student')."'>
                 <i class='fa fa-users'></i>
                 <span>".__('Students','WPSchoolPress')."</span>

@@ -10534,5 +10534,8 @@ div#receiverUsers li.optgroup span.label {
 /*CSS for layout design changes by Amir*/
 .bg-FeeManagement
 {
-	background:violet;
+	background:red;
+}
+.bg-Student {
+    background: rebeccapurple;
 }
