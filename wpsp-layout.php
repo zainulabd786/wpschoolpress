@@ -291,8 +291,9 @@ function wpsp_sidebar()
                 <span>".__('Students','WPSchoolPress')."</span>
               </a>
             </li>";
+			
           if($current_user_role=='administrator' || $current_user_role=='teacher') {  
-		             echo "<li class=".$fees_page.">
+		             echo "<li class=".$fees_page.' '.$bgFeeManagement.">
                     <a href='".site_url('sch-fee-man')."'>
                       <i class='fa fa-inr'></i>
                       <span>".__('Fees Management','WPSchoolPress')."</span>
