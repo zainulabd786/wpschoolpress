@@ -2639,6 +2639,7 @@ function wpsp_Import_Dummy_contents() {
 
 	function save_fees_settings(){
 		global $wpdb;
+		$ok = 0;
 		$wpdb->show_errors();
 		if(!empty($_POST['classId'])){
 			$class = $_POST['classId'];
@@ -2669,7 +2670,10 @@ function wpsp_Import_Dummy_contents() {
 					array( '%d' )
 				);
 				if($update_sql_res){
-					echo "success";
+					$ok = 1;
+				}
+				else{
+					$ok = 0;
 				}
 			}
 			else{
@@ -2684,9 +2688,12 @@ function wpsp_Import_Dummy_contents() {
 					)
 				);
 				if($insert_sql_res){
-					echo "success";
+					$ok = 1;
 				}
-				else echo $wpdb->print_error();
+				else{
+					$ok = 0;
+					echo $wpdb->print_error();
+				} 
 			}
 		}
 
@@ -2700,14 +2707,14 @@ function wpsp_Import_Dummy_contents() {
 					$setting_val = $setting->option_value;
 				}
 				if($due_date != $setting_val){
-					if($wpdb->query("UPDATE $settings_table SET option_value='$due_date' WHERE option_name='due_date'")) echo "success"; 
-					else echo "error".$wpdb->print_error();
+					if($wpdb->query("UPDATE $settings_table SET option_value='$due_date' WHERE option_name='due_date'")) $ok=1;
+					else{ $ok = 0; echo "error".$wpdb->print_error(); }
 				}
 			}
 			else{
 				$due_date_array = array('option_name'=>'due_date', 'option_value'=>$due_date);
-				if($wpdb->insert($settings_table, $due_date_array)) echo "success"; 
-				else echo "error".$wpdb->print_error();
+				if($wpdb->insert($settings_table, $due_date_array)) $ok=1;
+				else{ $ok = 0; echo "error".$wpdb->print_error(); }
 			}
 		}
 
