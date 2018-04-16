@@ -9,6 +9,7 @@ wpsp_header();
 		global $current_user, $wpdb,$wpsp_settings_data;
 
 		$notify_table	=	$wpdb->prefix . "wpsp_notification";
+		$settings_table	=	$wpdb->prefix . "wpsp_settings";
 
 		$status = $ins = 0;
 
@@ -150,7 +151,13 @@ wpsp_header();
 								$to = $value['s_phone'];
 								if( !empty( $to ) ) {
 									$notify_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $to, $description );
-									if( $notify_msg_response ) $status = 1;
+									echo $notify_msg_response;
+									if( $notify_msg_response ){
+										$status = 1;
+										$num_msg = ceil(strlen($description)/150);
+										$wpdb->query("UPDATE $settings_table SET option_value=option_value-'$num_msg' WHERE option_name='sch_num_sms'");
+									}
+
 								}
 							}
 						}
