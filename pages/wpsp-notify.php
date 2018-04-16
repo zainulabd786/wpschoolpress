@@ -150,14 +150,16 @@ wpsp_header();
 							foreach( $usersList as $key =>$value ) {
 								$to = $value['s_phone'];
 								if( !empty( $to ) ) {
-									$notify_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $to, $description );
-									echo $notify_msg_response;
-									if( $notify_msg_response ){
-										$status = 1;
-										$num_msg = ceil(strlen($description)/150);
-										$wpdb->query("UPDATE $settings_table SET option_value=option_value-'$num_msg' WHERE option_name='sch_num_sms'");
+									$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+									$sms_left = $check_sms[0]->option_value;
+									if($sms_left > 0){
+										$notify_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $to, $description );
+										if( $notify_msg_response ){
+											$status = 1;
+											$num_msg = ceil(strlen($description)/150);
+											$wpdb->query("UPDATE $settings_table SET option_value=option_value-'$num_msg' WHERE option_name='sch_num_sms'");
+										}
 									}
-
 								}
 							}
 						}
