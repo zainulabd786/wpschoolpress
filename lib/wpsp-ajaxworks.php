@@ -3782,7 +3782,21 @@ function wpsp_Import_Dummy_contents() {
 		for($i=0;$i<count($st_arr);$i++){
 			$st_num = $wpdb->get_results("SELECT s_phone FROM $student_table WHERE wp_usr_id='$st_arr[$i]' ");
 			$phone = $st_num[0]->s_phone;
-
+			if( !empty( $phone ) ) {
+				$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+				$sms_left = $check_sms[0]->option_value;
+				if($sms_left > 0){
+					$reminder_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $to, $msg );
+					if( $reminder_msg_response ){
+						$status = 1;
+						$num_msg = ceil(strlen($msg)/150);
+						$wpdb->query("UPDATE $settings_table SET option_value=option_value-'$num_msg' WHERE option_name='sch_num_sms'");
+					}
+				}
+				else{
+					echo "Error! You are running out of messages";
+				}
+			}
 		}
 
 		wp_die();
