@@ -1,5 +1,6 @@
 var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
 var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+var stArr = [];
 $(document).ready(function(){
 	var months_array = ["N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"];
 	function getSum(total, num) {
@@ -428,5 +429,37 @@ $(document).ready(function(){
 		}
 	});
 
+	$(".strowselect").click(function(){
+		if($(this).prop("checked") == true){
+			stArr.push($(this).val());
+		}
+		else{
+			stArr.splice( stArr.indexOf($(this).val()), 1 );
+		}
+	});
+
+	$("#selectall").click(function(){
+		if($(this).prop("checked") == true){
+			var count = $("#student_table tbody .z-checkbox-row").length;
+			for(var i=1;i<=count;i++){
+				stArr.push($("#student_table tbody .z-checkbox-row:nth-child("+i+") td .ccheckbox").val());
+			}
+		}
+		else{
+			var count = $("#student_table tbody .z-checkbox-row").length;
+			for(var i=1;i<=count;i++){
+				stArr.splice( stArr.indexOf($("#student_table tbody .z-checkbox-row:nth-child("+i+") td .ccheckbox").val()), 1 );
+			}
+		}
+	});
+
+	$(".reminder-btn").click(function(){
+		var filterArr = [];
+		$.each(stArr, function(i, el){
+		    if($.inArray(el, filterArr) === -1) filterArr.push(el);
+		});
+		$.post(ajax_url, {action: "send_reminder_message", to: filterArr}, function(data){ $.alert(data); });
+	});
 	
 });
+

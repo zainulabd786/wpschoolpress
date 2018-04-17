@@ -3770,4 +3770,21 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function send_reminder_message(){
+		global $wpdb;
+
+		$st_arr = $_POST['to'];
+		$student_table = $wpdb->prefix."wpsp_student";
+		$settings_table = $wpdb->prefix."wpsp_settings";
+		$msg = "";
+
+		for($i=0;$i<count($st_arr);$i++){
+			$st_num = $wpdb->get_results("SELECT s_phone FROM $student_table WHERE wp_usr_id='$st_arr[$i]' ");
+			$phone = $st_num[0]->s_phone;
+
+		}
+
+		wp_die();
+	}
 ?>
