@@ -221,9 +221,14 @@
 	$sql_due_date_scr	= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'due_php_script_status'");
 	foreach ($sql_due_date_scr as $due_date_scr) {
 		$due_date_scr = $due_date_scr->option_value;
-	}
+	} ?>
+	<script type="text/javascript">
+		//alert('<?php echo $due_date_scr; ?>');
+	</script><?php
 	if(!empty($due_date_scr)){
-		if(date("d") == $due_date_scr + 1){
+		$next_day_res = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name='due_date'");
+		$next_day = $next_day_res[0]->option_value + 1;
+		if(date("d") == $next_day){
 			$wpdb->query("UPDATE $settings_table SET option_value = '0' WHERE option_name = 'due_php_script_status' ");
 		}
 	}
