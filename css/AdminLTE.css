@@ -2906,7 +2906,7 @@ a:focus {
 
   z-index: 10;
 
-  background: rgba(0, 0, 0, 0.1);
+ /* background: rgba(0, 0, 0, 0.1);*/
 
   text-decoration: none;
 
@@ -2916,7 +2916,7 @@ a:focus {
 
   color: #fff;
 
-  background: rgba(0, 0, 0, 0.15);
+  /*background: rgba(0, 0, 0, 0.15);*/
 
 }
 
@@ -3412,7 +3412,7 @@ a:focus {
   color: #fff;
   display: block;
   padding: 10px;
-  background: #0073b7;
+  background: #182d3e;
   position: relative;
   border-radius: 3px;
 
@@ -8002,8 +8002,8 @@ fieldset[disabled] .btn-vk.active {
 
 .modal-danger .modal-body {
 
-  background-color: #dd4b39 !important;
-
+  background-color: #d47f36 !important;
+border-radius: 25px;
 }
 
 .bg-yellow,
@@ -8016,8 +8016,8 @@ fieldset[disabled] .btn-vk.active {
 
 .modal-warning .modal-body {
 
-  background-color: #f39c12 !important;
-
+  background-color: #03b3a9 !important;
+border-radius: 25px;
 }
 
 .bg-aqua,
@@ -8030,8 +8030,8 @@ fieldset[disabled] .btn-vk.active {
 
 .modal-info .modal-body {
 
-  background-color: #00c0ef !important;
-
+  background-color: #99152e !important;
+  border-radius: 25px;
 }
 
 .bg-blue {
@@ -8061,8 +8061,8 @@ fieldset[disabled] .btn-vk.active {
 
 .modal-success .modal-body {
 
-  background-color: #00a65a !important;
-
+  background-color: #aead44 !important;
+border-radius: 25px;
 }
 
 .bg-navy {
@@ -10532,12 +10532,27 @@ div#receiverUsers li.optgroup span.label {
 }
 
 /*CSS for layout design changes by Amir*/
-.bg-FeeManagement
-{
-	background:red;
-}
-.bg-Student {
+.bg-Dashboard {
     background: rebeccapurple;
+}
+.bg-firstBlock {
+    background: #d47f36;
+}
+.bg-SecondBlock
+{
+	background:#aead44;
+}
+.bg-ThirdBlock
+{
+	background:#99152e;
+}
+.bg-FourthBlock
+{
+	background:#03b3a9;
+}
+.bg-FifthBlock
+{
+	background:#d25801;
 }
 .sms-count {
     color: #fff;
