@@ -160,6 +160,9 @@ wpsp_header();
 											$wpdb->query("UPDATE $settings_table SET option_value=option_value-'$num_msg' WHERE option_name='sch_num_sms'");
 										}
 									}
+									else{
+										echo "Error! You are running out of messages!";
+									}
 								}
 							}
 						}
