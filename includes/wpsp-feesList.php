@@ -38,7 +38,7 @@
 
 		            <div class="box-footer text-black">
 						<div class="col-md-12 col-lg-12 col-sm-12" style="padding:0;display: inline-block; margin-bottom:10px">
-							<div class="col-md-4 col-sm-12 col-lg-4 float-left">
+							<div class="col-md-6 col-sm-12 col-lg-6 float-left">
 								<form name="StudentClass" id="StudentClass" method="post" action="" class="class-filter">
 									<label><?php _e( 'Select Class Name', 'WPSchoolPress' ); ?></label>
 									<select name="ClassID" id="ClassID" class="form-control">
@@ -53,10 +53,11 @@
 										 <?php if ( in_array( 'administrator', $role ) ) { ?>
 											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
 										 <?php } ?>
-									</select>
-								</form>								
+									</select>	
+								</form>							
+								<button style="float: right;" type="button" class="btn btn-success reminder-btn"><i class="fa fa-envelope-o"></i> Send Reminder</button>
 							</div>
-							<div class="col-md-8 col-sm-12 col-lg-8 ">
+							<div class="col-md-6 col-sm-12 col-lg-6 ">
 									
 								<div class="button-group btn-pro" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
 
@@ -162,7 +163,7 @@
 										$key++;	
 										if(!empty($stinfo->due_amount)){				
 									?>
-											<tr>
+											<tr class="z-checkbox-row">
 											<td>
 											<?php if ( in_array( 'administrator', $role ) ) { ?>
 												<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $stinfo->wp_usr_id;?>">

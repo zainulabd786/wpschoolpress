@@ -188,6 +188,7 @@ function ajax_actions(){
 		add_action( 'wp_ajax_get_expected_admission_fees', 'cal_admission_fees' );
 		add_action( 'wp_ajax_get_expected_annual_charge', 'cal_annual_charge' );
 		add_action( 'wp_ajax_get_expected_recreation_charge', 'cal_recreation_charge' );
+		add_action( 'wp_ajax_send_reminder_message', 'send_reminder_message' );
 }
 
 function tl_save_error() {
