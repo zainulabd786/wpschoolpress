@@ -3774,29 +3774,49 @@ function wpsp_Import_Dummy_contents() {
 	function send_reminder_message(){
 		global $wpdb;
 
+		$months_array = array("N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 		$st_arr = $_POST['to'];
 		$student_table = $wpdb->prefix."wpsp_student";
 		$settings_table = $wpdb->prefix."wpsp_settings";
-		$msg = "";
+		$dues_table = $wpdb->prefix."wpsp_fees_dues";
+		$from_mo = '';
+		$to_mo = '';
 
 		for($i=0;$i<count($st_arr);$i++){
+			$status = 0;
 			$st_num = $wpdb->get_results("SELECT s_phone FROM $student_table WHERE wp_usr_id='$st_arr[$i]' ");
+			$get_due_months_sql = $wpdb->get_results("SELECT MIN(CASE WHEN fees_type='ttn' THEN month ELSE NULL END) AS from_ttn, MAX(CASE WHEN fees_type='ttn' THEN month ELSE 0 END) AS to_ttn FROM $dues_table WHERE uid='$st_arr[$i]'");
+			foreach ($get_due_months_sql as $mo) {
+				$from_mo = $months_array[$mo->from_ttn];
+				$to_mo = $months_array[$mo->to_ttn];
+			}
 			$phone = $st_num[0]->s_phone;
 			if( !empty( $phone ) ) {
 				$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 				$sms_left = $check_sms[0]->option_value;
 				if($sms_left > 0){
-					$reminder_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $to, $msg );
+					$msg = "Dear Parent, you are requested to submit the fees for the month of ".$from_mo."->".$to_mo." . *Regards SPI School";
+					$reminder_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $phone, $msg );
 					if( $reminder_msg_response ){
 						$status = 1;
 						$num_msg = ceil(strlen($msg)/150);
 						$wpdb->query("UPDATE $settings_table SET option_value=option_value-'$num_msg' WHERE option_name='sch_num_sms'");
 					}
+					else{
+						$error = $reminder_msg_response;
+					}
 				}
 				else{
-					echo "Error! You are running out of messages";
+					$error = "Error! You are running out of messages";
 				}
 			}
+		}
+
+		if($status == 1){
+			echo "<div class='alert alert-success'>Messages Succesfully Sent</div>";
+		}
+		else{
+			echo "<div class='alert alert-danger'>".$error."</div>";
 		}
 
 		wp_die();

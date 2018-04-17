@@ -455,10 +455,15 @@ $(document).ready(function(){
 
 	$(".reminder-btn").click(function(){
 		var filterArr = [];
-		$.each(stArr, function(i, el){
-		    if($.inArray(el, filterArr) === -1) filterArr.push(el);
-		});
-		$.post(ajax_url, {action: "send_reminder_message", to: filterArr}, function(data){ $.alert(data); });
+		if(stArr.length > 0){
+			$.each(stArr, function(i, el){
+		    	if($.inArray(el, filterArr) === -1) filterArr.push(el);
+			});
+			$.post(ajax_url, {action: "send_reminder_message", to: filterArr}, function(data){ $.alert(data); });
+		}
+		else{
+			alert("Please Select Students to send message");
+		}
 	});
 	
 });
