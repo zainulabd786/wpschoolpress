@@ -123,7 +123,14 @@ function wpsp_header(){
 		  <?php } ?>
           <!-- Navbar Right Menu -->
           <div class='navbar-custom-menu'>
-            <ul class='nav navbar-nav'>                  
+            <ul class='nav navbar-nav'>  
+			<li class="sms-count">
+                        <?php
+							$settings_table=$wpdb->prefix."wpsp_settings";
+							$num_msg=$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+							$num_of_msg = $num_msg[0]->option_value; ?>
+							Number of SMS Left :  <span class="label label-success"><?php echo $num_of_msg; ?> </span>                 
+                    </li>			
                   <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>

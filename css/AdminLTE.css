@@ -10539,3 +10539,8 @@ div#receiverUsers li.optgroup span.label {
 .bg-Student {
     background: rebeccapurple;
 }
+.sms-count {
+    color: #fff;
+    padding-top: 15px;
+    padding-right: 15px;
+}
