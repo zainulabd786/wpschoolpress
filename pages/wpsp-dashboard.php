@@ -125,16 +125,17 @@
 							</table>
 						</div>
 					</div>
-
+<!--
 					<div class="box box-success">
 						<div class="box-header with-border">
 							<?php
-							$settings_table=$wpdb->prefix."wpsp_settings";
-							$num_msg=$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
-							$num_of_msg = $num_msg[0]->option_value; ?>
-							<h3 class="box-title">Number Of Messages Left: <?php echo $num_of_msg; ?></h3>
+							//$settings_table=$wpdb->prefix."wpsp_settings";
+							//$num_msg=$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+							//$num_of_msg = $num_msg[0]->option_value; ?>
+							<h3 class="box-title">Number Of Messages(SMS) Left: <?php //echo $num_of_msg; ?></h3>
 						</div>
 					</div>
+					-->
 				</div>
 		</div>
 		</section>
