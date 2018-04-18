@@ -3838,7 +3838,6 @@ function wpsp_Import_Dummy_contents() {
 				}
 			}
 		}
-		echo $msg."<br/>";
 		if($status == 1){
 			echo "<div class='alert alert-success'>Messages Succesfully Sent</div>";
 		}
