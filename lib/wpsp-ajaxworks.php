@@ -3781,21 +3781,48 @@ function wpsp_Import_Dummy_contents() {
 		$dues_table = $wpdb->prefix."wpsp_fees_dues";
 		$from_mo = '';
 		$to_mo = '';
+		$from_trn_mo = '';
+		$to_trn_mo = '';
+		$phone = 0;
+		$msg = "Dear Parent, you are requested to submit the fees for the month of ";
 
 		for($i=0;$i<count($st_arr);$i++){
 			$status = 0;
 			$st_num = $wpdb->get_results("SELECT s_phone FROM $student_table WHERE wp_usr_id='$st_arr[$i]' ");
-			$get_due_months_sql = $wpdb->get_results("SELECT MIN(CASE WHEN fees_type='ttn' THEN month ELSE NULL END) AS from_ttn, MAX(CASE WHEN fees_type='ttn' THEN month ELSE 0 END) AS to_ttn FROM $dues_table WHERE uid='$st_arr[$i]'");
+			$get_due_months_sql = $wpdb->get_results("SELECT MIN(CASE WHEN fees_type='ttn' THEN month ELSE NULL END) AS from_ttn, MAX(CASE WHEN fees_type='ttn' THEN month ELSE 0 END) AS to_ttn, MIN(CASE WHEN fees_type='trn' THEN month ELSE NULL END) AS from_trn, MAX(CASE WHEN fees_type='trn' THEN month ELSE 0 END) AS to_trn FROM $dues_table WHERE uid='$st_arr[$i]'");
 			foreach ($get_due_months_sql as $mo) {
-				$from_mo = $months_array[$mo->from_ttn];
-				$to_mo = $months_array[$mo->to_ttn];
+				$from = $mo->from_ttn;
+				$to = $mo->to_ttn;
+				$from_trn = $mo->from_trn;
+				$to_trn = $mo->to_trn;
 			}
+			for($m=$from;$m<=$to;$m++){
+				if(!empty($m)){
+					if($m == $to){
+						$msg .= $months_array[$m]."(Tution Fees) ";
+					}
+					else{
+						$msg .= $months_array[$m]."(Tution Fees), ";
+					}
+				}
+			}
+			for($n=$from_trn;$n<=$to_trn;$n++){
+				if(!empty($n)){
+					if($n == $to_trn){
+						$msg .= $months_array[$n]."(Transportation Chages)";
+					}
+					else{
+						$msg .= $months_array[$n]."(Transportation Chages), ";
+					}
+				}
+			}
+			$msg .= ". *Regards SPI School";
+
 			$phone = $st_num[0]->s_phone;
 			if( !empty( $phone ) ) {
 				$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 				$sms_left = $check_sms[0]->option_value;
 				if($sms_left > 0){
-					$msg = "Dear Parent, you are requested to submit the fees for the month of ".$from_mo."->".$to_mo." . *Regards SPI School";
 					$reminder_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $phone, $msg );
 					if( $reminder_msg_response ){
 						$status = 1;
@@ -3811,7 +3838,7 @@ function wpsp_Import_Dummy_contents() {
 				}
 			}
 		}
-
+		echo $msg."<br/>";
 		if($status == 1){
 			echo "<div class='alert alert-success'>Messages Succesfully Sent</div>";
 		}
