@@ -150,6 +150,7 @@
 	}
 
 	//due monthly fees
+	$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
 	$settings_table		=	$wpdb->prefix."wpsp_settings";
 	$script_status = 0;
 	$sql_exec_script = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name='due_php_script_status'");
@@ -179,7 +180,7 @@
 		$sql_due_date		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'due_date' AND option_value = '$curr_date' ");
 		if($wpdb->num_rows>0){
 			try{
-				$student_sql = $wpdb->get_results("SELECT wp_usr_id, class_id, transport FROM $student_table");
+				$student_sql = $wpdb->get_results("SELECT wp_usr_id, class_id, transport, s_phone FROM $student_table");
 
 				foreach ($student_sql as $student) {
 					$tf = 0;
@@ -205,6 +206,25 @@
 						if($wpdb->insert($dues_table, $sql_tc_data) == false) throw new Exception($wpdb->print_error());
 					}
 					
+					if(!empty($student->s_phone)){
+						$c_month = date('m');
+						$c_month = (int)$c_month;
+						$curr_month_name = $months_array[$c_month];
+						$mobile = $student->s_phone;
+						$msg = "Dear Parent, you are requested to submit the fees for the month of ".$curr_month_name.". *Regards SPI School";
+						$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+						$sms_left = $check_sms[0]->option_value;
+						if($sms_left > 0){
+							$reminder_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $mobile, $msg );
+							if( $reminder_msg_response ){
+								$status = 1;
+								$num_msg = ceil(strlen($msg)/150);
+								if($wpdb->query("UPDATE $settings_table SET option_value=option_value-'$num_msg' WHERE option_name='sch_num_sms'") == false){
+									throw new Exception($wpdb->print_error());
+								}
+							}
+						}
+					}
 
 				}
 

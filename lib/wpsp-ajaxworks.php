@@ -595,7 +595,7 @@ function wpsp_getStudentsList()
                             <div class="pull-right">
                                 <input type="hidden" value="'.$entry_date.'" name="AttendanceDate">
                                 <input type="hidden" value="'.$classid.'" name="AttendanceClass">
-                                <a href="#" class="btn btn-danger" data-id="'.$check_attend->aid.'" class="deleteAttendance">Delete </a>';
+                                <a href="#" class="btn btn-danger deleteAttendance" data-id="'.$check_attend->aid.'">Delete </a>';
     $content.= wp_nonce_field( 'StudentAttendance','sattendance_nonce', '', false ).'
                                 <input type="checkbox" class="ccheckbox" '. $nil .' name="Nil" value="Nil"> <span class="text-green MRTen">All Present</span>
                                 <button id="AttendanceSubmit" class="btn btn-primary">Submit</button>
