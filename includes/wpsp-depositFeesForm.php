@@ -159,11 +159,11 @@
 												</select>
 											</div>
 											<div class="form-group">
-												<label>Session</label>
+												<label>Session<sup>*</sup></label>
 												<input type="text" value="<?php if(!empty($session)) echo $session; ?>" class="dep-session form-control" placeholder="Session">
 											</div>
 											<div class="form-group mop">
-												<label>Mode Of Payment</label>
+												<label>Mode Of Payment<sup>*</sup></label>
 												<select class="form-control">
 													<option value="">Select one</option>
 													<option value="Cash">Cash</option>
@@ -172,7 +172,7 @@
 												</select>
 											</div>
 											<div class="form-group pno-group">
-												<label for="pno">Cheque/NEFT Number</label>
+												<label for="pno">Cheque/NEFT Number<sup>*</sup></label>
 												<input type="text" value="0" class="form-control" id="pno">
 											</div>
 											<div class="form-group dep-fee-type">
@@ -262,7 +262,7 @@
 												<div class="input-group">
 													<span class="input-group-addon remove-inp"><i class="fa fa-close"></i></span>
 													<input type="text" class="form-control expected" <?php if(!empty($rec_f)) echo "value='".$rec_f."'"; else echo "value='0'"; ?> placeholder="Amount Expected" disabled>
-													<input type="text" class="form-control paid" <?php if(!empty($rec_f)) echo "value='".$rec_fs."'"; else echo "value='0'"; ?> placeholder="Paid Amount">
+													<input type="text" class="form-control paid" <?php if(!empty($rec_f)) echo "value='".$rec_f."'"; else echo "value='0'"; ?> placeholder="Paid Amount">
 												</div>
 											</div>
 											

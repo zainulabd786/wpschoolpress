@@ -2783,11 +2783,13 @@ function wpsp_Import_Dummy_contents() {
 
 	function submit_deposit_form(){
 		global $wpdb;
+		$admission_fees = 0;
 		$wpdb->show_errors();
 		$current_date_time = date("Y-m-d H:i:s");
 		$todays_date		=	date("Y-m-d");
 		$months_array = array("none","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 		$tid = date("dmyis").$uid;
+		$admission_fees = $_POST['admissionFees'];
 		$slip_no = $_POST['slip'];
 		$uid = $_POST['studentId'];
 		$cid = $_POST['classId'];
@@ -2796,7 +2798,6 @@ function wpsp_Import_Dummy_contents() {
 		$from_trn = $_POST['fromDateTrn'];
 		$to_trn = $_POST['toDateTrn'];
 		$num_months = ($to - $from) + 1;
-		$admission_fees = $_POST['admissionFees'];
 		$tution_fees = $_POST['tutionFees'];
 		$transport_chg = $_POST['transportChg'];
 		$annual_chg = $_POST['annualChg'];
@@ -2813,12 +2814,14 @@ function wpsp_Import_Dummy_contents() {
 		$fees_type = "";
 		$pm_tf = 0;
 		$pm_tc = 0;
+		$msg = "Dear Parents, Thanks for depositing the payment of the month";
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
 		$record_table = $wpdb->prefix."wpsp_fees_payment_record";
 		$dues_table = $wpdb->prefix."wpsp_fees_dues";
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$student_table = $wpdb->prefix."wpsp_student";
 		$transport_table = $wpdb->prefix."wpsp_transport";
+		$settings_table = $wpdb->prefix."wpsp_settings";
 		$sql_expected_amounts = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$cid' ");
 		foreach ($sql_expected_amounts as $amt) {
 			$pm_tf = $amt->tution_fees-$concession;
@@ -2851,6 +2854,43 @@ function wpsp_Import_Dummy_contents() {
 				'mop' => $mop,
 				'pno' => $pno
 		);
+		$mob_no = $wpdb->get_results("SELECT s_phone FROM $student_table WHERE wp_usr_id='$uid'");
+		if(!empty($mob_no)){
+			$mobile = $mob_no[0]->s_phone;
+			if(!empty($mobile)){
+				for($m=$from;$m<=$to;$m++){
+					if(!empty($m)){
+						if($m == $to){
+							$msg .= $months_array[$m]."(Tution Fees) ";
+						}
+						else{
+							$msg .= $months_array[$m]."(Tution Fees), ";
+						}
+					}
+				}
+				for($n=$from_trn;$n<=$to_trn;$n++){
+					if(!empty($n)){
+						if($n == $to_trn){
+							$msg .= $months_array[$n]."(Transportation Chages)";
+						}
+						else{
+							$msg .= $months_array[$n]."(Transportation Chages), ";
+						}
+					}
+				}
+				$msg .= ". *Regards SPI School";
+				$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+				$sms_left = $check_sms[0]->option_value;
+				if($sms_left > 0){
+					$reminder_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $mobile, $msg );
+					if( $reminder_msg_response ){
+						$status = 1;
+						$num_msg = ceil(strlen($msg)/150);
+						$wpdb->query("UPDATE $settings_table SET option_value=option_value-'$num_msg' WHERE option_name='sch_num_sms'");
+					}
+				}
+			}
+		}
 		$outstanding_amt = 0;
 		$outstanding_amt_trn = 0;
 		$sql_due_month = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$uid' AND (fees_type='ttn' || fees_type='trn') ORDER BY month DESC");
@@ -3116,7 +3156,6 @@ function wpsp_Import_Dummy_contents() {
 					}				
 				}
 			}
-
 			for($j=0;$j<count($fees_type_arr);$j++){
 				$month = "N/A";
 				switch ($fees_type_arr[$j]) {
@@ -3141,8 +3180,8 @@ function wpsp_Import_Dummy_contents() {
 								'session' => $session
 							);
 							$find_adm_dues = $wpdb->get_resulte("SELECT * FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$exp_admission_fees' AND uid='$uid'");
-								if($wpdb->num_rows>0){
-									if($wpdb->query("UPDATE $dues_table SET amount=amount-'$admission_fees' WHERE fees_type='adm' AND session='$session' AND amount='$exp_admission_fees' AND uid='$uid'")){
+							if($wpdb->num_rows>0){
+								if($wpdb->query("UPDATE $dues_table SET amount=amount-'$admission_fees' WHERE fees_type='adm' AND session='$session' AND amount='$exp_admission_fees' AND uid='$uid'")){
 									$ok = 1;
 								}
 								else{
@@ -3150,10 +3189,10 @@ function wpsp_Import_Dummy_contents() {
 									throw new Exception($wpdb->print_error());
 								}
 							}
-							
 						}
 						else{
-							$find_adm_dues = $pwdb->get_results("SELECT * FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$admission_fees' AND uid='$uid'");
+							$find_adm_dues = $wpdb->get_results("SELECT * FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$admission_fees' AND uid='$uid'");
+							
 							if($wpdb->num_rows>0){
 								if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$admission_fees' AND uid='$uid' ")){
 									$ok = 1;
