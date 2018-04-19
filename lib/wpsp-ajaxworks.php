@@ -2814,7 +2814,7 @@ function wpsp_Import_Dummy_contents() {
 		$fees_type = "";
 		$pm_tf = 0;
 		$pm_tc = 0;
-		$msg = "Dear Parents, Thanks for depositing the payment of the month";
+		$msg = "Dear Parents, Thanks for depositing the payment of the month ";
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
 		$record_table = $wpdb->prefix."wpsp_fees_payment_record";
 		$dues_table = $wpdb->prefix."wpsp_fees_dues";
