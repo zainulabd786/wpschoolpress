@@ -3824,8 +3824,7 @@ function wpsp_Import_Dummy_contents() {
 		$to_trn_mo = '';
 		$phone = 0;
 		$msg = "Dear Parent, you are requested to submit the fees for the month of ";
-
-		for($i=0;$i<count($st_arr);$i++){
+        for($i=0;$i<count($st_arr);$i++){
 			$status = 0;
 			$st_num = $wpdb->get_results("SELECT s_phone FROM $student_table WHERE wp_usr_id='$st_arr[$i]' ");
 			$get_due_months_sql = $wpdb->get_results("SELECT MIN(CASE WHEN fees_type='ttn' THEN month ELSE NULL END) AS from_ttn, MAX(CASE WHEN fees_type='ttn' THEN month ELSE 0 END) AS to_ttn, MIN(CASE WHEN fees_type='trn' THEN month ELSE NULL END) AS from_trn, MAX(CASE WHEN fees_type='trn' THEN month ELSE 0 END) AS to_trn FROM $dues_table WHERE uid='$st_arr[$i]'");
