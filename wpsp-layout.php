@@ -305,7 +305,7 @@ function wpsp_sidebar()
               </a>
             </li>";
 			
-          if($current_user_role=='administrator' || $current_user_role=='teacher') {  
+          if($current_user_role=='administrator') {  
 		             echo "<li class=".$fees_page.' '.$bgFirstBlock.">
                     <a href='".site_url('sch-fee-man')."'>
                       <i class='fa fa-inr'></i>
