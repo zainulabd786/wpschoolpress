@@ -1,5 +1,6 @@
 <?php
 wpsp_header();
+$months_array = array("N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 	if( is_user_logged_in() ) {
 		global $current_user, $wp_roles, $wpdb;
 
