@@ -2871,14 +2871,14 @@ function wpsp_Import_Dummy_contents() {
 				for($n=$from_trn;$n<=$to_trn;$n++){
 					if(!empty($n)){
 						if($n == $to_trn){
-							$msg .= $months_array[$n]."(Transportation Chages)";
+							$msg .= $months_array[$n]."(Transportation Charges)";
 						}
 						else{
-							$msg .= $months_array[$n]."(Transportation Chages), ";
+							$msg .= $months_array[$n]."(Transportation Charges), ";
 						}
 					}
 				}
-				$msg .= ". *Regards SPI School";
+				$msg .= " . *Regards SPI School";
 				$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 				$sms_left = $check_sms[0]->option_value;
 				if($sms_left > 0){
@@ -3847,10 +3847,10 @@ function wpsp_Import_Dummy_contents() {
 			for($n=$from_trn;$n<=$to_trn;$n++){
 				if(!empty($n)){
 					if($n == $to_trn){
-						$msg .= $months_array[$n]."(Transportation Chages)";
+						$msg .= $months_array[$n]."(Transportation Charges)";
 					}
 					else{
-						$msg .= $months_array[$n]."(Transportation Chages), ";
+						$msg .= $months_array[$n]."(Transportation Charges), ";
 					}
 				}
 			}
