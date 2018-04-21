@@ -2,3 +2,7 @@ body{    background-color: #f1f1f1 !important;}.plg-option{width:15%;vertical-al
 tr.spaceUnder > td {
   padding-bottom: 1em;
 }
+
+.plg-set-wrapper{
+	padding: 20px;
+}

@@ -6,6 +6,15 @@ if( isset( $_POST['saveoptions'] ) && $_POST['saveoptions']=='Save' ) {
 	update_option( 'wpsp_remove_data', $remove_data );
 }
 $remove_data_status	=	get_option( 'wpsp_remove_data');
+
+if( isset( $_POST['save-custom-options'] ) && $_POST['save-custom-options']=='Save-custom-settings' ) {
+    $num_sms = $_POST['set-num-sms'];
+    if(!empty($_POST['set-pay-gateway'])) $gateway_status = $_POST['set-pay-gateway'];
+    global $wpdb;
+    ($gateway_status == 'on') ? $gateway_status = 1 : $gateway_status = 0;
+    $wpdb->query("UPDATE $settings_table SET option_value = '$num_sms' WHERE option_name='sch_num_sms'");
+    $wpdb->query("UPDATE $settings_table SET option_value = '$gateway_status' WHERE option_name='sch_enable_payment_gateway'");
+}
 ?>
 <div id="wpbody">
     <div aria-label="Main content" tabindex="0">
@@ -40,6 +49,41 @@ $remove_data_status	=	get_option( 'wpsp_remove_data');
 										<p class="response"></p>	
                                         <p class="submit">
                                             <input type="submit" name="saveoptions" class="button button-primary" value="Save">
+                                            <br class="clear">
+                                        </p>
+                                    </form>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                  
+                </div>
+            </div><!-- dashboard-widgets-wrap -->
+        </div><!-- wrap -->
+    </div><!-- wpbody-content -->
+</div>
+
+
+<div id="wpbody">
+    <div aria-label="Main content" tabindex="0">
+        <div class="wrap">
+            <div id="dashboard-widgets-wrap">
+                <div id="dashboard-widgets" class="metabox-holder columns-2">
+                    <div id="postbox-container-1" class="postbox-container">
+                        <div id="normal-sortables" class="meta-box-sortables">
+                            <div class="postbox ">
+                                <h2 class="hndle"><span><?php _e( 'Gateway & SMS Settings', 'WPSchoolPress'); ?> </span></h2>
+                                <div class="inside">
+                                    <form name="post" action="" method="post" >
+                                        <div class="plg-set-wrapper">
+                                            <label><strong>Number of SMS: </strong></label>
+                                            <input type="text" value="<?php echo $num_sms; ?>" name="set-num-sms" > 
+                                        </div>
+                                        <div class="plg-set-wrapper">
+                                            <label><strong>Enable Payment Gateway: </strong></label> 
+                                            <input type="checkbox" name="set-pay-gateway" <?php if(!empty($gateway_status)) echo "checked"; ?>>
+                                        </div>
+                                        <p class="submit">
+                                            <input type="submit" name="save-custom-options" class="button button-primary" value="Save-custom-settings">
                                             <br class="clear">
                                         </p>
                                     </form>                                    

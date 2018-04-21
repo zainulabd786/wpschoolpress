@@ -31,7 +31,32 @@ class Wpsp_Admin{
 	* @package WPSchoolPress
 	* @since 2.0.0
 	*/
-	function wpsp_admin_details() {					require_once( WPSP_PLUGIN_PATH. 'lib/wpsp-admin-options.php' );		//require_once( WPSP_PLUGIN_PATH. 'lib/wpsp-admin.php' );
+	function wpsp_admin_details() {
+		global $wpdb;
+		$settings_table = $wpdb->prefix."wpsp_settings";
+
+		$get_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+		if($wpdb->num_rows>0) $num_sms = $get_res[0]->option_value;
+		else{
+			$num_sms = 0;
+			$sms_qty_arr = array(
+				'option_name' => 'sch_num_sms',
+				'option_value' => '0'
+			);
+			$wpdb->insert($settings_table, $sms_qty_arr);
+		}
+
+		$gateway_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_enable_payment_gateway'");
+		if($wpdb->num_rows>0) $gateway_status = $gateway_res[0]->option_value;
+		else{
+			$gateway_status = 0;
+			$set_gateway_status = array(
+				'option_name' => 'sch_enable_payment_gateway',
+				'option_value' => '0'
+			);
+			$wpdb->insert($settings_table, $set_gateway_status);
+		}
+		require_once( WPSP_PLUGIN_PATH. 'lib/wpsp-admin-options.php' );		//require_once( WPSP_PLUGIN_PATH. 'lib/wpsp-admin.php' );
 	}
 
 	/*
