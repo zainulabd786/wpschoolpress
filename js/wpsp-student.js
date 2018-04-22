@@ -514,9 +514,16 @@ $(document).ready(function () {
         var slid = $(this).attr('id');
         $.post(ajax_url,{action: "load_detailed_transaction", slid: slid},function(data){ $.alert(data); });
     });
-    
+
+    //parents Panel
+
+    $(".deposit-btn").click(function(){
+        var sid_f = $(".child-tabs .active a").attr('id');
+        var url = "?tab=DepositFees"+"&uidf="+sid_f;
+        location = url;
+    });
 });
-// Bharatdan Gadhavi - 16th Feb - Start - function to call on blur of RollNo field to check if rollno is exists in database for selected class
+
 function checkRollNo(){
 	var rollNo = $('#Rollno').val();
 	var stdClass = $('#stdClass').val();

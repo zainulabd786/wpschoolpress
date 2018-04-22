@@ -90,14 +90,15 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 				<?php if( count( $child ) > 0 ) { ?>
 				<div class="tabbable-line">
 					<div class="nav-tabs-custom">
-					<ul class="nav nav-tabs ">
+					<ul class="nav nav-tabs child-tabs">
 						<?php $i=0; foreach($child as $ch) { ?>
-							<li class="<?php echo ($i==0)?'active':''?>"><a href="#<?php echo str_replace(' ', '', $ch['name'].$i );?>"  data-toggle="tab"><?php echo $ch['name'];?></a></li>
+							<li class="<?php echo ($i==0)?'active':''?> child-tab"><a href="#<?php echo str_replace(' ', '', $ch['name'].$i );?>" id="<?php echo $ch['student_id'] ?>" data-toggle="tab"><?php echo $ch['name'];?></a></li>
 						<?php $i++; } ?>
+						<li style="float: right;"><a class="btn btn-primary deposit-btn" id="deposit-btn" href="#"><i class="fa fa-plus"></i> Deposit Fees</a></li>
 					</ul>
 
 					<div class="tab-content">
-						<a class="btn btn-primary" href="?tab=DepositFees"><i class="fa fa-plus"></i> Deposit Fees</a>
+						
 						<?php
 						$i=0;
 						foreach($child as $ch) {
