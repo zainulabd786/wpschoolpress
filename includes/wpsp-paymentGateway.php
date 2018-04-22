@@ -89,7 +89,8 @@
 			</table>
 				
 			<h3 class="due-chart-head">Dues Chart</h3>
-			<button class="btn btn-primary pay-btn">Pay Now</button>
+
+			<form method="post"> <button name="pay-btn" type="submit" class="btn btn-primary pay-btn">Pay Rs. <?php echo number_format($total_amount_f); ?> Now</button> </form>
 			
 			<table class="dues-chart">
 				<tr>
@@ -98,42 +99,62 @@
 					<td>To Month</td>
 					<td>Amount</td>
 				</tr>
+				<?php 
+				if(!empty($adm_f)){ ?>
 				<tr>
 					<td>Admission Fees</td>
 					<td><?php echo $months_array[0]; ?></td>
 					<td><?php echo $months_array[0]; ?></td>
 					<td><?php echo "<i class='fa fa-inr'></i>".number_format($adm_f)."/-"; ?></td>
 				</tr>
+				<?php } 
+				if(!empty($ttn_f)){ ?>
 				<tr>
 					<td>Tution Fees</td>
 					<td><?php echo $months_array[$from_ttn_month_due]; ?></td>
 					<td><?php echo $months_array[$to_ttn_month_due]; ?></td>
 					<td><?php echo "<i class='fa fa-inr'></i>".number_format($ttn_f)."/-"; ?></td>
 				</tr>
+				<?php } 
+				if(!empty($trn_f)){ ?>
 				<tr>
 					<td>Transportaion Charges</td>
 					<td><?php echo $months_array[$from_trn_month_due]; ?></td>
 					<td><?php echo $months_array[$to_trn_month_due]; ?></td>
 					<td><?php echo "<i class='fa fa-inr'></i>".number_format($trn_f)."/-"; ?></td>
 				</tr>
+				<?php } 
+				if(!empty($ann_f)){ ?>
 				<tr>
 					<td>Annual Charges</td>
 					<td><?php echo $months_array[0]; ?></td>
 					<td><?php echo $months_array[0]; ?></td>
 					<td><?php echo "<i class='fa fa-inr'></i>".number_format($ann_f)."/-"; ?></td>
 				</tr>
+				<?php } 
+				if(!empty($rec_f)){ ?>
 				<tr>
 					<td>Recreation Charges</td>
 					<td><?php echo $months_array[0]; ?></td>
 					<td><?php echo $months_array[0]; ?></td>
 					<td><?php echo "<i class='fa fa-inr'></i>".number_format($rec_f)."/-"; ?></td>
 				</tr>
+				<?php } 
+				if(!empty($total_amount_f)){ ?>
 				<tr>
 					<td colspan="2">Total Payable Amount</td>
 					<td colspan="2"><?php echo "<i class='fa fa-inr'></i>".number_format($total_amount_f)."/-"; ?></td>
 				</tr>
+				<?php } ?>
 			</table>
 			
 		</div> <?php
+		function payment(){
+		   echo "Your test function on button click is working";
+		}
+
+		if(array_key_exists('pay-btn',$_POST)){
+		   payment();
+		}
 	}  	
 ?>
