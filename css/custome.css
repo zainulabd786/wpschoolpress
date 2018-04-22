@@ -670,10 +670,36 @@ input:checked + .slider:before {
 
 
 
+.pg{
+    margin: 20px;
+}
+.pg table{
+    width: 100%;
+    background-color: #fff;
+}
+.pg table td{
+    padding: 10px;
+    font-size: 16px;
+}
+.pg .details tr td:nth-child(odd){
+    font-weight: 900;
+}
 
-
-
-
+.pg .dues-chart tr:nth-child(1){
+    border-bottom: 3px solid;
+    font-weight: 900;
+}
+.pg .dues-chart tr:last-child{
+    border-top: 3px solid;
+    font-weight: 700;
+    text-align: center;
+}
+.due-chart-head, .pay-btn{
+    float: left;
+}
+.pay-btn{
+    margin: 15px;
+}
 
 
 
