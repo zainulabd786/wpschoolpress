@@ -55,7 +55,7 @@
 										 <?php } ?>
 									</select>	
 								</form>							
-								<button style="float: right;" type="button" class="btn btn-success reminder-btn"><i class="fa fa-envelope-o"></i> Send Reminder</button>
+								<button style="float: right;" type="button" class="btn btn-success reminder-btn"><i class="fa fa-envelope-o"></i> Send Fee Reminder</button>
 							</div>
 							<div class="col-md-6 col-sm-12 col-lg-6 ">
 									
