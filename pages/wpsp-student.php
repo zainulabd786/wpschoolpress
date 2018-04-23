@@ -93,8 +93,12 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 					<ul class="nav nav-tabs child-tabs">
 						<?php $i=0; foreach($child as $ch) { ?>
 							<li class="<?php echo ($i==0)?'active':''?> child-tab"><a href="#<?php echo str_replace(' ', '', $ch['name'].$i );?>" id="<?php echo $ch['student_id'] ?>" data-toggle="tab"><?php echo $ch['name'];?></a></li>
-						<?php $i++; } ?>
+						<?php $i++; } 
+						$settings_table = $wpdb->prefix."wpsp_settings";
+						$gateway_status = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_enable_payment_gateway'");
+						if(!empty($gateway_status[0]->option_value)){ ?>
 						<li style="float: right;"><a class="btn btn-primary deposit-btn" id="deposit-btn" href="#"><i class="fa fa-plus"></i> Deposit Fees</a></li>
+						<?php } ?>
 					</ul>
 
 					<div class="tab-content">

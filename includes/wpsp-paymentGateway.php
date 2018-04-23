@@ -149,12 +149,52 @@
 			</table>
 			
 		</div> <?php
-		function payment(){
-		   echo "Your test function on button click is working";
+		function payment($key, $auth, $purpose, $amount, $phone, $url){
+			include("instamojo/instamojo.php");
+		   	$api = new Instamojo\Instamojo($key, $auth, 'https://test.instamojo.com/api/1.1/');
+		   try {
+			    $response = $api->paymentRequestCreate(array(
+			        "purpose" => $purpose,
+			        "amount" => $amount,
+       				"phone" => $phone,
+       				"send_sms" => true,
+			        "redirect_url" => $url
+			    ));
+			   // print_r($response);
+			    $redirect = $response['longurl'];
+			    echo "<script> location = '".$redirect."' </script>";
+			    exit();
+			}
+			catch (Exception $e) {
+			    print('Error: ' . $e->getMessage());
+			}
 		}
 
 		if(array_key_exists('pay-btn',$_POST)){
-		   payment();
+			$api_key = "test_ea87442294656deeb00d38764f4";
+			$auth_token = "test_4d9cb6f667a20e243cfe20e8c39";
+			$purpose = "Fees Deposit";
+			$redirect_url = get_site_url()."/sch-student/?tab=DepositFees&uidf=".$uidf."&payment_status=payment_status";
+			payment($api_key, $auth_token, $purpose, $total_amount_f, $sphone_f, $redirect_url);
+		}
+
+		if(isset($_GET['payment_status']) && $_GET['payment_status'] == "payment_status"){
+			echo "successful";
+			include("instamojo/instamojo.php");
+			$key = "test_ea87442294656deeb00d38764f4";
+			$auth = "test_4d9cb6f667a20e243cfe20e8c39";
+			$api = new Instamojo\Instamojo($key, $auth, 'https://test.instamojo.com/api/1.1/');
+			$pay_id = $_GET['payment_request_id'];
+			try{
+				$response = $api->paymentRequestStatus($pay_id);
+				 //echo "<script> console.log('".$response[0]."') </script>";
+				print "<pre>";
+				print_r($response);
+				print "</pre>";
+			}
+			catch (Exception $e) {
+				print('Error: ' . $e->getMessage());
+			}
 		}
 	}  	
 ?>
