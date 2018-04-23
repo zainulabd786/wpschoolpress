@@ -30,7 +30,7 @@
 				<div class="box box-solid bg-blue-gradient">
 					<div class="box-header ui-sortable-handle" style="cursor: move;">
 	                    <i class="fa fa-graph"></i>
-	                    <h3 class="box-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp; List Of Fee Defaulters </h3>
+	                    <h3 class="box-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp; Payments Due list </h3>
 	                    <!-- tools box -->
 
 	                    <!-- /. tools -->
