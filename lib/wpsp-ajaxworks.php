@@ -3179,7 +3179,7 @@ function wpsp_Import_Dummy_contents() {
 								'fees_type' => "adm",
 								'session' => $session
 							);
-							$find_adm_dues = $wpdb->get_resulte("SELECT * FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$exp_admission_fees' AND uid='$uid'");
+							$find_adm_dues = $wpdb->get_results("SELECT * FROM $dues_table WHERE fees_type='adm' AND session='$session' AND amount='$exp_admission_fees' AND uid='$uid'");
 							if($wpdb->num_rows>0){
 								if($wpdb->query("UPDATE $dues_table SET amount=amount-'$admission_fees' WHERE fees_type='adm' AND session='$session' AND amount='$exp_admission_fees' AND uid='$uid'")){
 									$ok = 1;
