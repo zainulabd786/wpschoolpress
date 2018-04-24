@@ -95,10 +95,9 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 							<li class="<?php echo ($i==0)?'active':''?> child-tab"><a href="#<?php echo str_replace(' ', '', $ch['name'].$i );?>" id="<?php echo $ch['student_id'] ?>" data-toggle="tab"><?php echo $ch['name'];?></a></li>
 						<?php $i++; } 
 						$settings_table = $wpdb->prefix."wpsp_settings";
-						$gateway_status = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_enable_payment_gateway'");
-						if(!empty($gateway_status[0]->option_value)){ ?>
-						<li style="float: right;"><a class="btn btn-primary deposit-btn" id="deposit-btn" href="#"><i class="fa fa-plus"></i> Deposit Fees</a></li>
-						<?php } ?>
+						$gateway_status = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_enable_payment_gateway'"); ?>
+						<li style="float: right;"><a class="btn btn-primary deposit-btn" id="deposit-btn" href="#" <?php if(empty($gateway_status[0]->option_value)) echo "disabled"; ?>><i class="fa fa-plus"></i> Deposit Fees</a></li>
+						
 					</ul>
 
 					<div class="tab-content">

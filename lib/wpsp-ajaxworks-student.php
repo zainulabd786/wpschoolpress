@@ -268,7 +268,7 @@ function getparentInfo( $parentEmail ) {
 		$student_table 	=	$wpdb->prefix . "wpsp_student";
 		$roles			=	$parentInfo->roles;
 		$parentID		=	$parentInfo->ID;
-		$chck_parent	=	$wpdb->get_row("SELECT p_fname,p_mname,p_lname, p_gender, p_edu,  p_profession, p_bloodgrp from $student_table where parent_wp_usr_id=$parentID");
+		$chck_parent	=	$wpdb->get_row("SELECT p_fname,p_mname,p_lname, p_gender, p_edu,  p_profession, p_bloodgrp, s_phone from $student_table where parent_wp_usr_id=$parentID");
 		$response['parentID']	=	$parentID;
 		if( !empty( $chck_parent ) ) {
 			$response['data']		=	$chck_parent;

@@ -472,7 +472,8 @@ $(document).ready(function () {
 						 $('#p_middlename').val( result.data['p_mname'] );
 						 $('#p_lastname').val( result.data['p_lname'] );
 						 $('#p_edu').val( result.data['p_edu'] );
-						 $('#p_profession').val( result.data['p_profession'] );
+                         $('#p_profession').val( result.data['p_profession'] );
+						 $('#phone').val( result.data['s_phone'] );
 						 $('#p_username').val( result.username );
 						 $("#p_bloodgroup").val( result.data['p_bloodgrp'] );
 						 $('input[name="p_gender"]').attr('checked',false);
