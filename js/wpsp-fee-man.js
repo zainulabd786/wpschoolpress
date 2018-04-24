@@ -267,16 +267,28 @@ $(document).ready(function(){
 		var to = $(".dep-to-select select").val();
 		var classId = $(".dep-class-select select").val();
 		var uid = $(".dep-student-select select").val();
-		$.post(ajax_url, {action: "calculate_expected_amount", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
-		$(".tution-fees-te-inv .months").html(months_array[from]+"-"+months_array[to]);
+		if(from > to){
+			alert("'To' month should not be less than 'From' month");
+			$(".dep-to-select select").val("");
+		} else{
+			$.post(ajax_url, {action: "calculate_expected_amount", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
+			$(".tution-fees-te-inv .months").html(months_array[from]+"-"+months_array[to]);
+		}
+		
 	});
 	$(".dep-trans-from-select select, .dep-trans-to-select select").change(function(){
 		var from = $(".dep-trans-from-select select").val();
 		var to = $(".dep-trans-to-select select").val();
 		var classId = $(".dep-class-select select").val();
 		var uid = $(".dep-student-select select").val();
-		$.post(ajax_url, {action: "calculate_expected_amount_transport", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
-		$(".trans-chg-tr-inv .months").html(months_array[from]+"-"+months_array[to]);
+		if(from > to){
+			alert("'To' month should not be less than 'From' month");
+			$(".dep-trans-to-select select").val("");
+		} else{
+			$.post(ajax_url, {action: "calculate_expected_amount_transport", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
+			$(".trans-chg-tr-inv .months").html(months_array[from]+"-"+months_array[to]);
+		}
+		
 	});
 	$("#dep-concession").change(function(){
 		if($(this).val() == ""){
