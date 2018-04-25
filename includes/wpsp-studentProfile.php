@@ -229,7 +229,7 @@ if( !empty( $stinfo ) ) {
 							<div class="line_box">
 								<div class="form-group">
                                     <label for="pEmail">Email Address</label><span class="red">*</span>
-                                    <input class="form-control chk-email" id="pEmail" name="pEmail" placeholder="Parent Email" type="email" value="<?php echo $parentEmail; ?>">
+                                    <input class="form-control chk-email" id="pEmail" name="pEmail" placeholder="Parent Email" type="email" value="<?php if(!empty($parentEmail)) echo $parentEmail; ?>">
 									<!-- <br><label class="error user-email-error">Both Email Address Should Not Be same </label> -->
                                 </div>
 								<div class="row">
