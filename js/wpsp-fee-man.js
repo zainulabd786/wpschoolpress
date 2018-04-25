@@ -271,13 +271,13 @@ $(document).ready(function(){
 		$(".tution-fees-te-inv .months").html(months_array[from]+"-"+months_array[to]);
 	});
 	$(".dep-to-select select").change(function(){
-		var from = $(".dep-from-select select").val();
-		var to = $(".dep-to-select select").val();
+		var from = parseInt($(".dep-from-select select").val());
+		var to = parseInt($(".dep-to-select select").val());
 		if(from > to){
 			alert("'To' month should not be less than 'From' month");
-			$(".dep-to-select select").val("");
+			$(".dep-to-select select").val("0");
 		}
-
+		console.log(from, to);
 	});
 	$(".dep-trans-from-select select, .dep-trans-to-select select").change(function(){
 		var from = $(".dep-trans-from-select select").val();
@@ -288,12 +288,13 @@ $(document).ready(function(){
 		$(".trans-chg-tr-inv .months").html(months_array[from]+"-"+months_array[to]);
 	});
 	$(".dep-trans-to-select select").change(function(){
-		var from = $(".dep-trans-from-select select").val();
-		var to = $(".dep-trans-to-select select").val();
+		var from = parseInt($(".dep-trans-from-select select").val());
+		var to = parseInt($(".dep-trans-to-select select").val());
 		if(from > to){
 			alert("'To' month should not be less than 'From' month");
-			$(".dep-trans-to-select select").val("");
+			$(".dep-trans-to-select select").val("0");
 		}
+		console.log(from, to);
 	});
 	$("#dep-concession").change(function(){
 		if($(this).val() == ""){
