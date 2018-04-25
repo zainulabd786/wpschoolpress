@@ -1,3 +1,4 @@
+<?php $months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); ?>
 <h2>Fees Settings</h2>
 <form class="feesSettings">
 	<div class="form-group fs-class">
@@ -19,28 +20,28 @@
 	</div>
 	<div class="form-group">
 		<label for="fs-adm">Admission Fees</label>
-		<input type="text" class="form-control" id="fs-adm">
+		<input type="text" class="form-control" id="fs-adm" disabled>
 	</div>
 	<div class="form-group">
 		<label for="fs-tution">Tution Fees</label>
-		<input type="text" class="form-control" id="fs-tution">
+		<input type="text" class="form-control" id="fs-tution" disabled>
 	</div>
 	<div class="form-group">
 		<label for="fs-trans">Transportation Charges</label>
-		<input type="text" class="form-control" id="fs-trans">
+		<input type="text" class="form-control" id="fs-trans" disabled>
 	</div>
 	<div class="form-group">
 		<label for="fs-annaul">Annual Fees</label>
-		<input type="text" class="form-control" id="fs-annual">
+		<input type="text" class="form-control" id="fs-annual" disabled>
 	</div>
 	<div class="form-group">
 		<label for="fs-recreation">Recreation Charges</label>
-		<input type="text" class="form-control" id="fs-recreation">
+		<input type="text" class="form-control" id="fs-recreation" disabled>
 	</div>
 	<hr>
 	<div class="form-group due-date">
-		<label for="due-date">Monthly Due Date(For All Classes)</label>
-		<select class="form-control" id="due-date">
+		<label for="due-date">Monthly Due Date(For All Classes): </label>
+		<select id="due-date">
 			<option value="">Select Due Date</option><?php
 			$settings_table = $wpdb->prefix."wpsp_settings";
 			$due_date_sql = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name = 'due_date'");
@@ -64,8 +65,25 @@
 				}
 			}
 		?>
-		<label for="session-setting">Current Session</label>
-		<input type="text" value="<?php if(!empty($session)) echo $session; ?>" class="form-control" id="session-setting">
+		<label for="session-setting">Current Session: </label>
+		<input type="text" value="<?php if(!empty($session)) echo $session; ?>" id="session-setting">
+	</div>
+	<hr/>
+	<div class="form-group" id="session-start">
+		<label>Session Starts At(For All Classes): </label>
+		<select id="session-start">
+			<?php
+				$settings_table = $wpdb->prefix."wpsp_settings";
+				$session_start_sql = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name = 'sch_session_start'");
+				$session_start = 0;
+				foreach ($session_start_sql as $s_start) {
+					$session_start = $s_start->option_value;
+				}
+				for($i=0;$i<count($months_array);$i++){ ?>
+					<option <?php if($session_start == $i) echo "selected"; ?> value="<?php echo $i ?>"><?php echo $months_array[$i]; ?></option> <?php
+				}
+			 ?>
+		</select>
 	</div>
 	<button type="button" class="btn btn-primary btn-block fs-save-btn">Save</button>
 </form>

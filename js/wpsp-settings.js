@@ -276,6 +276,9 @@ $(document).ready(function(){
 		});
 
 	//JS for FEES Settings by Zainul
+
+
+
 	$(".fs-save-btn").click(function(){
 		var action= "save_fees_settings";
 		var adm= $("#fs-adm").val();
@@ -286,8 +289,9 @@ $(document).ready(function(){
 		var	classId= $(".fs-class select").val();
 		var dueDate = $(".due-date select").val();
 		var session = $("#session-setting").val();
+		var sessionStart = $("#session-start select").val();
 		var data=new Array();
-		data.push({name: 'action', value: action},{name: 'adm', value: adm},{name: 'ttn', value: ttn},{name: 'trans', value: trans},{name: 'annual', value: annual},{name: 'rec', value: rec},{name: 'classId', value: classId},{name: 'dueDate', value: dueDate},{name: 'session', value: session});
+		data.push({name: 'action', value: action},{name: 'adm', value: adm},{name: 'ttn', value: ttn},{name: 'trans', value: trans},{name: 'annual', value: annual},{name: 'rec', value: rec},{name: 'classId', value: classId},{name: 'dueDate', value: dueDate},{name: 'session', value: session},{name:'sStart', value: sessionStart});
 		$.ajax({
 			method:"POST",
 			url:ajax_url, 
@@ -314,5 +318,8 @@ $(document).ready(function(){
 
 	$(".fs-class select").change(function(){
 		$.post(ajax_url, {action:"fetch_class_fees_settings",value:$(this).val()}, function(data){ $(".execute-ajax-script").html(data); });
+		if($(this).val() != ""){
+			$("#fs-adm, #fs-tution, #fs-trans, #fs-annual, #fs-recreation").removeAttr("disabled");
+		}
 	});
 });

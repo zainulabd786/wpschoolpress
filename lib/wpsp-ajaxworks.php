@@ -2737,18 +2737,46 @@ function wpsp_Import_Dummy_contents() {
 					$setting_val = $setting->option_value;
 				}
 				if($session != $setting_val){
-					if($wpdb->query("UPDATE $settings_table SET option_value='$session' WHERE option_name='session'")) echo "success"; 
-					else echo "error".$wpdb->print_error();
+					if($wpdb->query("UPDATE $settings_table SET option_value='$session' WHERE option_name='session'")) $ok=1; 
+					else{ $ok = 0; echo "error".$wpdb->print_error(); };
 				}
 				else{
-					echo "success";
+					$ok=1;
 				}
 			}
 			else{
 				$due_date_array = array('option_name'=>'session', 'option_value'=>$session);
-				if($wpdb->insert($settings_table, $due_date_array)) echo "success"; 
-				else echo "error".$wpdb->print_error();
+				if($wpdb->insert($settings_table, $due_date_array)) echo $ok=1; 
+				else{ $ok = 0; echo "error".$wpdb->print_error(); };
 			}
+		}
+
+		if(!empty($_POST['sStart'])){
+			$settings_table = $wpdb->prefix."wpsp_settings";
+			$session_start = $_POST['sStart'];
+			$setting_val = 0;
+			$settings_sql = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name = 'sch_session_start' ");
+			if($wpdb->num_rows > 0){
+				foreach ($settings_sql as $setting) {
+					$setting_val = $setting->option_value;
+				}
+				if($session_start != $setting_val){
+					if($wpdb->query("UPDATE $settings_table SET option_value='$session_start' WHERE option_name='sch_session_start'")) $ok=1; 
+					else{ $ok = 0; echo "error".$wpdb->print_error(); };
+				}
+				else{
+					$ok=1; 
+				}
+			}
+			else{
+				$due_date_array = array('option_name'=>'sch_session_start', 'option_value'=>$session_start);
+				if($wpdb->insert($settings_table, $due_date_array)) $ok=1; 
+				else{ $ok = 0; echo "error".$wpdb->print_error(); };
+			}
+		}
+
+		if($ok == 1){
+			echo "success";
 		}
 		wp_die();
 	}
@@ -3512,7 +3540,6 @@ function wpsp_Import_Dummy_contents() {
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$transport_table = $wpdb->prefix."wpsp_transport";
 		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time), a.concession, a.mop, a.pno AS date, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND (IF(b.transport > 0, b.route_id=e.id, b.route_id=0)) LIMIT 1");
-		//echo "SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time), a.concession, a.mop, a.pno AS date, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND b.route_id=e.id LIMIT 1";
 		foreach ($receipts as $slip) {
 			$student_full_name = $slip->s_fname." ".$slip->s_mname." ".$slip->s_lname;
 			$father_full_name = $slip->p_fname." ".$slip->p_mname." ".$slip->p_lname; 
