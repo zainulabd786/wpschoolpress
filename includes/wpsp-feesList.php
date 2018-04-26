@@ -196,7 +196,7 @@
 													
 												?>
 											</td>
-											<td><?php echo $months_array[$stinfo->month]; ?></td>
+											<td><?php if($stinfo->month > 12) echo $months_array[$stinfo->month-12]; else echo $months_array[$stinfo->month]; ?></td>
 											<td>
 												<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										
 																					

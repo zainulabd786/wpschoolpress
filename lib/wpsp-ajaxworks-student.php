@@ -181,10 +181,11 @@ function wpsp_AddStudent() {
 						 );
 		$cid_for_fee = $_POST['Class'];
 		$fees_settings_sql = $wpdb->get_results("SELECT * FROM $wpsp_fees_settings_table WHERE cid='$cid_for_fee'");
-		$session_sql = $wpdb->get_results("SELECT * FROM $wpsp_settings_table WHERE option_name='session';");
+		$session_sql = $wpdb->get_results("SELECT * FROM $wpsp_settings_table WHERE option_name='session' OR option_name='sch_session_start' ;");
 		$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $session = 0;
 		foreach ($session_sql as $session) {
-			$session = $session->option_value;
+			if($session->option_name == "session") $session = $session->option_value;
+			if($session->option_name == "sch_session_start") $session_start = $session->option_value;
 		}
 		foreach ($fees_settings_sql as $fee) {
 			$adm_f = $fee->admission_fees;
@@ -522,7 +523,7 @@ function wpsp_StudentPublicProfile(){
 																	<tr id='<?php echo $due_fee->id; ?>'>
 																		<td><?php echo $fees_type ?></td>
 																		<td><?php echo "<i class='fa fa-inr'></i>".number_format($due_fee->amount)."/-"; ?></td>
-																		<td><?php echo $months_array[$due_fee->month]; ?></td>
+																		<td><?php echo $months_array[($due_fee->month>12)?$due_fee->month-12:$due_fee->month]; ?></td>
 																		<td><?php echo $due_fee->session; ?></td>
 																	</tr>
 																<?php } 

@@ -150,9 +150,10 @@
 	}
 
 	//due monthly fees
+	$wpdb->show_errors();
 	$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
 	$settings_table		=	$wpdb->prefix."wpsp_settings";
-	$script_status = 0;
+	$script_status = $session_start = 0;
 	$sql_exec_script = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name='due_php_script_status'");
 	if($wpdb->num_rows==0){
 		$script_status_data = array("option_name"=>"due_php_script_status", "option_value"=>"0");
@@ -163,7 +164,8 @@
 			$script_status = $status->option_value;
 		}
 	}
-	$wpdb->show_errors();
+	$session_start_sql = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_session_start'");
+	$session_start = $session_start_sql[0]->option_value;
 	if($script_status == 0){
 		$curr_date			=	date('d');
 		$curr_month			=	date('m');
@@ -177,14 +179,19 @@
 		foreach ($sql_session as $session) {
 			$session = $session->option_value;
 		}
+
 		$sql_due_date		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'due_date' AND option_value = '$curr_date' ");
 		if($wpdb->num_rows>0){
 			try{
 				$student_sql = $wpdb->get_results("SELECT wp_usr_id, class_id, transport, s_phone FROM $student_table");
-
 				foreach ($student_sql as $student) {
 					$tf = 0;
 					$tc = 0;
+					if(!empty($session_start)){
+						if($curr_month < $session_start){
+							$curr_month += 12;
+						}
+					}
 					$sql_fees = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$student->class_id' ");
 					foreach ($sql_fees as $f) {
 						$tf = $f->tution_fees;

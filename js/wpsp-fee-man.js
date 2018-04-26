@@ -253,11 +253,11 @@ $(document).ready(function(){
 		$(".b5 .sb1 div").text($(this).val());
 	});
 	$(".dep-from-select select").change(function(){
-		$(".b4 .sb1 div").text(months_array[$(this).val()]);
+		$(".b4 .sb1 div").text(months_array[($(this).val()>12)?$(this).val()-12:$(this).val()]);
 	});
 
 	$(".dep-to-select select").change(function(){
-		$(".b4 .sb2 div").text(months_array[$(this).val()]);
+		$(".b4 .sb2 div").text(months_array[($(this).val()>12)?$(this).val()-12:$(this).val()]);
 	});
 	$(".btn-print").click(function(){
 		$.print(".invoice-prev");
@@ -268,13 +268,13 @@ $(document).ready(function(){
 		var classId = $(".dep-class-select select").val();
 		var uid = $(".dep-student-select select").val();
 		$.post(ajax_url, {action: "calculate_expected_amount", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
-		$(".tution-fees-te-inv .months").html(months_array[from]+"-"+months_array[to]);
+		$(".tution-fees-te-inv .months").html(months_array[(from>12)?from-12:from]+"-"+months_array[(to>12)?to-12:to]);
 	});
 	$(".dep-to-select select").change(function(){
 		var from = parseInt($(".dep-from-select select").val());
 		var to = parseInt($(".dep-to-select select").val());
 		if(from > to){
-			alert("'To' month should not be less than 'From' month");
+			alert("Session already ended");
 			$(".dep-to-select select").val("0");
 		}
 		console.log(from, to);
@@ -285,16 +285,15 @@ $(document).ready(function(){
 		var classId = $(".dep-class-select select").val();
 		var uid = $(".dep-student-select select").val();
 		$.post(ajax_url, {action: "calculate_expected_amount_transport", from: from, to: to, classId: classId, uid: uid}, function(data){ $(".ajax-script-exec").html(data); });
-		$(".trans-chg-tr-inv .months").html(months_array[from]+"-"+months_array[to]);
+		$(".trans-chg-tr-inv .months").html(months_array[(from>12)?from-12:from]+"-"+months_array[(to>12)?to-12:to]);
 	});
 	$(".dep-trans-to-select select").change(function(){
 		var from = parseInt($(".dep-trans-from-select select").val());
 		var to = parseInt($(".dep-trans-to-select select").val());
 		if(from > to){
-			alert("'To' month should not be less than 'From' month");
+			alert("Session already ended");
 			$(".dep-trans-to-select select").val("0");
 		}
-		console.log(from, to);
 	});
 	$("#dep-concession").change(function(){
 		if($(this).val() == ""){

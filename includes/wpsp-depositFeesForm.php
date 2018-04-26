@@ -1,8 +1,13 @@
 <?php 
 	if (!defined('ABSPATH')) exit('No Such File');
 	$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
-	$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $sfname_f = $smname_f = $slname_f = $pfname_f = $pmname_f = $plname_f = $sphone_f = $sregno = $class = $cid = $to_f = $from = $to = $session = $from_ttn_month_due = $to_ttn_month_due = $from_trn_month_due = $to_trn_month_due = $school_name = $school_logo = $school_add = $school_city = $school_state = $school_country = $school_number = $school_email = $school_site = "";
+	$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $sfname_f = $smname_f = $slname_f = $pfname_f = $pmname_f = $plname_f = $sphone_f = $sregno = $class = $cid = $to_f = $from = $to = $session = $from_ttn_month_due = $to_ttn_month_due = $from_trn_month_due = $to_trn_month_due = $school_name = $school_logo = $school_add = $school_city = $school_state = $school_country = $school_number = $school_email = $school_site = $session_start = "";
 	$settings_table	=	$wpdb->prefix."wpsp_settings";
+	$sql_session = $wpdb->get_results("SELECT option_name, option_value FROM $settings_table WHERE option_name='session' || option_name='sch_session_start'");
+	foreach ($sql_session as $sess) {
+		if($sess->option_name == "session") $session =  $sess->option_value;
+		if($sess->option_name == "sch_session_start") $session_start = $sess->option_value; 
+	}
 	if(isset( $_GET['uidff'] )){
 		$uidff = $_GET['uidff'];
 		$student_table = $wpdb->prefix."wpsp_student";
@@ -42,11 +47,7 @@
 			$from_trn_month_due = $due_month->from_trn;
 			$to_trn_month_due = $due_month->to_trn;
 		}
-	}  
-	$sql_session = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'session'");
-	foreach ($sql_session as $session) {
-		$session = $session->option_value;
-	}
+	} 
 ?>
 <section class="content">
     <div class="row">
@@ -91,13 +92,13 @@
 														<?php }
 														if($due->fees_type == "ttn"){ ?>
 														<tr>
-															<td>Tution Fees(<?php echo $months_array[$due->month]." ".$due->session; ?>):</td>
+															<td>Tution Fees(<?php echo $months_array[($due->month>12)?$due->month-12:$due->month]." ".$due->session; ?>):</td>
 															<td><i class="fa fa-inr"></i><?php echo number_format($due->amount); ?>/-</td>
 														</tr>
 														<?php }
 														if($due->fees_type == "trans" || $due->fees_type == "trn"){ ?>
 														<tr>
-															<td>Transaportation Charges(<?php echo $months_array[$due->month]." ".$due->session; ?>):</td>
+															<td>Transaportation Charges(<?php echo $months_array[($due->month>12)?$due->month-12:$due->month]." ".$due->session; ?>):</td>
 															<td><i class="fa fa-inr"></i><?php if($due->fees_type == "trans" || $due->fees_type == "trn") echo number_format($due->amount); ?>/-</td>
 														</tr>
 														<?php }
@@ -202,7 +203,9 @@
 															<select class="form-control"><?php
 																for ($m=0; $m<=12; $m++) {
 																	if($m == 0) $months_array[0] = "From";	 ?>
-																	<option <?php if(!empty($from_ttn_month_due) && $from_ttn_month_due == $m) echo "selected"; ?> value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
+																	<option <?php if(!empty($from_ttn_month_due) && (($from_ttn_month_due>12)?$from_ttn_month_due-12:$from_ttn_month_due) == $m) echo "selected"; ?> value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
+																		<?php echo $months_array[$m]; ?>
+																	</option>;
 																<?php } ?>
 															</select>
 														</div>
@@ -210,7 +213,7 @@
 															<select class="form-control"><?php
 																for ($m=0; $m<=12; $m++) { 
 																	if($m == 0) $months_array[0] = "To"; ?>
-																	<option <?php if(!empty($to_ttn_month_due) && $to_ttn_month_due == $m) echo "selected"; ?> value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
+																	<option <?php if(!empty($to_ttn_month_due) && (($to_ttn_month_due>12)?$to_ttn_month_due-12:$to_ttn_month_due) == $m) echo "selected"; ?> value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
 																<?php } ?>
 															</select>
 														</div>
@@ -231,7 +234,7 @@
 															<select class="form-control"><?php
 																for ($m=0; $m<=12; $m++) {
 																	if($m == 0) $months_array[0] = "From";	 ?>
-																	<option <?php if(!empty($from_trn_month_due) && $from_trn_month_due == $m) echo "selected"; ?> value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
+																	<option <?php if(!empty($from_trn_month_due) && (($from_trn_month_due>12)?$from_trn_month_due-12:$from_trn_month_due) == $m) echo "selected"; ?> value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
 																<?php } ?>
 															</select>
 														</div>
@@ -239,7 +242,7 @@
 															<select class="form-control"><?php
 																for ($m=0; $m<=12; $m++) { 
 																	if($m == 0) $months_array[0] = "To"; ?>
-																	<option <?php if(!empty($to_trn_month_due) && $to_trn_month_due == $m) echo "selected"; ?> value="<?php echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
+																	<option <?php if(!empty($to_trn_month_due) && (($to_trn_month_due>12)?$to_trn_month_due-12:$to_trn_month_due) == $m) echo "selected"; ?> value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>"><?php echo $months_array[$m]; ?></option>;
 																<?php } ?>
 															</select>
 														</div>
@@ -365,11 +368,11 @@
 													<div class="blank b4">
 														<div class="sb1">
 															<strong>From Month</strong>
-															<div><?php if(!empty($from_ttn_month_due)) echo $months_array[$from_ttn_month_due]; ?></div>
+															<div><?php if(!empty($from_ttn_month_due)){ if($from_ttn_month_due>12)  echo $months_array[$from_ttn_month_due-12]; else  echo $months_array[$from_ttn_month_due]; } ?></div>
 														</div>
 														<div class="sb2">
 															<strong>To Month</strong>
-															<div><?php if(!empty($to_ttn_month_due)) echo $months_array[$to_ttn_month_due]; ?></div>
+															<div><?php if(!empty($to_ttn_month_due)){ if($to_ttn_month_due>12) echo $months_array[$to_ttn_month_due-12]; else echo $months_array[$to_ttn_month_due]; } ?></div>
 														</div>
 													</div>
 													<div class="blank b5">
@@ -423,14 +426,48 @@
 														</tr>
 														<tr <?php if(!empty($ttn_f)) echo "style='display:table-row'"; ?> class="tution-fees-te-inv" >
 															<td>2</td>
-															<td>Tution Fees(<div style="display: inline;" class="months"><?php if(!empty($from_ttn_month_due) && !empty($to_ttn_month_due)) echo $months_array[$from_ttn_month_due]."-".$months_array[$to_ttn_month_due]; else "Monthly"; ?></div>)</td>
+															<td>
+																Tution Fees
+																(<div style="display: inline;" class="months"><?php 
+																	if(!empty($from_ttn_month_due) && !empty($to_ttn_month_due)){
+																		if($from_ttn_month_due>12){
+																			echo $months_array[$from_ttn_month_due-12]."-";
+																		} else{
+																			echo $months_array[$from_ttn_month_due]."-";
+																		}
+
+																		if($to_ttn_month_due > 12){
+																			echo $months_array[$to_ttn_month_due-12];
+																		} else{
+																			echo $months_array[$to_ttn_month_due];
+																		}
+																	} else "Monthly"; ?>
+																</div>)
+															</td>
 															<td class="inv-expected-amt"><?php if(!empty($ttn_f)) echo "<i class='fa fa-inr'></i>".$ttn_f."/-"; else echo "0"; ?></td>
 															<td class="inv-paid-amt"><?php if(!empty($ttn_f)) echo "<i class='fa fa-inr'></i>".$ttn_f."/-"; else echo "0"; ?></td>
 															<td class="inv-bal-amt">0</td>
 														</tr>
 														<tr <?php if(!empty($trn_f)) echo "style='display:table-row'"; ?> class="trans-chg-tr-inv" >
 															<td>3</td>
-															<td>Transportation charges(<div style="display: inline;" class="months"><?php if(!empty($from_trn_month_due) && !empty($to_trn_month_due)) echo $months_array[$from_trn_month_due]."-".$months_array[$to_trn_month_due]; else "Monthly"; ?></div>)</td>
+															<td>
+																Transportation charges
+																(<div style="display: inline;" class="months"><?php 
+																	if(!empty($from_trn_month_due) && !empty($to_trn_month_due)){
+																		if($from_trn_month_due>12){
+																			echo $months_array[$from_trn_month_due-12]."-";
+																		} else{
+																			echo $months_array[$from_trn_month_due]."-";
+																		}
+
+																		if($to_trn_month_due > 12){
+																			echo $months_array[$to_trn_month_due-12];
+																		} else{
+																			echo $months_array[$to_trn_month_due];
+																		}
+																	} else "Monthly"; ?>
+																</div>)
+															</td>
 															<td class="inv-expected-amt"><?php if(!empty($trn_f)) echo "<i class='fa fa-inr'></i>".$trn_f."/-"; else echo "0"; ?></td>
 															<td class="inv-paid-amt"><?php if(!empty($trn_f)) echo "<i class='fa fa-inr'></i>".$trn_f."/-"; else echo "0"; ?></td>
 															<td class="inv-bal-amt">0</td>
