@@ -293,7 +293,7 @@
 	dbDelta($sql_fees_dues_table);
 
 	$sql_fees_payment_record = "CREATE TABLE IF NOT EXISTS $fees_payment_record  (
-	  `tid` varchar(20) NOT NULL PRIMARY KEY,	  
+	  `tid` varchar(50) NOT NULL PRIMARY KEY,	  
 	  `slip_no` int(9),
 	  `date_time` datetime,
 	  `uid` int(15),	 

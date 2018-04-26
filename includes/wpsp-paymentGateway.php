@@ -1,5 +1,6 @@
 <?php 
 	if (!defined('ABSPATH')) exit('No Such File');
+	$wpdb->show_errors();
 	$months_array = array("N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
 	$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $sfname_f = $smname_f = $slname_f = $pfname_f = $pmname_f = $plname_f = $sphone_f = $sregno = $class = $cid = $to_f = $from = $to = $session = $from_ttn_month_due = $to_ttn_month_due = $from_trn_month_due = $to_trn_month_due = $school_name = $school_logo = $school_add = $school_city = $school_state = $school_country = $school_number = $school_email = $school_site = $email = "";
 	if(isset($_GET['tab']) && $_GET['tab'] == "DepositFees" && isset($_GET['uidf'])){
@@ -11,8 +12,8 @@
 		$settings_table = $wpdb->prefix."wpsp_settings";
 		$receipts_table = $wpdb->prefix."wpsp_fees_receipts";
 		$users_table = $wpdb->prefix."users";
-		$uidff_sql = $wpdb->get_results("SELECT b.s_fname, b.s_mname, b.s_lname, b.p_fname, b.p_mname, b.p_lname, b.s_regno, b.s_phone, c.cid, c.c_name, a.user_email FROM $student_table b, $class_table c, $users_table a WHERE b.wp_usr_id = 43 AND c.cid = b.class_id AND b.parent_wp_usr_id=a.ID");
-		//echo "SELECT * FROM $student_table b, $class_table c WHERE b.wp_usr_id = $uidf AND c.cid = b.class_id";
+		$uidff_sql = $wpdb->get_results("SELECT b.s_fname, b.s_mname, b.s_lname, b.p_fname, b.p_mname, b.p_lname, b.s_regno, b.s_phone, c.cid, c.c_name, a.user_email FROM $student_table b, $class_table c, $users_table a WHERE b.wp_usr_id = '$uidf' AND c.cid = b.class_id AND b.parent_wp_usr_id=a.ID");
+		//echo "SELECT b.s_fname, b.s_mname, b.s_lname, b.p_fname, b.p_mname, b.p_lname, b.s_regno, b.s_phone, c.cid, c.c_name, a.user_email FROM $student_table b, $class_table c, $users_table a WHERE b.wp_usr_id = 43 AND c.cid = b.class_id AND b.parent_wp_usr_id=a.ID";
 		foreach ($uidff_sql as $fee) {
 			$sfname_f = $fee->s_fname;
 			$smname_f = $fee->s_mname;
@@ -198,35 +199,141 @@
 			$pay_id = $_GET['payment_request_id'];
 			try{
 				$response = $api->paymentRequestStatus($pay_id);
-				/*print "<pre>";
-				print_r($response);
-				print "</pre>";*/
 				$payment_status = $response['payments'][0]['status'];
 				$payment_id =  $response['payments'][0]['payment_id'];
 				$name =  $response['payments'][0]['buyer_name'];
-				$amount =  $response['payments'][0]['amount'];
+				$paid_amount =  $response['payments'][0]['amount'];
+				$mop =  $response['payments'][0]['instrument_type'];
 				$uid = $_GET['uidf'];
+				$todays_date = date('Y-m-d');
+				$date_time = date('Y-m-d H:i:s');
+				$rec_table = $wpdb->prefix."wpsp_fees_receipts";
+				$record_table = $wpdb->prefix."wpsp_fees_payment_record";
+				/*echo "<pre>"; 
+				print_r($response); 
+				echo "</pre>"; */
 				if($payment_status == "Credit"){
+					$wpdb->query("BEGIN;");
+
+					$sql_slip_data = array(
+						'slip_no' => $slip_no,
+						'date' => $todays_date,
+						'uid' => $uid,
+						'cid' => $cid,
+						'from_ttn' => $from_ttn_month_due,
+						'to_ttn' => $to_ttn_month_due,
+						'from_trn' => $from_trn_month_due,
+						'to_trn' => $to_trn_month_due,
+						'session' => $session,
+						'adm' => $adm_f,
+						'ttn' => $ttn_f,
+						'trans' => $trn_f,
+						'ann' => $ann_f,
+						'rec' => $rec_f,
+						'concession' => 0,
+						'mop' => $mop,
+						'pno' => $payment_id
+					);
+
+					$fees_type_arr = "";
 					if(!empty($adm_f)){
-						$wpdb->query("DELETE FROM $dues_table WHERE fees_type='adm' AND amount='$adm_f' AND uid='$uid' AND session='$session' AND month='0'");
+						$fees_type_arr .= "adm/";
+						if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='adm' AND amount='$adm_f' AND uid='$uid' AND session='$session' AND month='0'")==false) throw new Exception($wpdb->print_error());
+						$record_data = array(
+							'tid' => $payment_id."AD",
+							'slip_no' => $slip_no,
+							'date_time' => $date_time,
+							'uid' => $uid,
+							'month' => 0,
+							'amount' => $adm_f,
+							'session' => $session,
+							'fees_type' => 'adm'
+						);
+						if($wpdb->insert($record_table, $record_data)==false) throw new Exception($wpdb->print_error());
 					}
 					if(!empty($ttn_f)){
+						$fees_type_arr .= "ttn/";
 						for($i=$from_ttn_month_due;$i<=$to_ttn_month_due;$i++){
-
+							$amt = $wpdb->get_results("SELECT amount FROM $dues_table WHERE uid='$uid' AND fees_type='ttn' AND month='$i' AND session='$session'");
+							$amount = $amt[0]->amount;
+							if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='ttn' AND amount='$amount' AND uid='$uid' AND session='$session' AND month='$i' ")==false) throw new Exception($wpdb->print_error());
+							$record_data = array(
+								'tid' => $payment_id."TN".$i,
+								'slip_no' => $slip_no,
+								'date_time' => $date_time,
+								'uid' => $uid,
+								'month' => $i,
+								'amount' => $amount,
+								'session' => $session,
+								'fees_type' => 'ttn'
+							);
+							if($wpdb->insert($record_table, $record_data)==false) throw new Exception($wpdb->print_error());
 						}
-					} ?>
-					<div class="alert alert-success">
-						<p>Thank you <?php echo $name ?>, Your Payment of <i class="fa fa-inr"></i><b><?php echo $amount; ?></b> is Successfully submitted. Your Transaction ID is <b><?php echo $payment_id; ?></b>, Please Keep this ID for future reference</p>
-					</div> <?php
-				} else{ ?>
-					<div class="alert alert-danger">
-						<p>Payment Failed</p>
-					</div> <?php
+					}
+					if(!empty($trn_f)){
+						$fees_type_arr .= "trn/";
+						for($i=$from_trn_month_due;$i<=$to_trn_month_due;$i++){
+							$amt = $wpdb->get_results("SELECT amount FROM $dues_table WHERE uid='$uid' AND fees_type='trn' AND month='$i' AND session='$session'");
+							$amount = $amt[0]->amount;
+							if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='trn' AND amount='$amount' AND uid='$uid' AND session='$session' AND month='$i'")==false) throw new Exception($wpdb->print_error());
+							$record_data = array(
+								'tid' => $payment_id."TR".$i,
+								'slip_no' => $slip_no,
+								'date_time' => $date_time,
+								'uid' => $uid,
+								'month' => $i,
+								'amount' => $amount,
+								'session' => $session,
+								'fees_type' => 'trn'
+							);
+							if($wpdb->insert($record_table, $record_data)==false) throw new Exception($wpdb->print_error());
+						}
+					}
+					if(!empty($ann_f)){
+						$fees_type_arr .= "ann/";
+						if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='ann' AND amount='$ann_f' AND uid='$uid' AND session='$session' AND month='0'")==false) throw new Exception($wpdb->print_error());
+						$record_data = array(
+							'tid' => $payment_id."AN",
+							'slip_no' => $slip_no,
+							'date_time' => $date_time,
+							'uid' => $uid,
+							'month' => 0,
+							'amount' => $ann_f,
+							'session' => $session,
+							'fees_type' => 'ann'
+						);
+						if($wpdb->insert($record_table, $record_data)==false) throw new Exception($wpdb->print_error());
+					}
+					if(!empty($rec_f)){
+						$fees_type_arr .= "rec";
+						if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='rec' AND amount='$rec_f' AND uid='$uid' AND session='$session' AND month='0'")==false) throw new Exception($wpdb->print_error());
+						$record_data = array(
+							'tid' => $payment_id."RC",
+							'slip_no' => $slip_no,
+							'date_time' => $date_time,
+							'uid' => $uid,
+							'month' => 0,
+							'amount' => $rec_f,
+							'session' => $session,
+							'fees_type' => 'rec'
+						);
+						if($wpdb->insert($record_table, $record_data)==false) throw new Exception($wpdb->print_error());
+					}  
+					if($wpdb->insert($rec_table, $sql_slip_data)){
+
+						echo "Thank you ".$father_full_name.". Your payment of <i class='fa fa-inr'><b>".$paid_amount."</b></i> is successfully submitted. Your Transaction ID is <b>".$payment_id."</b>. Please keep this ID for future Reference";
+
+
+					} 
+					else throw new Exception($wpdb->print_error());
+
+					$wpdb->query("COMMIT;");
 				}
 			}
 			catch (Exception $e) {
-				print('Error: ' . $e->getMessage());
-			}
+				$wpdb->query("ROLLBACK;");
+				print('Payment Failed: ' . $e->getMessage());
+			} 
 		}
 	}  	
 
