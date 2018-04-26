@@ -183,9 +183,9 @@ function wpsp_AddStudent() {
 		$fees_settings_sql = $wpdb->get_results("SELECT * FROM $wpsp_fees_settings_table WHERE cid='$cid_for_fee'");
 		$session_sql = $wpdb->get_results("SELECT * FROM $wpsp_settings_table WHERE option_name='session' OR option_name='sch_session_start' ;");
 		$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $session = 0;
-		foreach ($session_sql as $session) {
-			if($session->option_name == "session") $session = $session->option_value;
-			if($session->option_name == "sch_session_start") $session_start = $session->option_value;
+		foreach ($session_sql as $sess) {
+			if($sess->option_name == "session") $session = $sess->option_value;
+			if($sess->option_name == "sch_session_start") $session_start = $sess->option_value;
 		}
 		foreach ($fees_settings_sql as $fee) {
 			$adm_f = $fee->admission_fees;
