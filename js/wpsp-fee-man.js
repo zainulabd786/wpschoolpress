@@ -274,7 +274,9 @@ $(document).ready(function(){
 		var from = parseInt($(".dep-from-select select").val());
 		var to = parseInt($(".dep-to-select select").val());
 		if(from > to){
-			alert("Session already ended");
+			$.post(ajax_url,{action:'fetch_session_start_month'}, function(data){
+				alert(`Your Session starts in ${months_array[data]} and ends in ${months_array[(data-1)]}. So, Please Select Months Between ${months_array[data]} and ${months_array[(data-1)]} `) 
+			});
 			$(".dep-to-select select").val("0");
 		}
 		console.log(from, to);

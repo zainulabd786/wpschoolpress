@@ -3912,4 +3912,14 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function get_session_start(){
+		global $wpdb;
+
+		$settings_table = $wpdb->prefix."wpsp_settings";
+		$session = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_session_start'");
+		echo $session[0]->option_value;
+		
+		wp_die();
+	}
 ?>
