@@ -165,7 +165,8 @@
 		}
 	}
 	$session_start_sql = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_session_start'");
-	$session_start = $session_start_sql[0]->option_value;
+	if(!empty($session_start_sql)) $session_start = $session_start_sql[0]->option_value;
+	else $session_start = 0;
 	if($script_status == 0){
 		$curr_date			=	date('d');
 		$curr_month			=	date('m');
