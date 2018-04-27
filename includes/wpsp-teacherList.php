@@ -2,24 +2,24 @@
 	  $proclass		=	!$proversion['status'] && isset( $proversion['class'] )? $proversion['class'] : '';
 	  $protitle		=	!$proversion['status'] && isset( $proversion['message'] )? $proversion['message']	: '';
 	  $prodisable	=	!$proversion['status'] ? 'disabled="disabled"'	: '';
-	  $teacherFieldList =  array(	'empcode'			=>	__('Emp. Code', 'WPSchoolPress'),
-									'first_name'		=>	__('First Name', 'WPSchoolPress'),	
-									'middle_name'		=>	__('Middle Name', 'WPSchoolPress'),	
-									'last_name'			=>	__('Last Name', 'WPSchoolPress'),
-									'user_email'		=>	__('Teacher Email', 'WPSchoolPress'),
-									'zipcode'			=>	__('Zip Code', 'WPSchoolPress'),	
-									'country'			=>	__('Country', 'WPSchoolPress'),
-									'gender'			=>	__('Gender', 'WPSchoolPress'),
-									'address'			=>	__('Address', 'WPSchoolPress'),										
-									'dob'				=>	__('Date Of Birth', 'WPSchoolPress'),
-									'doj'				=>	__('Date Of Join', 'WPSchoolPress'),	
-									'dol'				=>	__('Date Of Releaving', 'WPSchoolPress'),
-									'phone'				=>	__('Phone Number', 'WPSchoolPress'),
-									'qualification'	    =>	__('Qualification', 'WPSchoolPress'),
-									'gender'			=>	__('Gender', 'WPSchoolPress'),
-									'bloodgrp'			=>	__('Blood Group', 'WPSchoolPress'),
-									'position'			=>	__('Position', 'WPSchoolPress'),
-									'whours'			=>	__('Working Hours', 'WPSchoolPress'),
+	  $teacherFieldList =  array(	'empcode'			=>	__('Emp. Code', 'SchoolWeb'),
+									'first_name'		=>	__('First Name', 'SchoolWeb'),	
+									'middle_name'		=>	__('Middle Name', 'SchoolWeb'),	
+									'last_name'			=>	__('Last Name', 'SchoolWeb'),
+									'user_email'		=>	__('Teacher Email', 'SchoolWeb'),
+									'zipcode'			=>	__('Zip Code', 'SchoolWeb'),	
+									'country'			=>	__('Country', 'SchoolWeb'),
+									'gender'			=>	__('Gender', 'SchoolWeb'),
+									'address'			=>	__('Address', 'SchoolWeb'),										
+									'dob'				=>	__('Date Of Birth', 'SchoolWeb'),
+									'doj'				=>	__('Date Of Join', 'SchoolWeb'),	
+									'dol'				=>	__('Date Of Releaving', 'SchoolWeb'),
+									'phone'				=>	__('Phone Number', 'SchoolWeb'),
+									'qualification'	    =>	__('Qualification', 'SchoolWeb'),
+									'gender'			=>	__('Gender', 'SchoolWeb'),
+									'bloodgrp'			=>	__('Blood Group', 'SchoolWeb'),
+									'position'			=>	__('Position', 'SchoolWeb'),
+									'whours'			=>	__('Working Hours', 'SchoolWeb'),
 							);
 $teacher_table	=	$wpdb->prefix."wpsp_teacher";
 $class_table	=	$wpdb->prefix."wpsp_class";
@@ -66,9 +66,9 @@ $plugins_url=plugins_url();
 							
 								<div class="col-md-4 col-sm-12 col-lg-4 float-left" style="padding:0;">
 								<form name="TeacherClass" id="TeacherClass" method="post" action="" class="class-filter">
-									<label><?php _e( 'Select Class Name', 'WPSchoolPress' ); ?></label>
+									<label><?php _e( 'Select Class Name', 'SchoolWeb' ); ?></label>
 									<select name="ClassID" id="ClassID" class="form-control">										
-										<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
+										<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'SchoolWeb' ); ?></option>
 										 <?php
 										$class_table	=	$wpdb->prefix."wpsp_class";
 										$sel_class		=	$wpdb->get_results("select cid,c_name from $class_table Order By cid ASC");
@@ -83,14 +83,14 @@ $plugins_url=plugins_url();
 								<div class="button-group btn-pro" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
 									<div class="dropdown"> 
 										<button type="button" class="btn btn-primary dropdown-toggle print" id="PrintTeacher" data-toggle="dropdown" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
-											<i class="fa fa-print"></i> <?php _e( 'Print', 'WPSchoolPress'); ?>
+											<i class="fa fa-print"></i> <?php _e( 'Print', 'SchoolWeb'); ?>
 										</button>
 										<button type="button" class="btn btn-primary dropdown-toggle toggle-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
 											<span class="caret"></span>
-											<span class="sr-only"><?php _e( 'Toggle Dropdown', 'WPSchoolPress' );?></span>
+											<span class="sr-only"><?php _e( 'Toggle Dropdown', 'SchoolWeb' );?></span>
 										</button>
 										<ul class="dropdown-menu">
-											<li class="dropdown-header"><?php _e( 'Select Columns to Print', 'WPSchoolPress' );?> </li>
+											<li class="dropdown-header"><?php _e( 'Select Columns to Print', 'SchoolWeb' );?> </li>
 											<form id="TeacherColumnForm" name="TeacherColumnForm" method="POST">
 												<?php foreach( $teacherFieldList as $key=>$value ) { ?>
 													<li class="checkbox checkbox-info" >
@@ -110,14 +110,14 @@ $plugins_url=plugins_url();
 										</button>
 										<?php } ?>
 										<button type="button" class="btn btn-primary print" id="ExportTeachers" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
-											<i class="fa fa-download"></i> <?php _e( 'Export', 'WPSchoolPress'); ?>
+											<i class="fa fa-download"></i> <?php _e( 'Export', 'SchoolWeb'); ?>
 										</button>
 										<button type="button" class="btn btn-primary dropdown-toggle export-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
 											<span class="caret"></span>
-											<span class="sr-only"><?php _e( 'Toggle Dropdown', 'WPSchoolPress' );?></span>
+											<span class="sr-only"><?php _e( 'Toggle Dropdown', 'SchoolWeb' );?></span>
 										</button>
 										<ul class="dropdown-menu">
-											<li class="dropdown-header"><?php _e( 'Select Columns to Export', 'WPSchoolPress' );?> </li>
+											<li class="dropdown-header"><?php _e( 'Select Columns to Export', 'SchoolWeb' );?> </li>
 											<form id="ExportColumnForm" name="ExportTeacherColumn" method="POST">
 												<?php foreach( $teacherFieldList as $key=>$value ) { ?>
 												<li class="checkbox checkbox-info">
@@ -149,11 +149,11 @@ $plugins_url=plugins_url();
 										Sr. No.
 									<?php } ?>
 								</th>		
-								<th> <?php _e( 'Employee Code', 'WPSchoolPress' );?></th>						
-								<th> <?php _e( 'Name', 'WPSchoolPress' );?> </th>
-								<th> <?php _e( 'Incharge Class', 'WPSchoolPress' );?></th>
-								<th> <?php _e( 'Subjects Handling', 'WPSchoolPress' );?></th>								
-								<th> <?php _e( 'Phone', 'WPSchoolPress' );?></th>
+								<th> <?php _e( 'Employee Code', 'SchoolWeb' );?></th>						
+								<th> <?php _e( 'Name', 'SchoolWeb' );?> </th>
+								<th> <?php _e( 'Incharge Class', 'SchoolWeb' );?></th>
+								<th> <?php _e( 'Subjects Handling', 'SchoolWeb' );?></th>								
+								<th> <?php _e( 'Phone', 'SchoolWeb' );?></th>
 								<th class="nosort">
 								<?php if($current_user_role=='administrator' || $current_user_role=='editor' ) { ?>
 									<select name="bulkaction" class="form-control" id="bulkaction"><option value="">Select Action</option><option value="bulkUsersDelete">Delete</option></select>
@@ -192,11 +192,11 @@ $plugins_url=plugins_url();
 										Sr. No.
 								<?php } ?>
 								</th>
-								<th> <?php _e( 'Employee Code', 'WPSchoolPress' );?></th>							
-								<th><?php _e( 'Name', 'WPSchoolPress' );?> </th>
-								<th> <?php _e( 'Incharge Class', 'WPSchoolPress' );?></th>
-								<th> <?php _e( 'Subjects Handling', 'WPSchoolPress' );?></th>								
-								<th> <?php _e( 'Phone', 'WPSchoolPress' );?></th>
+								<th> <?php _e( 'Employee Code', 'SchoolWeb' );?></th>							
+								<th><?php _e( 'Name', 'SchoolWeb' );?> </th>
+								<th> <?php _e( 'Incharge Class', 'SchoolWeb' );?></th>
+								<th> <?php _e( 'Subjects Handling', 'SchoolWeb' );?></th>								
+								<th> <?php _e( 'Phone', 'SchoolWeb' );?></th>
 							</tr>
 						</tfoot>
 					  </table>

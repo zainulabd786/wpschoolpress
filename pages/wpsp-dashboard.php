@@ -21,8 +21,8 @@
 		<section class="content-header">
 			<h1>Dashboard</h1>
 			<ol class="breadcrumb">
-				<li><a href="<?php echo site_url('sch-dashboard');?>"><i class="fa fa-dashboard"></i><?php  _e( 'Home', 'WPSchoolPress'); ?></a></li>
-				<li class="active"><?php _e( 'Dashboard', 'WPSchoolPress'); ?> </li>
+				<li><a href="<?php echo site_url('sch-dashboard');?>"><i class="fa fa-dashboard"></i><?php  _e( 'Home', 'SchoolWeb'); ?></a></li>
+				<li class="active"><?php _e( 'Dashboard', 'SchoolWeb'); ?> </li>
 			</ol>
 		</section>
 		<section class="content">

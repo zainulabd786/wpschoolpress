@@ -16,17 +16,17 @@ wpsp_header();
 			<section class="content-header">
 					<h1>Teachers</h1>
 			  <ol class="breadcrumb">
-				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'WPSchoolPress'); ?></a></li>
-				<li><a href="<?php echo site_url('sch-teacher'); ?>"><?php _e( 'Teachers', 'WPSchoolPress'); ?></a></li>
+				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'SchoolWeb'); ?></a></li>
+				<li><a href="<?php echo site_url('sch-teacher'); ?>"><?php _e( 'Teachers', 'SchoolWeb'); ?></a></li>
 				<?php if(isset($_GET['ac']) && $_GET['ac']=='add')
 				{
 				?>
-					<li class="active"><?php _e( 'Add New', 'WPSchoolPress'); ?></li>
+					<li class="active"><?php _e( 'Add New', 'SchoolWeb'); ?></li>
 				<?php } ?>
 				<?php if(isset($_GET['id']) && is_numeric($_GET['id']))
 				{
 				?>
-					<li class="active"><?php _e( 'Edit Teacher', 'WPSchoolPress'); ?></li>
+					<li class="active"><?php _e( 'Edit Teacher', 'SchoolWeb'); ?></li>
 				<?php } ?>
 			  </ol>
 			</section>
@@ -99,10 +99,10 @@ wpsp_header();
 									<tr>
 										<th class="nosort">#</th>
 										<!-- <th class="nosort">Photo</th> -->
-										 <th><?php _e( 'Full Name', 'WPSchoolPress' ); ?></th>
-										<th><?php _e( 'Incharge of Class', 'WPSchoolPress' ); ?></th>
-										<th><?php _e( 'Subjects Handling', 'WPSchoolPress' ); ?></th>
-										<th><?php _e( 'Phone', 'WPSchoolPress' ); ?></th>
+										 <th><?php _e( 'Full Name', 'SchoolWeb' ); ?></th>
+										<th><?php _e( 'Incharge of Class', 'SchoolWeb' ); ?></th>
+										<th><?php _e( 'Subjects Handling', 'SchoolWeb' ); ?></th>
+										<th><?php _e( 'Phone', 'SchoolWeb' ); ?></th>
 									</tr>
 									</thead>
 									<tbody>
@@ -150,10 +150,10 @@ wpsp_header();
 									<tr>
 										<th>#</th>
 										<!-- <th>Photo</th> -->
-										<th> <?php _e( 'Full Name', 'WPSchoolPress' ); ?></th>
-										<th> <?php _e( 'Incharge of Class', 'WPSchoolPress' ); ?></th>
-										<th> <?php _e( 'Subjects Handling', 'WPSchoolPress' ); ?></th>
-										<th><?php _e( 'Phone', 'WPSchoolPress' ); ?></th>
+										<th> <?php _e( 'Full Name', 'SchoolWeb' ); ?></th>
+										<th> <?php _e( 'Incharge of Class', 'SchoolWeb' ); ?></th>
+										<th> <?php _e( 'Subjects Handling', 'SchoolWeb' ); ?></th>
+										<th><?php _e( 'Phone', 'SchoolWeb' ); ?></th>
 									</tr>
 									</tfoot>
 								</table>

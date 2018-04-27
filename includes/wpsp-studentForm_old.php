@@ -60,7 +60,7 @@ $classes		=	$wpdb->get_results( $queryclass );?>
 										<?php foreach( $classes as $class ) { ?>
 											<option value="<?php echo $class->cid;?>"><?php echo $class->c_name; ?></option>
 										<?php	} ?>
-										<option value="0"><?php _e( 'Unassigned Students', 'WPSchoolPress' ); ?></option>
+										<option value="0"><?php _e( 'Unassigned Students', 'SchoolWeb' ); ?></option>
 										<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 											<option value="other" class="class-other">Other</option>
 										<?php } ?>	

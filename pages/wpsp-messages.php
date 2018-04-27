@@ -45,18 +45,18 @@ wpsp_header();
 									<div class="col-md-10 wpsp-mail-title">
 										
 										<h2><?php 			
-										$columnFirstTitle = __( 'From', 'WPSchoolPress' );
+										$columnFirstTitle = __( 'From', 'SchoolWeb' );
 										if( isset( $_GET['mid'] ) && !empty( $_GET['mid'] ) ) {
-											echo esc_html( __( 'View Message', 'WPSchoolPress' ) );											
+											echo esc_html( __( 'View Message', 'SchoolWeb' ) );											
 										} else if(!isset($_REQUEST['tab']) || ($_REQUEST['tab'] == 'inbox')) {
-											echo esc_html( __( 'Inbox', 'WPSchoolPress' ) );
-											$columnFirstTitle = __( 'From', 'WPSchoolPress' );
+											echo esc_html( __( 'Inbox', 'SchoolWeb' ) );
+											$columnFirstTitle = __( 'From', 'SchoolWeb' );
 										} else if(isset( $_REQUEST['tab']) && $_REQUEST['tab'] == 'sentbox') {
-											echo esc_html( __( 'Sent Item', 'WPSchoolPress' ) );
-											$columnFirstTitle = __( 'To', 'WPSchoolPress' );
+											echo esc_html( __( 'Sent Item', 'SchoolWeb' ) );
+											$columnFirstTitle = __( 'To', 'SchoolWeb' );
 										}	else if(isset( $_REQUEST['tab']) && $_REQUEST['tab'] == 'trash') {
-											echo esc_html( __( 'Trash', 'WPSchoolPress' ) );
-											$columnFirstTitle = __( 'To', 'WPSchoolPress' );
+											echo esc_html( __( 'Trash', 'SchoolWeb' ) );
+											$columnFirstTitle = __( 'To', 'SchoolWeb' );
 										}									
 									?> </h2>
 								<div class="col-md-12 table-responsive">

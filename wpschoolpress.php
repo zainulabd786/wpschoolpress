@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name: 	WPSchoolPress
-Plugin URI: 	http://wpschoolpress.com
-Description:    WPSchoolpress is a school management system plugin that makes school activities transparent to parents. For more information please visit our website.
+Plugin Name: 	SchoolWeb
+Plugin URI: 	http://SchoolWeb.com
+Description:    SchoolWeb is a school management system plugin that makes school activities transparent to parents. For more information please visit our website.
 Version: 		1.0
-Author: 		WpSchoolPress Team
-Author URI: 	wpschoolpress.com
-Text Domain:	WPSchoolPress
+Author: 		SchoolWeb Team
+Author URI: 	SchoolWeb.com
+Text Domain:	SchoolWeb
 Domain Path:    languages
 
-@package WPSchoolPress 
+@package SchoolWeb 
 */
 
 // Exit if accessed directly
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Basic plugin definitions
  * 
- * @package WPSchoolPress
+ * @package SchoolWeb
  * @since 1.0.0
 */
 if( !defined( 'WPSP_PLUGIN_URL' ) ) {
@@ -46,7 +46,7 @@ add_action( 'plugins_loaded', 'wpsp_plugins_loaded' );
 function wpsp_plugins_loaded() {
 	
  	$wpsp_lang_dir	= dirname( plugin_basename( __FILE__ ) ) . '/languages/';
- 	load_plugin_textdomain( 'WPSchoolPress', false, $wpsp_lang_dir );
+ 	load_plugin_textdomain( 'SchoolWeb', false, $wpsp_lang_dir );
 
 	//initialize settings of plugin
 
@@ -211,7 +211,7 @@ function wpsp_start_session() {
 }
 function wpsp_add_plugin_links( $links ) {
 	$plugin_links = array(
-		'<a href="admin.php?page=WPSchoolPress"><strong style="color: #11967A; display: inline;">' . __( 'Settings', 'WPSchoolPress' ) . '</strong></a>'
+		'<a href="admin.php?page=SchoolWeb"><strong style="color: #11967A; display: inline;">' . __( 'Settings', 'SchoolWeb' ) . '</strong></a>'
 	);
 	return array_merge( $plugin_links, $links );
 }

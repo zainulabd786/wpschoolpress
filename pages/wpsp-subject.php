@@ -18,11 +18,11 @@ wpsp_header();
 			}
 			$sel_class		=	$wpdb->get_results( $classQuery );
 			if(( isset($_GET['classid']) && is_numeric($_GET['classid']))) {
-				$label	=	__( 'Add New Class', 'WPSchoolPress');
+				$label	=	__( 'Add New Class', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-subjectForm.php';
 				include_once ( $filename );
 			}elseif(( isset($_GET['id']) && is_numeric($_GET['id']))) {
-				$label	=	__( 'Edit Class', 'WPSchoolPress');
+				$label	=	__( 'Edit Class', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-editsubjectForm.php';
 				include_once ( $filename );
 			}else{

@@ -15,23 +15,23 @@ wpsp_header();
 
 		
 
-		$receiverTypeList = array( 'all'  => __( 'All Users', 'WPSchoolPress' ), 
+		$receiverTypeList = array( 'all'  => __( 'All Users', 'SchoolWeb' ), 
 
-							    'allp' => __( 'All Parents', 'WPSchoolPress'),
+							    'allp' => __( 'All Parents', 'SchoolWeb'),
 
-							    'allt' => __( 'All Teachers', 'WPSchoolPress' ) );
+							    'allt' => __( 'All Teachers', 'SchoolWeb' ) );
 
 															   
 
-		$notifyTypeList	=	array( 0 	=>	__( 'All', 'WPSchoolPress') , 
+		$notifyTypeList	=	array( 0 	=>	__( 'All', 'SchoolWeb') , 
 
-							   1 	=>	__( 'Email', 'WPSchoolPress'), 
+							   1 	=>	__( 'Email', 'SchoolWeb'), 
 
-							   2	=>	__( 'SMS', 'WPSchoolPress'), 
+							   2	=>	__( 'SMS', 'SchoolWeb'), 
 
-							   3	=> 	__( 'Web Notification', 'WPSchoolPress'),
+							   3	=> 	__( 'Web Notification', 'SchoolWeb'),
 
-							   4	=>	__( 'Push Notification (Android & IOS)', 'WPSchoolPress') );
+							   4	=>	__( 'Push Notification (Android & IOS)', 'SchoolWeb') );
 
 				
 
@@ -192,13 +192,13 @@ wpsp_header();
 
 		<section class="content-header">
 
-			<h1><?php _e( 'Notification', 'WPSchoolPress'); ?></h1>
+			<h1><?php _e( 'Notification', 'SchoolWeb'); ?></h1>
 
 			<ol class="breadcrumb">
 
-				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'WPSchoolPress'); ?></a></li>
+				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'SchoolWeb'); ?></a></li>
 
-				<li><a href="<?php echo site_url('sch-notify'); ?>"><?php _e( 'Notification', 'WPSchoolPress'); ?> </a></li>
+				<li><a href="<?php echo site_url('sch-notify'); ?>"><?php _e( 'Notification', 'SchoolWeb'); ?> </a></li>
 
 
 
@@ -212,7 +212,7 @@ wpsp_header();
 
 			<div class="wpsp-notice-success">
 
-				<p><?php _e('Notification Successfully Send!','WPSchoolPress');?></p>
+				<p><?php _e('Notification Successfully Send!','SchoolWeb');?></p>
 
 			</div>
 
@@ -242,7 +242,7 @@ wpsp_header();
 
 								<div class="form-group">
 
-									<label class="col-md-4 control-label"><?php _e( 'Name', 'WPSchoolPress'); ?></label>
+									<label class="col-md-4 control-label"><?php _e( 'Name', 'SchoolWeb'); ?></label>
 
 									<div class="col-md-4">
 
@@ -254,7 +254,7 @@ wpsp_header();
 
 								<div class="form-group">
 
-									<label class="col-md-4 control-label"><?php _e( 'Description', 'WPSchoolPress'); ?></label>
+									<label class="col-md-4 control-label"><?php _e( 'Description', 'SchoolWeb'); ?></label>
 
 									<div class="col-md-4">
 
@@ -265,7 +265,7 @@ wpsp_header();
 								</div>
 								<?php //Bharatdan Gadhavi - 28th Feb 2018 - Start - create class selection area ?>
 								<div class="form-group">
-									<label class="col-md-4 control-label"><?php _e( 'Class', 'WPSchoolPress'); ?></label>
+									<label class="col-md-4 control-label"><?php _e( 'Class', 'SchoolWeb'); ?></label>
 									<div class="col-md-4">
 										<div class="class-selection">
 											<ul class="class-line">
@@ -285,13 +285,13 @@ wpsp_header();
 
 								<div class="form-group">
 
-										<label class="col-md-4 control-label"><?php _e( 'Receiver', 'WPSchoolPress'); ?></label>
+										<label class="col-md-4 control-label"><?php _e( 'Receiver', 'SchoolWeb'); ?></label>
 
 										<div class="col-md-4">
 
 											<select name="receiver" class="form-control">
 
-												<option value=""><?php _e( 'Whom to notify?', 'WPSchoolPress'); ?></option>
+												<option value=""><?php _e( 'Whom to notify?', 'SchoolWeb'); ?></option>
 
 												<?php
 
@@ -311,7 +311,7 @@ wpsp_header();
 
 									<div class="form-group">
 
-										<label class="col-md-4 control-label"><?php _e( 'Notify Type', 'WPSchoolPress'); ?></label>
+										<label class="col-md-4 control-label"><?php _e( 'Notify Type', 'SchoolWeb'); ?></label>
 
 										<div class="col-md-4">
 
@@ -329,9 +329,9 @@ wpsp_header();
 
 											<select name="type" class="form-control">
 
-												<option value=""><?php _e( 'How to notify?', 'WPSchoolPress'); ?></option>
+												<option value=""><?php _e( 'How to notify?', 'SchoolWeb'); ?></option>
 
-												<option value="1"><?php _e( 'Email', 'WPSchoolPress'); ?></option>
+												<option value="1"><?php _e( 'Email', 'SchoolWeb'); ?></option>
 
 												<option value="2" title="<?php echo $protitle; ?>" class="<?php echo $proclass; ?>"
 
@@ -339,11 +339,11 @@ wpsp_header();
 
 													<?php if( !empty( $prodisable ) ) { ?> disabled <?php  } ?>>
 
-													<?php _e( 'SMS', 'WPSchoolPress'); ?>
+													<?php _e( 'SMS', 'SchoolWeb'); ?>
 
 												</option>												
 
-												<option value="0"><?php _e( 'All', 'WPSchoolPress'); ?></option>
+												<option value="0"><?php _e( 'All', 'SchoolWeb'); ?></option>
 
 											</select>
 
@@ -405,7 +405,7 @@ wpsp_header();
 
 							<div class="col-md-12 col-sm-12 col-lg-12 float-right" style="margin-bottom:10px;">
 
-								<a href="<?php echo $addUrl; ?>" id="NewNotify" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> <?php _e( 'Notify', 'WPSchoolPress'); ?></a>
+								<a href="<?php echo $addUrl; ?>" id="NewNotify" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> <?php _e( 'Notify', 'SchoolWeb'); ?></a>
 
 							</div>
 							<div class="col-md-12 table-responsive">
@@ -417,17 +417,17 @@ wpsp_header();
 
 										<th class="nosort">#</th>
 
-										<th><?php _e( 'Name', 'WPSchoolPress' ); ?></th>	
+										<th><?php _e( 'Name', 'SchoolWeb' ); ?></th>	
 
-										<th><?php _e( 'Description', 'WPSchoolPress' );?></th>										
+										<th><?php _e( 'Description', 'SchoolWeb' );?></th>										
 
-										<th><?php _e( 'Receiver', 'WPSchoolPress' ); ?></th>
+										<th><?php _e( 'Receiver', 'SchoolWeb' ); ?></th>
 
-										<th><?php _e( 'Type', 'WPSchoolPress' ); ?></th>
+										<th><?php _e( 'Type', 'SchoolWeb' ); ?></th>
 
-										<th><?php _e( 'Date', 'WPSchoolPress');  ?></th>
+										<th><?php _e( 'Date', 'SchoolWeb');  ?></th>
 
-										<th class="nosort"><?php _e( 'Action', 'WPSchoolPress'); ?></th>
+										<th class="nosort"><?php _e( 'Action', 'SchoolWeb'); ?></th>
 
 									</tr>
 

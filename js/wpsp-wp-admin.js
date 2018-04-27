@@ -37,7 +37,7 @@ $(document).ready(function(){
 				var contactData=$(this).serializeArray();
 				$.ajax({
 					type: "POST",
-					url: "http://localhost/wpschoolpress/public/wpadminContact",
+					url: "http://localhost/SchoolWeb/public/wpadminContact",
 					data: contactData,
 					cache: false,
 					success: function(result){

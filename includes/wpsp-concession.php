@@ -21,7 +21,7 @@
 						<div class="col-md-12 col-lg-12 col-sm-12" style="padding:0;display: inline-block; margin-bottom:10px">
 							<div class="col-md-4 col-sm-12 col-lg-4 float-left">
 								<form name="StudentClass" id="StudentClass" method="post" action="" class="class-filter">
-									<label><?php _e( 'Select Class Name', 'WPSchoolPress' ); ?></label>
+									<label><?php _e( 'Select Class Name', 'SchoolWeb' ); ?></label>
 									<select name="ClassID" id="ClassID" class="form-control">
 										<?php 
 										$sel_classid	=	isset( $_POST['ClassID'] ) ? $_POST['ClassID'] : '';										
@@ -32,7 +32,7 @@
 											<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 										<?php } ?>
 										 <?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
-											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
+											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'SchoolWeb' ); ?></option>
 										 <?php } ?>
 									</select>
 								</form>								

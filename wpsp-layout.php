@@ -4,7 +4,7 @@ function wpsp_header(){
 <html>
   <head>
     <meta charset='UTF-8'>
-    <title>WPSchoolPress</title>
+    <title>SchoolWeb</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href='".plugins_url('css/bootstrap.min.css', __FILE__ )."' rel='stylesheet' type='text/css' />
@@ -76,7 +76,7 @@ function wpsp_header(){
     $loc_avatar	=	get_user_meta( $current_user->ID,'simple_local_avatar',true);
 	$role		=	isset( $current_user->roles[0] ) ? $current_user->roles[0] : '';
     $img_url	=	$loc_avatar ? $loc_avatar['full'] : WPSP_PLUGIN_URL.'img/avatar.png';	
-	$schoolname	=	isset( $wpsp_settings_data['sch_name'] ) && !empty( $wpsp_settings_data['sch_name'] ) ? $wpsp_settings_data['sch_name'] : __( 'WPSchoolPress','WPSchoolPress' );
+	$schoolname	=	isset( $wpsp_settings_data['sch_name'] ) && !empty( $wpsp_settings_data['sch_name'] ) ? $wpsp_settings_data['sch_name'] : __( 'SchoolWeb','SchoolWeb' );
 	$imglogo	=	isset( $wpsp_settings_data['sch_logo'] ) ? $wpsp_settings_data['sch_logo'] : '';
 	$schoolyear	=	isset( $wpsp_settings_data['sch_wrkingyear'] ) ? $wpsp_settings_data['sch_wrkingyear'] : '';
 	$postname	=	isset( $post->post_name ) ? $post->post_name :'';
@@ -290,19 +290,19 @@ function wpsp_sidebar()
             <li class=".$dashboard_page.' '.$bgDashboard.">
              <a href='".site_url('sch-dashboard')."'>
                 <i class='fa fa-dashboard'></i>
-        <span>".__('Dashboard','WPSchoolPress')."</span>
+        <span>".__('Dashboard','SchoolWeb')."</span>
               </a>
             </li>
             <li class=".$message_page.' '.$bgFirstBlock.">
              <a href='".site_url('sch-messages')."'>
                 <i class='fa fa-inbox'></i>
-        <span>".__('Messages','WPSchoolPress')."</span><span class='pull-right label label-primary pull-right'>".wpsp_UnreadCount()."</span>
+        <span>".__('Messages','SchoolWeb')."</span><span class='pull-right label label-primary pull-right'>".wpsp_UnreadCount()."</span>
               </a>
             </li>
             <li class=".$student_page.' '.$bgFirstBlock.">
               <a href='".site_url('sch-student')."'>
                 <i class='fa fa-users'></i>
-                <span>".__('Students','WPSchoolPress')."</span>
+                <span>".__('Students','SchoolWeb')."</span>
               </a>
             </li>";
 			
@@ -310,7 +310,7 @@ function wpsp_sidebar()
 		             echo "<li class=".$fees_page.' '.$bgFirstBlock.">
                     <a href='".site_url('sch-fee-man')."'>
                       <i class='fa fa-inr'></i>
-                      <span>".__('Fees Management','WPSchoolPress')."</span>
+                      <span>".__('Fees Management','SchoolWeb')."</span>
                     </a>
                   </li>";
           }
@@ -318,59 +318,59 @@ function wpsp_sidebar()
           <li class=".$teacher_page.' '.$bgFirstBlock.">
             <a href='".site_url('sch-teacher')."'>
               <i class='fa fa-users'></i>
-              <span>".__('Teachers','WPSchoolPress')."</span>
+              <span>".__('Teachers','SchoolWeb')."</span>
             </a>
           </li>
           <li class=".$parent_page.' '.$bgSecondBlock.">
             <a href='".site_url('sch-parent')."'>
               <i class='fa fa-users'></i>
-              <span>".__('Parents','WPSchoolPress')."</span>
+              <span>".__('Parents','SchoolWeb')."</span>
             </a>
           </li>
       <li class=".$class_page.' '.$bgSecondBlock.">
         <a href='".site_url('sch-class')."'>
-          <i class='fa fa-bell'></i><span>".__('Classes','WPSchoolPress')."</span>
+          <i class='fa fa-bell'></i><span>".__('Classes','SchoolWeb')."</span>
         </a>
             </li>
       <li class=".$attendance_page.' '.$bgSecondBlock.">
         <a href='".site_url('sch-attendance')."'>
-          <i class='fa fa-table'></i><span>".__('Attendance','WPSchoolPress')."</span>
+          <i class='fa fa-table'></i><span>".__('Attendance','SchoolWeb')."</span>
         </a>
             </li>
       <li class=".$subject_page.' '.$bgSecondBlock.">
         <a href='".site_url('sch-subject')."'>
-          <i class='fa fa-book'></i><span>".__('Subjects','WPSchoolPress')."</span>
+          <i class='fa fa-book'></i><span>".__('Subjects','SchoolWeb')."</span>
         </a>
       </li>
       <li class=".$mark_page.' '.$bgThirdBlock.">
         <a href='".site_url('sch-marks')."'>
-          <i class='fa fa-check-square-o'></i><span>".__('Marks','WPSchoolPress')."</span>
+          <i class='fa fa-check-square-o'></i><span>".__('Marks','SchoolWeb')."</span>
         </a>
             </li>
       <li class=".$exam_page.' '.$bgThirdBlock.">
         <a href='".site_url('sch-exams')."'>
-          <i class='fa fa-edit'></i><span>".__('Exams','WPSchoolPress')."</span>
+          <i class='fa fa-edit'></i><span>".__('Exams','SchoolWeb')."</span>
         </a>
             </li>
       <li class=".$event_page.' '.$bgThirdBlock.">
         <a href='".site_url('sch-events')."'>
-          <i class='fa fa-calendar'></i><span>".__('Events','WPSchoolPress')."</span>
+          <i class='fa fa-calendar'></i><span>".__('Events','SchoolWeb')."</span>
         </a>
             </li>
       <li class=".$timetable_page.' '.$bgThirdBlock.">
         <a href='".site_url('sch-timetable')."'>
-          <i class='fa fa-clock-o'></i><span>".__('Time Table','WPSchoolPress')."</span>
+          <i class='fa fa-clock-o'></i><span>".__('Time Table','SchoolWeb')."</span>
         </a>
       </li> ";
     if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher') {
         echo "<li class=" . $import_page .' '.$bgFourthBlock. ">
         <a href='" . site_url('sch-importhistory') . "'>
-          <i class='fa fa-upload'></i><span>" . __('Import History', 'WPSchoolPress') . "</span>
+          <i class='fa fa-upload'></i><span>" . __('Import History', 'SchoolWeb') . "</span>
         </a>
        </li>
         <li class=".$notify_page.' '.$bgFourthBlock. ">
         <a href='".site_url('sch-notify')."'>
-          <i class='fa fa-bullhorn'></i><span>".__('Notify','WPSchoolPress')."</span>
+          <i class='fa fa-bullhorn'></i><span>".__('Notify','SchoolWeb')."</span>
         </a>
       </li>     
       ";
@@ -380,32 +380,32 @@ function wpsp_sidebar()
 		echo "<li ".$payment_page_main.' '.$bgFourthBlock. ">
               <a href='#'>
                 <i class='fa fa-cog'></i>
-                <span>".__('Payment','WPSchoolPress')."</span>
+                <span>".__('Payment','SchoolWeb')."</span>
                 <i class='fa fa-angle-left pull-right'></i>
               </a>
               <ul class='treeview-menu'>
-                <li class='".$viewpayment."'><a href='".site_url('sch-fees')."'><i class='fa fa-wrench'></i>".__('View Fees','WPSchoolPress')."</a></li>
-				<li class='".$addpayment."'><a href='".site_url('sch-fees?type=addfee')."'><i class='fa fa-check-square-o'></i>".__('Add Fees','WPSchoolPress')."</a></li>				
+                <li class='".$viewpayment."'><a href='".site_url('sch-fees')."'><i class='fa fa-wrench'></i>".__('View Fees','SchoolWeb')."</a></li>
+				<li class='".$addpayment."'><a href='".site_url('sch-fees?type=addfee')."'><i class='fa fa-check-square-o'></i>".__('Add Fees','SchoolWeb')."</a></li>				
 			</ul>
         </li>";
 	} else {
 		echo "<li ".$payment_page_main.">
             <a href='".site_url('sch-payment')."'>
 				<i class='fa fa-cog'></i>
-					<span>".__('View Fees','WPSchoolPress')."</span>                
+					<span>".__('View Fees','SchoolWeb')."</span>                
             </a></li>";
 	}
 	*/
      echo "<li class=".$transport_page.' '.$bgFourthBlock. ">
         <a href='".site_url('sch-transport')."'>
-          <i class='fa fa-road'></i><span>".__('Transport','WPSchoolPress')."</span>
+          <i class='fa fa-road'></i><span>".__('Transport','SchoolWeb')."</span>
         </a>
        </li>";
       if($current_user_role=='administrator' || $current_user_role=='editor' )
       {
           echo "<li class=".$teacher_attendance_page.' '.$bgFourthBlock. ">
         <a href='".site_url('sch-teacherattendance')."'>
-          <i class='fa fa-signal'></i><span>".__('Teacher Attendance','WPSchoolPress')."</span>
+          <i class='fa fa-signal'></i><span>".__('Teacher Attendance','SchoolWeb')."</span>
         </a>
        </li>";
         echo"
@@ -413,19 +413,19 @@ function wpsp_sidebar()
 		<li ".$settings_page.' '.$bgFifthBlock. ">
               <a href='#'>
                 <i class='fa fa-cog'></i>
-                <span>".__('Settings','WPSchoolPress')."</span>
+                <span>".__('Settings','SchoolWeb')."</span>
                 <i class='fa fa-angle-left pull-right'></i>
               </a>
               <ul class='treeview-menu'>
-                <li class='".$settings_general_page."'><a href='".site_url('sch-settings')."'><i class='fa fa-wrench'></i>".__('General Settings','WPSchoolPress')."</a></li>
-                <li class='".$settings_fees_page."'><a href='".site_url('sch-settings?sc=feesSettings')."'><i class='fa fa-inr'></i>".__('Fees Settings','WPSchoolPress')."</a></li>
-                <li class='".$settings_subfield_page."'><a href='".site_url('sch-settings?sc=subField')."'><i class='fa fa-check-square-o'></i>".__('Subject Mark Fields','WPSchoolPress')."</a></li>
-				<li class='".$settings_wrkhours_page."'><a href='".site_url('sch-settings?sc=WrkHours')."'><i class='fa fa-clock-o'></i>".__('Working Hours','WPSchoolPress')."</a></li>				
+                <li class='".$settings_general_page."'><a href='".site_url('sch-settings')."'><i class='fa fa-wrench'></i>".__('General Settings','SchoolWeb')."</a></li>
+                <li class='".$settings_fees_page."'><a href='".site_url('sch-settings?sc=feesSettings')."'><i class='fa fa-inr'></i>".__('Fees Settings','SchoolWeb')."</a></li>
+                <li class='".$settings_subfield_page."'><a href='".site_url('sch-settings?sc=subField')."'><i class='fa fa-check-square-o'></i>".__('Subject Mark Fields','SchoolWeb')."</a></li>
+				<li class='".$settings_wrkhours_page."'><a href='".site_url('sch-settings?sc=WrkHours')."'><i class='fa fa-clock-o'></i>".__('Working Hours','SchoolWeb')."</a></li>				
               </ul>
             </li>";
       }
-	  echo "<li class='".$settings_chgpw_page.' '.$bgFifthBlock. "'><a href='".site_url('sch-changepassword')."'><i class='fa fa-key fa-fw'></i>".__('Change Password','WPSchoolPress')."</a></li>";
-      echo "<li class='".$leave_page.' '.$bgFifthBlock. "'><a href='".site_url('sch-leavecalendar')."'><i class='fa fa-strikethrough'></i>".__('Leave Calendar','WPSchoolPress')."</a></li>
+	  echo "<li class='".$settings_chgpw_page.' '.$bgFifthBlock. "'><a href='".site_url('sch-changepassword')."'><i class='fa fa-key fa-fw'></i>".__('Change Password','SchoolWeb')."</a></li>";
+      echo "<li class='".$leave_page.' '.$bgFifthBlock. "'><a href='".site_url('sch-leavecalendar')."'><i class='fa fa-strikethrough'></i>".__('Leave Calendar','SchoolWeb')."</a></li>
           </ul>
         </section>
       </aside>";

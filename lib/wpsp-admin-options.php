@@ -19,20 +19,20 @@ if( isset( $_POST['save-custom-options'] ) && $_POST['save-custom-options']=='Sa
 <div id="wpbody">
     <div aria-label="Main content" tabindex="0">
         <div class="wrap">
-            <h1>WPSchoolpress</h1>
+            <h1>SchoolWeb</h1>
             <div id="dashboard-widgets-wrap">
                 <div id="dashboard-widgets" class="metabox-holder columns-2">
                     <div id="postbox-container-1" class="postbox-container">
                         <div id="normal-sortables" class="meta-box-sortables">
                             <div class="postbox ">
-                                <h2 class="hndle"><span><?php _e( 'Settings', 'WPSchoolPress'); ?> </span></h2>
+                                <h2 class="hndle"><span><?php _e( 'Settings', 'SchoolWeb'); ?> </span></h2>
                                 <div class="inside">
                                     <form name="post" action="" method="post" >
                                        <table class="plg-form-table">
                                             <tr class="spaceUnder">
 												<td class="plg-option"><label for="lcode"><strong>Delete Data</strong></label></td>
 												<td class="plg-value"><input type="checkbox" name="remove_data" id="lcode" value="1" <?php checked( $remove_data_status, 1, true ); ?>><br>											
-													<i>If you don't want to use the WPSChoolPress Plugin on your site anymore, you can check the delete data box. 
+													<i>If you don't want to use the SchoolWeb Plugin on your site anymore, you can check the delete data box. 
 													This makes sure, that all the pages and tables are being deleted from the database when you delete the plugin.</i>
 												</td>
 											</tr>
@@ -71,7 +71,7 @@ if( isset( $_POST['save-custom-options'] ) && $_POST['save-custom-options']=='Sa
                     <div id="postbox-container-1" class="postbox-container">
                         <div id="normal-sortables" class="meta-box-sortables">
                             <div class="postbox ">
-                                <h2 class="hndle"><span><?php _e( 'Gateway & SMS Settings', 'WPSchoolPress'); ?> </span></h2>
+                                <h2 class="hndle"><span><?php _e( 'Gateway & SMS Settings', 'SchoolWeb'); ?> </span></h2>
                                 <div class="inside">
                                     <form name="post" action="" method="post" >
                                         <div class="plg-set-wrapper">

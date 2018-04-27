@@ -40,10 +40,10 @@ wpsp_header();
 		?>
 
 			<section class="content-header">
-				<h1> <?php _e( 'Marks', 'WPSchoolPress' ); ?> </h1>
+				<h1> <?php _e( 'Marks', 'SchoolWeb' ); ?> </h1>
 				<ol class="breadcrumb">
-					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php  _e( 'Dashboard', 'WPSchoolPress' ); ?></a></li>
-					<li><a href="<?php echo site_url('sch-marks'); ?>"><?php _e( 'Marks', 'WPSchoolPress' ); ?> </a></li>
+					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php  _e( 'Dashboard', 'SchoolWeb' ); ?></a></li>
+					<li><a href="<?php echo site_url('sch-marks'); ?>"><?php _e( 'Marks', 'SchoolWeb' ); ?> </a></li>
 				</ol>
 			</section>
 
@@ -73,13 +73,13 @@ wpsp_header();
 
 									<div class="form-group col-md-4">
 
-										<label class="col-md-2 control-label"><?php _e( 'Class', 'WPSchoolPress' ); ?></label>
+										<label class="col-md-2 control-label"><?php _e( 'Class', 'SchoolWeb' ); ?></label>
 
 										<div class="col-md-10">   
 
 											<select name="ClassID"  id="ClassID" class="form-control" required>
 
-												<option value=""><?php _e( 'Select Class', 'WPSchoolPress' ); ?> </option>
+												<option value=""><?php _e( 'Select Class', 'SchoolWeb' ); ?> </option>
 
 												<?php
 
@@ -97,7 +97,7 @@ wpsp_header();
 
 									<div class="form-group col-md-4">
 
-										<label class="col-lg-2 col-md-2 control-label"><?php _e( 'Exam', 'WPSchoolPress'); ?></label>
+										<label class="col-lg-2 col-md-2 control-label"><?php _e( 'Exam', 'SchoolWeb'); ?></label>
 
 										<div class="col-lg-10 col-md-10">
 
@@ -119,7 +119,7 @@ wpsp_header();
 
 												} else { ?>
 
-													<option value=""><?php _e( 'Select Exam', 'WPSchoolPress' ); ?> </option>
+													<option value=""><?php _e( 'Select Exam', 'SchoolWeb' ); ?> </option>
 
 												<?php } ?>
 
@@ -131,7 +131,7 @@ wpsp_header();
 
 									<div class="form-group col-md-4">
 
-										<label class="col-md-2 control-label"><?php _e( 'Subject', 'WPSchoolPress'); ?> </label>
+										<label class="col-md-2 control-label"><?php _e( 'Subject', 'SchoolWeb'); ?> </label>
 
 										<div class="col-md-10">
 
@@ -165,7 +165,7 @@ wpsp_header();
 
 											} else { ?>
 
-												<option value=""><?php _e( 'Select Subject', 'WPSchoolPress' ); ?></option>
+												<option value=""><?php _e( 'Select Subject', 'SchoolWeb' ); ?></option>
 
 											<?php } ?>
 
@@ -177,7 +177,7 @@ wpsp_header();
 
 									<div class="form-group col-md-4 <?php echo $proclass;?>" title="<?php echo $protitle;?>" <?php echo $prodisable; ?>>
 
-										<label class="col-lg-2 col-md-2 control-label"><?php _e( 'Attach CSV', 'WPSchoolPress'); ?></label>
+										<label class="col-lg-2 col-md-2 control-label"><?php _e( 'Attach CSV', 'SchoolWeb'); ?></label>
 
 										<div class="col-lg-10 col-md-10">
 
@@ -193,11 +193,11 @@ wpsp_header();
 
 										<div class="col-sm-offset-4 col-sm-8">
 
-											<button type="submit" class="btn btn-primary MarkAction update-btn" name="MarkAction"  value="Add Marks"><?php _e( 'Add/Update', 'WPSchoolPress'); ?> </button>
+											<button type="submit" class="btn btn-primary MarkAction update-btn" name="MarkAction"  value="Add Marks"><?php _e( 'Add/Update', 'SchoolWeb'); ?> </button>
 
-											<button name="MarkAction " class="btn btn-secondary update-btn MarkAction <?php echo $proclass;?>" title="<?php echo $protitle;?>" <?php echo $prodisable; ?> value="ImportCSV"><?php _e( 'Upload CSV', 'WPSchoolPress'); ?></button>
+											<button name="MarkAction " class="btn btn-secondary update-btn MarkAction <?php echo $proclass;?>" title="<?php echo $protitle;?>" <?php echo $prodisable; ?> value="ImportCSV"><?php _e( 'Upload CSV', 'SchoolWeb'); ?></button>
 
-											<button name="MarkAction" class="btn btn-success update-btn" value="View Marks"><?php _e( 'View Marks', 'WPSchoolPress'); ?> </button>
+											<button name="MarkAction" class="btn btn-success update-btn" value="View Marks"><?php _e( 'View Marks', 'SchoolWeb'); ?> </button>
 
 										</div>
 
@@ -243,11 +243,11 @@ wpsp_header();
 
 								<?php if( $mark_entered ==1 ) {	?>
 
-									<h3><?php _e( 'Marks Already Entered update here!', 'WPSchoolPress'); ?></h3><br/>
+									<h3><?php _e( 'Marks Already Entered update here!', 'SchoolWeb'); ?></h3><br/>
 
 								<?php } else {	?>
 
-									<h1><?php _e( 'Enter Marks', 'WPSchoolPress'); ?></h1>
+									<h1><?php _e( 'Enter Marks', 'SchoolWeb'); ?></h1>
 
 								<?php }	?>
 
@@ -269,12 +269,12 @@ wpsp_header();
 
 													<!-- <th>#</th> -->
 
-													<th><?php _e( 'RollNo.', 'WPSchoolPress'); ?></th>
+													<th><?php _e( 'RollNo.', 'SchoolWeb'); ?></th>
 
-													<th><?php _e( 'Registration No.', 'WPSchoolPress' ); ?></th><?php // Bharatdan Gadhavi - 13th Feb 2018 ?>
-													<th><?php _e( 'Name', 'WPSchoolPress' ); ?></th>
+													<th><?php _e( 'Registration No.', 'SchoolWeb' ); ?></th><?php // Bharatdan Gadhavi - 13th Feb 2018 ?>
+													<th><?php _e( 'Name', 'SchoolWeb' ); ?></th>
 
-													<th><?php _e( 'Mark', 'WPSchoolPress' );?></th>
+													<th><?php _e( 'Mark', 'SchoolWeb' );?></th>
 
 													<?php if(!empty($extra_fields)){
 
@@ -430,7 +430,7 @@ wpsp_header();
 
 											if(empty($getslist) && $mark_entered=='0'){
 
-													echo "<tr><td>".__( 'No Students to retrive', 'WPSchoolPress')."</td></tr>";
+													echo "<tr><td>".__( 'No Students to retrive', 'SchoolWeb')."</td></tr>";
 
 												}else { ?>
 
@@ -524,13 +524,13 @@ wpsp_header();
 
 				<section class="content-header">
 
-					<h1> <?php _e( 'Marks', 'WPSchoolPress' ); ?> </h1>
+					<h1> <?php _e( 'Marks', 'SchoolWeb' ); ?> </h1>
 
 					<ol class="breadcrumb">
 
-						<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i> <?php _e( 'Dashboard', 'WPSchoolPress'); ?></a></li>
+						<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i> <?php _e( 'Dashboard', 'SchoolWeb'); ?></a></li>
 
-						<li><a href="<?php echo site_url('sch-marks'); ?>"><?php _e( 'Marks', 'WPSchoolPress' ); ?> </a></li>
+						<li><a href="<?php echo site_url('sch-marks'); ?>"><?php _e( 'Marks', 'SchoolWeb' ); ?> </a></li>
 
 					</ol>
 
@@ -632,13 +632,13 @@ wpsp_header();
 
 			<section class="content-header">
 
-				<h1><?php _e( 'Marks', 'WPSchoolPress' ); ?></h1>
+				<h1><?php _e( 'Marks', 'SchoolWeb' ); ?></h1>
 
 				<ol class="breadcrumb">
 
-					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php  _e( 'Dashboard', 'WPSchoolPress'); ?></a></li>
+					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php  _e( 'Dashboard', 'SchoolWeb'); ?></a></li>
 
-					<li><a href="<?php echo site_url('sch-marks'); ?>"><?php _e( 'Marks', 'WPSchoolPress'); ?> </a></li>
+					<li><a href="<?php echo site_url('sch-marks'); ?>"><?php _e( 'Marks', 'SchoolWeb'); ?> </a></li>
 
 				</ol>
 

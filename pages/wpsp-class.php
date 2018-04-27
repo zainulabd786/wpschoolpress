@@ -11,10 +11,10 @@ wpsp_header();
 			$filename	=	'';
 			$header	=	'Classes';
 			if( isset( $_GET['tab'] ) && $_GET['tab'] == 'addclass' ) {
-				$header	=	$label	=	__( 'Add New Class', 'WPSchoolPress');
+				$header	=	$label	=	__( 'Add New Class', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-classForm.php';				
 			}elseif(( isset($_GET['id']) && is_numeric($_GET['id'])))  {
-				$header	=	$label	=	__( 'Update Class', 'WPSchoolPress');
+				$header	=	$label	=	__( 'Update Class', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-classForm.php';				
 			}
 		?>
