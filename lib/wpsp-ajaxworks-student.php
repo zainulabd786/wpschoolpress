@@ -352,9 +352,12 @@ function wpsp_UpdateStudent(){
 	$pedu 				=	esc_attr($_POST['p_edu']);
 	$pprofession		=	esc_attr($_POST['p_profession']);      
 	$pbloodgroup	      =  esc_attr($_POST['p_bloodgrp']);
-	if($_POST['opt_transport'] == "on"){
-		$transport = 1;
+	if(!empty($_POST['opt_transport'])){
+		if($_POST['opt_transport'] == "on"){
+			$transport = 1;
+		}
 	}
+
 	else{
 		$transport = 0;
 	}
