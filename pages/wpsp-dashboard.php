@@ -7,7 +7,7 @@
     	if (current_user_can($role))
     		$current_user_role = $role;
     	endforeach;
-		if( $current_user_role == 'administrator' || $current_user_role == 'teacher' || $current_user_role == 'parent' || $current_user_role == 'student' ) {
+		if( $current_user_role == 'administrator' || $current_user_role == 'editor' || $current_user_role == 'teacher' || $current_user_role == 'parent' || $current_user_role == 'student' ) {
 			wpsp_topbar();
 			wpsp_sidebar();
 			wpsp_body_start(); 

@@ -155,7 +155,7 @@ function wpsp_header(){
                   </li>
                   <!-- Menu Footer-->
                   <li class='user-footer'>
-				  <?php if( $role == 'administrator' ) { ?>
+				  <?php if( $role == 'administrator' || $role == 'editor' ) { ?>
 						<div class='pull-left'>
 						  <a href="<?php echo admin_url(); ?> " class='btn btn-primary'>WP Admin</a>
 						</div>
@@ -306,7 +306,7 @@ function wpsp_sidebar()
               </a>
             </li>";
 			
-          if($current_user_role=='administrator') {  
+          if($current_user_role=='administrator' || $current_user_role=='editor' ) {  
 		             echo "<li class=".$fees_page.' '.$bgFirstBlock.">
                     <a href='".site_url('sch-fee-man')."'>
                       <i class='fa fa-inr'></i>
@@ -362,7 +362,7 @@ function wpsp_sidebar()
           <i class='fa fa-clock-o'></i><span>".__('Time Table','WPSchoolPress')."</span>
         </a>
       </li> ";
-    if($current_user_role=='administrator' || $current_user_role=='teacher') {
+    if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher') {
         echo "<li class=" . $import_page .' '.$bgFourthBlock. ">
         <a href='" . site_url('sch-importhistory') . "'>
           <i class='fa fa-upload'></i><span>" . __('Import History', 'WPSchoolPress') . "</span>
@@ -376,7 +376,7 @@ function wpsp_sidebar()
       ";
     }
 	/*
-	if($current_user_role=='administrator' || $current_user_role=='teacher') {	
+	if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher') {	
 		echo "<li ".$payment_page_main.' '.$bgFourthBlock. ">
               <a href='#'>
                 <i class='fa fa-cog'></i>
@@ -401,7 +401,7 @@ function wpsp_sidebar()
           <i class='fa fa-road'></i><span>".__('Transport','WPSchoolPress')."</span>
         </a>
        </li>";
-      if($current_user_role=='administrator')
+      if($current_user_role=='administrator' || $current_user_role=='editor' )
       {
           echo "<li class=".$teacher_attendance_page.' '.$bgFourthBlock. ">
         <a href='".site_url('sch-teacherattendance')."'>

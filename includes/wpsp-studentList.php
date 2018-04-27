@@ -48,7 +48,7 @@
 										?> 
 											<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 										<?php } ?>
-										 <?php if ( in_array( 'administrator', $role ) ) { ?>
+										 <?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 										<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
 										 <?php } ?>
 									</select>
@@ -113,7 +113,7 @@
 						<thead>
 							<tr>
 								<th class="nosort">
-								<?php if ( in_array( 'administrator', $role ) ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
+								<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
 								</th>
 								<th>Roll No.</th>
 								<th>Registration No.</th><?php // Bharatdan Gadhavi - 13th Feb 2018 ?>
@@ -122,7 +122,7 @@
 								<th>Address</th>
 								<th>Phone</th>
 								<th class="nosort">
-									<?php if ( in_array( 'administrator', $role ) ) { ?>
+									<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 									<select name="bulkaction" class="form-control" id="bulkaction">
 										<option value="">Select Action</option>
 										<option value="bulkUsersDelete">Delete</option>
@@ -161,7 +161,7 @@
 							?>
 									<tr>
 									<td>
-									<?php if ( in_array( 'administrator', $role ) ) { ?>
+									<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 										<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $stinfo->wp_usr_id;?>">
 									<?php }else echo $key; ?>
 									</td>
@@ -185,7 +185,7 @@
 										
 										<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										
 										<a href="javascript:;" data-id="<?php echo $stinfo->wp_usr_id;?>" class="viewAttendance" title="Attendance"><i class="fa fa-table btn btn-primary"></i></a>										
-										<?php if ( in_array( 'administrator', $role ) || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
+										<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
 											<a href="?id=<?php echo $stinfo->wp_usr_id.'&edit=true';?>" title="Edit"><i class="fa fa-pencil btn btn-warning"></i></a> 
 										<?php } ?>
 									</td>
@@ -196,7 +196,7 @@
 						</tbody>
 						<tfoot>
 						  <tr>
-							<th><?php if ( in_array( 'administrator', $role ) ) { } 
+							<th><?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { } 
 								else echo 'Sr. No'; ?></th>
 							<th>Roll No.</th>	
 							<th>Registration No.</th><?php // Bharatdan Gadhavi - 16th Feb 2018 ?>							

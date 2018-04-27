@@ -47,7 +47,7 @@ $sel_class		=	$wpdb->get_results( $classQuery );
 										<?php										
 										foreach( $sel_class as $classes ) { ?>
 											<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
-										<?php } if($current_user_role=='administrator' ) { ?>											
+										<?php } if($current_user_role=='administrator' || $current_user_role=='editor'  ) { ?>											
 											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>>All</option>
 										<?php } ?>	
 									</select>

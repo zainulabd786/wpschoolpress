@@ -188,7 +188,7 @@ wpsp_header();
 		wpsp_sidebar();
 		wpsp_body_start();
 		$addUrl = add_query_arg( 'ac', 'add', get_permalink());
-		if($current_user_role=='administrator' || $current_user_role=='teacher') { 	?>
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher') { 	?>
 
 		<section class="content-header">
 

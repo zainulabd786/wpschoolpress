@@ -31,7 +31,7 @@
 										?> 
 											<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 										<?php } ?>
-										 <?php if ( in_array( 'administrator', $role ) ) { ?>
+										 <?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
 										 <?php } ?>
 									</select>
@@ -62,7 +62,7 @@
 								<thead>
 									<tr>
 										<th class="nosort">
-										<?php if ( in_array( 'administrator', $role ) ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
+										<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
 										</th>
 										<th>Date</th>
 										<th>Slip No.</th>
@@ -128,7 +128,7 @@
 									?>
 											<tr>
 											<td>
-											<?php if ( in_array( 'administrator', $role ) ) { ?>
+											<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 												<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $stinfo->wp_usr_id;?>">
 											<?php }else echo $key; ?>
 											</td>
@@ -149,7 +149,7 @@
 											<td>
 												<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										
 																					
-												<?php if ( in_array( 'administrator', $role ) || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
+												<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
 													<button class="btn btn-basic view-invoice" id="<?php echo $stinfo->slip_no; ?>" type="button">Invoice</button>
 												<?php } ?>
 											</td>
@@ -160,7 +160,7 @@
 								</tbody>
 								<tfoot>
 								  <tr>
-									<th><?php if ( in_array( 'administrator', $role ) ) { } 
+									<th><?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { } 
 										else echo 'Sr. No'; ?></th>
 									<th>Date</th>
 									<th>Slip No.</th>	

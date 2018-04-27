@@ -13,7 +13,7 @@
 			?> 
 			<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 			<?php } ?>
-			<?php if ( in_array( 'administrator', $role ) ) { ?>
+			<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 			<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
 			<?php } ?>
 		</select>

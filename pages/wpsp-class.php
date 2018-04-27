@@ -3,7 +3,7 @@ wpsp_header();
 	if( is_user_logged_in() ) {
 		global $current_user, $wpdb;
 		$current_user_role=$current_user->roles[0];
-		if( $current_user_role=='administrator' || $current_user_role=='teacher')
+		if( $current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher')
 		{
 			wpsp_topbar();
 			wpsp_sidebar();
@@ -43,7 +43,7 @@ wpsp_header();
                     <!-- /. tools -->
                 </div>
                  <div class="box-footer text-black">	
-							<?php  if( $current_user_role=='administrator' ) { ?>
+							<?php  if( $current_user_role=='administrator' || $current_user_role=='editor'  ) { ?>
 								<div class="col-md-12 col-sm-12 col-lg-12 float-right" style="margin-bottom:10px;">
 									<!-- <button id="AddClass" class="btn btn-primary pull-right" data-toggle="modal" data-target="#AddModal"><i class="fa fa-plus"></i> Add Class</button> -->
 									<a class="btn btn-primary pull-right" href="?tab=addclass"><i class="fa fa-plus"></i> Add Class</a>
@@ -60,7 +60,7 @@ wpsp_header();
 										<th>Number of Students</th>
 										<th>Capacity</th>
 										<th>Location</th>
-										<?php  if( $current_user_role=='administrator' ) { ?> <th class="nosort">Action</th> <?php } ?>
+										<?php  if( $current_user_role=='administrator' || $current_user_role=='editor'  ) { ?> <th class="nosort">Action</th> <?php } ?>
 									</tr>
 								</thead>
 								<tbody>
@@ -90,7 +90,7 @@ wpsp_header();
 											<td><?php echo $class_students_count;?></td>
 											<td><?php echo $wpsp_class->c_capacity;?></td>
 											<td><?php echo $wpsp_class->c_loc;?></td>
-											<?php  if( $current_user_role=='administrator' ) { ?>
+											<?php  if( $current_user_role=='administrator' || $current_user_role=='editor'  ) { ?>
 												<td>
 													<!-- <a href="javascript:;" title="Edit"><i class="fa fa-pencil btn btn-warning  ClassEditBt" cid="<?php echo $wpsp_class->cid;?>"></i></a> -->
 													<a class="edit-btn" href="?id=<?php echo $wpsp_class->cid.'&edit=true';?>"><i class="fa fa-pencil btn btn-warning "></i></a>
@@ -111,7 +111,7 @@ wpsp_header();
 				</div>
 			</div>
 		</section>
-		<?php  } if( $current_user_role=='administrator' ) { ?>
+		<?php  } if( $current_user_role=='administrator' || $current_user_role=='editor'  ) { ?>
 		<div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="AddModal" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">

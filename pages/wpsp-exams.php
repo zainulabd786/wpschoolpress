@@ -5,7 +5,7 @@ wpsp_header();
 		$current_user_role	=	$current_user->roles[0];
 		$current_user_Id	=	$current_user->ID;
 		$subject_table		=	$wpdb->prefix."wpsp_subject";			
-		if($current_user_role=='administrator' || $current_user_role=='teacher')
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher')
 		{
 			wpsp_topbar();
 			wpsp_sidebar();

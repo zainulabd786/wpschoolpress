@@ -41,7 +41,7 @@ function wpsp_send_user_register_mail( $userInfo = array(), $user_id ) {
 */
 function wpsp_Authenticate() {
 	global $current_user;
-	if($current_user->roles[0]!='administrator' && $current_user->roles[0]!='teacher' ) {
+	if($current_user->roles[0]!='administrator' && $current_user->roles[0]!='teacher' && $current_user->roles[0]!='editor' ) {
 		echo "Unauthorized Access!";
 		exit;
 	}
@@ -55,7 +55,7 @@ function wpsp_Authenticate() {
 function wpsp_UpdateAccess($role,$id){
 	global $current_user;
 	$current_user_role=$current_user->roles[0];
-	if( $current_user_role=='administrator' || ( $current_user_role==$role && $current_user->ID==$id ) ) {
+	if( $current_user_role=='administrator' || $current_user_role=='editor'  || ( $current_user_role==$role && $current_user->ID==$id ) ) {
 		return true;	
 	} else {
 		return false;

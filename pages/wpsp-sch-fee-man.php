@@ -8,7 +8,7 @@ wpsp_header();
 		if ( current_user_can( $role ) )
 			$current_user_role =  $role;
 		endforeach;
-		if($current_user_role=='administrator') {
+		if($current_user_role=='administrator' || $current_user_role=='editor' ) {
 			wpsp_topbar();
 			wpsp_sidebar();
 			wpsp_body_start();

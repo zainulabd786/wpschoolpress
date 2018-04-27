@@ -1417,7 +1417,7 @@ function wpsp_ListEvent(){
 	$start=$_POST['start'];
 	$end=$_POST['end'];
 	$event_table=$wpdb->prefix."wpsp_events";
-	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='teacher') {
+	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  || $current_user->roles[0]=='teacher') {
 		$event_list = $wpdb->get_results("select * from $event_table where start >= '$start' and end <='$end'");
 	}else{
 		$event_list = $wpdb->get_results("select * from $event_table where type='0' and (start >= '$start' and end <='$end')");
@@ -1533,14 +1533,14 @@ function wpsp_GetLeaveDays(){
     $ldays=$wpdb->get_results("select * from $leave_table where class_id='$cid' and leave_date IS NOT NULL");
     $sno=1;
     echo "<table class='table table-bordered'><thead><tr><th>#</th><th>Date</th><th>Description</th>";
-    if($current_user->roles[0]=='administrator' && $current_user->roles[0]=='teacher') {
+    if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  && $current_user->roles[0]=='teacher') {
         echo "<th>Action</th>";
     }
     echo "</tr></thead><tbody>";
     foreach($ldays as $lday){
         $date=wpsp_ViewDate($lday->leave_date);
         echo "<tr><td>$sno</td><td>$date</td><td>$lday->description</td>";
-        if($current_user->roles[0]=='administrator' && $current_user->roles[0]=='teacher') {
+        if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  && $current_user->roles[0]=='teacher') {
             echo "<td><span class='text-blue pointer dateDelete' data-id=$lday->id>Delete</td>";
         }
         echo "</tr>";
@@ -2441,7 +2441,7 @@ function wpsp_listdashboardschedule(){
 	$student_table	=	$wpdb->prefix."wpsp_student";
 	$event_list		=	array();
 	//Event List
-	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='teacher') {
+	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  || $current_user->roles[0]=='teacher') {
 		$event_list = $wpdb->get_results("select start,end,title  from $event_table where start >= '$start' and end <='$end'", ARRAY_A );
 	}else{
 		$event_list = $wpdb->get_results("select start,end,title from $event_table where type='0' and (start >= '$start' and end <='$end')");
@@ -2460,7 +2460,7 @@ function wpsp_listdashboardschedule(){
 	//holiday
 	$leave_table	=	$wpdb->prefix."wpsp_leavedays";
 	$class_table	=	$wpdb->prefix."wpsp_class";
-	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='teacher') {
+	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  || $current_user->roles[0]=='teacher') {
 		$leaves=$wpdb->get_results("select c_name, description,leave_date from $leave_table l,$class_table c WHERE l.class_id=c.cid", ARRAY_A);
 	} else {
 		if( $current_user->roles[0]=='parent' ) {

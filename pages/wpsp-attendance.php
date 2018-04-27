@@ -9,7 +9,7 @@ wpsp_header();
 
 
 
-		if($current_user_role=='administrator' || $current_user_role=='teacher')
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher')
 
 		{
 

@@ -104,7 +104,7 @@ $plugins_url=plugins_url();
 									</div>
 									
 									<div class="btn-group dropdown">
-										<?php if($current_user_role=='administrator') { ?>
+										<?php if($current_user_role=='administrator' || $current_user_role=='editor' ) { ?>
 										<button id="ImportTeacher" class="btn btn-primary dropdown-toggle impt" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
 											<i class="fa fa-upload"></i> Import 
 										</button>
@@ -131,7 +131,7 @@ $plugins_url=plugins_url();
 										</ul>
 									</div>
 								</div>
-								<?php if($current_user_role=='administrator') { ?>
+								<?php if($current_user_role=='administrator' || $current_user_role=='editor' ) { ?>
 								<a class="btn btn-primary pull-right add-teacher-btn" href="?tab=addteacher"><i class="fa fa-plus"></i> Add Teacher</a>
 								<?php } ?>
 							</div>
@@ -143,7 +143,7 @@ $plugins_url=plugins_url();
 						<thead>
 							<tr>								
 								<th class="nosort">
-									<?php if($current_user_role=='administrator') { ?>
+									<?php if($current_user_role=='administrator' || $current_user_role=='editor' ) { ?>
 									<input type="checkbox" id="selectall" name="selectall" class="ccheckbox">
 									<?php  } else if(  $current_user_role=='teacher' ) { ?>
 										Sr. No.
@@ -155,7 +155,7 @@ $plugins_url=plugins_url();
 								<th> <?php _e( 'Subjects Handling', 'WPSchoolPress' );?></th>								
 								<th> <?php _e( 'Phone', 'WPSchoolPress' );?></th>
 								<th class="nosort">
-								<?php if($current_user_role=='administrator') { ?>
+								<?php if($current_user_role=='administrator' || $current_user_role=='editor' ) { ?>
 									<select name="bulkaction" class="form-control" id="bulkaction"><option value="">Select Action</option><option value="bulkUsersDelete">Delete</option></select>
 								<?php } else if(  $current_user_role=='teacher' ) { ?>
 									Select Action	
@@ -168,7 +168,7 @@ $plugins_url=plugins_url();
 							foreach($teachers as $key=>$tinfo) { ?>
 								<tr>									
 									<td>
-										<?php if($current_user_role=='administrator') { ?>
+										<?php if($current_user_role=='administrator' || $current_user_role=='editor' ) { ?>
 										<input type="checkbox" class="ccheckbox tcrowselect" name="UID[]" value="<?php echo $tinfo->wp_usr_id;?>">
 										<?php } else if(  $current_user_role=='teacher' ) { echo $key+1; } ?>	
 									</td>
@@ -179,7 +179,7 @@ $plugins_url=plugins_url();
 									<td><?php echo $tinfo->phone; ?></td>
 									<td>
 										<a href="<?php echo "?id=".$tinfo->wp_usr_id;?>" class="ViewTeacher" data-id="<?php echo $tinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 
-										<?php if($current_user_role=='administrator') { ?>
+										<?php if($current_user_role=='administrator' || $current_user_role=='editor' ) { ?>
 											<a href="<?php echo "?id=".$tinfo->wp_usr_id."&edit=true";?>" title="Edit"><i class="fa fa-pencil btn btn-warning"></i></a>
 										<?php } ?>	
 									</td>

@@ -3,7 +3,7 @@ wpsp_header();
 	if( is_user_logged_in() ) {
 		global $current_user, $wpdb;
 		$current_user_role=$current_user->roles[0];
-		if($current_user_role=='administrator' || $current_user_role=='teacher' || $current_user_role=='parent' || $current_user_role='student') {
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher' || $current_user_role=='parent' || $current_user_role='student') {
             wpsp_topbar();
             wpsp_sidebar();
             wpsp_body_start();
@@ -152,7 +152,7 @@ wpsp_header();
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Receiver</label>
                                             <div class="col-sm-6" id="receiverUsers">
-												<?php  if( $current_user_role=='administrator' || $current_user_role=='teacher' ) { ?>
+												<?php  if( $current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher' ) { ?>
                                                 <select name="r_id[]" multiple id="r_id" class="form-control">													 
                                                         <?php
                                                         $class_table 	=	$wpdb->prefix . "wpsp_class";

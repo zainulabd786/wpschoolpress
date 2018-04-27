@@ -6,7 +6,7 @@
 	$msg =	'';
     if(isset($_GET['edit']) && $_GET['edit']=='true')
     {
-    	if($current_user_role=='administrator' || ($current_user_role=='teacher' && $current_user->ID==$tid)){
+    	if($current_user_role=='administrator' || $current_user_role=='editor'  || ($current_user_role=='teacher' && $current_user->ID==$tid)){
     		$edit=true;
     	}else{
     		$edit=false;
@@ -231,7 +231,7 @@
                                     <label for="Employee">Employee Code</label>
                                     <?php 
                                         if($edit){
-                                        	if($current_user_role=='administrator'){                                        
+                                        	if($current_user_role=='administrator' || $current_user_role=='editor' ){                                        
                                         ?>
                                     <input type="text" class="form-control" id="Empcode" name="Empcode" value="<?php echo $tinfo->empcode; ?>" placeholder="Empcode">
                                     <?php } } else

@@ -3,7 +3,7 @@ wpsp_header();
 	if( is_user_logged_in() ) {
 		global $current_user, $wpdb;
 		$current_user_role=$current_user->roles[0];
-		if( $current_user_role=='administrator' || $current_user_role=='teacher')
+		if( $current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher')
 		{
 			wpsp_topbar();
 			wpsp_sidebar();
@@ -68,7 +68,7 @@ wpsp_header();
 											foreach($sel_class as $classes) { ?>
 												<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 											<?php } ?>
-											<?php /* if( $current_user_role=='administrator' ) { ?>
+											<?php /* if( $current_user_role=='administrator' || $current_user_role=='editor'  ) { ?>
 												<option value="0" <?php if($sel_classid==0) echo "selected"; ?>>Common Subjects for Timetable Purpose</option>
 											<?php } */ ?>	
 										</select>

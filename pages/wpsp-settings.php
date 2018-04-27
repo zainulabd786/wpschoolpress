@@ -22,7 +22,7 @@
 		$payprotitle		=	!$paymentproversion['status'] && isset( $paymentproversion['message'] )? $paymentproversion['message']	: '';
 		$payprodisable		=	!$paymentproversion['status'] ? 'disabled="disabled"'	: '';
 		
-		if($current_user_role=='administrator') {
+		if($current_user_role=='administrator' || $current_user_role=='editor' ) {
 			$ex_field_tbl	=	$wpdb->prefix."wpsp_mark_fields";
 			$subject_tbl	=	$wpdb->prefix."wpsp_subject";
 			$class_tbl		=	$wpdb->prefix."wpsp_class";
