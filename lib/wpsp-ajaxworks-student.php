@@ -187,6 +187,13 @@ function wpsp_AddStudent() {
 			if($sess->option_name == "session") $session = $sess->option_value;
 			if($sess->option_name == "sch_session_start") $session_start = $sess->option_value;
 		}
+
+		if(!empty($session_start)){
+			if($curr_month < $session_start){
+				$curr_month += 12;
+			}
+		}
+		
 		foreach ($fees_settings_sql as $fee) {
 			$adm_f = $fee->admission_fees;
 			$ttn_f = $fee->tution_fees;

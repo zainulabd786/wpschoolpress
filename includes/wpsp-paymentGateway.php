@@ -115,16 +115,16 @@
 					if(!empty($ttn_f)){ ?>
 					<tr>
 						<td>Tution Fees</td>
-						<td><?php echo $months_array[$from_ttn_month_due]; ?></td>
-						<td><?php echo $months_array[$to_ttn_month_due]; ?></td>
+						<td><?php echo $months_array[($from_ttn_month_due>12)?$from_ttn_month_due-12:$from_ttn_month_due]; ?></td>
+						<td><?php echo $months_array[($to_ttn_month_due>12)?$to_ttn_month_due-12:$to_ttn_month_due]; ?></td>
 						<td><?php echo "<i class='fa fa-inr'></i>".number_format($ttn_f)."/-"; ?></td>
 					</tr>
 					<?php } 
 					if(!empty($trn_f)){ ?>
 					<tr>
 						<td>Transportaion Charges</td>
-						<td><?php echo $months_array[$from_trn_month_due]; ?></td>
-						<td><?php echo $months_array[$to_trn_month_due]; ?></td>
+						<td><?php echo $months_array[($from_trn_month_due>12)?$from_trn_month_due-12:$from_trn_month_due]; ?></td>
+						<td><?php echo $months_array[($to_trn_month_due>12)?$to_trn_month_due-12:$to_trn_month_due]; ?></td>
 						<td><?php echo "<i class='fa fa-inr'></i>".number_format($trn_f)."/-"; ?></td>
 					</tr>
 					<?php } 
@@ -333,10 +333,13 @@
 
 					$wpdb->query("COMMIT;");
 				}
+				else{
+					throw new Exception("Something went Wrong. Please try again. if amount is debited from your account. It will be refunded within 2-3 working days");
+				}
 			}
 			catch (Exception $e) {
 				$wpdb->query("ROLLBACK;");
-				print('Payment Failed: ' . $e->getMessage());
+				echo "<div class='alert alert-danger'>Payment Failed! " . $e->getMessage()."</div>";
 			} 
 		}
 	}  	

@@ -195,6 +195,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_send_reminder_message', 'send_reminder_message' );
 
 		add_action( 'wp_ajax_fetch_session_start_month', 'get_session_start' );
+
+		add_action( 'wp_ajax_duplicate_month_fees_chk', 'duplicate_month_fees_chk' );
 }
 
 function tl_save_error() {

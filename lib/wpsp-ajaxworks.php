@@ -3539,7 +3539,7 @@ function wpsp_Import_Dummy_contents() {
 		$settings_table = $wpdb->prefix."wpsp_settings";
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$transport_table = $wpdb->prefix."wpsp_transport";
-		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time), a.concession, a.mop, a.pno AS date, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND (IF(b.transport > 0, b.route_id=e.id, b.route_id=0)) LIMIT 1");
+		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time) AS date, a.concession, a.mop, a.pno, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND (IF(b.transport > 0, b.route_id=e.id, b.route_id=0)) LIMIT 1");
 		foreach ($receipts as $slip) {
 			$student_full_name = $slip->s_fname." ".$slip->s_mname." ".$slip->s_lname;
 			$father_full_name = $slip->p_fname." ".$slip->p_mname." ".$slip->p_lname; 
@@ -3920,6 +3920,48 @@ function wpsp_Import_Dummy_contents() {
 		$session = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_session_start'");
 		echo $session[0]->option_value;
 		
+		wp_die();
+	}
+
+	function duplicate_month_fees_chk(){
+		global $wpdb;
+
+		$months_array = array("N/A","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
+		$dues_table = $wpdb->prefix."wpsp_fees_dues";
+		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
+		$from = $_POST['from'];
+		//$to = $_POST['to'];//($_POST['to']>12)?$_POST['to']-12:$_POST['to'];
+		$session = $_POST['session'];
+		$uid = $_POST['uid'];
+		if(!empty($_POST['chk_type']) AND $_POST['chk_type'] == "tutionFees"){
+			$rec_sql = $wpdb->get_results("SELECT to_ttn, session FROM $rec_table WHERE uid='$uid' AND session='$session' AND to_ttn='$from' ");
+			//echo "SELECT to_ttn, session FROM $rec_table WHERE uid='$uid' AND session='$session' AND to_ttn='$to' ";
+			//print_r($rec_sql);
+			$deposited_upto_m = $rec_sql[0]->to_ttn;
+			$deposited_upto_s = $rec_sql[0]->session;
+			if(!empty($rec_sql)){
+				$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid='$uid' AND month='$deposited_upto_m' AND session='$deposited_upto_s' AND fees_type='ttn'");
+				if($wpdb->num_rows==0){
+					echo "Tution Fees is submitted upto ".$months_array[($deposited_upto_m>12)?$deposited_upto_m-12:$deposited_upto_m];
+				}
+			}
+		}
+
+		if(!empty($_POST['chk_type']) AND $_POST['chk_type'] == "TransportFees"){
+			$rec_sql = $wpdb->get_results("SELECT to_trn, session FROM $rec_table WHERE uid='$uid' AND session='$session' AND to_trn='$from' ");
+			//echo "SELECT to_ttn, session FROM $rec_table WHERE uid='$uid' AND session='$session' AND to_ttn='$to' ";
+			//print_r($rec_sql);
+			$deposited_upto_m = $rec_sql[0]->to_trn;
+			$deposited_upto_s = $rec_sql[0]->session;
+			if(!empty($rec_sql)){
+				$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid='$uid' AND month='$deposited_upto_m' AND session='$deposited_upto_s' AND fees_type='trn'");
+				if($wpdb->num_rows==0){
+					echo "Transportation Charges is submitted upto ".$months_array[($deposited_upto_m>12)?$deposited_upto_m-12:$deposited_upto_m];
+				}
+			}
+		}
+		
+
 		wp_die();
 	}
 ?>

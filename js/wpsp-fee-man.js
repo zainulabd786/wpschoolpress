@@ -253,7 +253,29 @@ $(document).ready(function(){
 		$(".b5 .sb1 div").text($(this).val());
 	});
 	$(".dep-from-select select").change(function(){
+		var from = parseInt($(".dep-from-select select").val());
+		var session = $(".dep-session").val();
+		var uid = $(".dep-student-select select").val();
 		$(".b4 .sb1 div").text(months_array[($(this).val()>12)?$(this).val()-12:$(this).val()]);
+		$.post(ajax_url, {action: "duplicate_month_fees_chk", chk_type: 'tutionFees', from: from, session: session, uid: uid}, function(data){
+			if(data != ""){
+				alert(data);
+				$(this).val("0");
+			} 
+		});
+	});
+
+	$(".dep-trans-from-select select").change(function(){
+		var from = parseInt($(".dep-trans-from-select select").val());
+		var session = $(".dep-session").val();
+		var uid = $(".dep-student-select select").val();
+		$(".b4 .sb1 div").text(months_array[($(this).val()>12)?$(this).val()-12:$(this).val()]);
+		$.post(ajax_url, {action: "duplicate_month_fees_chk", chk_type: 'TransportFees', from: from, session: session, uid: uid}, function(data){
+			if(data != ""){
+				alert(data);
+				$(this).val("0");
+			} 
+		});
 	});
 
 	$(".dep-to-select select").change(function(){
@@ -279,7 +301,6 @@ $(document).ready(function(){
 			});
 			$(".dep-to-select select").val("0");
 		}
-		console.log(from, to);
 	});
 	$(".dep-trans-from-select select, .dep-trans-to-select select").change(function(){
 		var from = $(".dep-trans-from-select select").val();
