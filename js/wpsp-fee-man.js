@@ -260,7 +260,7 @@ $(document).ready(function(){
 		$.post(ajax_url, {action: "duplicate_month_fees_chk", chk_type: 'tutionFees', from: from, session: session, uid: uid}, function(data){
 			if(data != ""){
 				alert(data);
-				$(this).val("0");
+				$(".dep-from-select select").val("0");
 			} 
 		});
 	});
@@ -273,7 +273,7 @@ $(document).ready(function(){
 		$.post(ajax_url, {action: "duplicate_month_fees_chk", chk_type: 'TransportFees', from: from, session: session, uid: uid}, function(data){
 			if(data != ""){
 				alert(data);
-				$(this).val("0");
+				$(".dep-trans-from-select select").val("0");
 			} 
 		});
 	});
