@@ -136,6 +136,7 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 																				<td>Slip Number</td>
 																				<td>Session</td>
 																				<td>Amount</td>
+																				<td>View</td>
 																			</tr> <?php
 																			$sql_fees = $wpdb->get_results("SELECT * FROM $fees_table WHERE uid = '$sid' ORDER BY slip_no DESC");
 																			foreach ($sql_fees as $fee) {
@@ -152,6 +153,7 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 																					<td><?php echo $fee->slip_no; ?></td>
 																					<td><?php echo $fee->session; ?></td>
 																					<td><i class="fa fa-inr"></i><?php echo number_format($total_amt); ?>/-</td>
+																					<td id="view"><button id="<?php echo $fee->slip_no; ?> view" type="button" class="btn btn-primary btn-xs p-print-slip">View</button></td>
 																				</tr>
 																			<?php } ?>
 																		</table>

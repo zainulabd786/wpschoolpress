@@ -511,12 +511,35 @@ $(document).ready(function () {
 	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	  return regex.test(email);
 	}
-    $(".fees-single-row").click(function(){
+    $(".fees-single-row td:not(#view)").click(function(){
         var slid = $(this).attr('id');
         $.post(ajax_url,{action: "load_detailed_transaction", slid: slid},function(data){ $.alert(data); });
     });
 
     //parents Panel
+
+    $(".p-print-slip").click(function(){
+        var slipId = $(this).attr("id");
+        $.post(ajax_url, {
+            action: "view_invoice_to_print", 
+            sId: slipId
+        }, function(resp){
+            $.confirm({
+                title: "Receipt Details", 
+                type: 'green',
+                typeAnimated: true,
+                columnClass: 'col-md-12 col-md-offset-0',
+                buttons: {
+                    close: function () {text: 'Close'}
+                },
+                content: resp,
+                contentLoaded: function(data, status, xhr){
+                    // data is already set in content
+                    this.setContentAppend('<br>Status: ' + status);
+                }
+            });
+        });
+    });
 
     $(".deposit-btn").click(function(){
         var sid_f = $(".child-tabs .active a").attr('id');

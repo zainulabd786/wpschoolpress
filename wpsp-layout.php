@@ -27,6 +27,7 @@ function wpsp_header(){
     echo "<link href='".plugins_url('plugins/jquery-confirm-master/css/jquery-confirm.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
     echo "<link href='".plugins_url('plugins/gallery/blueimp-gallery.min.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
     echo "<link href='".plugins_url('plugins/bootstrap-toggle/css/bootstrap-toggle.min.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
+    echo "<link href='".plugins_url('plugins/jquery-confirm-master/css/jquery-confirm.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
 
   }
 
@@ -499,6 +500,7 @@ function wpsp_footer()
       echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("js/wpsp-student.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("plugins/bootstrap-toggle/js/bootstrap-toggle.min.js",__FILE__)."' > </script>";
+      echo "<script src='".plugins_url("plugins/jQuery-Print/jQuery.print.js",__FILE__)."' > </script>";
   }
   if ( is_page( 'sch-fee-man' ) || is_page( 'sch-fee-man/?tab=DepositFees' ) || is_page( 'sch-fee-man/?tab=PaymentHistory' ) ) 
   {

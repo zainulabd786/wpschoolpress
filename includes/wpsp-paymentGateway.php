@@ -319,13 +319,16 @@
 						);
 						if($wpdb->insert($record_table, $record_data)==false) throw new Exception($wpdb->print_error());
 					}  
-					if($wpdb->insert($rec_table, $sql_slip_data)){
+					if(!empty($adm_f) OR !empty($ttn_f) OR !empty($trn_f) OR !empty($ann_f) OR !empty($rec_f)){
+						if($wpdb->insert($rec_table, $sql_slip_data)){
 
-						echo "Thank you ".$father_full_name.". Your payment of <i class='fa fa-inr'><b>".$paid_amount."</b></i> is successfully submitted. Your Transaction ID is <b>".$payment_id."</b>. Please keep this ID for future Reference";
+							echo "<div class='alert alert-success'>Thank you ".$father_full_name.". Your payment of <i class='fa fa-inr'><b>".$paid_amount."</b></i> is successfully submitted. Your Transaction ID is <b>".$payment_id."</b>. Please keep this ID for future Reference</div>";
 
 
-					} 
-					else throw new Exception($wpdb->print_error());
+						} 
+						else throw new Exception($wpdb->print_error());
+					}
+					
 
 					$wpdb->query("COMMIT;");
 				}
