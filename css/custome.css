@@ -700,6 +700,9 @@ input:checked + .slider:before {
 .pay-btn{
     margin: 15px;
 }
+.op-thankyou a{
+    color: #c0392b;
+}
 
 
 

@@ -63,96 +63,96 @@
 		} ?>
 		<div class="pg">
 		<?php if(!empty($total_amount_f)){
-		if(!isset($_GET['payment_status']) && $_GET['payment_status'] != "payment_thankyou_page"){ ?>
-			<table class="details">
+			if(!isset($_GET['payment_status'])){ ?>
+				<table class="details">
 
-				<tr>
-					<td>Slip No.:</td>
-					<td><?php echo $slip_no; ?></td>
-					<td>Date:</td>
-					<td><?php echo date("d/m/Y"); ?></td>
-				</tr>
-				<tr>
-					<td>Student Name:</td>
-					<td><?php echo $student_full_name; ?></td>
-					<td>Parent Name:</td>
-					<td><?php echo $father_full_name; ?></td>
-				</tr>
-				<tr>
-					<td>Registration Number:</td>
-					<td><?php echo $regno; ?></td>
-					<td>Mobile Number:</td>
-					<td><?php echo $sphone_f; ?></td>
-				</tr>
-				<tr>
-					<td>Session:</td>
-					<td><?php echo $session; ?></td>
-					<td>Class:</td>
-					<td><?php echo $class; ?></td>
-				</tr>
+					<tr>
+						<td>Slip No.:</td>
+						<td><?php echo $slip_no; ?></td>
+						<td>Date:</td>
+						<td><?php echo date("d/m/Y"); ?></td>
+					</tr>
+					<tr>
+						<td>Student Name:</td>
+						<td><?php echo $student_full_name; ?></td>
+						<td>Parent Name:</td>
+						<td><?php echo $father_full_name; ?></td>
+					</tr>
+					<tr>
+						<td>Registration Number:</td>
+						<td><?php echo $regno; ?></td>
+						<td>Mobile Number:</td>
+						<td><?php echo $sphone_f; ?></td>
+					</tr>
+					<tr>
+						<td>Session:</td>
+						<td><?php echo $session; ?></td>
+						<td>Class:</td>
+						<td><?php echo $class; ?></td>
+					</tr>
+					
+				</table>
+
+				<h3 class="due-chart-head">Dues Chart</h3>
+				<form method="post"> <button name="pay-btn" type="submit" class="btn btn-primary pay-btn">Pay Rs. <?php echo number_format($total_amount_f); ?> Now</button> </form>
 				
-			</table>
-
-			<h3 class="due-chart-head">Dues Chart</h3>
-			<form method="post"> <button name="pay-btn" type="submit" class="btn btn-primary pay-btn">Pay Rs. <?php echo number_format($total_amount_f); ?> Now</button> </form>
-			
-			<table class="dues-chart">
-				<tr>
-					<td>Fees Type</td>
-					<td>From Month</td>
-					<td>To Month</td>
-					<td>Amount</td>
-				</tr>
-				<?php 
-				if(!empty($adm_f)){ ?>
-				<tr>
-					<td>Admission Fees</td>
-					<td><?php echo $months_array[0]; ?></td>
-					<td><?php echo $months_array[0]; ?></td>
-					<td><?php echo "<i class='fa fa-inr'></i>".number_format($adm_f)."/-"; ?></td>
-				</tr>
-				<?php } 
-				if(!empty($ttn_f)){ ?>
-				<tr>
-					<td>Tution Fees</td>
-					<td><?php echo $months_array[$from_ttn_month_due]; ?></td>
-					<td><?php echo $months_array[$to_ttn_month_due]; ?></td>
-					<td><?php echo "<i class='fa fa-inr'></i>".number_format($ttn_f)."/-"; ?></td>
-				</tr>
-				<?php } 
-				if(!empty($trn_f)){ ?>
-				<tr>
-					<td>Transportaion Charges</td>
-					<td><?php echo $months_array[$from_trn_month_due]; ?></td>
-					<td><?php echo $months_array[$to_trn_month_due]; ?></td>
-					<td><?php echo "<i class='fa fa-inr'></i>".number_format($trn_f)."/-"; ?></td>
-				</tr>
-				<?php } 
-				if(!empty($ann_f)){ ?>
-				<tr>
-					<td>Annual Charges</td>
-					<td><?php echo $months_array[0]; ?></td>
-					<td><?php echo $months_array[0]; ?></td>
-					<td><?php echo "<i class='fa fa-inr'></i>".number_format($ann_f)."/-"; ?></td>
-				</tr>
-				<?php } 
-				if(!empty($rec_f)){ ?>
-				<tr>
-					<td>Recreation Charges</td>
-					<td><?php echo $months_array[0]; ?></td>
-					<td><?php echo $months_array[0]; ?></td>
-					<td><?php echo "<i class='fa fa-inr'></i>".number_format($rec_f)."/-"; ?></td>
-				</tr>
-				<?php } 
-				if(!empty($total_amount_f)){ ?>
-				<tr>
-					<td colspan="2">Total Payable Amount</td>
-					<td colspan="2"><?php echo "<i class='fa fa-inr'></i>".number_format($total_amount_f)."/-"; ?></td>
-				</tr>
-				<?php } ?>
-			</table>
-		}
-			<?php } else{ ?>
+				<table class="dues-chart">
+					<tr>
+						<td>Fees Type</td>
+						<td>From Month</td>
+						<td>To Month</td>
+						<td>Amount</td>
+					</tr>
+					<?php 
+					if(!empty($adm_f)){ ?>
+					<tr>
+						<td>Admission Fees</td>
+						<td><?php echo $months_array[0]; ?></td>
+						<td><?php echo $months_array[0]; ?></td>
+						<td><?php echo "<i class='fa fa-inr'></i>".number_format($adm_f)."/-"; ?></td>
+					</tr>
+					<?php } 
+					if(!empty($ttn_f)){ ?>
+					<tr>
+						<td>Tution Fees</td>
+						<td><?php echo $months_array[$from_ttn_month_due]; ?></td>
+						<td><?php echo $months_array[$to_ttn_month_due]; ?></td>
+						<td><?php echo "<i class='fa fa-inr'></i>".number_format($ttn_f)."/-"; ?></td>
+					</tr>
+					<?php } 
+					if(!empty($trn_f)){ ?>
+					<tr>
+						<td>Transportaion Charges</td>
+						<td><?php echo $months_array[$from_trn_month_due]; ?></td>
+						<td><?php echo $months_array[$to_trn_month_due]; ?></td>
+						<td><?php echo "<i class='fa fa-inr'></i>".number_format($trn_f)."/-"; ?></td>
+					</tr>
+					<?php } 
+					if(!empty($ann_f)){ ?>
+					<tr>
+						<td>Annual Charges</td>
+						<td><?php echo $months_array[0]; ?></td>
+						<td><?php echo $months_array[0]; ?></td>
+						<td><?php echo "<i class='fa fa-inr'></i>".number_format($ann_f)."/-"; ?></td>
+					</tr>
+					<?php } 
+					if(!empty($rec_f)){ ?>
+					<tr>
+						<td>Recreation Charges</td>
+						<td><?php echo $months_array[0]; ?></td>
+						<td><?php echo $months_array[0]; ?></td>
+						<td><?php echo "<i class='fa fa-inr'></i>".number_format($rec_f)."/-"; ?></td>
+					</tr>
+					<?php } 
+					if(!empty($total_amount_f)){ ?>
+					<tr>
+						<td colspan="2">Total Payable Amount</td>
+						<td colspan="2"><?php echo "<i class='fa fa-inr'></i>".number_format($total_amount_f)."/-"; ?></td>
+					</tr>
+					<?php } ?>
+				</table> <?php
+			} 
+		}	else{ ?>
 				<div style="text-align: center;" class="alert alert-success">
 					<h3>No Dues 😊</h3>
 				</div> <?php
@@ -323,7 +323,7 @@
 					if(!empty($adm_f) OR !empty($ttn_f) OR !empty($trn_f) OR !empty($ann_f) OR !empty($rec_f)){
 						if($wpdb->insert($rec_table, $sql_slip_data)){
 
-							echo "<div class='alert alert-success'>Thank you ".$father_full_name.". Your payment of <i class='fa fa-inr'><b>".$paid_amount."</b></i> is successfully submitted. Your Transaction ID is <b>".$payment_id."</b>. Please keep this ID for future Reference. <a href='#' class='p-print-slip'></a></div>";
+							echo "<div class='alert alert-success op-thankyou'>Thank you ".$father_full_name.". Your payment of <i class='fa fa-inr'><b>".$paid_amount."</b></i> is successfully submitted. Your Transaction ID is <b>".$payment_id."</b>. Please keep this ID for future Reference. <a id='".$slip_no."' href='#' class='p-print-slip'>Click Here To Print receipt.</a></div>";
 
 
 						} 
