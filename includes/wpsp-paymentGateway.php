@@ -62,7 +62,8 @@
 			$slip_no = 1;
 		} ?>
 		<div class="pg">
-		<?php if(!empty($total_amount_f)){ ?>
+		<?php if(!empty($total_amount_f)){
+		if(!isset($_GET['payment_status']) && $_GET['payment_status'] != "payment_thankyou_page"){ ?>
 			<table class="details">
 
 				<tr>
@@ -150,7 +151,7 @@
 				</tr>
 				<?php } ?>
 			</table>
-
+		}
 			<?php } else{ ?>
 				<div style="text-align: center;" class="alert alert-success">
 					<h3>No Dues 😊</h3>
@@ -322,7 +323,7 @@
 					if(!empty($adm_f) OR !empty($ttn_f) OR !empty($trn_f) OR !empty($ann_f) OR !empty($rec_f)){
 						if($wpdb->insert($rec_table, $sql_slip_data)){
 
-							echo "<div class='alert alert-success'>Thank you ".$father_full_name.". Your payment of <i class='fa fa-inr'><b>".$paid_amount."</b></i> is successfully submitted. Your Transaction ID is <b>".$payment_id."</b>. Please keep this ID for future Reference</div>";
+							echo "<div class='alert alert-success'>Thank you ".$father_full_name.". Your payment of <i class='fa fa-inr'><b>".$paid_amount."</b></i> is successfully submitted. Your Transaction ID is <b>".$payment_id."</b>. Please keep this ID for future Reference. <a href='#' class='p-print-slip'></a></div>";
 
 
 						} 

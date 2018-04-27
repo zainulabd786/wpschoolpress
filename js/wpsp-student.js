@@ -511,6 +511,7 @@ $(document).ready(function () {
 	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	  return regex.test(email);
 	}
+    
     $(".fees-single-row td:not(#view)").click(function(){
         var slid = $(this).attr('id');
         $.post(ajax_url,{action: "load_detailed_transaction", slid: slid},function(data){ $.alert(data); });

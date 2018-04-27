@@ -142,7 +142,7 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 																			foreach ($sql_fees as $fee) {
 																				$total_amt = $fee->adm+$fee->ttn+$fee->trans+$fee->ann+$fee->rec; ?>
 																				<tr class="fees-single-row" id='<?php echo $fee->slip_no; ?>'>
-																					<td>
+																					<td id='<?php echo $fee->slip_no; ?>'>
 																						<?php
 																						$sql_slip_date = $wpdb->get_results("SELECT date_time FROM $record_table WHERE slip_no='$fee->slip_no' LIMIT 1");
 																						foreach ($sql_slip_date as $date_time) {
@@ -150,9 +150,9 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 																						} ?>
 																							
 																					</td>
-																					<td><?php echo $fee->slip_no; ?></td>
-																					<td><?php echo $fee->session; ?></td>
-																					<td><i class="fa fa-inr"></i><?php echo number_format($total_amt); ?>/-</td>
+																					<td id='<?php echo $fee->slip_no; ?>'><?php echo $fee->slip_no; ?></td>
+																					<td id='<?php echo $fee->slip_no; ?>'><?php echo $fee->session; ?></td>
+																					<td id='<?php echo $fee->slip_no; ?>'><i class="fa fa-inr"></i><?php echo number_format($total_amt); ?>/-</td>
 																					<td id="view"><button id="<?php echo $fee->slip_no; ?> view" type="button" class="btn btn-primary btn-xs p-print-slip">View</button></td>
 																				</tr>
 																			<?php } ?>
