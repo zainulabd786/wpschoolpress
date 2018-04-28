@@ -76,6 +76,7 @@ function wpsp_AddStudent() {
 	$pedu 				=	esc_attr($_POST['p_edu']);
 	$pprofession		=	esc_attr($_POST['p_profession']);      
 	$pbloodgroup	    = 	esc_attr($_POST['p_bloodgrp']);  
+	$phone	    		= 	esc_attr($_POST['s_phone']);  
 	$transport 			= 	$_POST['opt_transport'];
 	$current_date		=	date("Y-m-d");
 	$curr_month			=	date("m");
@@ -108,6 +109,7 @@ function wpsp_AddStudent() {
 			$pedu			=	$response['data']->p_edu;
 			$pprofession	=	$response['data']->p_profession;
 			$pbloodgroup	=	$response['data']->p_bloodgrp;		
+			$phone			=	$response['data']->s_phone;		
 		} else {		
 			if( wpsp_CheckUsername( $_POST['pUsername'] ,true)===true ){
 				$parentMsg	=	'Parent UserName Already Exists';
@@ -163,7 +165,7 @@ function wpsp_AddStudent() {
 						's_bloodgrp' 		=> 	isset( $_POST['s_bloodgrp'] ) ? esc_attr($_POST['s_bloodgrp']) : '',						
 						's_dob'				=>	isset( $_POST['s_dob'] ) && !empty( $_POST['s_dob'] ) ? wpsp_StoreDate( $_POST['s_dob'] ) :'',
 						's_doj'				=>	isset( $_POST['s_doj'] ) && !empty( $_POST['s_doj'] ) ? wpsp_StoreDate( $_POST['s_doj'] ) :'',
-						's_phone'			=> 	isset( $_POST['s_phone'] ) ? esc_attr( $_POST['s_phone'] ) : '',
+						's_phone'			=> 	$phone,
 						'p_fname' 			=>  $pfirstname,
 						'p_mname'			=>  $pmiddlename,
 						'p_lname' 			=>  $plastname,
