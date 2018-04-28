@@ -7,7 +7,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * Handles generic Public functionality.
  *
- * @package WPSchoolPress
+ * @package SchoolWeb
  * @since 2.0.0
  */
 class Wpsp_Public{
@@ -17,7 +17,7 @@ class Wpsp_Public{
 	}	
 	/*
 	* Redirect user to dashboard
-	* @package WPSchoolPress
+	* @package SchoolWeb
 	* @since 2.0.0
 	*/
 	function wpsp_login_redirect( $redirect_to, $request, $user ) {		
@@ -34,7 +34,7 @@ class Wpsp_Public{
 	
 	/*
 	* redirect to specific page
-	* @package WPSchoolPress
+	* @package SchoolWeb
 	* @since 2.0.0
 	*/
 	function wpsp_page_template( $page_template ) {

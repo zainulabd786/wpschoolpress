@@ -9,16 +9,16 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 		if ( current_user_can( $role ) )
 			$current_user_role =  $role;
 		endforeach;
-		if($current_user_role=='administrator' || $current_user_role=='teacher') {
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher') {
 			wpsp_topbar();
 			wpsp_sidebar();
 			wpsp_body_start();
 			$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-studentList.php';
 			if( isset( $_GET['tab'] ) && $_GET['tab'] == 'addstudent' ) {
-				$label	=	__( 'Add New Student', 'WPSchoolPress');
+				$label	=	__( 'Add New Student', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-studentForm.php';
 			} else if( isset($_GET['id']) && is_numeric($_GET['id']) ) {
-				$label	=	__( 'Update Student', 'WPSchoolPress');
+				$label	=	__( 'Update Student', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-studentProfile.php';
 			} else if( isset( $_POST['ClassID'] ) && empty( $_POST['ClassID'] ) ) {
 				 $label	=	'List Of Unassigned Students';
@@ -38,13 +38,13 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 			<section class="content-header">
 				<h1><?php echo $label; ?></h1>
 				<ol class="breadcrumb">
-					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'WPSchoolPress'); ?> </a></li>
-					<li><a href="<?php echo site_url('sch-student'); ?>"><?php _e( 'Students', 'WPSchoolPress'); ?></a></li>
+					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'SchoolWeb'); ?> </a></li>
+					<li><a href="<?php echo site_url('sch-student'); ?>"><?php _e( 'Students', 'SchoolWeb'); ?></a></li>
 					<?php if(isset($_GET['ac']) && $_GET['ac']=='add') { ?>
-					<li class="active"><?php _e( 'Add New', 'WPSchoolPress'); ?></li>
+					<li class="active"><?php _e( 'Add New', 'SchoolWeb'); ?></li>
 					<?php } ?>
 					<?php if(isset($_GET['id']) && is_numeric($_GET['id'])) { ?>
-					<li class="active"><?php _e( 'Edit Student', 'WPSchoolPress'); ?></li>
+					<li class="active"><?php _e( 'Edit Student', 'SchoolWeb'); ?></li>
 					<?php } ?>
 				</ol>
 			</section>
@@ -59,7 +59,7 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 		wpsp_sidebar();
 		wpsp_body_start();
 		if( isset( $_GET['tab'] ) && $_GET['tab'] == 'DepositFees' ) {
-			$label	=	__( 'Deposit Fees', 'WPSchoolPress');
+			$label	=	__( 'Deposit Fees', 'SchoolWeb');
 			include_once(WPSP_PLUGIN_PATH .'includes/wpsp-paymentGateway.php');
 		}
 		else{
@@ -82,8 +82,8 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 			<section class="content-header">
 				<h1>Your Child(s) Information</h1>
 				<ol class="breadcrumb">
-					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'WPSchoolPress'); ?></a></li>
-					<li><a href="<?php echo site_url('sch-student'); ?>"><?php _e( 'Child(s)', 'WPSchoolPress'); ?></a></li>
+					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'SchoolWeb'); ?></a></li>
+					<li><a href="<?php echo site_url('sch-student'); ?>"><?php _e( 'Child(s)', 'SchoolWeb'); ?></a></li>
 				</ol>
 			</section>
 			<section class="content">
@@ -236,52 +236,52 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 															<table class="table table-user-information">
 																<tbody>
 																<tr>
-																	<td class="bold"><?php _e( 'Roll No.', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Roll No.', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->s_rollno;	?></td>
 																</tr>
 																<?php // Bharatdan Gadhavi - 13th Feb 2018 - Start ?>
 																<tr>
-																	<td class="bold"><?php _e( 'Registration Number', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Registration Number', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->s_regno;	?></td>
 																</tr>
 																<?php // Bharatdan Gadhavi - 13th Feb 2018 - End ?>
 																<tr>
-																	<td class="bold"><?php _e( 'Class', 'WPSchoolPress'); ?> </td>
+																	<td class="bold"><?php _e( 'Class', 'SchoolWeb'); ?> </td>
 																	<td><?php echo $stinfo->c_name;	?></td>
 																</tr>
 																<tr>
-																	<td class="bold"><?php _e( 'Gender', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Gender', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->s_gender;	?></td>
 																</tr>
 																<tr>
-																	<td class="bold"><?php _e( 'Date of Birth', 'WPSchoolPress' );?></td>
+																	<td class="bold"><?php _e( 'Date of Birth', 'SchoolWeb' );?></td>
 																	<td><?php echo wpsp_ViewDate($stinfo->s_dob);	?></td>
 																</tr>
 																<tr>
-																	<td class="bold"><?php _e( 'Date of Join', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Date of Join', 'SchoolWeb'); ?></td>
 																	<td><?php echo wpsp_ViewDate($stinfo->s_doj);	?></td>
 																</tr>
 																<tr>
-																	<td class="bold"><?php _e( 'Permanent Address', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Permanent Address', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->s_paddress; ?></td>
 																</tr>
 																<tr>
-																	<td class="bold"><?php _e( 'Permanent Country', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Permanent Country', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->s_pcountry; ?></td>
 																</tr><tr>
-																	<td class="bold"><?php _e( 'Permanent Zipcode', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Permanent Zipcode', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->s_pzipcode; ?></td>
 																</tr>
 																<tr>
-																	<td class="bold"><?php _e( 'Email', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Email', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->user_email; ?></td>
 																</tr>
 																<tr>
-																	<td class="bold"><?php _e( 'Phone Number', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Phone Number', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->s_phone; ?></td>
 																</tr>
 																<tr>
-																	<td class="bold"><?php _e( 'Blood Group', 'WPSchoolPress'); ?></td>
+																	<td class="bold"><?php _e( 'Blood Group', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->s_bloodgrp; ?></td>
 																</tr>																														
 																</tbody>
@@ -294,7 +294,7 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 									</div>
 								</div>
 						<?php } else {
-					_e( 'Sorry! No data retrieved', 'WPSchoolPress');
+					_e( 'Sorry! No data retrieved', 'SchoolWeb');
 				}
 				?>
 						</div>
@@ -322,10 +322,10 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 			$student=$wpdb->get_row("select st.class_id,  CONCAT_WS(' ', st.s_fname, st.s_mname, st.s_lname ) AS full_name,cl.c_name from $student_table st LEFT JOIN $class_table cl ON cl.cid=st.class_id where st.wp_usr_id='$student_id'");			
 			?>
 			<section class="content-header">
-				<h1><?php _e( 'Students', 'WPSchoolPress'); ?></h1>
+				<h1><?php _e( 'Students', 'SchoolWeb'); ?></h1>
 				<ol class="breadcrumb">
-					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'WPSchoolPress'); ?></a></li>
-					<li><a href="<?php echo site_url('sch-student'); ?>"><?php _e( 'Students', 'WPSchoolPress'); ?></a></li>
+					<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'SchoolWeb'); ?></a></li>
+					<li><a href="<?php echo site_url('sch-student'); ?>"><?php _e( 'Students', 'SchoolWeb'); ?></a></li>
 				</ol>
 			</section>
 			
@@ -337,7 +337,7 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
                                     <h3 class="box-title"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp; <?php
 							$st_class=$student->class_id;
 							if( isset( $student->c_name ) && !empty( $student->c_name ) ) 
-								_e( 'Your Current Class is '.$student->c_name, 'WPSchoolPress' );
+								_e( 'Your Current Class is '.$student->c_name, 'SchoolWeb' );
 							?> </h3>
                                     <!-- tools box -->
                                   
@@ -348,10 +348,10 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 									<thead>
 									<tr>
 										<th>#</th>
-										<th><?php _e( 'Roll No.', 'WPSchoolPress' ); ?></th>										
-										<th><?php _e( 'Student Name', 'WPSchoolPress' );?></th>
-										<th><?php _e( 'Parent Name', 'WPSchoolPress' ); ?></th>
-										<th><?php _e( 'Permanent Address', 'WPSchoolPress' );?></th>
+										<th><?php _e( 'Roll No.', 'SchoolWeb' ); ?></th>										
+										<th><?php _e( 'Student Name', 'SchoolWeb' );?></th>
+										<th><?php _e( 'Parent Name', 'SchoolWeb' ); ?></th>
+										<th><?php _e( 'Permanent Address', 'SchoolWeb' );?></th>
 									</tr>
 									</thead>
 									<tbody>

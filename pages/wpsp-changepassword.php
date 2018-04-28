@@ -18,13 +18,13 @@ if( is_user_logged_in() ) {
 
 		<section class="content-header">
 
-			<h1><?php _e( 'Change Password', 'WPSchoolPress' ); ?></h1>
+			<h1><?php _e( 'Change Password', 'SchoolWeb' ); ?></h1>
 
 			<ol class="breadcrumb">
 
-				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'WPSchoolPress'); ?></a></li>
+				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'SchoolWeb'); ?></a></li>
 
-				<li><a href="<?php echo site_url('sch-changepassword'); ?>"><?php _e( 'Change Password', 'WPSchoolPress'); ?> </a></li>
+				<li><a href="<?php echo site_url('sch-changepassword'); ?>"><?php _e( 'Change Password', 'SchoolWeb'); ?> </a></li>
 
 			</ol>
 
@@ -54,7 +54,7 @@ if( is_user_logged_in() ) {
 
                                         <div class="form-group">
 
-                                            <label class="col-sm-3 control-label"><?php _e( 'Current Password', 'WPSchoolPress' ); ?></label>
+                                            <label class="col-sm-3 control-label"><?php _e( 'Current Password', 'SchoolWeb' ); ?></label>
 
                                             <div class="col-sm-5">
 
@@ -66,7 +66,7 @@ if( is_user_logged_in() ) {
 
                                         <div class="form-group">
 
-                                            <label class="col-sm-3 control-label"><?php _e( 'New Password', 'WPSchoolPress' ); ?></label>
+                                            <label class="col-sm-3 control-label"><?php _e( 'New Password', 'SchoolWeb' ); ?></label>
 
                                             <div class="col-sm-5">
 
@@ -78,7 +78,7 @@ if( is_user_logged_in() ) {
 
 										<div class="form-group">
 
-                                            <label class="col-sm-3 control-label"><?php _e( 'Confirm  New Password', 'WPSchoolPress' ); ?></label>
+                                            <label class="col-sm-3 control-label"><?php _e( 'Confirm  New Password', 'SchoolWeb' ); ?></label>
 
                                             <div class="col-sm-5">
 

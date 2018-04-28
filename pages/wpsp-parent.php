@@ -7,7 +7,7 @@ wpsp_header();
 		if ( current_user_can( $role ) )
 			$current_user_role =  $role;
 		endforeach;
-		if($current_user_role=='administrator' || $current_user_role=='teacher')
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher')
 		{
 			wpsp_topbar();
 			wpsp_sidebar();
@@ -21,12 +21,12 @@ wpsp_header();
 				<?php if(isset($_GET['ac']) && $_GET['ac']=='add')
 				{
 				?>
-					<li class="active"><?php _e( 'Add New', 'WPSchoolPress'); ?></li>
+					<li class="active"><?php _e( 'Add New', 'SchoolWeb'); ?></li>
 				<?php } ?>
 				<?php if(isset($_GET['id']) && is_numeric($_GET['id']))
 				{
 				?>
-					<li class="active"><?php _e( 'View/Edit Parent', 'WPSchoolPress'); ?></li>
+					<li class="active"><?php _e( 'View/Edit Parent', 'SchoolWeb'); ?></li>
 				<?php } ?>
 			  </ol>
 			</section>

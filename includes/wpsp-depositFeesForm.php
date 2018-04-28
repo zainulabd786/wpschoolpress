@@ -144,8 +144,8 @@
 													?> 
 														<option value="<?php echo $classes->cid;?>" <?php if($classes->cid == $cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 													<?php } ?>
-													 <?php if ( in_array( 'administrator', $role ) ) { ?>
-														<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
+													 <?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
+														<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'SchoolWeb' ); ?></option>
 													 <?php } ?>
 												</select>
 											</div>

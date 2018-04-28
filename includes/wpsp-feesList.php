@@ -2,21 +2,21 @@
 	  $proclass		=	!$proversion['status'] && isset( $proversion['class'] )? $proversion['class'] : '';
 	  $protitle		=	!$proversion['status'] && isset( $proversion['message'] )? $proversion['message']	: '';
 	  $prodisable	=	!$proversion['status'] ? 'disabled="disabled"'	: '';
-	  $studentFieldList =  array(	's_rollno'			=>	__('Roll Number', 'WPSchoolPress'),
-									's_regno'			=>	__('Registration Number', 'WPSchoolPress'),	// Bharatdan Gadhavi - 13th Feb 2018
-									's_fname'			=>	__('Student First Name', 'WPSchoolPress'),	
-									's_mname'			=>	__('Student Middle Name', 'WPSchoolPress'),	
-									's_lname'			=>	__('Student Last Name', 'WPSchoolPress'),	
-									's_zipcode'			=>	__('Zip Code', 'WPSchoolPress'),	
-									's_country'			=>	__('Country', 'WPSchoolPress'),	
-									's_gender'			=>	__('Gender', 'WPSchoolPress'),	
-									's_address'			=>	__('Current Address', 'WPSchoolPress'),	
-									's_paddress'		=>	__('Permanent Address', 'WPSchoolPress'),	
-									'p_fname '			=>	__('Parent First Name', 'WPSchoolPress'),	
-									's_bloodgrp'		=>	__('Blood Group', 'WPSchoolPress'),	
-									's_dob'				=>	__('Date Of Birth', 'WPSchoolPress'),	
-									's_doj'				=>	__('Date Of Join', 'WPSchoolPress'),										
-									's_phone'			=>	__('Phone Number', 'WPSchoolPress'),	
+	  $studentFieldList =  array(	's_rollno'			=>	__('Roll Number', 'SchoolWeb'),
+									's_regno'			=>	__('Registration Number', 'SchoolWeb'),	// Bharatdan Gadhavi - 13th Feb 2018
+									's_fname'			=>	__('Student First Name', 'SchoolWeb'),	
+									's_mname'			=>	__('Student Middle Name', 'SchoolWeb'),	
+									's_lname'			=>	__('Student Last Name', 'SchoolWeb'),	
+									's_zipcode'			=>	__('Zip Code', 'SchoolWeb'),	
+									's_country'			=>	__('Country', 'SchoolWeb'),	
+									's_gender'			=>	__('Gender', 'SchoolWeb'),	
+									's_address'			=>	__('Current Address', 'SchoolWeb'),	
+									's_paddress'		=>	__('Permanent Address', 'SchoolWeb'),	
+									'p_fname '			=>	__('Parent First Name', 'SchoolWeb'),	
+									's_bloodgrp'		=>	__('Blood Group', 'SchoolWeb'),	
+									's_dob'				=>	__('Date Of Birth', 'SchoolWeb'),	
+									's_doj'				=>	__('Date Of Join', 'SchoolWeb'),										
+									's_phone'			=>	__('Phone Number', 'SchoolWeb'),	
 							);
 	$teacherId	=	0;
 	global $current_user;	
@@ -40,7 +40,7 @@
 						<div class="col-md-12 col-lg-12 col-sm-12" style="padding:0;display: inline-block; margin-bottom:10px">
 							<div class="col-md-6 col-sm-12 col-lg-6 float-left">
 								<form name="StudentClass" id="StudentClass" method="post" action="" class="class-filter">
-									<label><?php _e( 'Select Class Name', 'WPSchoolPress' ); ?></label>
+									<label><?php _e( 'Select Class Name', 'SchoolWeb' ); ?></label>
 									<select name="ClassID" id="ClassID" class="form-control">
 										<?php 
 										$sel_classid	=	isset( $_POST['ClassID'] ) ? $_POST['ClassID'] : '';										
@@ -50,8 +50,8 @@
 										?> 
 											<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 										<?php } ?>
-										 <?php if ( in_array( 'administrator', $role ) ) { ?>
-											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
+										 <?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
+											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'SchoolWeb' ); ?></option>
 										 <?php } ?>
 									</select>	
 								</form>							
@@ -67,14 +67,14 @@
 									<!--<div class="dropdown"> 
 										<a class="btn btn-primary st-btn add-student-btn" href="?tab=addstudent"><i class="fa fa-plus"></i> Add student</a>
 										<button type="button" class="btn btn-primary dropdown-toggle print" id="PrintStudent" data-toggle="dropdown" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
-											<i class="fa fa-print" ></i> <?php _e( 'Print', 'WPSchoolPress'); ?> 
+											<i class="fa fa-print" ></i> <?php _e( 'Print', 'SchoolWeb'); ?> 
 										</button>
 										<button type="button" class="btn btn-primary dropdown-toggle toggle-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
 											<span class="caret"></span>
-											<span class="sr-only"><?php _e( 'Toggle Dropdown', 'WPSchoolPress' );?></span>
+											<span class="sr-only"><?php _e( 'Toggle Dropdown', 'SchoolWeb' );?></span>
 										</button>
 										<ul class="dropdown-menu">
-											<li class="dropdown-header"><?php _e( 'Select Columns to Print', 'WPSchoolPress' );?> </li>
+											<li class="dropdown-header"><?php _e( 'Select Columns to Print', 'SchoolWeb' );?> </li>
 											<form id="StudentColumnForm" name="StudentColumnForm" method="POST">
 												<?php foreach( $studentFieldList as $key=>$value ) { ?>
 													<li class="checkbox checkbox-info" >
@@ -90,13 +90,13 @@
 									</div>
 									<div class="btn-group dropdown">
 										<button id="ImportStudent" class="btn btn-primary dropdown-toggle impt" <?php echo $prodisable;?> title="<?php echo $protitle;?>"><i class="fa fa-upload"></i> Import </button>									
-										<button type="button" class="btn btn-primary print" id="ExportStudents" <?php echo $prodisable;?> title="<?php echo $protitle;?>"><i class="fa fa-download"></i> <?php _e( 'Export', 'WPSchoolPress'); ?> </button>
+										<button type="button" class="btn btn-primary print" id="ExportStudents" <?php echo $prodisable;?> title="<?php echo $protitle;?>"><i class="fa fa-download"></i> <?php _e( 'Export', 'SchoolWeb'); ?> </button>
 										<button type="button" class="btn btn-primary dropdown-toggle export-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
 											<span class="caret"></span>
-											<span class="sr-only"><?php _e( 'Toggle Dropdown', 'WPSchoolPress' );?></span>
+											<span class="sr-only"><?php _e( 'Toggle Dropdown', 'SchoolWeb' );?></span>
 										</button>
 										<ul class="dropdown-menu">
-											<li class="dropdown-header"><?php _e( 'Select Columns to Export', 'WPSchoolPress' );?> </li>
+											<li class="dropdown-header"><?php _e( 'Select Columns to Export', 'SchoolWeb' );?> </li>
 											<form id="ExportColumnForm" name="ExportStudentColumn" method="POST">
 												<?php foreach( $studentFieldList as $key=>$value ) { ?>
 												<li class="checkbox checkbox-info">
@@ -119,7 +119,7 @@
 								<thead>
 									<tr>
 										<th class="nosort">
-										<?php if ( in_array( 'administrator', $role ) ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
+										<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
 										</th>
 										<th>Roll No.</th>
 										<th>Registration No.</th>
@@ -165,7 +165,7 @@
 									?>
 											<tr class="z-checkbox-row">
 											<td>
-											<?php if ( in_array( 'administrator', $role ) ) { ?>
+											<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 												<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $stinfo->wp_usr_id;?>">
 											<?php }else echo $key; ?>
 											</td>
@@ -200,7 +200,7 @@
 											<td>
 												<a href="<?php echo "?id=".$stinfo->wp_usr_id;?>" class="ViewStudent" data-id="<?php echo $stinfo->wp_usr_id;?>" title="View"><i class="fa fa-eye btn btn-success"></i></a> 										
 																					
-												<?php if ( in_array( 'administrator', $role ) || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
+												<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  || ( !empty( $teacherId ) && $teacherId==$cuserId ) ) { ?>
 													<a href="?uidff=<?php echo $stinfo->wp_usr_id; ?>" title="Deposit Fees"><i class="fa fa-plus btn btn-danger"></i></a> 
 												<?php } ?>
 											</td>
@@ -211,7 +211,7 @@
 								</tbody>
 								<tfoot>
 								  <tr>
-									<th><?php if ( in_array( 'administrator', $role ) ) { } 
+									<th><?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { } 
 										else echo 'Sr. No'; ?></th>
 									<th>Roll No.</th>	
 									<th>Registration No.</th><?php // Bharatdan Gadhavi - 16th Feb 2018 ?>							

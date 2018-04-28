@@ -3,7 +3,7 @@ wpsp_header();
 	if( is_user_logged_in() ) {
 		global $current_user, $wpdb;
 		$current_user_role=$current_user->roles[0];
-		if( $current_user_role=='administrator' || $current_user_role=='teacher')
+		if( $current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher')
 		{
 			wpsp_topbar();
 			wpsp_sidebar();
@@ -18,11 +18,11 @@ wpsp_header();
 			}
 			$sel_class		=	$wpdb->get_results( $classQuery );
 			if(( isset($_GET['classid']) && is_numeric($_GET['classid']))) {
-				$label	=	__( 'Add New Class', 'WPSchoolPress');
+				$label	=	__( 'Add New Class', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-subjectForm.php';
 				include_once ( $filename );
 			}elseif(( isset($_GET['id']) && is_numeric($_GET['id']))) {
-				$label	=	__( 'Edit Class', 'WPSchoolPress');
+				$label	=	__( 'Edit Class', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-editsubjectForm.php';
 				include_once ( $filename );
 			}else{
@@ -68,7 +68,7 @@ wpsp_header();
 											foreach($sel_class as $classes) { ?>
 												<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 											<?php } ?>
-											<?php /* if( $current_user_role=='administrator' ) { ?>
+											<?php /* if( $current_user_role=='administrator' || $current_user_role=='editor'  ) { ?>
 												<option value="0" <?php if($sel_classid==0) echo "selected"; ?>>Common Subjects for Timetable Purpose</option>
 											<?php } */ ?>	
 										</select>

@@ -5,7 +5,7 @@ wpsp_header();
 		$current_user_role	=	$current_user->roles[0];
 		$current_user_Id	=	$current_user->ID;
 		$subject_table		=	$wpdb->prefix."wpsp_subject";			
-		if($current_user_role=='administrator' || $current_user_role=='teacher')
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher')
 		{
 			wpsp_topbar();
 			wpsp_sidebar();
@@ -14,10 +14,10 @@ wpsp_header();
 			$filename	=	'';
 			$header ='Exams';
 			if( isset( $_GET['tab'] ) && $_GET['tab'] == 'addexam' ) {
-				$header	=	$label	=	__( 'Add New Exam', 'WPSchoolPress');
+				$header	=	$label	=	__( 'Add New Exam', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-examForm.php';				
 			}elseif(( isset($_GET['id']) && is_numeric($_GET['id'])))  {
-				$header	=	$label	=	__( 'Update Exam', 'WPSchoolPress');
+				$header	=	$label	=	__( 'Update Exam', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-examForm.php';				
 			}
 			$extable	=	$wpdb->prefix."wpsp_exam";

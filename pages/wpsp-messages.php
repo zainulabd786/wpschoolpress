@@ -3,7 +3,7 @@ wpsp_header();
 	if( is_user_logged_in() ) {
 		global $current_user, $wpdb;
 		$current_user_role=$current_user->roles[0];
-		if($current_user_role=='administrator' || $current_user_role=='teacher' || $current_user_role=='parent' || $current_user_role='student') {
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher' || $current_user_role=='parent' || $current_user_role='student') {
             wpsp_topbar();
             wpsp_sidebar();
             wpsp_body_start();
@@ -45,18 +45,18 @@ wpsp_header();
 									<div class="col-md-10 wpsp-mail-title">
 										
 										<h2><?php 			
-										$columnFirstTitle = __( 'From', 'WPSchoolPress' );
+										$columnFirstTitle = __( 'From', 'SchoolWeb' );
 										if( isset( $_GET['mid'] ) && !empty( $_GET['mid'] ) ) {
-											echo esc_html( __( 'View Message', 'WPSchoolPress' ) );											
+											echo esc_html( __( 'View Message', 'SchoolWeb' ) );											
 										} else if(!isset($_REQUEST['tab']) || ($_REQUEST['tab'] == 'inbox')) {
-											echo esc_html( __( 'Inbox', 'WPSchoolPress' ) );
-											$columnFirstTitle = __( 'From', 'WPSchoolPress' );
+											echo esc_html( __( 'Inbox', 'SchoolWeb' ) );
+											$columnFirstTitle = __( 'From', 'SchoolWeb' );
 										} else if(isset( $_REQUEST['tab']) && $_REQUEST['tab'] == 'sentbox') {
-											echo esc_html( __( 'Sent Item', 'WPSchoolPress' ) );
-											$columnFirstTitle = __( 'To', 'WPSchoolPress' );
+											echo esc_html( __( 'Sent Item', 'SchoolWeb' ) );
+											$columnFirstTitle = __( 'To', 'SchoolWeb' );
 										}	else if(isset( $_REQUEST['tab']) && $_REQUEST['tab'] == 'trash') {
-											echo esc_html( __( 'Trash', 'WPSchoolPress' ) );
-											$columnFirstTitle = __( 'To', 'WPSchoolPress' );
+											echo esc_html( __( 'Trash', 'SchoolWeb' ) );
+											$columnFirstTitle = __( 'To', 'SchoolWeb' );
 										}									
 									?> </h2>
 								<div class="col-md-12 table-responsive">
@@ -152,7 +152,7 @@ wpsp_header();
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Receiver</label>
                                             <div class="col-sm-6" id="receiverUsers">
-												<?php  if( $current_user_role=='administrator' || $current_user_role=='teacher' ) { ?>
+												<?php  if( $current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher' ) { ?>
                                                 <select name="r_id[]" multiple id="r_id" class="form-control">													 
                                                         <?php
                                                         $class_table 	=	$wpdb->prefix . "wpsp_class";

@@ -22,16 +22,16 @@
 		$payprotitle		=	!$paymentproversion['status'] && isset( $paymentproversion['message'] )? $paymentproversion['message']	: '';
 		$payprodisable		=	!$paymentproversion['status'] ? 'disabled="disabled"'	: '';
 		
-		if($current_user_role=='administrator') {
+		if($current_user_role=='administrator' || $current_user_role=='editor' ) {
 			$ex_field_tbl	=	$wpdb->prefix."wpsp_mark_fields";
 			$subject_tbl	=	$wpdb->prefix."wpsp_subject";
 			$class_tbl		=	$wpdb->prefix."wpsp_class";
 		?>
 		<section class="content-header">
-			<h1><?php _e( 'Settings', 'WPSchoolPress'); ?> </h1>
+			<h1><?php _e( 'Settings', 'SchoolWeb'); ?> </h1>
 			<ol class="breadcrumb">
-				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'WPSchoolPress'); ?></a></li>
-				<li><a href="<?php echo site_url('sch-settings'); ?>"><?php _e( 'Settings', 'WPSchoolPress'); ?> </a></li>
+				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'SchoolWeb'); ?></a></li>
+				<li><a href="<?php echo site_url('sch-settings'); ?>"><?php _e( 'Settings', 'SchoolWeb'); ?> </a></li>
 			</ol>
 		</section>
 		<section class="content">
@@ -40,7 +40,7 @@
 					<div class="box box-info">
 								<div class="box-header ui-sortable-handle" style="cursor: move;">
                     <i class="fa fa-graph"></i>
-                    <h3 class="box-title"><i class="fa fa-list-ol" aria-hidden="true"></i>&nbsp; <?php _e( 'Sub-Division Fields', 'WPSchoolPress'); ?> </h3>
+                    <h3 class="box-title"><i class="fa fa-list-ol" aria-hidden="true"></i>&nbsp; <?php _e( 'Sub-Division Fields', 'SchoolWeb'); ?> </h3>
                     <!-- tools box -->
 
                     <!-- /. tools -->
@@ -55,10 +55,10 @@
 									?>
 									<div class="col-md-12 col-lg-12">
 										<div class="col-md-6">
-											<label><?php _e( 'Class:', 'WPSchoolPress'); ?></label> <?php echo $fields[0]->c_name;?>
+											<label><?php _e( 'Class:', 'SchoolWeb'); ?></label> <?php echo $fields[0]->c_name;?>
 										</div>
 										<div class="col-md-6">
-											<label><?php _e( 'Subject:', 'WPSchoolPress'); ?></label> <?php echo $fields[0]->sub_name;?>
+											<label><?php _e( 'Subject:', 'SchoolWeb'); ?></label> <?php echo $fields[0]->sub_name;?>
 										</div>
 									</div>
 									<div class="form-horizontal">
@@ -77,12 +77,12 @@
 											  </div>
 											<?php $sno++; }
 										}else{
-											echo "<div class='col-md-8 col-md-offset-4'>".__( 'No data retrived!', 'WPSchoolPress')."</div>";
+											echo "<div class='col-md-8 col-md-offset-4'>".__( 'No data retrived!', 'SchoolWeb')."</div>";
 										}
 									?>
 									</div>
 									<div class="col-md-6">
-										<a href="?sc=subField" class="btn btn-primary"><?php _e( 'Back', 'WPSchoolPress'); ?></a>
+										<a href="?sc=subField" class="btn btn-primary"><?php _e( 'Back', 'SchoolWeb'); ?></a>
 									</div>
 									
 								<?php }else{
@@ -101,10 +101,10 @@
 								<thead>
 									<tr>
 										<th class="nosort">#</th>
-										<th><?php _e( 'Class', 'WPSchoolPress'); ?></th>
-										<th><?php _e( 'Subject', 'WPSchoolPress'); ?></th>
-										<th><?php _e( 'Fields', 'WPSchoolPress'); ?></th>
-										<th class="nosort"><?php _e( 'Action', 'WPSchoolPress'); ?></th>
+										<th><?php _e( 'Class', 'SchoolWeb'); ?></th>
+										<th><?php _e( 'Subject', 'SchoolWeb'); ?></th>
+										<th><?php _e( 'Fields', 'SchoolWeb'); ?></th>
+										<th class="nosort"><?php _e( 'Action', 'SchoolWeb'); ?></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -121,10 +121,10 @@
 								<tfoot>
 								  <tr>
 									<th>#</th>
-									<th><?php _e( 'Class', 'WPSchoolPress'); ?></th>
-									<th><?php _e( 'Subject', 'WPSchoolPress'); ?></th>
-									<th><?php _e( 'Fields', 'WPSchoolPress'); ?></th>
-									<th><?php _e( 'Action', 'WPSchoolPress'); ?></th>
+									<th><?php _e( 'Class', 'SchoolWeb'); ?></th>
+									<th><?php _e( 'Subject', 'SchoolWeb'); ?></th>
+									<th><?php _e( 'Fields', 'SchoolWeb'); ?></th>
+									<th><?php _e( 'Action', 'SchoolWeb'); ?></th>
 								  </tr>
 								</tfoot>
 							  </table></div>
@@ -185,13 +185,13 @@
 								if(isset($_POST['AddHours'])){
 									$workinghour_table	=	$wpdb->prefix."wpsp_workinghours";
 									if( empty( $_POST['hname'] ) || empty( $_POST['hstart'] ) || empty( $_POST['hend'] ) || $_POST['htype']=='' ) {
-										echo "<div class='col-md-12'><div class='alert alert-danger'>".__( 'Please fill all values.', 'WPSchoolPress')."</div></div>";
+										echo "<div class='col-md-12'><div class='alert alert-danger'>".__( 'Please fill all values.', 'SchoolWeb')."</div></div>";
 									} elseif( strtotime( $_POST['hend'] ) <= strtotime( $_POST['hstart'] ) ) {
-										echo "<div class='col-md-12'><div class='alert alert-danger'>".__( 'Invalid Class Time.', 'WPSchoolPress')."</div></div>";
+										echo "<div class='col-md-12'><div class='alert alert-danger'>".__( 'Invalid Class Time.', 'SchoolWeb')."</div></div>";
 									} else {
 										$workinghour_namelist = $wpdb->get_var( $wpdb->prepare( "SELECT count( * ) AS total_hour FROM $workinghour_table WHERE HOUR = %s", $_POST['hname'] ) );
 										if( $workinghour_namelist > 0 ) {
-											echo "<div class='col-md-12'><div class='alert alert-danger'>".__( 'Class Hour Name Already exists.', 'WPSchoolPress')."</div></div>";
+											echo "<div class='col-md-12'><div class='alert alert-danger'>".__( 'Class Hour Name Already exists.', 'SchoolWeb')."</div></div>";
 										} else {											
 											$ins=$wpdb->insert( $workinghour_table,
 															array(	'hour'		=>	$_POST['hname'],

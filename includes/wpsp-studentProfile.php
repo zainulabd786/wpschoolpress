@@ -6,7 +6,7 @@ $transport_table=	$wpdb->prefix."wpsp_transport";
 $sid			=	$_GET['id'];
 $edit			=	true;
 $msg			=	'';
-if( isset($_GET['edit']) && $_GET['edit']=='true' && ($current_user_role=='administrator' || $current_user_role=='teacher' ) && (isset( $_POST['sedit_nonce'] ) && wp_verify_nonce( $_POST['sedit_nonce'], 'StudentEdit' ) ) )  {
+if( isset($_GET['edit']) && $_GET['edit']=='true' && ($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher' ) && (isset( $_POST['sedit_nonce'] ) && wp_verify_nonce( $_POST['sedit_nonce'], 'StudentEdit' ) ) )  {
 	ob_start();
 	wpsp_UpdateStudent();
 	$msg = ob_get_clean();

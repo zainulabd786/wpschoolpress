@@ -19,7 +19,7 @@
 						<div class="col-md-12 col-lg-12 col-sm-12" style="padding:0;display: inline-block; margin-bottom:10px">
 							<div class="col-md-4 col-sm-12 col-lg-4 float-left">
 								<form name="StudentClass" id="StudentClass" method="post" action="" class="class-filter">
-									<label><?php _e( 'Select Class Name', 'WPSchoolPress' ); ?></label>
+									<label><?php _e( 'Select Class Name', 'SchoolWeb' ); ?></label>
 									<select name="ClassID" id="ClassID" class="form-control">
 										<?php
 										$sel_classid	=	isset( $_POST['ClassID'] ) ? $_POST['ClassID'] : '';
@@ -29,8 +29,8 @@
 										?>
 											<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
 										<?php } ?>
-										 <?php if ( in_array( 'administrator', $role ) ) { ?>
-											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'WPSchoolPress' ); ?></option>
+										 <?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
+											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>><?php _e( 'All', 'SchoolWeb' ); ?></option>
 										 <?php } ?>
 									</select>
 								</form>
@@ -59,7 +59,7 @@
 								<thead>
 									<tr>
 										<th class="nosort">
-										<?php if ( in_array( 'administrator', $role ) ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
+										<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
 										</th>
 										<th>Slip Number</th>
 										<th>Date & Time</th>
@@ -128,7 +128,7 @@
 									?>
 										<tr>
 											<td>
-											<?php if ( in_array( 'administrator', $role ) ) { ?>
+											<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 												<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $stinfo->wp_usr_id;?>">
 											<?php }else echo $key; ?>
 											</td>
@@ -169,7 +169,7 @@
 								</tbody>
 								<tfoot>
 								  <tr>
-									<th><?php if ( in_array( 'administrator', $role ) ) { }
+									<th><?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { }
 										else echo 'Sr. No'; ?></th>
 									<th>Slip No.</th>
 									<th>Date & Time</th>

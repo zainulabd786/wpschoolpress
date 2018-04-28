@@ -4,7 +4,7 @@ $role			=	$current_user->roles;
 $cuserId		=	$current_user->ID;
 $class_table	=	$wpdb->prefix."wpsp_class";	
 									
-if ( in_array( 'administrator', $role ) ) {
+if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) {
 	$queryclass	=	"select cid,c_name from $class_table";
 } else if( in_array( 'teacher', $role ) ) {
 	$queryclass	=	"select cid,c_name from $class_table where teacher_id=$cuserId";
@@ -60,8 +60,8 @@ $classes		=	$wpdb->get_results( $queryclass );?>
 										<?php foreach( $classes as $class ) { ?>
 											<option value="<?php echo $class->cid;?>"><?php echo $class->c_name; ?></option>
 										<?php	} ?>
-										<option value="0"><?php _e( 'Unassigned Students', 'WPSchoolPress' ); ?></option>
-										<?php if ( in_array( 'administrator', $role ) ) { ?>
+										<option value="0"><?php _e( 'Unassigned Students', 'SchoolWeb' ); ?></option>
+										<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 											<option value="other" class="class-other">Other</option>
 										<?php } ?>	
 									</select>											

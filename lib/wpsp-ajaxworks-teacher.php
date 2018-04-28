@@ -257,7 +257,7 @@ function wpsp_UpdateTeacher(){
 		$country		=	esc_attr($_POST['country']);
 		$city		    =	esc_attr($_POST['city']);
 	    $zipcode 		=	esc_attr($_POST['zipcode']);	
-		if( wpsp_CurrentUserRole()=='administrator' ) {
+		if( wpsp_CurrentUserRole()=='administrator' || wpsp_CurrentUserRole()=='editor'  ) {
 			$empcode=esc_attr($_POST['Empcode']);
 			$wpsp_tch_upd = $wpdb->update( $wpsp_teacher_table , array(						
 						'first_name' =>  $firstname,

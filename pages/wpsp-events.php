@@ -14,7 +14,7 @@ wpsp_header();
 
 		wpsp_body_start();
 
-		if($current_user_role=='administrator' || $current_user_role=='teacher')
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher')
 
 		{
 

@@ -538,7 +538,7 @@ function wpsp_getStudentsList()
 	if( !empty( $startdate ) && !empty( $enddate ) ) {
 		if( $startdate<= $selected && $enddate>=$selected ) { }
 		else {
-			$msg	=	__( sprintf( 'You have selected wrong date, your class startdate is %s and enddate %s',$check_date->c_sdate, $check_date->c_edate ), 'WPSchoolPress' );
+			$msg	=	__( sprintf( 'You have selected wrong date, your class startdate is %s and enddate %s',$check_date->c_sdate, $check_date->c_edate ), 'SchoolWeb' );
 			$response['status']	= 0;
 			$response['msg']	= $msg;
 			echo json_encode( $response );
@@ -547,11 +547,11 @@ function wpsp_getStudentsList()
 	}	
     $check_attend	=	$wpdb->get_row( "SELECT ab.absents,ab.aid,cls.c_name FROM $att_table ab LEFT JOIN $class_table cls ON cls.cid=ab.class_id  WHERE ab.class_id=$classid and ab.date = '$entry_date'" );
     $ex_absents		=	array();
-    $title			=	__( 'New Attendance Entry', 'WPSchoolPress' );
+    $title			=	__( 'New Attendance Entry', 'SchoolWeb' );
     $warning		=	$nil	=	'';
     if( $check_attend ) {
-        $title		= __( 'Update Attendance Entry', 'WPSchoolPress' );
-        $warning	= __( 'Already attendance were entered!', 'WPSchoolPress' );
+        $title		= __( 'Update Attendance Entry', 'SchoolWeb' );
+        $warning	= __( 'Already attendance were entered!', 'SchoolWeb' );
         if( $check_attend->absents !='Nil' ) {
             $abs	=	json_decode($check_attend->absents);
             foreach( $abs as $ab ) {
@@ -1417,7 +1417,7 @@ function wpsp_ListEvent(){
 	$start=$_POST['start'];
 	$end=$_POST['end'];
 	$event_table=$wpdb->prefix."wpsp_events";
-	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='teacher') {
+	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  || $current_user->roles[0]=='teacher') {
 		$event_list = $wpdb->get_results("select * from $event_table where start >= '$start' and end <='$end'");
 	}else{
 		$event_list = $wpdb->get_results("select * from $event_table where type='0' and (start >= '$start' and end <='$end')");
@@ -1533,14 +1533,14 @@ function wpsp_GetLeaveDays(){
     $ldays=$wpdb->get_results("select * from $leave_table where class_id='$cid' and leave_date IS NOT NULL");
     $sno=1;
     echo "<table class='table table-bordered'><thead><tr><th>#</th><th>Date</th><th>Description</th>";
-    if($current_user->roles[0]=='administrator' && $current_user->roles[0]=='teacher') {
+    if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  && $current_user->roles[0]=='teacher') {
         echo "<th>Action</th>";
     }
     echo "</tr></thead><tbody>";
     foreach($ldays as $lday){
         $date=wpsp_ViewDate($lday->leave_date);
         echo "<tr><td>$sno</td><td>$date</td><td>$lday->description</td>";
-        if($current_user->roles[0]=='administrator' && $current_user->roles[0]=='teacher') {
+        if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  && $current_user->roles[0]=='teacher') {
             echo "<td><span class='text-blue pointer dateDelete' data-id=$lday->id>Delete</td>";
         }
         echo "</tr>";
@@ -2092,11 +2092,11 @@ function wpsp_getTeachersList() {
 		$teachers					=	$wpdb->get_results("select * from $teacher_table");
 		$check_attend 				= 	$wpdb->get_results("SELECT *FROM $teacher_attendance_table WHERE leave_date = '$entry_date'");
 		$reasonList	=	$attendanceID	=	$teacherID	=	array();
-		$title		=	_( 'New Attendance Entry', 'WPSchoolPress');		
+		$title		=	_( 'New Attendance Entry', 'SchoolWeb');		
 		$allPresent	=	0;
 		if( $check_attend ) {			
-			$title		= 	__( 'Update Attendance Entry', 'WPSchoolPress');
-			$warning	=	__( 'Attendance already were entered!', 'WPSchoolPress');
+			$title		= 	__( 'Update Attendance Entry', 'SchoolWeb');
+			$warning	=	__( 'Attendance already were entered!', 'SchoolWeb');
 			foreach( $check_attend as $key => $value ) {				
 				$attendanceID[]	= $value->id;				
 				if( $value->status == 'Nil' )
@@ -2263,15 +2263,15 @@ function wpsp_getNotifyInfo(){
 		$notify_table	=	$wpdb->prefix . "wpsp_notification";
 		$notifyID		=	$_POST['notifyid'];
 		$notifyInfo		= 	$wpdb->get_row( "Select *from $notify_table where nid= $notifyID");
-		$receiverTypeList = array( 'all'  => __( 'All Users', 'WPSchoolPress' ), 
-								'alls' => __( 'All Students', 'WPSchoolPress'),
-							    'allp' => __( 'All Parents', 'WPSchoolPress'),
-							    'allt' => __( 'All Teachers', 'WPSchoolPress' ) );
-		$notifyTypeList	=	array( 0 	=>	__( 'All', 'WPSchoolPress') , 
-							   1 	=>	__( 'Email', 'WPSchoolPress'), 
-							   2	=>	__( 'SMS', 'WPSchoolPress'), 
-							   3	=> 	__( 'Web Notification', 'WPSchoolPress'),
-							   4	=>	__( 'Push Notification (Android & IOS)', 'WPSchoolPress') );
+		$receiverTypeList = array( 'all'  => __( 'All Users', 'SchoolWeb' ), 
+								'alls' => __( 'All Students', 'SchoolWeb'),
+							    'allp' => __( 'All Parents', 'SchoolWeb'),
+							    'allt' => __( 'All Teachers', 'SchoolWeb' ) );
+		$notifyTypeList	=	array( 0 	=>	__( 'All', 'SchoolWeb') , 
+							   1 	=>	__( 'Email', 'SchoolWeb'), 
+							   2	=>	__( 'SMS', 'SchoolWeb'), 
+							   3	=> 	__( 'Web Notification', 'SchoolWeb'),
+							   4	=>	__( 'Push Notification (Android & IOS)', 'SchoolWeb') );
 		if(!empty( $notifyInfo ) ) {
 			$receiver	=	isset( $receiverTypeList[$notifyInfo->receiver] ) ? $receiverTypeList[$notifyInfo->receiver] :  $notifyInfo->receiver;
 			$type		=	isset( $notifyTypeList[$notifyInfo->type] ) ? $notifyTypeList[$notifyInfo->type] : $notifyInfo->type;
@@ -2288,27 +2288,27 @@ function wpsp_getNotifyInfo(){
 											<table class='table table-user-information'>
 												<tbody>
 													<tr>
-														<td class='bold' width='13%'>".__('Notification ID', 'WPSchoolPress')."</td>
+														<td class='bold' width='13%'>".__('Notification ID', 'SchoolWeb')."</td>
 														<td> $notifyInfo->nid </td>
 													</tr>
 													<tr>
-														<td class='bold'>".__( 'Name', 'WPSchoolPress')."</td>
+														<td class='bold'>".__( 'Name', 'SchoolWeb')."</td>
 														<td> $notifyInfo->name </td>
 													</tr>
 													<tr>
-														<td class='bold'>".__( 'Description', 'WPSchoolPress')."</td>
+														<td class='bold'>".__( 'Description', 'SchoolWeb')."</td>
 														<td> $notifyInfo->description </td>
 													</tr>
 													<tr>
-														<td class='bold'>".__( 'Receiver', 'WPSchoolPress')."</td>
+														<td class='bold'>".__( 'Receiver', 'SchoolWeb')."</td>
 														<td> $receiver </td>
 													</tr>
 													<tr>
-														<td class='bold'>".__( 'Notify Type', 'WPSchoolPress')."</td>
+														<td class='bold'>".__( 'Notify Type', 'SchoolWeb')."</td>
 														<td> $type </td>
 													</tr>
 													<tr>
-														<td class='bold'>".__( 'Notify Date', 'WPSchoolPress')."</td>
+														<td class='bold'>".__( 'Notify Date', 'SchoolWeb')."</td>
 														<td> ".wpsp_ViewDate( $notifyInfo->date)."</td>
 													</tr>
 												</tbody>
@@ -2349,13 +2349,13 @@ function wpsp_changepassword() {
 			wp_set_auth_cookie($user_id);
 			do_action('wp_login', $loginusername);
 			wp_password_change_notification( $current_user );
-			$msg	=	__( 'Password Updated Successfully', 'WPSchoolPress' );
+			$msg	=	__( 'Password Updated Successfully', 'SchoolWeb' );
 			$status	=	1;
 		} else {
-			$msg	=	__( 'New Password and re-enter New Password Should be same', 'WPSchoolPress' );
+			$msg	=	__( 'New Password and re-enter New Password Should be same', 'SchoolWeb' );
 		}
 	} else {
-		$msg	=	__('Please enter correct old password', 'WPSchoolPress' );
+		$msg	=	__('Please enter correct old password', 'SchoolWeb' );
 	}
 	$response	=	array( 'status' => $status, 'msg' => $msg );
 	echo json_encode( $response );	
@@ -2378,7 +2378,7 @@ function wpsp_getStudentsAttendanceList() {
 		if( !empty( $startdate ) && !empty( $enddate ) ) {
 			if( $startdate<= $selected && $enddate>=$selected ) { }
 			else {
-				$msg	=	__( sprintf( 'You have selected wrong date, your class startdate is %s and enddate %s',$check_date->c_sdate, $check_date->c_edate ), 'WPSchoolPress' );
+				$msg	=	__( sprintf( 'You have selected wrong date, your class startdate is %s and enddate %s',$check_date->c_sdate, $check_date->c_edate ), 'SchoolWeb' );
 				$response['status']	= 0;
 				$response['msg']	= $msg;
 				echo json_encode( $response );
@@ -2389,11 +2389,11 @@ function wpsp_getStudentsAttendanceList() {
 		$attendanceList	=	'';
 		$absentList	=	array();
 		if( count( $leaveday ) > 0 ) {
-			$msg	=	__( '<span class="label label-danger">N/A</span> Not Applicable(Date is marked as leave)', 'WPSchoolPress' );
+			$msg	=	__( '<span class="label label-danger">N/A</span> Not Applicable(Date is marked as leave)', 'SchoolWeb' );
 		} else {
 			$attendance				=	$wpdb->get_row( "SELECT * from $att_table where date='$date' and class_id='$classID'", ARRAY_A );
 			if( empty( $attendance ) ) {
-				$msg	=	__( '<span class="label label-danger">N/E</span> No Attendance Entered Yet', 'WPSchoolPress' );
+				$msg	=	__( '<span class="label label-danger">N/E</span> No Attendance Entered Yet', 'SchoolWeb' );
 			} elseif( isset( $attendance['absents'] ) && $attendance['absents'] !='Nil' ) {
 				$attendanceList		= json_decode( $attendance['absents'] );
 				foreach( $attendanceList as $key => $value ) {					
@@ -2403,15 +2403,15 @@ function wpsp_getStudentsAttendanceList() {
 			$studentList	=	$wpdb->get_results( "SELECT CONCAT_WS(' ', s_fname, s_mname, s_lname ) AS full_name, s_rollno from $student_table where class_id='$classID'", ARRAY_A );
 			if( count( $studentList ) > 0 && empty( $msg ) ) {
 				ob_start();
-				echo '<table class="table"><tr><th>'.__( 'Roll Number', 'WPSchoolPress').'</th>
-							<th>'.__( 'Student Name','WPSchoolPress' ).'</th>
-							<th>'.__( 'Attendance', 'WPSchoolPress' ).'</th>
-							<th>'.__( 'Commment', 'WPSchoolPress' ).'</th>
+				echo '<table class="table"><tr><th>'.__( 'Roll Number', 'SchoolWeb').'</th>
+							<th>'.__( 'Student Name','SchoolWeb' ).'</th>
+							<th>'.__( 'Attendance', 'SchoolWeb' ).'</th>
+							<th>'.__( 'Commment', 'SchoolWeb' ).'</th>
 							</tr>';
 				foreach( $studentList as $key => $value ) {
 					 $userID		=	$value['s_rollno'];
 					 $userName		=	$value['full_name'];
-					 $sattendance	=	count( $absentList) >0 && array_key_exists( $userID, $absentList ) ? __( 'Absent', 'WPSchoolPress' ) : __( 'Present', 'WPSchoolPress' );					 
+					 $sattendance	=	count( $absentList) >0 && array_key_exists( $userID, $absentList ) ? __( 'Absent', 'SchoolWeb' ) : __( 'Present', 'SchoolWeb' );					 
 					 $commnet		=	isset( $absentList[$userID] ) ? stripslashes ( $absentList[$userID] ) : '';
 					 echo '<tr><td>'.$userID.'</td>
 								<td>'.$userName.'</td>
@@ -2422,10 +2422,10 @@ function wpsp_getStudentsAttendanceList() {
 				echo '</table>';
 				$msg	=	ob_get_clean();
 			} elseif( empty( $msg ) ) {
-				$msg	=	__( '<span class="label label-danger">No Students Available in this class</span>', 'WPSchoolPress' );
+				$msg	=	__( '<span class="label label-danger">No Students Available in this class</span>', 'SchoolWeb' );
 			}
 		}
-		$title =	'<br><h4>'.__( 'Attendance Overview', 'WPSchoolPress').'</h4>';		
+		$title =	'<br><h4>'.__( 'Attendance Overview', 'SchoolWeb').'</h4>';		
 		$response['status']	= 1;
 		$response['msg']	= $title.$msg;
 		echo json_encode( $response );		
@@ -2441,7 +2441,7 @@ function wpsp_listdashboardschedule(){
 	$student_table	=	$wpdb->prefix."wpsp_student";
 	$event_list		=	array();
 	//Event List
-	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='teacher') {
+	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  || $current_user->roles[0]=='teacher') {
 		$event_list = $wpdb->get_results("select start,end,title  from $event_table where start >= '$start' and end <='$end'", ARRAY_A );
 	}else{
 		$event_list = $wpdb->get_results("select start,end,title from $event_table where type='0' and (start >= '$start' and end <='$end')");
@@ -2460,7 +2460,7 @@ function wpsp_listdashboardschedule(){
 	//holiday
 	$leave_table	=	$wpdb->prefix."wpsp_leavedays";
 	$class_table	=	$wpdb->prefix."wpsp_class";
-	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='teacher') {
+	if($current_user->roles[0]=='administrator' || $current_user->roles[0]=='editor'  || $current_user->roles[0]=='teacher') {
 		$leaves=$wpdb->get_results("select c_name, description,leave_date from $leave_table l,$class_table c WHERE l.class_id=c.cid", ARRAY_A);
 	} else {
 		if( $current_user->roles[0]=='parent' ) {

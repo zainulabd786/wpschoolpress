@@ -8,7 +8,7 @@ wpsp_header();
 
 		$current_user_role=$current_user->roles[0];
 
-		if($current_user_role=='administrator' || $current_user_role=='teacher')
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher')
 
 		{
 

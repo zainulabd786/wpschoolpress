@@ -65,7 +65,7 @@ Chat->http://bootsnipp.com/snippets/featured/like-hangout-chat
 
 
 
-WPSchoolpress.com -> Reviews Style -> http://bootsnipp.com/snippets/featured/carousel-reviews-with-rating
+SchoolWeb.com -> Reviews Style -> http://bootsnipp.com/snippets/featured/carousel-reviews-with-rating
  
  
  * Check and restrict all files cannot be accessed directly.

@@ -18,19 +18,19 @@ wpsp_header();
 
 		
 
-		if($current_user_role=='administrator' || $current_user_role=='teacher') {			
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher') {			
 
 		?>
 
 		<section class="content-header">
 
-			<h1><?php _e( 'Teacher Attendance', 'WPSchoolPress'); ?></h1>
+			<h1><?php _e( 'Teacher Attendance', 'SchoolWeb'); ?></h1>
 
 			<ol class="breadcrumb">
 
-				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'WPSchoolPress'); ?></a></li>
+				<li><a href="<?php echo site_url('sch-dashboard'); ?> "><i class="fa fa-dashboard"></i><?php _e( 'Dashboard', 'SchoolWeb'); ?></a></li>
 
-				<li><a href="<?php echo site_url('sch-teacherattendance'); ?>"><?php _e( 'Teacher Attendance', 'WPSchoolPress'); ?></a></li>
+				<li><a href="<?php echo site_url('sch-teacherattendance'); ?>"><?php _e( 'Teacher Attendance', 'SchoolWeb'); ?></a></li>
 
 			</ol>
 
@@ -56,7 +56,7 @@ wpsp_header();
 
 									<div class="form-group">
 
-										<label class="control-label"><?php _e( 'Date', 'WPSchoolPress' ); ?> </label>
+										<label class="control-label"><?php _e( 'Date', 'SchoolWeb' ); ?> </label>
 
 										<div class="">
 
@@ -68,9 +68,9 @@ wpsp_header();
 
 									
 
-										<button id="AttendanceEnter" name="attendance" class="btn btn-primary"><?php _e( 'Add', 'WPSchoolPress'); ?></button>
+										<button id="AttendanceEnter" name="attendance" class="btn btn-primary"><?php _e( 'Add', 'SchoolWeb'); ?></button>
 
-										<button id="AttendanceView" name="attendanceview" class="btn btn-success"><?php _e( 'View', 'WPSchoolPress'); ?></button>
+										<button id="AttendanceView" name="attendanceview" class="btn btn-success"><?php _e( 'View', 'SchoolWeb'); ?></button>
 
 								
 

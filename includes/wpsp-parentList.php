@@ -3,15 +3,15 @@
 	  $proclass		=	!$proversion['status'] && isset( $proversion['class'] )? $proversion['class'] : '';
 	  $protitle		=	!$proversion['status'] && isset( $proversion['message'] )? $proversion['message']	: '';
 	  $prodisable	=	!$proversion['status'] ? 'disabled="disabled"'	: '';
-	  $parentFieldList =  array(	'p_fname'		=>	__('First Name', 'WPSchoolPress'),	
-									'p_mname'		=>	__('Middle Name', 'WPSchoolPress'),	
-									'p_lname'		=>	__('Last Name', 'WPSchoolPress'),
-									's_fname'		=>	__('Student Name', 'WPSchoolPress'),
-									'user_email'	=>	__('Parent Email ID', 'WPSchoolPress'),
-									'p_edu'			=>	__('Education', 'WPSchoolPress'),									
-									'p_gender'		=>	__('Gender', 'WPSchoolPress'),
-									'p_profession'	=>	__('Profession', 'WPSchoolPress'),
-									'p_bloodgrp'	=>	__('Blood Group', 'WPSchoolPress'),
+	  $parentFieldList =  array(	'p_fname'		=>	__('First Name', 'SchoolWeb'),	
+									'p_mname'		=>	__('Middle Name', 'SchoolWeb'),	
+									'p_lname'		=>	__('Last Name', 'SchoolWeb'),
+									's_fname'		=>	__('Student Name', 'SchoolWeb'),
+									'user_email'	=>	__('Parent Email ID', 'SchoolWeb'),
+									'p_edu'			=>	__('Education', 'SchoolWeb'),									
+									'p_gender'		=>	__('Gender', 'SchoolWeb'),
+									'p_profession'	=>	__('Profession', 'SchoolWeb'),
+									'p_bloodgrp'	=>	__('Blood Group', 'SchoolWeb'),
 							);
 $sel_classid	=	isset( $_POST['ClassID'] ) ? $_POST['ClassID'] : '';										
 $class_table	=	$wpdb->prefix."wpsp_class";
@@ -42,12 +42,12 @@ $sel_class		=	$wpdb->get_results( $classQuery );
 						<div class="col-md-12 col-lg-12 col-sm-12" style="padding:0;margin-bottom:10px">
 							<div class="col-md-4 col-sm-12 col-lg-4 float-left" style="padding:0;">
 								<form name="ClassForm" id="ClassForm" method="post" action="" class="class-filter">
-									<label><?php _e( 'Select Class Name', 'WPSchoolPress' );?></label>
+									<label><?php _e( 'Select Class Name', 'SchoolWeb' );?></label>
 									<select name="ClassID" id="ClassID" class="form-control">
 										<?php										
 										foreach( $sel_class as $classes ) { ?>
 											<option value="<?php echo $classes->cid;?>" <?php if($sel_classid==$classes->cid) echo "selected"; ?>><?php echo $classes->c_name;?></option>
-										<?php } if($current_user_role=='administrator' ) { ?>											
+										<?php } if($current_user_role=='administrator' || $current_user_role=='editor'  ) { ?>											
 											<option value="all" <?php if($sel_classid=='all') echo "selected"; ?>>All</option>
 										<?php } ?>	
 									</select>

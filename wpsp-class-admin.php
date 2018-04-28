@@ -7,7 +7,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * Handles generic Admin functionality.
  *
- * @package WPSchoolPress
+ * @package SchoolWeb
  * @since 2.0.0
  */
 class Wpsp_Admin{
@@ -18,17 +18,17 @@ class Wpsp_Admin{
 	}	
 	/*
 	* Add menu for manage license code
-	* @package WPSchoolPress
+	* @package SchoolWeb
 	* @since 2.0.0
 	*/
 	function wpsp_admin_menu(){
-		add_menu_page( __( 'WPSchoolPress', 'WPSchoolPress'), __( 'School Web', 'WPSchoolPress' ), 'manage_options', 'WPSchoolPress' , array( $this, 'wpsp_admin_details'), WPSP_PLUGIN_URL. 'img/favicon.png');
+		add_menu_page( __( 'SchoolWeb', 'SchoolWeb'), __( 'School Web', 'SchoolWeb' ), 'manage_options', 'SchoolWeb' , array( $this, 'wpsp_admin_details'), WPSP_PLUGIN_URL. 'img/favicon.png');
 	}
 
 	
 	/*
 	* Call html of purchase code validation and contact
-	* @package WPSchoolPress
+	* @package SchoolWeb
 	* @since 2.0.0
 	*/
 	function wpsp_admin_details() {
@@ -61,11 +61,11 @@ class Wpsp_Admin{
 
 	/*
 	* Add required css and js for purchase code validation page
-	* @package WPSchoolPress
+	* @package SchoolWeb
 	* @since 2.0.0
 	*/
 	function wpsp_add_admin_scripts( $hook ) {
-		if(	$hook == 'toplevel_page_WPSchoolPress'	) {
+		if(	$hook == 'toplevel_page_SchoolWeb'	) {
 			wp_register_style( 'wpsp_wp_admin_bootstrap', WPSP_PLUGIN_URL. 'css/bootstrap.min.css', false, '1.0.0' );
 			wp_register_style( 'wpsp_wp_admin_css', WPSP_PLUGIN_URL . 'css/wpadmin.css', false, '1.0.0' );
 		   
@@ -77,7 +77,7 @@ class Wpsp_Admin{
 	
 	/*
 	* Add pages in menu default
-	* @package WPSchoolPress
+	* @package SchoolWeb
 	* @since 2.0.0
 	*/
 	function wpsp_add_adminbar() {
