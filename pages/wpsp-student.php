@@ -211,7 +211,7 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 																							<tr id='<?php echo $due_fee->id; ?>'>
 																								<td><?php echo $fees_type ?></td>
 																								<td><?php echo "<i class='fa fa-inr'></i>".number_format($due_fee->amount)."/-"; ?></td>
-																								<td><?php echo $months_array[$due_fee->month]; ?></td>
+																								<td><?php echo $months_array[($due_fee->month>12)?$due_fee->month-12:$due_fee->month]; ?></td>
 																								<td><?php echo $due_fee->session; ?></td>
 																							</tr>
 																						<?php } 

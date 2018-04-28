@@ -2835,6 +2835,11 @@ function wpsp_Import_Dummy_contents() {
 		$exp_transport_chg = $_POST['exptransportChg'];
 		$exp_annual_chg = $_POST['expannualChg'];
 		$exp_recreation_chg = $_POST['exprecreationChg'];
+		$due_adm = $exp_admission_fees - $admission_fees;
+		$due_ttn = $exp_tution_fees - $tution_fees;
+		$due_trn = $exp_transport_chg - $transport_chg;
+		$due_ann = $exp_annual_chg - $annual_chg;
+		$due_rec = $exp_recreation_chg - $recreation_chg;
 		$session = $_POST["session"];
 		$concession = $_POST['concession']/$num_months;
 		$mop = $_POST['mop'];
@@ -2880,7 +2885,12 @@ function wpsp_Import_Dummy_contents() {
 				'rec' => $recreation_chg,
 				'concession' => $concession*$num_months,
 				'mop' => $mop,
-				'pno' => $pno
+				'pno' => $pno,
+				'due_adm' => $due_adm,
+				'due_ttn' => $due_ttn,
+				'due_trn' => $due_trn,
+				'due_ann' => $due_ann,
+				'due_rec' => $due_rec
 		);
 		$mob_no = $wpdb->get_results("SELECT s_phone FROM $student_table WHERE wp_usr_id='$uid'");
 		if(!empty($mob_no)){
@@ -3539,7 +3549,8 @@ function wpsp_Import_Dummy_contents() {
 		$settings_table = $wpdb->prefix."wpsp_settings";
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$transport_table = $wpdb->prefix."wpsp_transport";
-		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, c.c_name, DATE(d.date_time) AS date, a.concession, a.mop, a.pno, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND (IF(b.transport > 0, b.route_id=e.id, b.route_id=0)) LIMIT 1");
+		$dues_table = $wpdb->prefix."wpsp_fees_dues";
+		$receipts = $wpdb->get_results("SELECT a.*, b.s_regno, b.s_fname, b.s_mname, b.s_lname, b.s_phone, b.class_id, b.p_fname, b.p_mname, b.p_lname, b.wp_usr_id, c.c_name, DATE(d.date_time) AS date, e.route_fees FROM $receipts_table a, $student_table b, $class_table c, $records_table d, $transport_table e WHERE b.wp_usr_id=a.uid AND c.cid=b.class_id AND a.slip_no='$id' AND d.slip_no=a.slip_no AND (IF(b.transport > 0, b.route_id=e.id, b.route_id=0)) LIMIT 1");
 		foreach ($receipts as $slip) {
 			$student_full_name = $slip->s_fname." ".$slip->s_mname." ".$slip->s_lname;
 			$father_full_name = $slip->p_fname." ".$slip->p_mname." ".$slip->p_lname; 
@@ -3554,11 +3565,16 @@ function wpsp_Import_Dummy_contents() {
 			 	$exp_rec = $exp_amt->recreation_chg;
 			 }
 			$exp_trn = $slip->route_fees * $num_months_trn;
-			$due_adm = $exp_adm - $slip->adm;
+			/*$due_adm = $exp_adm - $slip->adm;
 			$due_ttn = $exp_ttn - $slip->ttn;
 			$due_trn = $exp_trn - $slip->trans;
 			$due_ann = $exp_ann - $slip->ann;
-			$due_rec = $exp_rec - $slip->rec;
+			$due_rec = $exp_rec - $slip->rec;*/
+			$due_adm = $slip->due_adm;
+			$due_ttn = $slip->due_ttn;
+			$due_trn = $slip->due_trn;
+			$due_ann = $slip->due_ann;
+			$due_rec = $slip->due_rec;
 			if(!empty($slip->adm)) $total_amt += $exp_adm;
 			if(!empty($slip->ttn)) $total_amt += $exp_ttn;
 			if(!empty($slip->trans)) $total_amt += $exp_trn;
@@ -3648,12 +3664,12 @@ function wpsp_Import_Dummy_contents() {
 									<div class="blank b4">
 										<div class="sb1">
 											<strong>From Month</strong>
-											<div><?php echo $months_array[$slip->from_ttn]; ?></div>
+											<div><?php echo $months_array[($slip->from_ttn>12)?$slip->from_ttn-12:$slip->from_ttn]; ?></div>
 										</div>
 										<div class="sb2">
 											<strong>To Month</strong>
 										
-											<div><?php echo $months_array[$slip->to_ttn]; ?></div>
+											<div><?php echo $months_array[($slip->to_ttn>12)?$slip->to_ttn-12:$slip->to_ttn]; ?></div>
 										</div>
 									</div>
 									<div class="blank b5">

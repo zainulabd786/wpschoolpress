@@ -192,7 +192,7 @@
 		}
 
 		if(isset($_GET['payment_status']) && $_GET['payment_status'] == "payment_thankyou_page"){
-			//echo "successful";
+			$due_adm = $due_ttn = $due_trn = $due_ann = $due_rec = 0;
 			include("instamojo/instamojo.php");
 			$key = "test_ea87442294656deeb00d38764f4";
 			$auth = "test_4d9cb6f667a20e243cfe20e8c39";
@@ -233,7 +233,12 @@
 						'rec' => $rec_f,
 						'concession' => 0,
 						'mop' => $mop,
-						'pno' => $payment_id
+						'pno' => $payment_id,
+						'due_adm' => $due_adm,
+						'due_ttn' => $due_ttn,
+						'due_trn' => $due_trn,
+						'due_ann' => $due_ann,
+						'due_rec' => $due_rec
 					);
 
 					$fees_type_arr = "";

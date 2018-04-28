@@ -321,7 +321,12 @@
 	  `rec` int(11),
 	  `concession` int(11),
 	  `mop` varchar(20),
-	  `pno` varchar(50)
+	  `pno` varchar(50),
+	  `due_adm` int(11),
+	  `due_ttn` int(11),
+	  `due_trn` int(11),
+	  `due_ann` int(11),
+	  `due_rec` int(11)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_receipts);
 
