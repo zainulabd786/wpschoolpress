@@ -179,7 +179,8 @@
 			    exit();
 			}
 			catch (Exception $e) {
-			    print('Error: ' . $e->getMessage());
+			    //print('Error: ' . $e->getMessage());
+			    echo "<div class='alert alert-danger'>Payment Failed! " . $e->getMessage()."</div>";
 			}
 		}
 
