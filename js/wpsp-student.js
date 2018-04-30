@@ -156,6 +156,8 @@ $(document).ready(function () {
 			s_phone: {
 				required: false,
 				number: true,
+                minlength: 10,
+                maxlength: 10
 			},	
         },
         messages: {
@@ -174,6 +176,11 @@ $(document).ready(function () {
                 required: "Please provide a password",
                 minlength: "Password must be at least 5 characters long",
                 equalTo: "Please enter the same password as above"
+            },
+            s_phone: {
+                required: "Please provide Mobile Number",
+                minlength: "Mobile Number should not be less than 10 digits",
+                maxlength: "Mobile Number should not be greater than 10 digits"
             },
             Email: "Please enter a valid email address",
         },
