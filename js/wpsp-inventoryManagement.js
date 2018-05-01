@@ -7,4 +7,12 @@ $(document).ready(function() {
   	$("body").on('change', ".add-item-inp", function() {
     	$.post(ajax_url, { action: "add_item_to_inv_master_table", item: $(this).val() }, function(data){ $(".items-dropdown select").html(data); });
   	});
+
+  	$(".submit-btn").click(function(){
+  		$.confirm({
+  			title: 'Sorry!',
+  			content: 'This Module is Still Incomplete',
+		    theme: 'supervan' // 'material', 'bootstrap'
+		});
+  	});
 });

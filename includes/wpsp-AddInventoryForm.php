@@ -64,7 +64,7 @@
 								</tr>
 
 								<tr>
-									<td colspan="2"><button type="button" class="btn btn-primary">Submit</button></td>
+									<td colspan="2"><button type="button" class="btn btn-primary submit-btn">Submit</button></td>
 								</tr>
 								
 							</table>
