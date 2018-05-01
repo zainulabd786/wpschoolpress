@@ -22,8 +22,13 @@
 									<td>Item:</td>
 									<td class="items-dropdown">
 										<a href="#" class="add-item-popup">Add item</a>
-										<select class="form-control">
-											<option value="">Select Item</option>
+										<select class="form-control"> <?php
+											$master_table = $wpdb->prefix."wpsp_inventory_master";
+											$result = $wpdb->get_results("SELECT * FROM $master_table"); ?>
+											<option value="">Select Item</option><?php
+											foreach ($result as $value) { ?>
+												<option value="<?php echo $value->master_id; ?>"><?php echo $value->item_name; ?></option> <?php
+											} ?>
 										</select>
 									</td>
 								</tr>
