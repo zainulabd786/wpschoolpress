@@ -706,7 +706,18 @@ input:checked + .slider:before {
 
 
 
-
+.add-inv-from table, .add-inv-from table textarea{
+    width: 100%;
+}
+.add-inv-from table textarea{
+    height: 80px;
+}
+.add-inv-from table tr td{
+    padding: 10px;
+}
+.add-inv-from table tr td a, .add-inv-from table tr td button{
+    float: right;
+}
 
 
 

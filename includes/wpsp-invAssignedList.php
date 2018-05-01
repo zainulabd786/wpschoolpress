@@ -44,7 +44,6 @@
 										<th>Quantity</th>
 										<th>Assigned To</th>
 										<th>Session</th>
-										<th class="nosort">Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -59,7 +58,6 @@
 									<th>Quantity</th>
 									<th>Assigned To</th>
 									<th>Session</th>
-									<th>Action</th>
 								  </tr>
 								</tfoot>
 							  </table>
