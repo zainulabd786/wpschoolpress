@@ -3980,4 +3980,20 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function add_invm_item(){
+		global $wpdb;
+
+		$item_name = $_POST['item'];
+		$master_table = $wpdb->prefix."wpsp_inventory_master";
+		if($wpdb->insert($master_table, array( 'item_name' => $item_name ))){
+			$result = $wpdb->get_results("SELECT * FROM $master_table"); ?>
+			<option value="">UpdatedList loaded</option><?php
+			foreach ($result as $value) { ?>
+				<option value="<?php echo $value->master_id; ?>"><?php echo $value->item_name; ?></option> <?php
+			}
+		}
+
+		wp_die();
+	}
 ?>

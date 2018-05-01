@@ -20,7 +20,7 @@
 							<table>
 								<tr>
 									<td>Item:</td>
-									<td>
+									<td class="items-dropdown">
 										<a href="#" class="add-item-popup">Add item</a>
 										<select class="form-control">
 											<option value="">Select Item</option>
