@@ -178,7 +178,7 @@ function wpsp_sidebar()
   global $current_user, $wp_roles, $current_user_name;
   $current_user_role=$current_user->roles[0];
   $page=get_the_title();
-  $dashboard_page=$message_page=$student_page=$fees_page=$teacher_page=$parent_page=$class_page=$attendance_page=$subject_page=$mark_page=$exam_page=$event_page=$timetable_page=$import_page=$notify_page=$sms_page=$transport_page=$settings_page=$settings_general_page=$settings_wrkhours_page=$settings_subfield_page=$leave_page=$teacher_attendance_page=$settings_chgpw_page = $viewpayment= $addpayment =$payment_page_main= $fees_page=$settings_fees_page='';
+  $dashboard_page=$message_page=$student_page=$fees_page=$teacher_page=$parent_page=$class_page=$attendance_page=$subject_page=$mark_page=$exam_page=$event_page=$timetable_page=$import_page=$notify_page=$sms_page=$transport_page=$settings_page=$settings_general_page=$settings_wrkhours_page=$settings_subfield_page=$leave_page=$teacher_attendance_page=$settings_chgpw_page = $viewpayment= $addpayment =$payment_page_main= $fees_page=$settings_fees_page=$inventory_page='';
   switch( $page )
   {
     case 'Dashboard':
@@ -193,6 +193,9 @@ function wpsp_sidebar()
       break;
     case 'Fees Management':
       $fees_page="active";
+      break;
+    case 'Inventory Management':
+      $inventory_page="active";
       break;
     case 'Teacher':
       $teacher_page="active";
@@ -311,6 +314,14 @@ function wpsp_sidebar()
                     <a href='".site_url('sch-fee-man')."'>
                       <i class='fa fa-inr'></i>
                       <span>".__('Fees Management','SchoolWeb')."</span>
+                    </a>
+                  </li>";
+          }
+          if($current_user_role=='administrator' || $current_user_role=='editor' ) {  
+                 echo "<li class=".$inventory_page.' '.$bgFirstBlock.">
+                    <a href='".site_url('sch-inv-management')."'>
+                      <i class='fa fa-inr'></i>
+                      <span>".__('Inventory Management','SchoolWeb')."</span>
                     </a>
                   </li>";
           }

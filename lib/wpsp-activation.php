@@ -25,11 +25,12 @@
 	$change_password_page		=	array( 'slug' => 'sch-changepassword', 'title' =>'Change Password' );
 	$payment_page				=	array( 'slug' => 'sch-payment', 'title' =>'Payment' );
 	$fees_management_page       =   array( 'slug' => 'sch-fee-man', 'title' => 'Fees Management' );
+	$inventory_management_page 	=	array( 'slug' => 'sch-inv-management', 'title' => 'Inventory Management');
 	
  	$teacher_found	=	$student_found	=	$parent_found	=	$class_found	=	$dashboard_found	=	
 	$messages_found	=	$exams_found	=	$attendance_found	=	$timetable_found	=	$events_found	=
 	$leave_found	=	$subject_found	=	$settings_found	=	$transport_found	=	$marks_found	=
-	$sms_found	=	$notify_found =	$importhistory_found	=	$teacher_attendance_found = $change_password = $payment_found = $fm_found = 0;
+	$sms_found	=	$notify_found =	$importhistory_found	=	$teacher_attendance_found = $change_password = $payment_found = $fm_found = $inventory_found = 0;
 	
 	$pages = get_pages();
 	foreach ($pages as $page) { 
@@ -55,8 +56,9 @@
 			case 'sch-importhistory' : 	$importhistory_found='1';		break;
             case 'sch-teacherattendance' : 	$teacher_attendance_found='1';		break;
             case 'sch-changepassword' : 	$change_password='1';		break;
-            case 'sch-payment' 		: 		$payment_found='1';		break;
-            case 'sch-fee-man': 			$fm_found = '1';  break;
+            case 'sch-payment' 	: 			$payment_found='1';			break;
+            case 'sch-fee-man': 			$fm_found = '1';  			break;
+            case 'sch-inv-management': 		$inventory_found = '1';  	break;
 			default:						$no_page;			
 		}		
 	}
@@ -77,6 +79,16 @@
 			'post_name'		=> $fees_management_page['slug'],
             'post_status'	=>	'publish',		
 			'post_excerpt' 	=> 'Fees Management'
+        ));
+    }
+
+    if( $inventory_found !='1' ){
+        $page_id = wp_insert_post( array(
+            'post_title'	=>	$inventory_management_page['title'],
+			'post_type' 	=>	'page',
+			'post_name'		=> 	$inventory_management_page['slug'],
+            'post_status'	=>	'publish',		
+			'post_excerpt' 	=> 	'Inventory Management'
         ));
     }
     
@@ -280,6 +292,39 @@
 	$fees_dues			  	  = $wpdb->prefix . 'wpsp_fees_dues';
 	$fees_payment_record	  = $wpdb->prefix . 'wpsp_fees_payment_record';
 	$fees_receipts			  = $wpdb->prefix . 'wpsp_fees_receipts';
+	$inventory_master		  = $wpdb->prefix . 'wpsp_inventory_master';
+	$inventory_items		  = $wpdb->prefix . 'wpsp_inventory_items';
+	$assigned_inventory		  = $wpdb->prefix . 'wpsp_assigned_inventory';
+
+	$sql_inv_master_table = "CREATE TABLE IF NOT EXISTS $inventory_master  (
+	  `master_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	  `item_name` varchar(100)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+	dbDelta($sql_inv_master_table);
+
+	$sql_inv_items_table = "CREATE TABLE IF NOT EXISTS $inventory_items  (
+	  `item_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	  `master_id` int(11),
+	  `date` date,
+	  `model` varchar(50),
+	  `manufacturer` varchar(100),
+	  `price` int(11),
+	  `quantity` int(11),
+	  `description` varchar(100),
+	  `session` varchar(12)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+	dbDelta($sql_inv_items_table);
+
+	$sql_inv_ass_items_table = "CREATE TABLE IF NOT EXISTS $assigned_inventory  (
+	  `sno` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	  `master_id` int(11),
+	  `date` date,
+	  `quantity` int(11),
+	  `staff_uid` int(11),
+	  `session` varchar(12)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+	dbDelta($sql_inv_ass_items_table);
+
 
 	$sql_fees_dues_table = "CREATE TABLE IF NOT EXISTS $fees_dues  (
 	  `date` date,
@@ -339,6 +384,7 @@
 	  `recreation_chg` int(11)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_settings_table);
+
         $sql_teacher_attendance_table="CREATE TABLE IF NOT EXISTS $teacher_attendance_table (
                   `id` bigint(11) NOT NULL AUTO_INCREMENT,
                   `teacher_id` bigint(11) NOT NULL,
@@ -349,6 +395,7 @@
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1" ;
         dbDelta($sql_teacher_attendance_table);
+
         $sql_leave_table = "CREATE TABLE IF NOT EXISTS $leave_table (
                   `id` bigint(11) NOT NULL AUTO_INCREMENT,
                   `class_id` int(11) NOT NULL,
@@ -357,6 +404,7 @@
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1" ;
         dbDelta($sql_leave_table);
+
 		$sql_import_history = "CREATE TABLE IF NOT EXISTS $import_history_table (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
 		  `type` int(1) NOT NULL,
@@ -376,6 +424,7 @@
 	  `comment` varchar(60) 
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
 	dbDelta($sql_grade);
+
 	$sql_events_table = "CREATE TABLE IF NOT EXISTS $events_table  (
 	  `id` bigint(15)  UNSIGNED NOT NULL AUTO_INCREMENT,	  
 	  `start` varchar(50) DEFAULT NULL,
