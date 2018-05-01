@@ -214,7 +214,7 @@
 									<th><?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { } 
 										else echo 'Sr. No'; ?></th>
 									<th>Roll No.</th>	
-									<th>Registration No.</th><?php // Bharatdan Gadhavi - 16th Feb 2018 ?>							
+									<th>Registration No.</th>				
 									<th>Name</th>
 									<th>Parent</th>
 									<th>Class</th>

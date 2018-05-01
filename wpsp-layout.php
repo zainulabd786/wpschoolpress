@@ -320,7 +320,7 @@ function wpsp_sidebar()
           if($current_user_role=='administrator' || $current_user_role=='editor' ) {  
                  echo "<li class=".$inventory_page.' '.$bgFirstBlock.">
                     <a href='".site_url('sch-inv-management')."'>
-                      <i class='fa fa-inr'></i>
+                      <i class='fa fa-table'></i>
                       <span>".__('Inventory Management','SchoolWeb')."</span>
                     </a>
                   </li>";
