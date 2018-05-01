@@ -47,6 +47,9 @@ class Wpsp_Public{
 		if ( is_page( 'sch-fee-man' ) ) {
 			$page_template = dirname( __FILE__ ) . '/pages/wpsp-sch-fee-man.php';
 		}
+		if ( is_page( 'sch-inv-management' ) ) {
+			$page_template = dirname( __FILE__ ) . '/pages/wpsp-invmanagement.php';
+		}
 		 if ( is_page( 'sch-transport' ) ) {
 			$page_template = dirname( __FILE__ ) . '/pages/wpsp-transport.php';
 		}
