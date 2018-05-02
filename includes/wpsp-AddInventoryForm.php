@@ -35,32 +35,32 @@
 
 								<tr>
 									<td>Make Model:</td>
-									<td><input type="text" class="form-control"></td>
+									<td><input type="text" class="form-control it-model"></td>
 								</tr>
 
 								<tr>
 									<td>Manufacturer</td>
-									<td><input type="text" class="form-control"></td>
+									<td><input type="text" class="form-control it-manufacturer"></td>
 								</tr>
 
 								<tr>
 									<td>Quantity</td>
-									<td><input type="number" class="form-control"></td>
+									<td><input type="number" class="form-control it-qty"></td>
 								</tr>
 
 								<tr>
 									<td>Price</td>
-									<td><input type="text" class="form-control"></td>
+									<td><input type="text" class="form-control it-price"></td>
 								</tr>
 
 								<tr>
 									<td>Description:</td>
-									<td><textarea class="form-control"></textarea></td>
+									<td><textarea class="form-control it-desc"></textarea></td>
 								</tr>
 
 								<tr>
 									<td>Session</td>
-									<td><input type="text" class="form-control"></td>
+									<td><input type="text" class="form-control it-session"></td>
 								</tr>
 
 								<tr>

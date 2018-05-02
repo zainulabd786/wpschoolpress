@@ -199,6 +199,10 @@ function ajax_actions(){
 		add_action( 'wp_ajax_duplicate_month_fees_chk', 'duplicate_month_fees_chk' );
 
 		add_action( 'wp_ajax_add_item_to_inv_master_table', 'add_invm_item' );
+
+		add_action( 'wp_ajax_add_new_inventory_item_details', 'add_inventory_items' );
+
+		add_action( 'wp_ajax_assign_inventory_item', 'assign_item' );
 }
 
 function tl_save_error() {

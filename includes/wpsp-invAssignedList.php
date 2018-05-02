@@ -46,8 +46,25 @@
 										<th>Session</th>
 									</tr>
 								</thead>
-								<tbody>
-									
+								<tbody> <?php
+									$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
+									$master_table = $wpdb->prefix."wpsp_inventory_master";
+									$teacher_table = $wpdb->prefix."wpsp_teacher";
+									$get_data = $wpdb->get_results("SELECT a.date, a.quantity, a.session, b.item_name, c.first_name, c.middle_name, c.last_name, c.empcode FROM $assigned_table a, $master_table b, $teacher_table c WHERE c.wp_usr_id=a.staff_uid AND b.master_id=a.master_id");
+									foreach ($get_data as $assigned) { ?>
+									 	<tr>
+									 		<td>
+												<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
+													<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $stinfo->wp_usr_id;?>">
+												<?php }else echo $key; ?>
+											</td>
+									 		<td><?php echo date('d/m/Y', strtotime($assigned->date)); ?></td>
+									 		<td><?php echo $assigned->item_name; ?></td>
+									 		<td><?php echo $assigned->quantity; ?></td>
+									 		<td><?php echo $assigned->first_name." ".$assigned->middle_name." ".$assigned->last_name."-".$assigned->empcode; ?></td>
+									 		<td><?php echo $assigned->session; ?></td>
+									 	</tr> <?php
+									 } ?>
 								</tbody>
 								<tfoot>
 								  <tr>

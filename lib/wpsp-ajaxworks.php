@@ -3996,4 +3996,50 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function add_inventory_items(){
+		global $wpdb;
+
+		$item = $_POST['item'];
+		$make_model = $_POST['model'];
+		$manufacturer = $_POST['manufacturer'];
+		$qty = $_POST['quantity'];
+		$price = $_POST['price'];
+		$description = $_POST['desc'];
+		$session = $_POST['session'];
+
+		$inventory_table = $wpdb->prefix."wpsp_inventory_items";
+
+		$curr_date = date('Y-m-d');
+
+		$inv_data = array( 'master_id' => $item, 'date' => $curr_date, 'model' => $make_model, 'manufacturer' => $manufacturer, 'price' => $price, 'quantity' => $qty, 'description' => $description, 'session' => $session );
+		if($wpdb->insert($inventory_table, $inv_data)){
+			echo "success";
+		} else{
+			echo "error";
+		}	
+
+		wp_die();
+	}
+
+	function assign_item(){
+		global $wpdb;
+
+		$item = $_POST['item'];
+		$date = date('Y-m-d', strtotime($_POST['date']));
+		$quantity = $_POST['qty'];
+		$assigned_to = $_POST['assignedTo'];
+		$session = $_POST['session'];
+
+		$assign_table = $wpdb->prefix."wpsp_assigned_inventory";
+
+		$assign_data = array( 'master_id' => $item, 'date' => $date, 'quantity' => $quantity, 'staff_uid' => $assigned_to, 'session' => $session );
+		if($wpdb->insert($assign_table, $assign_data)){
+			echo 'success';
+		} else{
+			echo "error";
+		}
+
+		wp_die();
+	}
 ?>
