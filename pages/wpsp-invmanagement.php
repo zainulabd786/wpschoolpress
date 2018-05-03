@@ -25,6 +25,10 @@ wpsp_header();
 				$label	=	__( 'Assign Item', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-invItemsSummary.php';
 			} 
+			else if( isset( $_GET['tab'] ) && $_GET['tab'] == 'stock' ) {
+				$label	=	__( 'Assign Item', 'SchoolWeb');
+				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-invStockList.php';
+			}
 			else {
 				$label	=	'List of Assigned Items';
 			}			
