@@ -20,12 +20,12 @@ wpsp_header();
 			else if( isset( $_GET['tab'] ) && $_GET['tab'] == 'Assign' ) {
 				$label	=	__( 'Assign Item', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-assignInventory.php';
+			}
+			else if( isset( $_GET['tab'] ) && $_GET['tab'] == 'Summary' ) {
+				$label	=	__( 'Assign Item', 'SchoolWeb');
+				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-invItemsSummary.php';
 			} 
-			else {				
-				$where	=	'';
-				if( isset( $_POST['ClassID'] ) && !empty( $_POST['ClassID'] ) ) {
-					$where =	' where  cid='.$_POST['ClassID'];
-				}
+			else {
 				$label	=	'List of Assigned Items';
 			}			
 			?>
