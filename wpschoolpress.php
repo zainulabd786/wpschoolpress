@@ -203,6 +203,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_add_new_inventory_item_details', 'add_inventory_items' );
 
 		add_action( 'wp_ajax_assign_inventory_item', 'assign_item' );
+		
+		add_action( 'wp_ajax_get_stock_status', 'get_stock_status' );
 }
 
 function tl_save_error() {

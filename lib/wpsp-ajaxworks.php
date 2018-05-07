@@ -4042,4 +4042,19 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function get_stock_status(){
+		global $wpdb;
+
+		$item=$_POST['item'];
+		$items_table = $wpdb->prefix."wpsp_inventory_items";
+		$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
+		$stock_results = $wpdb->get_results("SELECT SUM(a.quantity)-SUM(b.quantity) AS stock FROM $items_table a, $assigned_table b WHERE a.master_id=b.master_id AND a.master_id='$item' "); 
+		(!empty($stock_results[0]->stock))?$stock=$stock_results[0]->stock:$stock=0;
+		if(!empty($stock)) echo "<div style='text-align:center' class='alert alert-success'><h3>Availability: <b>".$stock."</b></h3></div>";
+		else echo "<div style='text-align:center' class='alert alert-danger'><h3>Oops! This Item is not available
+		</h3></div>";
+
+		wp_die();
+	}
 ?>

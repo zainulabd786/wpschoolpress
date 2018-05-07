@@ -68,6 +68,10 @@
 							</table>
 						</div>
 
+						<div class="col-md-6 inv-avail">
+							
+						</div>
+
                     </div>
                 </form>
                 

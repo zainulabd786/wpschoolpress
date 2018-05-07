@@ -64,13 +64,13 @@ $(document).ready(function() {
   		var data=new Array();
 
   		data.push(
-			{ name: 'action', value: action },
-			{ name: 'item', value: item },
-			{ name: 'date', value: date },
-			{ name: 'qty', value: qty },
-			{ name: 'assignedTo', value: assignedTo },
-			{ name: 'session', value: session }
-		);
+  			{ name: 'action', value: action },
+  			{ name: 'item', value: item },
+  			{ name: 'date', value: date },
+  			{ name: 'qty', value: qty },
+  			{ name: 'assignedTo', value: assignedTo },
+  			{ name: 'session', value: session }
+		  );
   		$.ajax({
   			method: "POST",
   			url: ajax_url,
@@ -93,4 +93,27 @@ $(document).ready(function() {
   			}
   		});
   	});
+
+    $(".as-items-dropdown select").change(function(){
+      var data=new Array();
+
+      data.push(
+        { name: 'action', value: 'get_stock_status' },
+        { name: 'item', value: $(this).val() }
+      );
+      $.ajax({
+        method: 'POST',
+        url: ajax_url,
+        data: data,
+        success: function(resp){
+          $(".inv-avail").html(resp)
+        },
+        beforeSend: function(){
+          $.fn.notify('loader',{'desc':'Fetching Stock Status...'});
+        },
+        complete: function(){
+          $('.pnloader').remove();
+        }
+      });
+    });
 });
