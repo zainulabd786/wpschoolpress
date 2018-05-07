@@ -29,9 +29,6 @@
 							<table id="student_table" class="table table-bordered table-striped table-responsive" style="margin-top:10px">
 								<thead>
 									<tr>
-										<th class="nosort">
-										<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
-										</th>
 										<th>Date</th>
 										<th>Item</th>
 										<th>Model</th>
@@ -48,11 +45,6 @@
 									$results = $wpdb->get_results("SELECT a.*, b.item_name FROM $items_table a, $master_table b WHERE a.master_id=b.master_id");
 									foreach ($results as $summary) { ?>
 										<tr>
-											<td>
-												<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
-													<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $summary->wp_usr_id;?>">
-												<?php }else echo $key; ?>
-											</td>
 											<td><?php echo date('d/m/Y', strtotime($summary->date)); ?></td>
 											<td><?php echo $summary->item_name; ?></td>
 											<td><?php echo $summary->model; ?></td>
@@ -66,8 +58,6 @@
 								</tbody>
 								<tfoot>
 								  <tr>
-										<th><?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { } 
-										else echo 'Sr. No'; ?></th>
 										<th>Date</th>
 										<th>Item</th>
 										<th>Model</th>
