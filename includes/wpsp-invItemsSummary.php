@@ -50,7 +50,7 @@
 										<tr>
 											<td>
 												<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
-													<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $stinfo->wp_usr_id;?>">
+													<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $summary->wp_usr_id;?>">
 												<?php }else echo $key; ?>
 											</td>
 											<td><?php echo date('d/m/Y', strtotime($summary->date)); ?></td>

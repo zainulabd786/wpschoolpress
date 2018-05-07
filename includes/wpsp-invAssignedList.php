@@ -50,7 +50,7 @@
 									$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
 									$master_table = $wpdb->prefix."wpsp_inventory_master";
 									$teacher_table = $wpdb->prefix."wpsp_teacher";
-									$get_data = $wpdb->get_results("SELECT a.date, a.quantity, a.session, b.item_name, c.first_name, c.middle_name, c.last_name, c.empcode FROM $assigned_table a, $master_table b, $teacher_table c WHERE c.wp_usr_id=a.staff_uid AND b.master_id=a.master_id");
+									$get_data = $wpdb->get_results("SELECT a.date, a.quantity, a.session, b.item_name, c.first_name, c.middle_name, c.last_name, c.empcode, c.wp_usr_id FROM $assigned_table a, $master_table b, $teacher_table c WHERE c.wp_usr_id=a.staff_uid AND b.master_id=a.master_id");
 									foreach ($get_data as $assigned) { ?>
 									 	<tr>
 									 		<td>
