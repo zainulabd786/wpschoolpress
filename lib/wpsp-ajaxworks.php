@@ -4049,9 +4049,10 @@ function wpsp_Import_Dummy_contents() {
 		$item=$_POST['item'];
 		$items_table = $wpdb->prefix."wpsp_inventory_items";
 		$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
-		$stock_results = $wpdb->get_results("SELECT SUM(a.quantity - COALESCE(b.quantity, 0)) AS stock FROM $items_table a LEFT JOIN $assigned_table b ON a.master_id = b.master_id WHERE a.master_id = '$item'"); 
-		//echo "SELECT SUM(a.quantity - coalesce(b.quantity, 0)) AS stock FROM $items_table a LEFT JOIN $assigned_table b ON a.master_id = b.master_id WHERE a.master_id = '$item'";
-		(!empty($stock_results[0]->stock))?$stock=$stock_results[0]->stock:$stock=0;
+		
+		/*$stock_results = $wpdb->get_results("SELECT SUM(a.quantity - COALESCE(b.quantity, 0)) AS stock FROM $items_table a LEFT JOIN $assigned_table b ON a.master_id = b.master_id WHERE a.master_id = '$item'"); 
+		echo "SELECT SUM(a.quantity - COALESCE(b.quantity, 0)) AS stock FROM $items_table a LEFT JOIN $assigned_table b ON a.master_id = b.master_id WHERE a.master_id = '$item'";*/
+		(!empty(get_stock($item)))?$stock=get_stock($item):$stock=0;
 		if(!empty($stock)) echo "<div style='text-align:center' class='alert alert-success'><h3>Availability: <b>".$stock."</b></h3></div>";
 		else echo "<div style='text-align:center' class='alert alert-danger'><h3>Oops! This Item is not available
 		</h3></div>";
@@ -4060,5 +4061,20 @@ function wpsp_Import_Dummy_contents() {
 		if(!empty($items_count_result[0]->item_count)) echo "<div style='text-align:center' class='alert alert-success'><h3>Total Items Count: <b>".$items_count_result[0]->item_count."</b></h3></div>";
 
 		wp_die();
+	}
+
+	function get_stock($id){
+		global $wpdb;
+
+		$items_table = $wpdb->prefix."wpsp_inventory_items";
+		$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
+
+		$item_result = $wpdb->get_results("SELECT SUM(quantity) AS items FROM $items_table WHERE master_id='$id'");
+		$items = $item_result[0]->items;
+
+		$assigned_results = $wpdb->get_results("SELECT SUM(quantity) AS assigned FROM $assigned_table WHERE master_id='$id'");
+		$assigned = $assigned_results[0]->assigned; 
+
+		return $items-$assigned;
 	}
 ?>

@@ -63,7 +63,7 @@
 									<?php
 									$settings_table = $wpdb->prefix."wpsp_settings";
 									$result = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='session'"); ?>
-									<td><input type="text" value="<?php echo $result[0]->option_value; ?>" class="form-control it-session"></td>
+									<td><input type="text" value="<?php echo $result[0]->option_value; ?>" class="form-control it-session" disabled></td>
 								</tr>
 
 								<tr>
