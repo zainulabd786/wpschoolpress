@@ -4052,13 +4052,14 @@ function wpsp_Import_Dummy_contents() {
 		
 		/*$stock_results = $wpdb->get_results("SELECT SUM(a.quantity - COALESCE(b.quantity, 0)) AS stock FROM $items_table a LEFT JOIN $assigned_table b ON a.master_id = b.master_id WHERE a.master_id = '$item'"); 
 		echo "SELECT SUM(a.quantity - COALESCE(b.quantity, 0)) AS stock FROM $items_table a LEFT JOIN $assigned_table b ON a.master_id = b.master_id WHERE a.master_id = '$item'";*/
+		echo "<div style='display:flex'>";
 		(!empty(get_stock($item)))?$stock=get_stock($item):$stock=0;
-		if(!empty($stock)) echo "<div style='text-align:center' class='alert alert-success'><h3>Availability: <b>".$stock."</b></h3></div>";
-		else echo "<div style='text-align:center' class='alert alert-danger'><h3>Oops! This Item is not available
-		</h3></div>";
+		if(!empty($stock)) echo "<p style='color:green;padding:15px 10px 0 10px'>Availability: <b>".$stock."</b></p>";
+		else echo "<p style='color:red;padding:15px 10px 0 10px'>Oops! This Item is not available</p>";
 
 		$items_count_result = $wpdb->get_results("SELECT SUM(quantity) AS item_count FROM $items_table WHERE master_id='$item'");
-		if(!empty($items_count_result[0]->item_count)) echo "<div style='text-align:center' class='alert alert-success'><h3>Total Items Count: <b>".$items_count_result[0]->item_count."</b></h3></div>";
+		if(!empty($items_count_result[0]->item_count)) echo "<p style='padding:15px 10px 0 10px'>Total Items Count: <b>".$items_count_result[0]->item_count."</b></p>";
+		echo "</div>";
 
 		wp_die();
 	}
