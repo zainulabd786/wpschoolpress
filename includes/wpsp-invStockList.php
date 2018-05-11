@@ -2,7 +2,6 @@
 	global $current_user;	
 	$role		=	 $current_user->roles;
 	$cuserId	=	 $current_user->ID;
-	
 ?>
 	<section class="content">
 		<div class="row">
@@ -30,9 +29,9 @@
 							<table id="student_table" class="table table-bordered table-striped table-responsive" style="margin-top:10px">
 								<thead>
 									<tr>
-										<th>Master Id</th>
 										<th>Item Name</th>
 										<th>Stock</th>
+										<th>Item Count</th>
 									</tr>
 								</thead>
 								<tbody> <?php
@@ -43,19 +42,20 @@
 									$results = $wpdb->get_results("SELECT * FROM $master_table"); 
 									foreach ($results as $item) { ?>
 										<tr>
-											<td><?php echo $item->master_id; ?></td>
 											<td><?php echo $item->item_name; ?></td>
+											<td> <?php echo get_stock($item->master_id); ?> </td>
 											<td> <?php
-												echo get_stock($item->master_id); ?>
+												$items_count_result = $wpdb->get_results("SELECT SUM(quantity) AS item_count FROM $items_table WHERE master_id='$item->master_id'");
+												if(!empty($items_count_result[0]->item_count)) echo $items_count_result[0]->item_count; else echo "0"; ?>
 											</td>
 										</tr> <?php 
 									} ?>
 								</tbody>
 								<tfoot>
 								  <tr>
-										<th>Master Id</th>
 										<th>Item Name</th>
 										<th>Stock</th>
+										<th>Item Count</th>
 								  </tr>
 								</tfoot>
 							  </table>
