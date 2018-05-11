@@ -157,7 +157,7 @@
 														//if(!empty($student_full_name))
 															//echo "<option selected value='".$uidff."'>".$student_full_name." S/O ".$father_full_name."</option>";
 														if(isset( $_GET['uidff'] )){
-															$get_students = $wpdb->get_results("SELECT s_fname, s_mname, s_lname, p_fname, p_mname, p_lname, wp_usr_id FROM $student_table WHERE class_id=(SELECT class_id FROM wp_wpsp_student WHERE wp_usr_id='$uidff')");
+															$get_students = $wpdb->get_results("SELECT s_fname, s_mname, s_lname, p_fname, p_mname, p_lname, wp_usr_id FROM $student_table WHERE class_id=(SELECT class_id FROM $student_table WHERE wp_usr_id='$uidff')");
 															foreach ($get_students as $std) { ?>
 																<option <?php if($std->wp_usr_id == $uidff) echo "selected"; ?> value="<?php echo $std->wp_usr_id; ?>"><?php echo $std->s_fname." ".$std->s_mname." ".$std->s_lname." S/D/O " .$std->p_fname." ".$std->p_mname." ".$std->p_lname; ?></option><?php
 															}
