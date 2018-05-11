@@ -68,7 +68,7 @@
 										<th>Session</th>
 								  </tr>
 								</tfoot>
-							  </table>
+							</table>
 						</div>					  
 					</div><!-- /.box-body -->
 				</div><!-- /.box -->				

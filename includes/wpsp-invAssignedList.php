@@ -24,7 +24,7 @@
 
 									<a class="btn btn-primary" href="?tab=AddNew"><i class="fa fa-plus"></i> Add New </a>
 									<a class="btn btn-primary" href="?tab=Assign"><i class="fa fa-history"></i> Assign Item </a>
-									<a class="btn btn-primary" href="?tab=Summary"><i class="fa fa-history"></i> Items Summary </a>
+									<!--<a class="btn btn-primary" href="?tab=Summary"><i class="fa fa-history"></i> Items Summary </a>-->
 									<a class="btn btn-primary" href="?tab=stock"><i class="fa fa-table"></i> In Stock Items </a>
 									
 								</div>

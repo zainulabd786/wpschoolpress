@@ -94,7 +94,7 @@ $(document).ready(function() {
   		});
   	});
 
-    $(".as-items-dropdown select").change(function(){
+    $(".as-items-dropdown select, .items-dropdown select").change(function(){
       var data=new Array();
 
       data.push(
