@@ -2,6 +2,7 @@
 	global $current_user;	
 	$role		=	 $current_user->roles;
 	$cuserId	=	 $current_user->ID;
+	
 ?>
 	<section class="content">
 		<div class="row">
@@ -45,8 +46,7 @@
 											<td><?php echo $item->master_id; ?></td>
 											<td><?php echo $item->item_name; ?></td>
 											<td> <?php
-												$stock_results = $wpdb->get_results("SELECT SUM(a.quantity)-SUM(b.quantity) AS stock FROM $items_table a, $assigned_table b WHERE a.master_id=b.master_id AND a.master_id='$item->master_id' "); 
-												echo (!empty($stock_results[0]->stock))?$stock_results[0]->stock:'0'; ?>
+												echo get_stock($item->master_id); ?>
 											</td>
 										</tr> <?php 
 									} ?>
