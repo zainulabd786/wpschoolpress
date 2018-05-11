@@ -116,4 +116,8 @@ $(document).ready(function() {
         }
       });
     });
+
+    $("#assigned_table").dataTable( {
+      "searching": true
+    } );
 });
