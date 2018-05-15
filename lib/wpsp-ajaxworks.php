@@ -4078,4 +4078,135 @@ function wpsp_Import_Dummy_contents() {
 
 		return $items-$assigned;
 	}
+
+	function save_visitor_data(){
+		global $wpdb;
+
+		$date = date('Y-m-d', strtotime($_POST['date']));
+		$session = $_POST['session'];
+		$purpose = $_POST['purpose'];
+		$v_details = $_POST['vDetails'];
+		$approach = $_POST['approach'];
+		$p_name = $_POST['pName'];
+		$phone = $_POST['phone'];
+		$email = $_POST['email'];
+		$address = $_POST['address'];
+		$city = $_POST['city'];
+		$state = $_POST['state'];
+		$zip = $_POST['zip'];
+		$c_name = $_POST['cName'];
+		$dob = date('Y-m-d', strtotime($_POST['dob']));
+		$class = $_POST['class'];
+		$gender = $_POST['gender'];
+
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+
+		$visitors_data = array(
+			'date' => $date,
+			'p_name' => $p_name,
+			'phone' => $phone,
+			'email' => $email,
+			'address' => $address,
+			'city' => $city,
+			'state' => $state,
+			'zip' => $zip,
+			'c_name' => $c_name,
+			'c_class' => $class,
+			'c_dob' => $dob,
+			'c_gender' => $gender,
+			'v_purpose' => $purpose,
+			'v_detail' => $v_details,
+			'approach' => $approach,
+			'session' => $session,
+			'follow_up' => 0,
+			'converted' => 0
+		);
+
+		if($wpdb->insert($visitors_table, $visitors_data)) echo "success";
+		else echo "error! ".$wpdb->print_error();
+
+		wp_die();
+	}
+
+	function follow_up(){
+		global $wpdb;
+
+		$id = $_POST['id'];
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+
+		$result = $wpdb->get_results("SELECT c_name, p_name, address, city, follow_up FROM $visitors_table WHERE id='$id'"); ?>
+
+		<div class="alert alert-success">
+			<p><?php echo $result[0]->c_name." S/D/O ".$result[0]->p_name; ?></p>
+			<p><?php echo $result[0]->address.", ".$result[0]->city; ?></p>
+			<p><a class="follow-up-history" id="<?php echo $id; ?>" style="color: purple" href="#"><?php echo "Followed up <b>".$result[0]->follow_up."</b> times"; ?></a></p>
+		</div>
+		<textarea id="<?php echo $id; ?>" class="form-control follow-up-comment" placeholder="Follow Up Comments"></textarea>
+		<script type="text/javascript">
+			$(".follow-up-history").click(function(){
+				id = $(this).attr('id');
+
+				$.post(ajax_url, { action: "follow_up_history", id: id }, function(data){ $.alert(data); });
+			});
+		</script> <?php
+
+		wp_die();
+	}
+
+	function save_followup_comment(){
+		global $wpdb;
+
+		$comment = $_POST['comment'];
+		$id = $_POST['id'];
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+		$followup_table = $wpdb->prefix."wpsp_follow_up";
+
+		$follow_up_data = array('date' => date("Y-m-d"), 'visitor' => $id, 'comments' => $comment );
+
+		try{
+			$wpdb->query("BEGIN;");
+
+			if($wpdb->insert($followup_table, $follow_up_data) == false) throw new Exception($wpdb->print_error());
+
+			if($wpdb->query("UPDATE $visitors_table SET follow_up=follow_up+1 WHERE id='$id'") == false) throw new Exception($wpdb->print_error());
+
+			echo "Comment Saved...";
+
+			$wpdb->query("COMMIT;");
+		}
+		catch(Exception $e){
+			$wpdb->query("ROLLBACK;");
+			echo "Error Processing Request".$e->getMessage();
+		}
+
+		wp_die();
+	}
+
+	function follow_up_history(){
+		global $wpdb;
+
+		$id = $_POST['id'];
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+		$followup_table = $wpdb->prefix."wpsp_follow_up";
+
+		$result = $wpdb->get_results("SELECT c_name, p_name, address, city, follow_up FROM $visitors_table WHERE id='$id'"); ?>
+
+		<div style="padding: 10px">
+			<p><?php echo $result[0]->c_name." S/D/O ".$result[0]->p_name; ?></p>
+			<p><?php echo $result[0]->address.", ".$result[0]->city; ?></p>
+			<p><?php echo "Followed up <b>".$result[0]->follow_up."</b> times"; ?></p>
+		</div> <?php
+
+		$history = $wpdb->get_results("SELECT * FROM $followup_table WHERE visitor='$id'");
+
+		foreach ($history as $value) { ?>
+			<div>
+				<p style="color: green">Followed on: <?php echo date("d/m/Y", strtotime($value->date)); ?></p>
+				<textarea class="form-control" disabled><?php echo $value->comments; ?></textarea>
+			</div>
+			<hr/><?php
+		}
+
+		wp_die();
+	}
 ?>

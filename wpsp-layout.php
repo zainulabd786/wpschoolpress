@@ -31,7 +31,11 @@ function wpsp_header(){
 
   }
 
-  if ( is_page( 'sch-fee-man' ) || is_page( 'sch-fee-man/?tab=DepositFees' ) || is_page( 'sch-fee-man/?tab=PaymentHistory' ) ) {
+  if ( is_page( 'sch-fee-man' ) )  {
+    echo "<link href='".plugins_url('plugins/jquery-confirm-master/css/jquery-confirm.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
+  }
+
+  if ( is_page( 'sch-enquiry' ) ) {
     echo "<link href='".plugins_url('plugins/jquery-confirm-master/css/jquery-confirm.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
   }
 
@@ -182,7 +186,7 @@ function wpsp_sidebar()
   global $current_user, $wp_roles, $current_user_name;
   $current_user_role=$current_user->roles[0];
   $page=get_the_title();
-  $dashboard_page=$message_page=$student_page=$fees_page=$teacher_page=$parent_page=$class_page=$attendance_page=$subject_page=$mark_page=$exam_page=$event_page=$timetable_page=$import_page=$notify_page=$sms_page=$transport_page=$settings_page=$settings_general_page=$settings_wrkhours_page=$settings_subfield_page=$leave_page=$teacher_attendance_page=$settings_chgpw_page = $viewpayment= $addpayment =$payment_page_main= $fees_page=$settings_fees_page=$inventory_page='';
+  $dashboard_page=$message_page=$student_page=$fees_page=$teacher_page=$parent_page=$class_page=$attendance_page=$subject_page=$mark_page=$exam_page=$event_page=$timetable_page=$import_page=$notify_page=$sms_page=$transport_page=$settings_page=$settings_general_page=$settings_wrkhours_page=$settings_subfield_page=$leave_page=$teacher_attendance_page=$settings_chgpw_page = $viewpayment= $addpayment =$payment_page_main= $fees_page=$settings_fees_page=$inventory_page=$enquiry_page='';
   switch( $page )
   {
     case 'Dashboard':
@@ -247,6 +251,9 @@ function wpsp_sidebar()
     case 'Timetable' :
         $timetable_page='active';
           break;
+    case 'Enquiry' :
+      $enquiry_page='active';
+      break;
 	case 'Settings':
 		$settings_page="class='treeview active'";
 		if(isset($_GET['sc']) && $_GET['sc']=='subField')
@@ -329,6 +336,14 @@ function wpsp_sidebar()
                     </a>
                   </li>";
           }
+          if($current_user_role=='administrator' || $current_user_role=='editor' ) {  
+                 echo "<li class=".$enquiry_page.' '.$bgFirstBlock.">
+                    <a href='".site_url('sch-enquiry')."'>
+                      <i class='fa fa-table'></i>
+                      <span>".__('Enquiry','SchoolWeb')."</span>
+                    </a>
+                  </li>";
+          }
           echo "
           <li class=".$teacher_page.' '.$bgFirstBlock.">
             <a href='".site_url('sch-teacher')."'>
@@ -390,6 +405,7 @@ function wpsp_sidebar()
       </li>     
       ";
     }
+    
 	/*
 	if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher') {	
 		echo "<li ".$payment_page_main.' '.$bgFourthBlock. ">
@@ -517,7 +533,7 @@ function wpsp_footer()
       echo "<script src='".plugins_url("plugins/bootstrap-toggle/js/bootstrap-toggle.min.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("plugins/jQuery-Print/jQuery.print.js",__FILE__)."' > </script>";
   }
-  if ( is_page( 'sch-fee-man' ) || is_page( 'sch-fee-man/?tab=DepositFees' ) || is_page( 'sch-fee-man/?tab=PaymentHistory' ) ) 
+  if ( is_page( 'sch-fee-man' ) ) 
   {
       echo "<script src='".plugins_url("plugins/fileupload/jquery.fileupload.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
@@ -529,6 +545,11 @@ function wpsp_footer()
   {
       echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("js/wpsp-inventoryManagement.js",__FILE__)."' > </script>";
+  }
+  if ( is_page( 'sch-enquiry' ) ) 
+  {
+      echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
+      echo "<script src='".plugins_url("js/wpsp-enquiry.js",__FILE__)."' > </script>";
   }
   if ( is_page( 'sch-teacher' ) ) 
   { 

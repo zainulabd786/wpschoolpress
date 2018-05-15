@@ -50,7 +50,10 @@ class Wpsp_Public{
 		if ( is_page( 'sch-inv-management' ) ) {
 			$page_template = dirname( __FILE__ ) . '/pages/wpsp-invmanagement.php';
 		}
-		 if ( is_page( 'sch-transport' ) ) {
+		if ( is_page( 'sch-enquiry' ) ) {
+			$page_template = dirname( __FILE__ ) . '/pages/wpsp-enquiry.php';
+		}
+		if ( is_page( 'sch-transport' ) ) {
 			$page_template = dirname( __FILE__ ) . '/pages/wpsp-transport.php';
 		}
 		if ( is_page( 'sch-parent' ) ) {
@@ -118,7 +121,8 @@ class Wpsp_Public{
 		}		
 		if ( is_page( 'sch-changepassword' ) ) {
 			$page_template = dirname( __FILE__ ) . '/pages/wpsp-changepassword.php';
-		}		
+		}
+
 		
 		return $page_template;
 	}

@@ -205,6 +205,14 @@ function ajax_actions(){
 		add_action( 'wp_ajax_assign_inventory_item', 'assign_item' );
 		
 		add_action( 'wp_ajax_get_stock_status', 'get_stock_status' );
+
+		add_action( 'wp_ajax_save_visitor_data', 'save_visitor_data' );
+
+		add_action( 'wp_ajax_follow_up', 'follow_up' );
+
+		add_action( 'wp_ajax_save_followup_comment', 'save_followup_comment' );
+
+		add_action( 'wp_ajax_follow_up_history', 'follow_up_history' );
 }
 
 function tl_save_error() {

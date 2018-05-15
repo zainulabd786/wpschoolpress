@@ -26,39 +26,41 @@
 	$payment_page				=	array( 'slug' => 'sch-payment', 'title' =>'Payment' );
 	$fees_management_page       =   array( 'slug' => 'sch-fee-man', 'title' => 'Fees Management' );
 	$inventory_management_page 	=	array( 'slug' => 'sch-inv-management', 'title' => 'Inventory Management');
+	$enquiry 					=	array( 'slug' => 'sch-enquiry', 'title' => 'Enquiry');
 	
  	$teacher_found	=	$student_found	=	$parent_found	=	$class_found	=	$dashboard_found	=	
 	$messages_found	=	$exams_found	=	$attendance_found	=	$timetable_found	=	$events_found	=
 	$leave_found	=	$subject_found	=	$settings_found	=	$transport_found	=	$marks_found	=
-	$sms_found	=	$notify_found =	$importhistory_found	=	$teacher_attendance_found = $change_password = $payment_found = $fm_found = $inventory_found = 0;
+	$sms_found	=	$notify_found =	$importhistory_found	=	$teacher_attendance_found = $change_password = $payment_found = $fm_found = $inventory_found = $enquiry_found = 0;
 	
 	$pages = get_pages();
 	foreach ($pages as $page) { 
 		$apage = $page->post_name; 
 		switch ( $apage ){ 
-			case 'sch-teacher' :   		$teacher_found= '1';			break;			
-			case 'sch-student' :   		$student_found= '1';			break;			
-			case 'sch-parent' :   		$parent_found= '1';				break;			
-			case 'sch-class' :   		$class_found= '1';				break;			
-			case 'sch-dashboard' :  	$dashboard_found= '1';			break;			
-			case 'sch-messages' :   	$messages_found= '1';			break;
-			case 'sch-exams' :   		$exams_found= '1';				break;			
-			case 'sch-attendance' :   	$attendance_found= '1';			break;			
-			case 'sch-timetable' :   	$timetable_found= '1';			break;
-			case 'sch-events' :   		$events_found= '1';				break;
-            case 'sch-leavecalendar' :  $leave_found= '1';				break;
-            case 'sch-subject' :   		$subject_found= '1';			break;
-			case 'sch-settings' :   	$settings_found= '1';			break;			
-			case 'sch-transport' :   	$transport_found= '1';			break;
-			case 'sch-marks' : 			$marks_found= '1';				break;
-			//case 'sch-sms' : 			$sms_found='1';					break;
-			case 'sch-notify' : 		$notify_found='1';				break;
-			case 'sch-importhistory' : 	$importhistory_found='1';		break;
-            case 'sch-teacherattendance' : 	$teacher_attendance_found='1';		break;
-            case 'sch-changepassword' : 	$change_password='1';		break;
-            case 'sch-payment' 	: 			$payment_found='1';			break;
-            case 'sch-fee-man': 			$fm_found = '1';  			break;
-            case 'sch-inv-management': 		$inventory_found = '1';  	break;
+			case 'sch-teacher' :   			$teacher_found= '1';			break;			
+			case 'sch-student' :   			$student_found= '1';			break;			
+			case 'sch-parent' :   			$parent_found= '1';				break;			
+			case 'sch-class' :   			$class_found= '1';				break;			
+			case 'sch-dashboard' :  		$dashboard_found= '1';			break;			
+			case 'sch-messages' :   		$messages_found= '1';			break;
+			case 'sch-exams' :   			$exams_found= '1';				break;			
+			case 'sch-attendance' :   		$attendance_found= '1';			break;			
+			case 'sch-timetable' :   		$timetable_found= '1';			break;
+			case 'sch-events' :   			$events_found= '1';				break;
+            case 'sch-leavecalendar' :  	$leave_found= '1';				break;
+            case 'sch-subject' :   			$subject_found= '1';			break;
+			case 'sch-settings' :   		$settings_found= '1';			break;			
+			case 'sch-transport' :   		$transport_found= '1';			break;
+			case 'sch-marks' : 				$marks_found= '1';				break;
+			//case 'sch-sms' : 				$sms_found='1';					break;
+			case 'sch-notify' : 			$notify_found='1';				break;
+			case 'sch-importhistory' : 		$importhistory_found='1';		break;
+            case 'sch-teacherattendance' : 	$teacher_attendance_found='1';	break;
+            case 'sch-changepassword' : 	$change_password='1';			break;
+            case 'sch-payment' 	: 			$payment_found='1';				break;
+            case 'sch-fee-man': 			$fm_found = '1';  				break;
+            case 'sch-inv-management': 		$inventory_found = '1';  		break;
+            case 'sch-enquiry': 			$enquiry_found = '1';  			break;
 			default:						$no_page;			
 		}		
 	}
@@ -89,6 +91,16 @@
 			'post_name'		=> 	$inventory_management_page['slug'],
             'post_status'	=>	'publish',		
 			'post_excerpt' 	=> 	'Inventory Management'
+        ));
+    }
+
+    if( $enquiry_found !='1' ){
+        $page_id = wp_insert_post( array(
+            'post_title'	=>	$enquiry['title'],
+			'post_type' 	=>	'page',
+			'post_name'		=> 	$enquiry['slug'],
+            'post_status'	=>	'publish',		
+			'post_excerpt' 	=> 	'Enquiry'
         ));
     }
     
@@ -295,6 +307,39 @@
 	$inventory_master		  = $wpdb->prefix . 'wpsp_inventory_master';
 	$inventory_items		  = $wpdb->prefix . 'wpsp_inventory_items';
 	$assigned_inventory		  = $wpdb->prefix . 'wpsp_assigned_inventory';
+	$visitors		  		  = $wpdb->prefix . 'wpsp_visitors';
+	$follow_up		  		  = $wpdb->prefix . 'wpsp_follow_up';
+
+	$sql_visitor_table = "CREATE TABLE IF NOT EXISTS $visitors  (
+	  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	  `date` date, 
+	  `p_name` varchar(50),
+	  `phone` bigint(10),
+	  `email` varchar(50),
+	  `address` varchar(100),
+	  `city` varchar(50),
+	  `state` varchar(50),
+	  `zip` int(10),
+	  `c_name` varchar(50),
+	  `c_class` varchar(20),
+	  `c_dob` date,
+	  `c_gender` text(1),
+	  `v_purpose` varchar(20),
+	  `v_detail` varchar(20),
+	  `approach` varchar(20),
+	  `session` varchar(10),
+	  `follow_up` int(5),
+	  `converted` int(1)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+	dbDelta($sql_visitor_table);
+
+	$sql_follow_up_table = "CREATE TABLE IF NOT EXISTS $follow_up  (
+	  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	  `date` date,
+	  `visitor` int(11),
+	  `comments` varchar(500)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+	dbDelta($sql_follow_up_table);
 
 	$sql_inv_master_table = "CREATE TABLE IF NOT EXISTS $inventory_master  (
 	  `master_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
