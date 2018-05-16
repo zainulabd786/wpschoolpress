@@ -103,7 +103,7 @@
             </div>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-9 visitor-list-container">
             <div class="box box-blue" style="position: relative; left: 0px; top: 0px;">
                 <div class="box-header" style="cursor: move;">
                     <i class="fa fa-graph"></i>

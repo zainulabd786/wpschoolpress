@@ -213,6 +213,10 @@ function ajax_actions(){
 		add_action( 'wp_ajax_save_followup_comment', 'save_followup_comment' );
 
 		add_action( 'wp_ajax_follow_up_history', 'follow_up_history' );
+
+		add_action( 'wp_ajax_search_visitors', 'search_visitors' );
+
+		add_action( 'wp_ajax_fill_visitors_info_into_students_form', 'fill_visitors_info' );
 }
 
 function tl_save_error() {

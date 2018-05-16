@@ -325,7 +325,7 @@
 	  `c_dob` date,
 	  `c_gender` text(1),
 	  `v_purpose` varchar(20),
-	  `v_detail` varchar(20),
+	  `v_detail` varchar(100),
 	  `approach` varchar(20),
 	  `session` varchar(10),
 	  `follow_up` int(5),

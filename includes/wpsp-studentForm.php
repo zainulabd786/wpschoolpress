@@ -15,12 +15,21 @@
                   <div class="col-md-12 gap-top-bottom">
                     <div id="formresponse"></div>
                 </div>
+
+                <div class="form-group visitor-search-container">
+                    <input type="search" class="form-control search-visitor-inp" placeholder="Search From Visitors">
+                    <div class="visitor-suggestions">
+                        <table>
+                            
+                        </table>
+                    </div>
+                    <input type="hidden" value="0">
+                </div>
                
                  
                 <!-- /.box-header -->
                 <form name="StudentEntryForm" id="StudentEntryForm" method="post" enctype="multipart/form-data" novalidate="novalidate"> 
                     <div class="box-body text-black">
-                     
                         <div class="col-md-6">
                             <h3 class="box-title"> <i class="fa fa-info" aria-hidden="true"></i>&nbsp;Personal Details</h3>
                             <div class="line_box">

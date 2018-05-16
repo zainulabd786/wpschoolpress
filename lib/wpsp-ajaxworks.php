@@ -4209,4 +4209,40 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function search_visitors(){
+		global $wpdb;
+
+		$val = $_POST['value'];
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+
+		$result = $wpdb->get_results("SELECT c_name, p_name, phone, id FROM $visitors_table WHERE p_name LIKE '%$val%' OR phone LIKE '%$val%' OR email LIKE '%$val%' OR address LIKE '%$val%' OR city LIKE '%$val%' OR state LIKE '%$val%' OR zip LIKE '%$val%' OR c_name LIKE '%$val%' ");
+		if($wpdb->num_rows>0){
+			foreach ($result as $visitor) { ?>
+				<tr class="visitor-single-row" id="<?php echo $visitor->id; ?>">
+					<td><?php echo $visitor->c_name." S/D/O ".$visitor->p_name; ?></td>
+					<td><?php echo $visitor->phone; ?></td>
+				</tr> <?php
+			}
+		} else{ ?>
+			<tr><td colspan="2">No Matches Found!</td></tr> <?php
+		}
+		
+
+		wp_die();
+	}
+
+	function fill_visitors_info(){
+		global $wpdb;
+
+		$vid = $_POST['id'];
+
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+
+		$result = $wpdb->get_results("SELECT * FROM $visitors_table WHERE id='$vid'");
+
+		echo json_encode($result);
+
+		wp_die();
+	}
 ?>

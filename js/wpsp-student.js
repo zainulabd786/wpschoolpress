@@ -554,6 +554,44 @@ $(document).ready(function () {
         var url = "?tab=DepositFees"+"&uidf="+sid_f;
         location = url;
     });
+
+    $(".visitor-suggestions").hide();
+    $("body").click(function(){
+        $(".visitor-suggestions").fadeOut();
+    });
+
+    $(".search-visitor-inp").keyup(function(){
+        if($(this).val() == ""){
+            $(".visitor-suggestions").slideUp();
+        } 
+        else{
+            $.post(ajax_url, {action: "search_visitors", value: $(this).val()}, function(data){
+                $(".visitor-suggestions table").html(data); 
+                $(".visitor-suggestions").slideDown(); 
+            })
+            
+        } 
+    });
+
+    $("body").on('click', ".visitor-single-row", function() {
+        let id = $(this).attr('id');
+        $.post(ajax_url, {action: "fill_visitors_info_into_students_form", id: id}, function(data){ 
+            data = JSON.parse(data);
+            let sName = data[0].c_name.split(" ");
+            let pName = data[0].p_name.split(" ");
+            $("#firstname").val(sName[0]);
+            $("#lastname").val(sName[1]);
+            $("#p_firstname").val(pName[0]);
+            $("#p_lastname").val(pName[1]);
+            $("#phone").val(data[0].phone);
+            $("#pEmail").val(data[0].email);
+            $("#current_address").val(data[0].address);
+            $("#current_city").val(data[0].city);
+            $("#current_pincode").val(data[0].zip);
+            $("#stdClass").val(data[0].c_class);
+            $("#Dob").val(data[0].c_dob);
+        });
+    });
 });
 
 function checkRollNo(){

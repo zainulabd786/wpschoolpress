@@ -77,4 +77,8 @@ $(document).ready(function(){
 
 		$.post(ajax_url, { action: "follow_up_history", id: id }, function(data){ $.alert(data); });
 	});
+
+	$("#visitors_table").dataTable( {
+      "searching": true
+    } );
 });
