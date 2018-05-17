@@ -78,6 +78,7 @@ function wpsp_AddStudent() {
 	$pbloodgroup	    = 	esc_attr($_POST['p_bloodgrp']);  
 	$phone	    		= 	esc_attr($_POST['s_phone']);  
 	$transport 			= 	$_POST['opt_transport'];
+	$vid 				= 	$_POST['vid'];
 	$current_date		=	date("Y-m-d");
 	$curr_month			=	date("m");
 	$trn_route			=	0;
@@ -86,6 +87,11 @@ function wpsp_AddStudent() {
 		$trn_route = $_POST['transport_route'];
 	} 
 	else $transport = 0;
+
+	if(!empty($vid)){
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+		$wpdb->query("UPDATE $visitors_table SET converted = '1' WHERE id = '$vid' ");
+	}
 	
 	$email	=	empty( $email ) ? wpsp_EmailGen($username) : $email;
 		

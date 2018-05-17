@@ -127,13 +127,14 @@
 							<th>Purpose</th>
 							<th>Followup</th>
 							<th>Converted</th>
+                            <th>Session</th>
 							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody> <?php
 						$visitors_table = $wpdb->prefix."wpsp_visitors";
 						//$followup_table = $wpdb->prefix."wpsp_follow_up";
-						$results = $wpdb->get_results("SELECT id, date, p_name, c_name, phone, address, city, state, v_purpose, follow_up, converted FROM $visitors_table");
+						$results = $wpdb->get_results("SELECT id, date, p_name, c_name, phone, address, city, state, v_purpose, follow_up, converted, session FROM $visitors_table");
 						foreach ($results as $visitor) { 
 							$purpose = $visitor->v_purpose;
 							if($purpose == "ADM") $purpose = "Admission";
@@ -147,8 +148,14 @@
 								<td><?php echo $visitor->address.", ".$visitor->city.", ".$visitor->state; ?></td>
 								<td><?php echo $purpose; ?></td>
 								<td><a id="<?php echo $visitor->id; ?>" class="follow-up-history" href="#"><?php echo $visitor->follow_up; ?></a></td>
-								<td><?php echo ($visitor->converted == 0) ? "No" : "Yes"; ?></td>
-								<td><button type="button" id="<?php echo $visitor->id; ?>" class="btn btn-primary follow-up-btn">Follow Up</button></td>
+                                <td><?php echo ($visitor->converted == 0) ? "No" : "Yes"; ?></td>
+								<td><?php echo $visitor->session; ?></td>
+								<td>
+                                    <button type="button" id="<?php echo $visitor->id; ?>" title="Follow Up" class="btn btn-primary btn-xs follow-up-btn"><i class="fa fa-arrow-up"></i></button>
+                                    <button type="button" id="<?php echo $visitor->id; ?>" title="Details" class="btn btn-success btn-xs details-btn"><i class="fa fa-eye"></i></button>
+                                    <!--<button type="button" id="<?php echo $visitor->id; ?>" title="Edit" class="btn btn-warning btn-xs edit-btn"><i class="fa fa-pencil"></i></button>
+                                    <button type="button" id="<?php echo $visitor->id; ?>" title="Delete" class="btn btn-danger btn-xs delete-btn"><i class="fa fa-trash"></i></button>-->
+                                </td>
 							</tr> <?php
 						} ?>
 					</tbody>
@@ -161,7 +168,8 @@
 							<th>Address</th>
 							<th>Purpose</th>
 							<th>Followup</th>
-							<th>Converted</th>
+                            <th>Converted</th>
+							<th>Session</th>
 							<th>Action</th>
 						</tr>
 					</tfoot>

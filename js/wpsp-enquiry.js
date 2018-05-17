@@ -81,4 +81,26 @@ $(document).ready(function(){
 	$("#visitors_table").dataTable( {
       "searching": true
     } );
+
+    $(".details-btn").click(function(){
+        $.post(ajax_url, {action: "view_visitor_details", id: $(this).attr('id')}, function(data){
+            $.confirm({
+                title: 'Visitor Details!',
+                content: data,
+                columnClass: 'col-md-12 col-md-offset-0',
+				type: 'blue',
+				typeAnimated: true,
+                buttons: {
+                    close: {
+                        text: 'Close',
+                        btnClass: 'btn-blue',
+                        keys: ['enter'],
+                        action: function(){
+                            //$.alert('Something else?');
+                        }
+                    }
+                }
+            });
+        });
+    });
 });

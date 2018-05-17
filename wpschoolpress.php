@@ -217,6 +217,12 @@ function ajax_actions(){
 		add_action( 'wp_ajax_search_visitors', 'search_visitors' );
 
 		add_action( 'wp_ajax_fill_visitors_info_into_students_form', 'fill_visitors_info' );
+
+		add_action( 'wp_ajax_view_visitor_details', 'visitor_details' );
+
+		add_action( 'wp_ajax_edit_visitor_data', 'edit_visitor_data' );
+
+		add_action( 'wp_ajax_delete_visitor_record', 'delete_visitor_record' );
 }
 
 function tl_save_error() {

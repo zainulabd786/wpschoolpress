@@ -4245,4 +4245,309 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function visitor_details(){
+		global $wpdb;
+
+		$vid = $_POST['id'];
+
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+
+		$result = $wpdb->get_results("SELECT * FROM $visitors_table WHERE id='$vid'"); ?>
+		<div class="visitor-info-popup">
+			<div class="btn-group btn-group-justified">
+				<a href="#" class="btn btn-success edit-btn"><i class="fa fa-pencil"></i> Edit</a>
+				<a href="#" class="btn btn-danger delete-btn"><i class="fa fa-trash"></i> Delete</a>
+				<a href="#" class="btn btn-primary done-btn"><i class="fa fa-check"></i> Done</a>
+			</div>
+			<div style="border-radius: 0; text-align: center;" class="alert alert-success"><?php echo "Visited on ".date("d-M-Y", strtotime($result[0]->date)); ?></div>
+			<table style="width: 100%;">
+				<tr>
+					<td><b>Child Name:</b></td>
+					<td><input type="text" class="form-control e-c-name" value="<?php echo $result[0]->c_name; ?>" disabled></td>
+					<td><b>Parent Name:</b></td>
+					<td><input type="text" class="form-control e-p-name" value="<?php echo $result[0]->p_name; ?>" disabled></td>
+				</tr>
+
+				<tr>
+					<td><b>Gender:</b></td>
+					<td class="e-gender">
+						<select class="form-control" disabled>
+							<option value="">Select Gender</option>
+							<option <?php if($result[0]->c_gender == "M") echo "selected"; ?> value="M">Male</option>
+							<option <?php if($result[0]->c_gender == "F") echo "selected"; ?> value="F">Female</option>
+						</select>
+					</td>
+					<td><b>D.O.B:</b></td>
+					<td><input type="date" class="form-control e-dob" value="<?php echo $result[0]->c_dob; ?>" disabled></td>
+				</tr>
+
+				<tr>
+					<td><b>Phone:</b></td>
+					<td><input type="text" class="form-control e-phone" value="<?php echo $result[0]->phone; ?>" disabled></td>
+					<td><b>E-mail:</b></td>
+					<td><input type="text" class="form-control e-email" value="<?php echo $result[0]->email; ?>" disabled></td>
+				</tr>
+				<tr>
+					<td><b>Address:</b></td>
+					<td><textarea class="form-control e-address" disabled><?php echo $result[0]->address; ?></textarea></td>
+					<td><b>City:</b></td>
+					<td><input type="text" class="form-control e-city" value="<?php echo $result[0]->city; ?>" disabled></td>
+				</tr>
+
+				<tr>
+					<td><b>Postal Code:</b></td>
+					<td><input type="text" class="form-control e-zip" value="<?php echo $result[0]->zip; ?>" disabled></td>
+					<td><b>State:</b></td>
+					<td><input type="text" class="form-control e-state" value="<?php echo $result[0]->state; ?>" disabled></td>
+				</tr>
+
+				<tr>
+					<td><b>Class:</b></td>
+					<td class="e-class">
+						<select class="form-control" disabled>
+							<option value="">Select Class</option> <?php 
+							$class_table = $wpdb->prefix."wpsp_class";
+							$classes = $wpdb->get_results("SELECT cid, c_name FROM $class_table");
+							foreach ($classes as $class) { ?>
+								<option <?php if($class->cid == $result[0]->c_class) echo "selected"; ?> value="<?php echo $class->cid; ?>"><?php echo $class->c_name; ?></option> <?php
+							} ?>
+						</select>
+					</td>
+					<td><b>Purpose Of Visit:</b></td>
+					<td class="e-purpose">
+						<select class="form-control e-purpose" disabled>
+							<option value="">Select Purpose of Visit</option>
+							<option <?php if($result[0]->v_purpose == "ADM") echo "selected"; ?> value="ADM">Admission</option>
+                    		<option <?php if($result[0]->v_purpose == "KAS") echo "selected"; ?> value="KAS">Know about school</option>
+                    		<option <?php if($result[0]->v_purpose == "OTH") echo "selected"; ?> value="OTH">Other</option>
+						</select>
+					</td>
+				</tr>
+
+				<tr>
+					<td><b>Visit Details:</b></td>
+					<td><textarea class="form-control e-v-details" disabled><?php echo $result[0]->v_detail; ?></textarea></td>
+					<td><b>How did you hear about us:</b></td>
+					<td class="e-approach">
+						<select class="form-control" disabled>
+                    		<option value="">How did you hear about us?</option>
+                    		<option <?php if($result[0]->approach == "SWT") echo "selected"; ?> value="SWT">School Website</option>
+                    		<option <?php if($result[0]->approach == "GSR") echo "selected"; ?> value="GSR">Google Search</option>
+                    		<option <?php if($result[0]->approach == "BOA") echo "selected"; ?> value="BOA">Brochure or Advertising</option>
+                    		<option <?php if($result[0]->approach == "NFR") echo "selected"; ?> value="NFR">Neighbor or Friend Referral</option>
+                    	</select>
+					</td>
+				</tr>
+
+				<tr>
+					<td><b>Session:</b></td>
+					<td><input type="text" class="form-control" value="<?php echo $result[0]->session; ?>" readonly></td>
+					<td><b>Converted:</b></td>
+					<td>
+						<select class="form-control" readonly>
+							<option value="">Select One</option>
+							<option <?php if(!empty($result[0]->converted)) echo "selected"; ?> value="1">Yes</option>
+							<option <?php if(empty($result[0]->converted)) echo "selected"; ?> value="0">No</option>
+						</select>
+					</td>
+				</tr>
+
+			</table>
+
+			<!--<div class='panel-group' id='accordion'>
+				<div class='panel panel-primary'>
+					<h4 class='panel-title'>
+						<button class='btn btn-primary btn-block' id='collapse-button' data-toggle='collapse' href='#fees-details'><i class='fa fa-inr' aria-hidden='true'></i> View Fees Details</button>
+					</h4>
+					<div id='fees-details' class='panel-collapse collapse'>
+						<div id='panel-body' class='panel-body'>
+							<table>
+								<tr>
+									<td>Date</td>
+									<td>Comment</td>
+								</tr>
+							</table>	
+						</div>
+					</div>
+				</div>
+			</div>-->
+
+			<script type="text/javascript">
+				$(".done-btn").fadeOut();
+
+				$(".edit-btn").click(function(){
+					$(".done-btn").fadeToggle();
+					$(".delete-btn").fadeToggle();
+					$(".edit-btn").fadeToggle();
+					$(".visitor-info-popup input, .visitor-info-popup textarea, .visitor-info-popup select").removeAttr('disabled')
+				});
+
+				$(".done-btn").click(function(){
+					$(".done-btn").fadeToggle();
+					$(".delete-btn").fadeToggle();
+					$(".edit-btn").fadeToggle();
+					$(".visitor-info-popup input, .visitor-info-popup textarea, .visitor-info-popup select").attr('disabled', true);
+
+					
+					let purpose = $(".e-purpose select").val();
+					let vDetails = $(".e-v-details").val();
+					let approach = $(".e-approach select").val();
+					let phone = $(".e-phone").val();
+					let pName = $(".e-p-name").val();
+					let email = $(".e-email").val();
+					let address = $(".e-address").val();
+					let city = $(".e-city").val();
+					let state = $(".e-state").val();
+					let zip = $(".e-zip").val();
+					let cName = $(".e-c-name").val();
+					let dob = $(".e-dob").val();
+					let sClass = $(".e-class select").val();
+					let gender = $(".e-gender select").val();
+					let action = "edit_visitor_data";
+
+					let data=new Array();
+
+					data.push(
+						{ name: 'action', value: action },
+						{ name: 'purpose', value: purpose },
+						{ name: 'vDetails', value: vDetails },
+						{ name: 'approach', value: approach },
+						{ name: 'pName', value: pName },
+						{ name: 'phone', value: phone },
+						{ name: 'email', value: email },
+						{ name: 'address', value: address },
+						{ name: 'city', value: city },
+						{ name: 'state', value: state },
+						{ name: 'zip', value: zip },
+						{ name: 'cName', value: cName },
+						{ name: 'dob', value: dob },
+						{ name: 'class', value: sClass },
+						{ name: 'gender', value: gender },
+						{ name: 'id', value: <?php echo $result[0]->id; ?> }
+					);
+			  		$.ajax({
+			  			method: "POST",
+			  			url: ajax_url,
+			  			data: data,
+			  			success: function(resp){
+			  				if (resp == 'success') {
+			  					$.fn.notify('success',{'desc':'Information saved succesfully!'});
+			  				} else{
+			  					$.fn.notify('error',{'desc':resp});
+			  				}
+			  			},
+			  			error: function(){
+			  				$.fn.notify('error',{'desc':'Something went wrong'});
+			  			},
+			  			beforeSend: function(){
+			  				$.fn.notify('loader',{'desc':'Saving Data...'});
+			  			},
+			  			complete: function(){
+			  				$('.pnloader').remove();
+			  			}
+			  		});
+				});
+
+				$(".delete-btn").click(function(){
+					$.confirm({
+					    title: 'Are you sure you want to delete this record? This cannot be undone!',
+					    content: 'This will remove all data associated with this visitor including their follow up details!',
+					    buttons: {
+					        sure: {
+					            text: 'Sure',
+					            btnClass: 'btn-red',
+					            keys: ['enter'],
+					            action: function(){
+					            	let data=new Array();
+					            	data.push(
+					            		{name: "action", value: "delete_visitor_record"},
+					            		{name: "id", value: <?php echo $result[0]->id; ?>}
+					            	);
+					            	$.ajax({
+							  			method: "POST",
+							  			url: ajax_url,
+							  			data: data,
+							  			success: function(resp){
+							  				if (resp == 'success') {
+							  					$.fn.notify('success',{'desc':'Vsitor succesfully deleted!'});
+							  				} else{
+							  					$.fn.notify('error',{'desc':resp});
+							  				}
+							  			},
+							  			error: function(){
+							  				$.fn.notify('error',{'desc':'Something went wrong'});
+							  			},
+							  			beforeSend: function(){
+							  				$.fn.notify('loader',{'desc':'Deleting Visitor....'});
+							  			},
+							  			complete: function(){
+							  				$('.pnloader').remove();
+							  				location.reload();
+							  			}
+							  		});
+					            }
+					        },
+					        cancel: function () {
+					            
+					        }
+					    }
+					});
+				});
+
+
+			</script>
+		</div> <?php
+
+		wp_die();
+	}
+
+	function edit_visitor_data(){
+		global $wpdb;
+
+		$purpose = $_POST['purpose'];
+		$v_details = $_POST['vDetails'];
+		$approach = $_POST['approach'];
+		$p_name = $_POST['pName'];
+		$phone = $_POST['phone'];
+		$email = $_POST['email'];
+		$address = $_POST['address'];
+		$city = $_POST['city'];
+		$state = $_POST['state'];
+		$zip = $_POST['zip'];
+		$c_name = $_POST['cName'];
+		$dob = date('Y-m-d', strtotime($_POST['dob']));
+		$class = $_POST['class'];
+		$gender = $_POST['gender'];
+		$id = $_POST['id'];
+
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+
+		if($wpdb->query("UPDATE $visitors_table SET p_name='$p_name', phone='$phone', email='$email', address='$address', city='$city', state='$state', zip='$zip', c_name='$c_name', c_class='$class', c_dob='$dob', c_gender='$gender', v_purpose='$purpose', v_detail='$v_details', approach='$approach' WHERE id='$id' ")) echo "success";
+
+		wp_die();
+	}
+
+	function delete_visitor_record(){
+		global $wpdb;
+
+		$id = $_POST['id'];
+		$visitors_table = $wpdb->prefix."wpsp_visitors";
+		$followup_table = $wpdb->prefix."wpsp_follow_up";
+
+		try{
+			$wpdb->query("BEGIN;");
+
+			if($wpdb->query("DELETE FROM $visitors_table WHERE id='$id'") && $wpdb->query("DELETE FROM $followup_table WHERE visitor='$id'")) echo "success";
+			else throw new Exception($wpdb->print_error());
+
+			$wpdb->query("COMMIT;");
+		}
+		catch(Exception $e){
+			$wpdb->query("ROLLBACK;");
+			echo "Error Processing Request".$e->getMessage();
+		}
+
+		wp_die();
+	}
 ?>

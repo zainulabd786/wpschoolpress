@@ -743,7 +743,7 @@ input:checked + .slider:before {
     z-index: 10;
     box-shadow: 3px 4px 10px 1px #000;
 }
-.visitor-suggestions table{
+.visitor-suggestions table, .visitor-info-popup table{
     width: 100%;
 
 }
@@ -754,6 +754,10 @@ input:checked + .slider:before {
     cursor: pointer;
     background-color: #182D3E;
     color: #fff;
+}
+
+.visitor-info-popup table tr td{
+    padding: 10px
 }
 
 

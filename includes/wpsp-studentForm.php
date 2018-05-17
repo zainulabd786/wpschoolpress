@@ -23,12 +23,12 @@
                             
                         </table>
                     </div>
-                    <input type="hidden" value="0">
                 </div>
                
                  
                 <!-- /.box-header -->
                 <form name="StudentEntryForm" id="StudentEntryForm" method="post" enctype="multipart/form-data" novalidate="novalidate"> 
+                    <input type="hidden" class="vid" name="vid" value="0">
                     <div class="box-body text-black">
                         <div class="col-md-6">
                             <h3 class="box-title"> <i class="fa fa-info" aria-hidden="true"></i>&nbsp;Personal Details</h3>

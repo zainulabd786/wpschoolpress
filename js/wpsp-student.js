@@ -589,10 +589,23 @@ $(document).ready(function () {
             $("#current_city").val(data[0].city);
             $("#current_pincode").val(data[0].zip);
             $("#stdClass").val(data[0].c_class);
-            $("#Dob").val(data[0].c_dob);
+            $("#Dob").val(convertDate(data[0].c_dob));
+            $(".vid").val(data[0].id);
+            if(data[0].c_gender == "M") $("input[name=s_gender][value='Male']").prop("checked",true);
+            else if(data[0].c_gender == "F") $("input[name=s_gender][value='Female']").prop("checked",true);
+            else $("input[name=s_gender][value='other']").prop("checked",true);
+            $('#pEmail').trigger('blur');
         });
     });
+
+    
 });
+
+function convertDate(inputFormat) {
+    function pad(s) { return (s < 10) ? '0' + s : s; }
+    var d = new Date(inputFormat);
+    return [pad(d.getMonth()+1), pad(d.getDate()), d.getFullYear()].join('/');
+}
 
 function checkRollNo(){
 	var rollNo = $('#Rollno').val();
