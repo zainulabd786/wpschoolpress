@@ -206,6 +206,12 @@ function ajax_actions(){
 		
 		add_action( 'wp_ajax_get_stock_status', 'get_stock_status' );
 
+		add_action( 'wp_ajax_update_item_input', 'update_item_input' );
+
+		add_action( 'wp_ajax_update_inv_item', 'update_inv_item' );
+
+		add_action( 'wp_ajax_delete_master_item', 'delete_master_item' );
+
 		add_action( 'wp_ajax_save_visitor_data', 'save_visitor_data' );
 
 		add_action( 'wp_ajax_follow_up', 'follow_up' );

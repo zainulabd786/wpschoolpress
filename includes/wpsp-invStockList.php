@@ -32,6 +32,7 @@
 										<th>Item Name</th>
 										<th>Stock</th>
 										<th>Item Count</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody> <?php
@@ -48,6 +49,10 @@
 												$items_count_result = $wpdb->get_results("SELECT SUM(quantity) AS item_count FROM $items_table WHERE master_id='$item->master_id'");
 												if(!empty($items_count_result[0]->item_count)) echo $items_count_result[0]->item_count; else echo "0"; ?>
 											</td>
+											<td>
+												<button type="button" id="<?php echo $item->master_id; ?>" class="btn btn-primary edit-btn"><i class="fa fa-pencil"></i></button>
+												<button type="button" id="<?php echo $item->master_id; ?>" class="btn btn-danger delete-btn"><i class="fa fa-trash"></i></button>
+											</td>
 										</tr> <?php 
 									} ?>
 								</tbody>
@@ -56,6 +61,7 @@
 										<th>Item Name</th>
 										<th>Stock</th>
 										<th>Item Count</th>
+										<th>Action</th>
 								  </tr>
 								</tfoot>
 							  </table>

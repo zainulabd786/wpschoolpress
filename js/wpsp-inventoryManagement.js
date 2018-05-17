@@ -106,13 +106,18 @@ $(document).ready(function() {
         url: ajax_url,
         data: data,
         success: function(resp){
-          $(".inv-avail").html(resp)
+          if (resp == 'success') {
+            $.fn.notify('success',{'desc':'Information saved succesfully!'});
+          } else{
+            $.fn.notify('error',{'desc':resp});
+          }
         },
         beforeSend: function(){
           $.fn.notify('loader',{'desc':'Fetching Stock Status...'});
         },
         complete: function(){
           $('.pnloader').remove();
+
         }
       });
     });
@@ -120,4 +125,36 @@ $(document).ready(function() {
     $("#assigned_table").dataTable( {
       "searching": true
     } );
+
+    $(".edit-btn").click(function(){
+      let id = $(this).attr('id');
+      $.post(ajax_url, {action: "update_item_input", id: id}, function(data){ $.alert(data); });
+    });
+
+    $(".delete-btn").click(function(){
+      let id = $(this).attr('id');
+
+      var data=new Array();
+
+      data.push(
+        { name: 'action', value: 'delete_master_item' },
+        { name: 'id', value: id }
+      );
+      $.ajax({
+        method: 'POST',
+        url: ajax_url,
+        data: data,
+        success: function(resp){
+          $(".inv-avail").html(resp)
+        },
+        beforeSend: function(){
+          $.fn.notify('loader',{'desc':'Fetching Stock Status...'});
+        },
+        complete: function(){
+          $('.pnloader').remove();
+          location.reload();
+        }
+      });
+     // $.post(ajax_url, {action: "delete_master_item", id: id}, function(data){ $.alert(data); location.reload(); });
+    });
 });

@@ -4079,6 +4079,66 @@ function wpsp_Import_Dummy_contents() {
 		return $items-$assigned;
 	}
 
+	function update_item_input(){
+		global $wpdb;
+
+		$master_table = $wpdb->prefix."wpsp_inventory_master";
+		$id = $_POST['id'];
+		$res = $wpdb->get_results("SELECT * FROM $master_table WHERE master_id='$id'");
+		//echo "SELECT * FROM $master_table WHERE master_id='$id'";  ?>
+
+		<input type="text" class="form-control u-item-name" id="<?php echo $res[0]->master_id; ?>" value="<?php echo $res[0]->item_name; ?>">
+		<script type="text/javascript">
+			$(".u-item-name").change(function(){
+				var data=new Array();
+
+			    data.push(
+			      { name: 'action', value: 'update_inv_item' },
+			      { name: 'item', value: $(this).val() },
+			      { name: 'id', value: $(this).attr('id') }
+			    );
+			    $.ajax({
+			      method: 'POST',
+			      url: ajax_url,
+			      data: data,
+			      success: function(resp){
+			        //$(".inv-avail").html(resp)
+			      },
+			      beforeSend: function(){
+			        $.fn.notify('loader',{'desc':'Fetching Stock Status...'});
+			      },
+			      complete: function(){
+			        $('.pnloader').remove();
+			        location.reload();
+			      }
+			    });
+			});
+		</script> <?php 
+
+		wp_die();
+	}
+
+	function update_inv_item(){
+		global $wpdb;
+
+		$master_table = $wpdb->prefix."wpsp_inventory_master";
+		$id = $_POST['id'];
+		$item = $_POST['item'];
+
+		if($wpdb->query("UPDATE $master_table SET item_name='$item' WHERE master_id='$id'")) echo "success";
+	}
+
+	function delete_master_item(){
+		global $wpdb;
+		
+		$master_table = $wpdb->prefix."wpsp_inventory_master";
+		$id = $_POST['id'];
+
+		if($wpdb->query("DELETE FROM $master_table WHERE master_id='$id'")) echo "success";
+
+		wp_die();
+	}
+
 	function save_visitor_data(){
 		global $wpdb;
 
