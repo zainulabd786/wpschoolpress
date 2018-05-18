@@ -58,6 +58,7 @@ $(document).ready(function(){
   			},
   			complete: function(){
   				$('.pnloader').remove();
+  				location.reload();
   			}
   		});
 	});

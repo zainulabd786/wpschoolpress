@@ -49,6 +49,7 @@ $(document).ready(function() {
   			},
   			complete: function(){
   				$('.pnloader').remove();
+          location.reload();
   			}
   		});
   	});
@@ -106,11 +107,7 @@ $(document).ready(function() {
         url: ajax_url,
         data: data,
         success: function(resp){
-          if (resp == 'success') {
-            $.fn.notify('success',{'desc':'Information saved succesfully!'});
-          } else{
-            $.fn.notify('error',{'desc':resp});
-          }
+          $(".inv-avail").html(resp);
         },
         beforeSend: function(){
           $.fn.notify('loader',{'desc':'Fetching Stock Status...'});
