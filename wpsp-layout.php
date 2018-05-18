@@ -319,7 +319,14 @@ function wpsp_sidebar()
                 <span>".__('Students','SchoolWeb')."</span>
               </a>
             </li>";
-			
+			 if($current_user_role=='administrator' || $current_user_role=='editor' ) {  
+                 echo "<li class=".$enquiry_page.' '.$bgFirstBlock.">
+                    <a href='".site_url('sch-enquiry')."'>
+                      <i class='fa fa-table'></i>
+                      <span>".__('Enquiries And Visitors','SchoolWeb')."</span>
+                    </a>
+                  </li>";
+          }
           if($current_user_role=='administrator' || $current_user_role=='editor' ) {  
 		             echo "<li class=".$fees_page.' '.$bgFirstBlock.">
                     <a href='".site_url('sch-fee-man')."'>
@@ -336,14 +343,7 @@ function wpsp_sidebar()
                     </a>
                   </li>";
           }
-          if($current_user_role=='administrator' || $current_user_role=='editor' ) {  
-                 echo "<li class=".$enquiry_page.' '.$bgFirstBlock.">
-                    <a href='".site_url('sch-enquiry')."'>
-                      <i class='fa fa-table'></i>
-                      <span>".__('Enquiry','SchoolWeb')."</span>
-                    </a>
-                  </li>";
-          }
+         
           echo "
           <li class=".$teacher_page.' '.$bgFirstBlock.">
             <a href='".site_url('sch-teacher')."'>
