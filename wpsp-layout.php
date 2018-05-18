@@ -138,7 +138,7 @@ function wpsp_header(){
 							$settings_table=$wpdb->prefix."wpsp_settings";
 							$num_msg=$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 							$num_of_msg = $num_msg[0]->option_value; ?>
-							Number of SMS Left :  <span class="label label-success"><?php echo $num_of_msg; ?> </span>                 
+							Number of SMS Left :  <span class="label label-success"><?php echo (!empty($num_of_msg))?$num_of_msg:'0'; ?> </span>                 
                     </li>			
                   <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">

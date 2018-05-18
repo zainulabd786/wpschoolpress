@@ -145,14 +145,18 @@ $(document).ready(function() {
         url: ajax_url,
         data: data,
         success: function(resp){
-          $(".inv-avail").html(resp)
+          if (resp == 'success') {
+            $.fn.notify('success',{'desc':'Item Successfully Deleted!'});
+          } else{
+            $.fn.notify('error',{'desc':resp});
+          }
         },
         beforeSend: function(){
           $.fn.notify('loader',{'desc':'Fetching Stock Status...'});
         },
         complete: function(){
           $('.pnloader').remove();
-          location.reload();
+         // location.reload();
         }
       });
      // $.post(ajax_url, {action: "delete_master_item", id: id}, function(data){ $.alert(data); location.reload(); });

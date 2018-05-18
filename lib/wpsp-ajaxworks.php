@@ -4129,9 +4129,24 @@ function wpsp_Import_Dummy_contents() {
 		global $wpdb;
 		
 		$master_table = $wpdb->prefix."wpsp_inventory_master";
+		$items_table = $wpdb->prefix."wpsp_inventory_items";
+		$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
+
 		$id = $_POST['id'];
 
-		if($wpdb->query("DELETE FROM $master_table WHERE master_id='$id'")) echo "success";
+		$ass_res = $wpdb->get_results("SELECT sno FROM $assigned_table WHERE master_id='$id'");
+		$ass_rows = $wpdb->num_rows;
+
+		$item_res = $wpdb->get_results("SELECT item_id FROM $items_table WHERE master_id='$id'");
+		$item_rows = $wpdb->num_rows;
+
+		if(empty($ass_rows) && empty($item_rows)){
+			if($wpdb->query("DELETE FROM $master_table WHERE master_id='$id'")) echo "success";
+		}
+		else{
+			echo "This cannot be deleted! Other records are linked with this item.";
+		}
+		
 
 		wp_die();
 	}
