@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="form-group visitor-search-container">
-                    <input type="search" class="form-control search-visitor-inp" placeholder="Search From Visitors">
+                    <input type="search" class="form-control search-visitor-inp" placeholder="Search Record From Enquiries And Visitors">
                     <div class="visitor-suggestions">
                         <table>
                             
