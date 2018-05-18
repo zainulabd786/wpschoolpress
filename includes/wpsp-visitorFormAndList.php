@@ -123,7 +123,7 @@
 							<th>Name</th>
 							<th>Child</th>
 							<th>Phone</th>
-							<th>Address</th>
+							<!--<th>Address</th>-->
 							<th>Purpose</th>
 							<th>Followup</th>
 							<th>Converted</th>
@@ -145,7 +145,7 @@
 								<td><?php echo $visitor->p_name; ?></td>
 								<td><?php echo $visitor->c_name; ?></td>
 								<td><?php echo $visitor->phone; ?></td>
-								<td><?php echo $visitor->address.", ".$visitor->city.", ".$visitor->state; ?></td>
+								<!--<td><?php echo $visitor->address.", ".$visitor->city.", ".$visitor->state; ?></td>-->
 								<td><?php echo $purpose; ?></td>
 								<td><a id="<?php echo $visitor->id; ?>" class="follow-up-history" href="#"><?php echo $visitor->follow_up; ?></a></td>
                                 <td><?php echo ($visitor->converted == 0) ? "No" : "Yes"; ?></td>
@@ -165,7 +165,7 @@
 							<th>Name</th>
 							<th>Child</th>
 							<th>Phone</th>
-							<th>Address</th>
+							<!--<th>Address</th>-->
 							<th>Purpose</th>
 							<th>Followup</th>
                             <th>Converted</th>
