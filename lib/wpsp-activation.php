@@ -423,8 +423,7 @@
 	$sql_fees_settings_table = "CREATE TABLE IF NOT EXISTS $fees_settings  (
 	  `cid` int(11) NOT NULL PRIMARY KEY,	  
 	  `admission_fees` int(11),
-	  `tution_fees` int(11),	 
-	  `transport_chg` int(11),	 
+	  `tution_fees` int(11),		 
 	  `annual_chg` int(11),	 
 	  `recreation_chg` int(11)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";

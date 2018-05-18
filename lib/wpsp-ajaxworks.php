@@ -2654,7 +2654,7 @@ function wpsp_Import_Dummy_contents() {
 			$class = $_POST['classId'];
 			$adm = $_POST['adm'];
 			$ttn = $_POST['ttn'];
-			$trans = $_POST['trans'];
+			//$trans = $_POST['trans'];
 			$annual = $_POST['annual'];
 			$rec = $_POST['rec'];
 			$fees_table = $wpdb->prefix."wpsp_fees_settings";
@@ -2664,13 +2664,11 @@ function wpsp_Import_Dummy_contents() {
 					array(
 						'admission_fees' => $adm,
 						'tution_fees' => $ttn,
-						'transport_chg' => $trans,
 						'annual_chg' => $annual,
 						'recreation_chg' => $rec
 					),
 					array( 'cid' => $class),
 					array(
-						'%d',
 						'%d',
 						'%d',
 						'%d',
@@ -2691,7 +2689,6 @@ function wpsp_Import_Dummy_contents() {
 						'cid' => $class,
 						'admission_fees' => $adm,
 						'tution_fees' => $ttn,
-						'transport_chg' => $trans,
 						'annual_chg' => $annual,
 						'recreation_chg' => $rec
 					)

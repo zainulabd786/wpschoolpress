@@ -28,7 +28,7 @@
 	</div>
 	<div class="form-group">
 		<label for="fs-trans">Transportation Charges</label>
-		<input type="text" class="form-control" id="fs-trans" disabled>
+		<input type="text" class="form-control" value="This can be set Under Transport Option based on routes" readonly>
 	</div>
 	<div class="form-group">
 		<label for="fs-annaul">Annual Fees</label>

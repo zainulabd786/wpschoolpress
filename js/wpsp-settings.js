@@ -283,7 +283,7 @@ $(document).ready(function(){
 		var action= "save_fees_settings";
 		var adm= $("#fs-adm").val();
 		var	ttn= $("#fs-tution").val();
-		var	trans= $("#fs-trans").val();
+		//var	trans= $("#fs-trans").val();
 		var	annual= $("#fs-annual").val();
 		var	rec= $("#fs-recreation").val();
 		var	classId= $(".fs-class select").val();
@@ -291,7 +291,7 @@ $(document).ready(function(){
 		var session = $("#session-setting").val();
 		var sessionStart = $("#session-start select").val();
 		var data=new Array();
-		data.push({name: 'action', value: action},{name: 'adm', value: adm},{name: 'ttn', value: ttn},{name: 'trans', value: trans},{name: 'annual', value: annual},{name: 'rec', value: rec},{name: 'classId', value: classId},{name: 'dueDate', value: dueDate},{name: 'session', value: session},{name:'sStart', value: sessionStart});
+		data.push({name: 'action', value: action},{name: 'adm', value: adm},{name: 'ttn', value: ttn},{name: 'annual', value: annual},{name: 'rec', value: rec},{name: 'classId', value: classId},{name: 'dueDate', value: dueDate},{name: 'session', value: session},{name:'sStart', value: sessionStart});
 		$.ajax({
 			method:"POST",
 			url:ajax_url, 
