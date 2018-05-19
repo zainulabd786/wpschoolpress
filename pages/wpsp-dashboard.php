@@ -7,6 +7,35 @@
     	if (current_user_can($role))
     		$current_user_role = $role;
     	endforeach;
+
+    	if( $current_user_role == 'administrator'){
+    		$class_table = $wpdb->prefix."wpsp_class";
+    		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+    		$settings_table = $wpdb->prefix."wpsp_settings";
+    		$class_res = $wpdb->get_results("SELECT COUNT(*) AS c_num FROM $class_table");
+    		$c_num = $class_res[0]->c_num;
+    		$fs_res = $wpdb->get_results("SELECT COUNT(*) AS fs_num FROM $fees_settings_table");
+    		$fs_num = $fs_res[0]->fs_num;
+
+    		$ses_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='session'");
+    		$dd_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='due_date'");  
+    		$sm_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_session_start'");  ?>
+    		<div class="setup-warnings"> <?php
+    			if($c_num != $fs_num){ ?>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set Fees For All Classes Under Settings->Fees Settings</div>
+	    		<?php } 
+	    		if(empty($ses_res[0]->option_value)){ ?>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set your Session Start date Under Settings->Fees Settings</div>
+	    		<?php }
+	    		if(empty($dd_res[0]->option_value)){ ?>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set Monthly due date for all classes Under Settings->Fees Settings</div>
+	    		<?php } 
+	    		if(empty($sm_res[0]->option_value)){ ?>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set the month in which your session starts Under Settings->Fees Settings</div>
+	    		<?php } ?>
+    		</div> <?php
+    	}
+
 		if( $current_user_role == 'administrator' || $current_user_role == 'editor' || $current_user_role == 'teacher' || $current_user_role == 'parent' || $current_user_role == 'student' ) {
 			wpsp_topbar();
 			wpsp_sidebar();

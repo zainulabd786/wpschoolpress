@@ -721,55 +721,7 @@ input:checked + .slider:before {
 
 
 
-.visitor-list-container #visitors_table_wrapper{
-    padding: 20px;
-}
-.visitor-search-container{
-    display: flex;
-    padding: 1px;
-    justify-content: center;
-}
-.visitor-search-container input{
-    width: 40%;
-}
-.visitor-suggestions{
-    position: absolute;
-    background-color: #ffffff;
-    width: 40%;
-    top: 126px;
-    border: 1px solid #000;
-    border-radius: 2px;
-    font-size: 12px;
-    z-index: 10;
-    box-shadow: 3px 4px 10px 1px #000;
-}
-.visitor-suggestions table, .visitor-info-popup table{
-    width: 100%;
 
-}
-.visitor-suggestions table tr td{
-    padding: 5px;
-}
-.visitor-single-row:hover{
-    cursor: pointer;
-    background-color: #182D3E;
-    color: #fff;
-}
-
-.visitor-info-popup table tr td{
-    padding: 10px
-}
-.setup-warnings{
-    position: fixed;
-    top: 60px;
-    right: 0;
-    z-index: 9999;
-}
-.setup-warnings div{
-    background-color: #FCF8E3!important;
-    color: #8A6D3B!important;
-    border-radius: 5px; 
-}
 
 
 
