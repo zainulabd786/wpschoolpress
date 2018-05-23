@@ -12,6 +12,8 @@
     		$class_table = $wpdb->prefix."wpsp_class";
     		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
     		$settings_table = $wpdb->prefix."wpsp_settings";
+    		$teachers_table = $wpdb->prefix."wpsp_teachers";
+    		$class_table = $wpdb->prefix."wpsp_class";
     		$class_res = $wpdb->get_results("SELECT COUNT(*) AS c_num FROM $class_table");
     		$c_num = $class_res[0]->c_num;
     		$fs_res = $wpdb->get_results("SELECT COUNT(*) AS fs_num FROM $fees_settings_table");
@@ -19,19 +21,31 @@
 
     		$ses_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='session'");
     		$dd_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='due_date'");  
-    		$sm_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_session_start'");  ?>
-    		<div class="setup-warnings"> <?php
+    		$sm_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_session_start'");  
+    		
+    		$teach_res = $wpdb->get_results("SELECT * FROM $teachers_table");  
+    		$class_res = $wpdb->get_results("SELECT * FROM $class_table");  ?>
+    		<div class="setup-warnings">
+    			<div class="alert alert-info">
+    				<i class="fa fa-info"></i> INFO! To avoid unstable behaviour and crashes please make sure you have gone through the below warning messages and no warning messages has left.
+    			</div> <?php
     			if($c_num != $fs_num){ ?>
 	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set Fees For All Classes Under Settings->Fees Settings</div>
 	    		<?php } 
-	    		if(empty($ses_res[0]->option_value)){ ?>
+	    		if(!empty($ses_res[0]->option_value)){ ?>
 	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set your Session Start date Under Settings->Fees Settings</div>
 	    		<?php }
-	    		if(empty($dd_res[0]->option_value)){ ?>
+	    		if(!empty($dd_res[0]->option_value)){ ?>
 	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set Monthly due date for all classes Under Settings->Fees Settings</div>
 	    		<?php } 
-	    		if(empty($sm_res[0]->option_value)){ ?>
+	    		if(!empty($sm_res[0]->option_value)){ ?>
 	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set the month in which your session starts Under Settings->Fees Settings</div>
+	    		<?php }
+	    		if(!empty($teach_res)){ ?>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must enter the teachers record before going to use this system.</div>
+	    		<?php }
+	    		if(!empty($class_res)){ ?>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must entered the Classes information before going to use this system</div>
 	    		<?php } ?>
     		</div> <?php
     	}

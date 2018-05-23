@@ -764,11 +764,17 @@ input:checked + .slider:before {
     top: 60px;
     right: 0;
     z-index: 9999;
+    max-width: 500px;
 }
 .setup-warnings div{
     background-color: #FCF8E3!important;
     color: #8A6D3B!important;
     border-radius: 5px; 
+}
+
+.setup-warnings .alert-info{
+    background-color: #D9EDF7!important;
+    color: #31708F!important;
 }
 
 
