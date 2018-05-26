@@ -14,21 +14,23 @@
     		$settings_table = $wpdb->prefix."wpsp_settings";
     		$teachers_table = $wpdb->prefix."wpsp_teacher";
     		$class_table = $wpdb->prefix."wpsp_class";
+    		$transport_table = $wpdb->prefix."wpsp_transport";
+
     		$class_res = $wpdb->get_results("SELECT COUNT(*) AS c_num FROM $class_table");
     		$c_num = $class_res[0]->c_num;
     		$fs_res = $wpdb->get_results("SELECT COUNT(*) AS fs_num FROM $fees_settings_table");
     		$fs_num = $fs_res[0]->fs_num;
-
     		$ses_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='session'");
     		$dd_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='due_date'");  
     		$sm_res = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_session_start'");  
-    		
     		$teach_res = $wpdb->get_results("SELECT * FROM $teachers_table");
-    		$class_res = $wpdb->get_results("SELECT * FROM $class_table");  ?>
+    		$class_res = $wpdb->get_results("SELECT * FROM $class_table");
+    		$trans_res = $wpdb->get_results("SELECT COUNT(*) AS trans_num FROM $transport_table ");   ?>
     		<div class="setup-warnings"> <?php
-    			if($c_num != $fs_num || empty($ses_res[0]->option_value) || empty($dd_res[0]->option_value) || empty($sm_res[0]->option_value) || empty($teach_res) || empty($class_res)){ ?>
+    			if($c_num != $fs_num || empty($ses_res[0]->option_value) || empty($dd_res[0]->option_value) || empty($sm_res[0]->option_value) || empty($teach_res) || empty($class_res) || empty($trans_res[0]->trans_num)){ ?>
     				<div class="alert alert-info"><i class="fa fa-info"></i> INFO! To avoid unstable behaviour and crashes please make sure you have gone through the below warning messages and no warning messages has left. </div> 
-    			<?php } if($c_num != $fs_num){ ?>
+    			<?php } 
+    			if($c_num != $fs_num){ ?>
 	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set Fees For All Classes Under Settings->Fees Settings</div>
 	    		<?php } 
 	    		if(empty($ses_res[0]->option_value)){ ?>
@@ -45,6 +47,9 @@
 	    		<?php }
 	    		if(empty($class_res)){ ?>
 	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must entered the Classes information before going to use this system</div>
+	    		<?php }
+	    		if(empty($trans_res[0]->trans_num)){ ?>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must enter the Transport Routes before going to use this system.</div>
 	    		<?php } ?>
     		</div> <?php
     	}
