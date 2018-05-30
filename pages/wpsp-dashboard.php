@@ -8,7 +8,7 @@
     		$current_user_role = $role;
     	endforeach;
 
-    	if( $current_user_role == 'administrator'){
+    	if( $current_user_role == 'administrator' || $current_user_role == 'editor'){
     		$class_table = $wpdb->prefix."wpsp_class";
     		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
     		$settings_table = $wpdb->prefix."wpsp_settings";
