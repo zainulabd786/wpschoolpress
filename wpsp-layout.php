@@ -165,7 +165,7 @@ function wpsp_header(){
                   <li class='user-footer'>
 				  <?php if( $role == 'administrator' || $role == 'editor' ) { ?>
 						<div class='pull-left'>
-						  <a href="<?php echo admin_url(); ?> " class='btn btn-primary'>WP Admin</a>
+						  <a href="<?php echo admin_url(); ?> " class='btn btn-primary'>Website Admin</a>
 						</div>
 				  <?php } ?>
                     <div class='pull-right'>
