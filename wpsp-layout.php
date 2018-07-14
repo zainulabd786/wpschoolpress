@@ -319,7 +319,7 @@ function wpsp_sidebar()
                 <span>".__('Students','SchoolWeb')."</span>
               </a>
             </li>";
-			 if($current_user_role=='administrator' || $current_user_role=='editor' ) {  
+			 if($current_user_role=='administrator' || $current_user_role=='editor' || $current_user_role=='teacher' ) {  
                  echo "<li class=".$enquiry_page.' '.$bgFirstBlock.">
                     <a href='".site_url('sch-enquiry')."'>
                       <i class='fa fa-table'></i>
@@ -335,7 +335,7 @@ function wpsp_sidebar()
                     </a>
                   </li>";
           }
-          if($current_user_role=='administrator' || $current_user_role=='editor' ) {  
+          if($current_user_role=='administrator' || $current_user_role=='editor' || $current_user_role=='teacher' ) {  
                  echo "<li class=".$inventory_page.' '.$bgFirstBlock.">
                     <a href='".site_url('sch-inv-management')."'>
                       <i class='fa fa-table'></i>
