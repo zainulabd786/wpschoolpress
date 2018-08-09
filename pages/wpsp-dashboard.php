@@ -28,28 +28,36 @@
     		$trans_res = $wpdb->get_results("SELECT COUNT(*) AS trans_num FROM $transport_table ");   ?>
     		<div class="setup-warnings"> <?php
     			if($c_num != $fs_num || empty($ses_res[0]->option_value) || empty($dd_res[0]->option_value) || empty($sm_res[0]->option_value) || empty($teach_res) || empty($class_res) || empty($trans_res[0]->trans_num)){ ?>
-    				<div class="alert alert-info"><i class="fa fa-info"></i> INFO! To avoid unstable behaviour and crashes please make sure you have gone through the below warning messages and no warning messages has left. </div> 
+    				<div class="alert alert-info"><i class="fa fa-info"></i> INFO! To avoid unstable behaviour and crashes please make sure you have gone through the below warning messages and no warning messages has left. 
+					<input type="button" name="cancelvalue" value="CLOSE" onClick="$(this).parent().hide();" style="color:red;margin: auto;display: block;"></div> 
     			<?php } 
     			if($c_num != $fs_num){ ?>
-	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set Fees For All Classes Under Settings->Fees Settings</div>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set Fees For All Classes Under Settings->Fees Settings
+					<input type="button" name="cancelvalue" value="CLOSE" onClick="$(this).parent().hide();" style="color:red;margin: auto;display: block;"></div>
 	    		<?php } 
 	    		if(empty($ses_res[0]->option_value)){ ?>
-	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set your Session Start date Under Settings->Fees Settings</div>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set your Session Start date Under Settings->Fees Settings
+					<input type="button" name="cancelvalue" value="CLOSE" onClick="$(this).parent().hide();" style="color:red;margin: auto;display: block;"></div>
 	    		<?php }
 	    		if(empty($dd_res[0]->option_value)){ ?>
-	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set Monthly due date for all classes Under Settings->Fees Settings</div>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set Monthly due date for all classes Under Settings->Fees Settings
+					<input type="button" name="cancelvalue" value="CLOSE" onClick="$(this).parent().hide();" style="color:red;margin: auto;display: block;"></div>
 	    		<?php } 
 	    		if(empty($sm_res[0]->option_value)){ ?>
-	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set the month in which your session starts Under Settings->Fees Settings</div>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! Please Set the month in which your session starts Under Settings->Fees Settings
+					<input type="button" name="cancelvalue" value="CLOSE" onClick="$(this).parent().hide();" style="color:red;margin: auto;display: block;"></div>
 	    		<?php }
 	    		if(empty($teach_res)){ ?>
-	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must enter the teachers record before going to use this system.</div>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must enter the teachers record before going to use this system.
+					<input type="button" name="cancelvalue" value="CLOSE" onClick="$(this).parent().hide();" style="color:red;margin: auto;display: block;"></div>
 	    		<?php }
 	    		if(empty($class_res)){ ?>
-	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must entered the Classes information before going to use this system</div>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must entered the Classes information before going to use this system
+					<input type="button" name="cancelvalue" value="CLOSE" onClick="$(this).parent().hide();" style="color:red;margin: auto;display: block;"></div>
 	    		<?php }
 	    		if(empty($trans_res[0]->trans_num)){ ?>
-	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must enter the Transport Routes before going to use this system.</div>
+	    			<div class="alert alert-warning"><i class="fa fa-warning"></i> WARNING! You must enter the Transport Routes before going to use this system.
+					<input type="button" name="cancelvalue" value="CLOSE" onClick="$(this).parent().hide();" style="color:red;margin: auto;display: block;"></div>
 	    		<?php } ?>
     		</div> <?php
     	}
