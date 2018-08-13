@@ -62,7 +62,7 @@
 										<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?><input type="checkbox" id="selectall" name="selectall" class="ccheckbox"><?php } else echo 'Sr. No.'; ?>
 										</th>
 										<th>Slip Number</th>
-										<th>Date & Time</th>
+										<th>Date</th>
 										<th>Registration No.</th>
 										<th>Full Name</th>
 										<th>Parent</th>
@@ -172,7 +172,7 @@
 									<th><?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { }
 										else echo 'Sr. No'; ?></th>
 									<th>Slip No.</th>
-									<th>Date & Time</th>
+									<th>Date</th>
 									<th>Registration Number</th>
 									<th>Full Name</th>
 									<th>Parent</th>

@@ -2810,8 +2810,9 @@ function wpsp_Import_Dummy_contents() {
 		global $wpdb;
 		$admission_fees = 0;
 		$wpdb->show_errors();
-		$current_date_time = date("Y-m-d H:i:s");
-		$todays_date		=	date("Y-m-d");
+		$issue_date = $_POST['issueDate'];
+		$current_date_time = $issue_date." ".date("H:i:s");
+		$todays_date =	$issue_date;
 		$months_array = array("none","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 		$tid = date("dmyis").$uid;
 		$admission_fees = $_POST['admissionFees'];
@@ -4619,6 +4620,17 @@ function wpsp_Import_Dummy_contents() {
 			$wpdb->query("ROLLBACK;");
 			echo "Error Processing Request".$e->getMessage();
 		}
+
+		wp_die();
+	}
+
+	function check_slip_num_availibility(){
+		global $wpdb;
+
+		$slip = $_POST['slipNo'];
+		$rec_tab = $wpdb->prefix."wpsp_fees_receipts";
+		$slip_sql = $wpdb->get_results("SELECT slip_no FROM $rec_tab WHERE slip_no='$slip'");
+		if(!empty($slip_sql[0]->slip_no)) echo "<div style='margin:5px;color:red;font-size:12px'>Slip Number Already Exist!</div>";
 
 		wp_die();
 	}

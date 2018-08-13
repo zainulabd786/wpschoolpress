@@ -129,8 +129,13 @@
 						                <div class="panel-body">
 						                	<?php $current_date = date("d-m-Y"); ?>
 						                	<div class="form-group">
+												<label for="dep-slip-num">Slip Number:</label>
+												<input type="text" class="form-control" id="dep-slip-num">
+												<div class="slip-num-availability"></div>
+											</div>
+						                	<div class="form-group">
 												<label for="dep-issue-date">Issue Date</label>
-												<input type="text" class="form-control" id="dep-issue-date" value="<?php echo $current_date; ?>" disabled>
+												<input type="date" class="form-control" id="dep-issue-date" value="<?php echo date('Y-m-d', strtotime($current_date)); ?>">
 											</div>
 											<div class="form-group dep-class-select">
 												<label for="dep-class">Class<sup>*</sup></label>

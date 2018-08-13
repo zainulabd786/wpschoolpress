@@ -37,6 +37,26 @@ $(document).ready(function(){
 	    return str.join(" ");
 	}
 
+	function convertDate(inputFormat) {
+		function pad(s) { return (s < 10) ? '0' + s : s; }
+	 	var d = new Date(inputFormat);
+	  	return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('-');
+	}
+
+	$("#dep-slip-num").keyup(function(){
+		$(".invoice-header-slip-no div").text($(this).val());
+		$.post(ajax_url, {
+			slipNo: $(this).val(),
+			action: "check_slip_number_availibility"
+		}, function(response){
+			$(".slip-num-availability").html(response)
+		});
+	});
+
+	$("#dep-issue-date").change(function(){
+		$(".invoice-header-date div").text(convertDate($(this).val()));
+	});
+
 	$("#dep-amount-exp, #dep-amount-paid").keyup(function(){
 		expectedAmt = $("#dep-amount-exp").val();
 		paidAmt = $("#dep-amount-paid").val();
@@ -358,6 +378,7 @@ $(document).ready(function(){
 	});
 	$("#dep-fees-btn").click(function(){
 		var action = "submit_deposit_form";
+		var issueDate = $("#dep-issue-date").val();
 		var slip = $(".invoice-header-slip-no div").text();
 		var uid = $(".dep-student-select select").val();
 		var cid = $(".dep-class-select select").val();
@@ -383,6 +404,7 @@ $(document).ready(function(){
 		data.push(
 			{name: 'action', value: action},
 			{name: 'slip', value: slip},
+			{name: 'issueDate', value: issueDate},
 			{name: 'studentId', value: uid},
 			{name: 'classId', value: cid},
 			{name: 'fromDate', value: from},

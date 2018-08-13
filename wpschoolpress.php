@@ -229,6 +229,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_edit_visitor_data', 'edit_visitor_data' );
 
 		add_action( 'wp_ajax_delete_visitor_record', 'delete_visitor_record' );
+
+		add_action( 'wp_ajax_check_slip_number_availibility', 'check_slip_num_availibility' );
 }
 
 function tl_save_error() {
