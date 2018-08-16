@@ -527,6 +527,65 @@ $(document).ready(function(){
 			alert("Please Select Students to send message");
 		}
 	});
+
+
+	/*--------------------------------CANCEL Payment--------------------------------*/
+
+	$(".cancel-payment").click(function(){
+		var sid = $(this).attr('id');
+		$.confirm({
+		    title: 'Confirm!',
+		    content: 'Are you sure you want to cancel this Payment?',
+		    theme: 'material',
+		    buttons: {
+		        confirm: {
+		            text: 'Cancel Payment',
+		            btnClass: 'btn-red',
+		            keys: ['enter'],
+		            action: function(){
+		                
+						let data = new Array();
+						data.push(
+							{name:'action', value:'cancel_payment'},
+							{name:'id', value: sid},
+						);
+						console.log(sid);
+						$.ajax({
+							method: 'POST',
+							url: ajax_url,
+							data: data,
+							success: function(res){
+								if(res=='success'){
+									$.fn.notify('success',{'desc':'Payment Cancelled!'});
+									//window.location.reload();
+								}
+								else $.fn.notify('error',{'desc':res});
+								console.log(res);
+							},
+							error:function(){
+								$.fn.notify('error',{'desc':'Something went wrong'});
+							},
+							beforeSend:function(){
+								$.fn.notify('loader',{'desc':'Cancelling...'});
+							},
+							complete:function(){
+								$('.pnloader').remove();
+								$(".btn-print").show();
+							}
+
+						});
+		            }
+		        },
+		        cancel: {
+		        	text: "Don't Cancel",
+		        	btnClass: 'btn-green'
+		        }
+		    }
+		});
+		
+	});
+
+	/*--------------------------------CANCEL Payment--------------------------------*/
 	
 });
 

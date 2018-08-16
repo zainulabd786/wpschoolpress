@@ -466,7 +466,7 @@ function wpsp_StudentPublicProfile(){
 													</tr> <?php
 													foreach ($sql_fees as $fee) {
 														$total_amt = $fee->adm+$fee->ttn+$fee->trans+$fee->ann+$fee->rec; ?>
-														<tr class="fees-single-row" id='<?php echo $fee->slip_no; ?>'>
+														<tr <?php if(!empty($fee->status)) echo "style='color:red;'"; ?> class="fees-single-row" id='<?php echo $fee->slip_no; ?>'>
 															<td>
 																<?php
 																$sql_slip_date = $wpdb->get_results("SELECT date_time FROM $record_table WHERE slip_no='$fee->slip_no' LIMIT 1");
@@ -477,7 +477,7 @@ function wpsp_StudentPublicProfile(){
 															</td>
 															<td><?php echo $fee->slip_no; ?></td>
 															<td><?php echo $fee->session; ?></td>
-															<td><i class="fa fa-inr"></i><?php echo number_format($total_amt); ?>/-</td>
+															<td><i class="fa fa-inr"></i><?php echo number_format($total_amt); ?>/- <?php if(!empty($fee->status)) echo "Payment Cancelled"; ?></td>
 														</tr>
 													<?php } ?>
 												</table>

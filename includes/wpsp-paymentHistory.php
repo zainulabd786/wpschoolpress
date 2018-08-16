@@ -107,7 +107,7 @@
 										$showing_records = "";
 										$date_query_rec = "";
 									}
-									$filter_sql = $wpdb->get_results("SELECT SUM(a.amount) AS total_payments FROM $fee_record_table a, $student_table s, $class_table c WHERE s.wp_usr_id=a.uid AND c.cid=s.class_id $classquery $date_query_sum");
+									$filter_sql = $wpdb->get_results("SELECT SUM(a.amount) AS total_payments FROM $fee_record_table a, $student_table s, $class_table c WHERE s.wp_usr_id=a.uid AND c.cid=s.class_id AND a.status!='1' $classquery $date_query_sum");
 									foreach ($filter_sql as $payments) { ?>
 										<script type="text/javascript">
 											document.getElementById("total-payments").innerHTML = "Total Payments Collected: <?php echo "<i class='fa fa-inr'></i>".number_format($payments->total_payments)."/-"; ?>";
@@ -126,7 +126,7 @@
 										$key++;
 										$amount = $stinfo->adm+$stinfo->ttn+$stinfo->trans+$stinfo->ann+$stinfo->rec;
 									?>
-										<tr>
+										<tr <?php if(!empty($stinfo->status)) echo "style='color:red;'"; ?>>
 											<td>
 											<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
 												<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $stinfo->wp_usr_id;?>">
@@ -161,6 +161,7 @@
 											<td>
 												<a class="view-transaction" id="<?php echo $stinfo->slip_no; ?>" title="View"><i class="fa fa-eye btn btn-success"></i></a>
 												<button class="btn btn-basic view-invoice" id="<?php echo $stinfo->slip_no; ?>" type="button">Invoice</button>
+												<button class="btn btn-danger cancel-payment" id="<?php echo $stinfo->slip_no; ?>" type="button" <?php if(!empty($stinfo->status)) echo "disabled" ?>><?php if(!empty($stinfo->status)) echo "Cancelled"; else echo "Cancel Payment"; ?></button>
 											</td>
 										</tr>
 									<?php

@@ -2819,17 +2819,17 @@ function wpsp_Import_Dummy_contents() {
 		$slip_no = $_POST['slip'];
 		$uid = $_POST['studentId'];
 		$cid = $_POST['classId'];
-		$from = $_POST['fromDate'];
-		$to = $_POST['toDate'];
+		$from = $_POST['fromDate']; //9
+		$to = $_POST['toDate']; //16
 		$from_trn = $_POST['fromDateTrn'];
 		$to_trn = $_POST['toDateTrn'];
 		$num_months = ($to - $from) + 1;
-		$tution_fees = $_POST['tutionFees'];
+		$tution_fees = $_POST['tutionFees']; //9600
 		$transport_chg = $_POST['transportChg'];
 		$annual_chg = $_POST['annualChg'];
 		$recreation_chg = $_POST['recreationChg'];
 		$exp_admission_fees = $_POST['expadmissionFees'];
-		$exp_tution_fees = $_POST['exptutionFees'];
+		$exp_tution_fees = $_POST['exptutionFees']; //9600
 		$exp_transport_chg = $_POST['exptransportChg'];
 		$exp_annual_chg = $_POST['expannualChg'];
 		$exp_recreation_chg = $_POST['exprecreationChg'];
@@ -2843,7 +2843,7 @@ function wpsp_Import_Dummy_contents() {
 		$mop = $_POST['mop'];
 		$pno = $_POST['pno'];
 		$fees_type = "";
-		$pm_tf = 0;
+		$pm_tf = 0; //1200
 		$pm_tc = 0;
 		$msg = "Dear Parents, Thanks for depositing the payment of the month ";
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
@@ -4631,6 +4631,50 @@ function wpsp_Import_Dummy_contents() {
 		$rec_tab = $wpdb->prefix."wpsp_fees_receipts";
 		$slip_sql = $wpdb->get_results("SELECT slip_no FROM $rec_tab WHERE slip_no='$slip'");
 		if(!empty($slip_sql[0]->slip_no)) echo "<div style='margin:5px;color:red;font-size:12px'>Slip Number Already Exist!</div>";
+
+		wp_die();
+	}
+
+	function cancel_payment(){
+		global $wpdb;
+
+		$record_table = $wpdb->prefix."wpsp_fees_payment_record";
+		$dues_table = $wpdb->prefix."wpsp_fees_dues";
+		$receipts_table = $wpdb->prefix."wpsp_fees_receipts";
+		$id = $_POST['id'];
+		$count = 0;
+
+		$slip_details = $wpdb->get_results("SELECT * FROM $record_table WHERE slip_no='$id'");
+
+		foreach ($slip_details as $slip) {
+			try{
+				$wpdb->query("BEGIN;");
+
+				$dues_data = array(
+					'date' => date('Y-m-d'),
+					'uid' => $slip->uid,
+					'month' => $slip->month,
+					'amount' => $slip->amount,
+					'fees_type' => $slip->fees_type,
+					'session' => $slip->session
+				);
+				$update_records_sql = "UPDATE $record_table SET status = '1' WHERE slip_no = '$id' ";
+				$update_slip_sql = "UPDATE $receipts_table SET status = '1' WHERE slip_no = '$id' ";
+				if(!$wpdb->insert($dues_table, $dues_data)) throw new Exception($wpdb->print_error());
+				if($count == 0){
+					if(!$wpdb->query($update_slip_sql) || !$wpdb->query($update_records_sql)) throw new Exception($wpdb->print_error());
+					else echo "success";
+				}
+				
+
+				$wpdb->query("COMMIT");
+			}
+			catch(Exception $e){
+				$wpdb->query("ROLLBACK");
+				echo "Error Processing Request".$e->getMessage();
+			}
+			$count++;
+		}
 
 		wp_die();
 	}

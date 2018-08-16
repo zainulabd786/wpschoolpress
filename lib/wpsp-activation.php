@@ -390,7 +390,8 @@
 	  `month` int(2),	 
 	  `amount` int(11),
 	  `session` varchar(20),
-	  `fees_type` varchar(50)
+	  `fees_type` varchar(50),
+	  `status` int(1)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_payment_record);
 
@@ -416,7 +417,8 @@
 	  `due_ttn` int(11),
 	  `due_trn` int(11),
 	  `due_ann` int(11),
-	  `due_rec` int(11)
+	  `due_rec` int(11),
+	  `status` int(1)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_receipts);
 
