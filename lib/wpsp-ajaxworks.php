@@ -4630,7 +4630,8 @@ function wpsp_Import_Dummy_contents() {
 		$slip = $_POST['slipNo'];
 		$rec_tab = $wpdb->prefix."wpsp_fees_receipts";
 		$slip_sql = $wpdb->get_results("SELECT slip_no FROM $rec_tab WHERE slip_no='$slip'");
-		if(!empty($slip_sql[0]->slip_no)) echo "<div style='margin:5px;color:red;font-size:12px'>Slip Number Already Exist!</div>";
+		if(!empty($slip_sql[0]->slip_no)) echo true;
+		else echo false;
 
 		wp_die();
 	}

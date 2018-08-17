@@ -49,7 +49,15 @@ $(document).ready(function(){
 			slipNo: $(this).val(),
 			action: "check_slip_number_availibility"
 		}, function(response){
-			$(".slip-num-availability").html(response)
+			if(response){
+				$(".slip-num-availability").html("<div style='margin:5px;color:red;font-size:12px'>Slip Number Already Exist!</div>");
+				$("#dep-fees-btn").attr("disabled", true);
+			}
+			else{
+				$(".slip-num-availability").html("");
+				$("#dep-fees-btn").attr("disabled", false);
+			}
+			
 		});
 	});
 
