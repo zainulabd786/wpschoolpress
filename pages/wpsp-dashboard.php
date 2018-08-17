@@ -156,7 +156,50 @@
 							<div id="multiple-events"></div>
 
 
-							<!------------- event detail modal ------------------------>
+							
+
+
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="box box-success">
+						<div class="box-header with-border">
+							<h3 class="box-title">Exams</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<?php
+								$exam_table=$wpdb->prefix."wpsp_exam";
+								$examinfo=$wpdb->get_results("select * from $exam_table order by e_s_date DESC");
+								?>
+							<table class="table table-bordered">
+								<th>Date</th>
+								<th>Exam</th>
+								<?php foreach($examinfo as $exam) { ?>
+								<tr>
+									<td><?php echo wpsp_ViewDate($exam->e_s_date)." TO ".wpsp_ViewDate($exam->e_e_date);?></td>
+									<td><?php echo $exam->e_name; ?></td>
+								</tr>
+								<?php } ?>
+							</table>
+						</div>
+					</div>
+<!--
+					<div class="box box-success">
+						<div class="box-header with-border">
+							<?php
+							//$settings_table=$wpdb->prefix."wpsp_settings";
+							//$num_msg=$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+							//$num_of_msg = $num_msg[0]->option_value; ?>
+							<h3 class="box-title">Number Of Messages(SMS) Left: <?php //echo $num_of_msg; ?></h3>
+						</div>
+					</div>
+					-->
+				</div>
+		</div>
+		</section>
+		<!------------- event detail modal ------------------------>
 							<div id="viewModal" class="modal fade">
 
 								<div class="modal-dialog">
@@ -210,48 +253,6 @@
 
 						</div>
 							<!------------- event detail modal ------------------------>
-
-
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="box box-success">
-						<div class="box-header with-border">
-							<h3 class="box-title">Exams</h3>
-						</div>
-						<!-- /.box-header -->
-						<div class="box-body">
-							<?php
-								$exam_table=$wpdb->prefix."wpsp_exam";
-								$examinfo=$wpdb->get_results("select * from $exam_table order by e_s_date DESC");
-								?>
-							<table class="table table-bordered">
-								<th>Date</th>
-								<th>Exam</th>
-								<?php foreach($examinfo as $exam) { ?>
-								<tr>
-									<td><?php echo wpsp_ViewDate($exam->e_s_date)." TO ".wpsp_ViewDate($exam->e_e_date);?></td>
-									<td><?php echo $exam->e_name; ?></td>
-								</tr>
-								<?php } ?>
-							</table>
-						</div>
-					</div>
-<!--
-					<div class="box box-success">
-						<div class="box-header with-border">
-							<?php
-							//$settings_table=$wpdb->prefix."wpsp_settings";
-							//$num_msg=$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
-							//$num_of_msg = $num_msg[0]->option_value; ?>
-							<h3 class="box-title">Number Of Messages(SMS) Left: <?php //echo $num_of_msg; ?></h3>
-						</div>
-					</div>
-					-->
-				</div>
-		</div>
-		</section>
 	<?php 
 		wpsp_body_end();
 		wpsp_footer();
