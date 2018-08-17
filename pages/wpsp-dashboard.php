@@ -198,11 +198,7 @@
 										<div class="modal-footer">
 
 											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-											<?php if( $current_user_role == 'administrator' || $current_user_role == 'editor' || $current_user_role == 'teacher'){ ?>
-											<button class="btn btn-danger" id="deleteEvent">Delete Event</button>
-
-											<button class="btn btn-primary" id="editEvent">Edit Event</button>
-										<?php } ?>
+											
 
 										</div>
 
