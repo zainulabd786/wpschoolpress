@@ -175,13 +175,13 @@ wpsp_header();
 														
 														foreach ($class_ids as $clss) { ?>
 															<?php																
-																$total_parent_user_list = $wpdb->get_results("select parent_wp_usr_id, p_fname from $studenttable where class_id=$clss->cid");																
+																$total_parent_user_list = $wpdb->get_results("select parent_wp_usr_id, p_fname, p_lname from $studenttable where class_id=$clss->cid");																
 																if( !empty( $total_parent_user_list ) ) { ?>
 																	<optgroup label="Class <?php echo $clss->c_name; ?> Parents">
 																	<?php
 																	foreach ($total_parent_user_list as $usr) {
 																		if ( $usr->parent_wp_usr_id != $current_user->ID ) { ?>
-																			<option	value="<?php echo $usr->parent_wp_usr_id; ?>"><?php echo $usr->p_fname; ?></option>
+																			<option	value="<?php echo $usr->parent_wp_usr_id; ?>"><?php echo $usr->p_fname." ".$usr->p_lname; ?></option>
 																	<?php }
 																	}
 																	echo '</optgroup>';
@@ -193,7 +193,7 @@ wpsp_header();
 														if( !empty( $teachers ) ) {
 															echo '<optgroup label="All Teachers">';
 															foreach( $teachers as $key=>$tinfo ) { ?>
-																<option	value="<?php echo $tinfo->wp_usr_id; ?>"><?php echo $tinfo->first_name; ?></option>
+																<option	value="<?php echo $tinfo->wp_usr_id; ?>"><?php echo $tinfo->first_name." ".$tinfo->last_name; ?></option>
 															<?php	
 															}
 															echo '</optgroup>';
