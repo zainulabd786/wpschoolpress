@@ -154,6 +154,68 @@
 								<label>Holidays</label>
 							</div>
 							<div id="multiple-events"></div>
+
+
+							<!------------- event detail modal ------------------------>
+							<div id="viewModal" class="modal fade">
+
+								<div class="modal-dialog">
+
+									<div class="modal-content">
+
+										<div class="modal-header">
+
+											<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+
+											<h4 id="viewEventTitle" class="modal-title"></h4>
+
+										</div>
+
+										<div class="modal-body" style="min-height: 150px">
+
+											<div class="col-md-12">
+
+												<label>Start : </label> <span id="eventStart"> </span>
+
+											</div>
+
+											<div class="col-md-12">
+
+												<label>End : </label> <span id="eventEnd"> </span>
+
+											</div>
+
+											<div class="col-md-12">
+
+												<label>Description : </label> <span id="eventDesc"> </span>
+
+											</div>
+
+
+
+										</div>
+
+										<div class="modal-footer">
+
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											<?php if( $current_user_role == 'administrator' || $current_user_role == 'editor' || $current_user_role == 'teacher'){ ?>
+											<button class="btn btn-danger" id="deleteEvent">Delete Event</button>
+
+											<button class="btn btn-primary" id="editEvent">Edit Event</button>
+										<?php } ?>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+							<!------------- event detail modal ------------------------>
+
+
 						</div>
 					</div>
 				</div>
@@ -205,7 +267,7 @@
 	}
 
 	//due monthly fees
-	$wpdb->show_errors();
+	/*$wpdb->show_errors();
 	$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
 	$settings_table		=	$wpdb->prefix."wpsp_settings";
 	$script_status = $session_start = 0;
@@ -315,5 +377,5 @@
 		if(date("d") == $next_day){
 			$wpdb->query("UPDATE $settings_table SET option_value = '0' WHERE option_name = 'due_php_script_status' ");
 		}
-	}
+	}*/
 ?>
