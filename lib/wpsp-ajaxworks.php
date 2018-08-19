@@ -4679,4 +4679,40 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function details_to_reassign_item(){
+		global $wpdb;
+
+		$id = $_POST['id'];
+		$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
+		$master_table = $wpdb->prefix."wpsp_inventory_master";
+		$teacher_table = $wpdb->prefix."wpsp_teacher";
+		$settings_table		=	$wpdb->prefix."wpsp_settings";
+
+		$results = $wpdb->get_results("SELECT a.sno, a.date, a.quantity, a.master_id, a.session, b.item_name, c.first_name, c.middle_name, c.last_name, c.empcode, c.wp_usr_id FROM $assigned_table a, $master_table b, $teacher_table c WHERE c.wp_usr_id=a.staff_uid AND b.master_id=a.master_id AND a.sno='$id'");
+
+		$teachers = $wpdb->get_results("SELECT first_name, middle_name, last_name, empcode, wp_usr_id FROM $teacher_table");
+
+		$session = $wpdb->get_results("SELECT * FROM $settings_table WHERE option_name='session'");
+
+		//echo "<pre>"; print_r($teachers); echo "</pre>";
+
+		$response = array('trachers_list' => $teachers , 'item_details' =>  $results[0], 'current_session' => $session[0]);
+
+		echo json_encode($response);
+
+		wp_die();
+	}
+
+	function deduct_quantity_after_reassign_item(){
+		global $wpdb;
+
+		$id = $_POST['id'];
+		$qty_left = $_POST['qtyLeft'];
+		$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
+		if($wpdb->query("UPDATE $assigned_table SET quantity = '$qty_left' WHERE sno='$id' ")) echo "success";
+		else echo "error";
+
+		wp_die();
+	}
 ?>

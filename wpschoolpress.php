@@ -39,7 +39,25 @@ define( 'PERMISSION_MSG', 'You don\'t have enough permission to access this page
 register_activation_hook( __FILE__, 'wpsp_activation' );
 function wpsp_activation() {
 	include_once( WPSP_PLUGIN_PATH.'lib/wpsp-activation.php' );
+
+	if (! wp_next_scheduled ( 'make_monthly_dues' )) {
+ 		wp_schedule_event(time(), 'daily', 'make_monthly_dues');
+    }
 }
+
+register_deactivation_hook(__FILE__, 'wpsp_deactivation');
+
+function wpsp_deactivation() {
+	wp_clear_scheduled_hook('make_monthly_dues');
+}
+
+//Monthly dues
+add_action('make_monthly_dues', 'cal_monthly_dues');
+
+function cal_monthly_dues() {
+	include_once( WPSP_PLUGIN_PATH.'includes/wpsp-cal-monthly-dues.php' );
+}
+
 
 //add action to load plugin
 add_action( 'plugins_loaded', 'wpsp_plugins_loaded' );
@@ -233,6 +251,10 @@ function ajax_actions(){
 		add_action( 'wp_ajax_check_slip_number_availibility', 'check_slip_num_availibility' );
 
 		add_action( 'wp_ajax_cancel_payment', 'cancel_payment' );
+		
+		add_action( 'wp_ajax_details_to_reassign_item', 'details_to_reassign_item' );
+		
+		add_action( 'wp_ajax_deduct_quantity_after_reassign_item', 'deduct_quantity_after_reassign_item' );
 }
 
 function tl_save_error() {
@@ -252,4 +274,7 @@ function wpsp_add_plugin_links( $links ) {
 	return array_merge( $plugin_links, $links );
 }
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wpsp_add_plugin_links', 20 );
+
+
+
 ?>

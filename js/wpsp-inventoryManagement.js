@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	$(".add-item-popup").click(function() {
     	var form = "<input type='text' class='form-control add-item-inp' placeholder='Enter Item Name' />";
     	$.alert(form);
@@ -162,6 +163,148 @@ $(document).ready(function() {
          // location.reload();
         }
       });
-     // $.post(ajax_url, {action: "delete_master_item", id: id}, function(data){ $.alert(data); location.reload(); });
     });
+
+    /*------------------Reassign Item---------------------------*/
+
+    $(".reassign-btn").click(function(){
+      let id = $(this).attr('id');
+      let data = new Array();
+      data.push(
+        {name:"action", value:"details_to_reassign_item"},
+        {name:"id",value:id}
+      );
+      $.ajax({
+        method: "POST",
+        url: ajax_url,
+        data: data,
+        success: function(resp){
+          resp = JSON.parse(resp);
+          let dispData = '<form>'+
+          '<div class="form-group">'+
+            '<label>Item</label>'+
+            '<input type="text" class="form-control reas-item" id="'+resp["item_details"].master_id+'" value="'+resp["item_details"].item_name+'" disabled>'+
+          '</div>'+
+
+          '<div class="form-group">'+
+            '<label>Date</label>'+
+            '<input type="date" class="form-control reas-date">'+
+          '</div>'+
+
+          '<div class="form-group">'+
+            '<label>Quantity</label>'+
+            '<input type="number" class="form-control reas-quantity" min="1" max="'+resp["item_details"].quantity+'" value="'+resp["item_details"].quantity+'" >'+
+          '</div>'+
+
+          '<div class="form-group">'+
+            '<label>Reassign To:</label>'+
+            '<select class="form-control reas-staff">';
+
+            for (var i = 0; i < resp['trachers_list'].length; i++) {
+              var staffName = resp['trachers_list'][i].first_name+" "+resp['trachers_list'][i].middle_name+" "+resp['trachers_list'][i].last_name
+              dispData += '<option value="'+resp['trachers_list'][i].wp_usr_id+'">'+staffName+'</option>';
+            }
+            dispData += '</select>'+
+
+            '</div>'+
+
+            '<div class="form-group">'+
+              '<label>Session</label>'+
+              '<input type="text" class="form-control reas-session" id="'+resp["current_session"].option_value+'" value="'+resp["current_session"].option_value+'">'+
+            '</div>'+
+            '<span style="display:none" class="reas-data" >'+JSON.stringify(resp)+'</span>'
+            '</form>';
+          $.confirm({
+            title: 'Reassign Item',
+            content: dispData,
+            theme: "supervan",
+            buttons: {
+              cancel: function () {          
+              },
+              done: {
+                text: 'Done',
+                btnClass: 'btn-blue',
+                keys: ['enter'],
+                action: function(){
+                  var item = $(".reas-item").attr('id');
+                  var date = $(".reas-date").val();
+                  var qty = $(".reas-quantity").val();
+                  var assignedTo = $(".reas-staff").val();
+                  var session = $(".reas-session").val();
+                  var action = "assign_inventory_item";
+                  let data=new Array();
+                  var reasData = JSON.parse($(".reas-data").text());
+                  data.push(
+                    { name: 'action', value: action },
+                    { name: 'item', value: item },
+                    { name: 'date', value: date },
+                    { name: 'qty', value: qty },
+                    { name: 'assignedTo', value: assignedTo },
+                    { name: 'session', value: session }
+                  );
+                  $.ajax({
+                    method: "POST",
+                    url: ajax_url,
+                    data: data,
+                    success: function(resp){
+                      if (resp == 'success') {
+                        var qtyLeft = parseInt(reasData['item_details'].quantity) - parseInt(qty);
+                        let data=new Array();
+                        data.push(
+                          {name: 'action', value:"deduct_quantity_after_reassign_item"},
+                          {name: 'id', value: reasData['item_details'].sno},
+                          {name: 'qtyLeft', value: qtyLeft}
+                        );
+                        $.ajax({
+                          method: "POST",
+                          url: ajax_url,
+                          data: data,
+                          success: function(resp){
+                           if (resp == 'success') {
+                              $.fn.notify('success',{'desc':'Item Successfully Deleted!'});
+                            } else{
+                              $.fn.notify('error',{'desc':resp});
+                            }
+                          },
+                          error: function(){
+                            $.fn.notify('error',{'desc':'Something went wrong'});
+                          },
+                          beforeSend: function(){
+                            $.fn.notify('loader',{'desc':'Saving Data...'});
+                          },
+                          complete: function(){
+                            $('.pnloader').remove();
+                          }
+                        });
+
+
+                      } else{
+                        $.fn.notify('error',{'desc':resp});
+                      }
+                    },
+                    error: function(){
+                      $.fn.notify('error',{'desc':'Something went wrong'});
+                    },
+                    beforeSend: function(){
+                      $.fn.notify('loader',{'desc':'Saving Data...'});
+                    },
+                    complete: function(){
+                      $('.pnloader').remove();
+                    }
+                  });
+                }
+              }
+            }
+          });
+          },
+          beforeSend: function(){
+            $.fn.notify('loader',{'desc':'Fetching details...'});
+          },
+          complete: function(){
+            $('.pnloader').remove();
+          }
+        });
+      });
+
+      /*------------------Reassign Item---------------------------*/
 });
