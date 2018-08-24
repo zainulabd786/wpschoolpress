@@ -1,4 +1,6 @@
 <?php
+	global $wpdb;
+	
 	$wpdb->show_errors();
 	$months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); 
 	$settings_table		=	$wpdb->prefix."wpsp_settings";
@@ -37,15 +39,17 @@
 				foreach ($student_sql as $student) {
 					$tf = 0;
 					$tc = 0;
+					$student_fees = json_decode(apply_filters("get_student_fees", $student->wp_usr_id));
 					if(!empty($session_start)){
 						if($curr_month < $session_start){
 							$curr_month += 12;
 						}
 					}
-					$sql_fees = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$student->class_id' ");
+					$tf = $student_fees->tution_fees;
+					/*$sql_fees = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$student->class_id' ");
 					foreach ($sql_fees as $f) {
 						$tf = $f->tution_fees;
-					}
+					}*/
 					$sql_trans_fees = $wpdb->get_results("SELECT a.route_fees FROM $transport_table a, $student_table b WHERE a.id=b.route_id AND b.transport = 1 ");
 					foreach ($sql_trans_fees as $trf) {
 						$tc = $trf->route_fees;

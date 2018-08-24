@@ -304,6 +304,7 @@
 	$fees_dues			  	  = $wpdb->prefix . 'wpsp_fees_dues';
 	$fees_payment_record	  = $wpdb->prefix . 'wpsp_fees_payment_record';
 	$fees_receipts			  = $wpdb->prefix . 'wpsp_fees_receipts';
+	$single_student_fees	  = $wpdb->prefix . 'wpsp_single_student_fees';
 	$inventory_master		  = $wpdb->prefix . 'wpsp_inventory_master';
 	$inventory_items		  = $wpdb->prefix . 'wpsp_inventory_items';
 	$assigned_inventory		  = $wpdb->prefix . 'wpsp_assigned_inventory';
@@ -421,6 +422,15 @@
 	  `status` int(1)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
 	dbDelta($sql_fees_receipts);
+
+	$sql_single_student_fees = "CREATE TABLE IF NOT EXISTS $single_student_fees  (
+	  `uid` int(11) NOT NULL PRIMARY KEY,	  
+	  `admission_fees` int(11),
+	  `tution_fees` int(11),		 
+	  `annual_chg` int(11),	 
+	  `recreation_chg` int(11)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 ";
+	dbDelta($sql_single_student_fees);
 
 	$sql_fees_settings_table = "CREATE TABLE IF NOT EXISTS $fees_settings  (
 	  `cid` int(11) NOT NULL PRIMARY KEY,	  

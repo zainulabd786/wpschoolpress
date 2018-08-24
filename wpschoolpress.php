@@ -190,6 +190,7 @@ function ajax_actions(){
 		//add_action( 'wp_ajax_nopriv_action_public', 'action_public_callback' );
 
 		add_action( 'wp_ajax_save_fees_settings', 'save_fees_settings' );
+		
 		add_action( 'wp_ajax_fetch_class_fees_settings', 'class_fees_settings' );
 
 		add_action( 'wp_ajax_submit_deposit_form', 'submit_deposit_form' );
@@ -276,5 +277,25 @@ function wpsp_add_plugin_links( $links ) {
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wpsp_add_plugin_links', 20 );
 
 
+//Student Fees
 
+function single_student_fees($uid){
+	global $wpdb;
+
+	$single_student_fees_table = $wpdb->prefix."wpsp_single_student_fees";
+	$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+	$student_table = $wpdb->prefix."wpsp_student";
+	
+	$single_sf_res = $wpdb->get_results("SELECT * FROM $single_student_fees_table WHERE uid = '$uid'");
+
+	if($wpdb->num_rows > 0){
+		$student_fees = $single_sf_res[0];
+	} else{
+		$regular_fees_res = $wpdb->get_results("SELECT a.* FROM $fees_settings_table a, $student_table b WHERE a.cid = b.class_id AND b.wp_usr_id='$uid'");
+		$student_fees = $regular_fees_res[0];
+	}
+
+	return json_encode($student_fees);
+}
+add_filter("get_student_fees","single_student_fees");
 ?>

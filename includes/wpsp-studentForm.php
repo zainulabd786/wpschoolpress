@@ -189,6 +189,30 @@
                                     <p class="help-block">* Max 3 MB Upload </p>
                                 </div>
                             </div>
+                            <!--------------------------------------------Fees Inputs------------------------------------------->
+                            <h3 class="box-title"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;Fees Details</h3>
+                            <div class="line_box">
+                                <input type="checkbox" name="set_fees" id="set_fees" data-toggle="toggle" data-on="Set Fees" data-off="Don't Set">
+                                <div style="display: none;" class="fees_inp_cont">
+                                    <div class="form-group">
+                                        <label>Admission Fees</label>
+                                        <input type="text" name="s_adm_fees" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tuition Fees</label>
+                                        <input type="text" name="s_ttn_fees" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Annual Charges</label>
+                                        <input type="text" name="s_ann_chg" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Recreation Charges</label>
+                                        <input type="text" name="s_rec_chg" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--------------------------------------------Fees Inputs end---------------------------------------->
                         </div>
                         <div class="col-md-6">
                             <h3 class="box-title"><i class="fa fa-building" aria-hidden="true"></i>&nbsp;School Details</h3>

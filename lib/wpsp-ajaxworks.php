@@ -2843,7 +2843,8 @@ function wpsp_Import_Dummy_contents() {
 		$mop = $_POST['mop'];
 		$pno = $_POST['pno'];
 		$fees_type = "";
-		$pm_tf = 0; //1200
+		$student_fees = json_decode(apply_filters("get_student_fees", $uid));
+		$pm_tf = $student_fees->tution_fees; //1200
 		$pm_tc = 0;
 		$msg = "Dear Parents, Thanks for depositing the payment of the month ";
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
@@ -2853,10 +2854,10 @@ function wpsp_Import_Dummy_contents() {
 		$student_table = $wpdb->prefix."wpsp_student";
 		$transport_table = $wpdb->prefix."wpsp_transport";
 		$settings_table = $wpdb->prefix."wpsp_settings";
-		$sql_expected_amounts = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$cid' ");
+		/*$sql_expected_amounts = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$cid' ");
 		foreach ($sql_expected_amounts as $amt) {
 			$pm_tf = $amt->tution_fees-$concession;
-		}
+		}*/
 		$sql_trans_fees = $wpdb->get_results("SELECT a.route_fees FROM $transport_table a, $student_table b WHERE b.wp_usr_id='$uid' AND a.id=b.route_id ");
 		foreach ($sql_trans_fees as $trans_amount) {
 			$pm_tc = $trans_amount->route_fees;
@@ -3437,15 +3438,17 @@ function wpsp_Import_Dummy_contents() {
 		$class = $_POST['classId'];
 		$uid = $_POST['uid'];
 		$num_months = ($to - $from) + 1;
-		$pm_tf = 0;
+		$pm_tf = $tf = $tc = 0;
 		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$fees_dues_table = $wpdb->prefix."wpsp_fees_dues";
-		$sql_fees = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid = '$class'");
-		$tf = $tc = 0;
-		foreach ($sql_fees as $amount) {
+		$student_fees = json_decode(apply_filters("get_student_fees", $uid));
+		$pm_tf = $student_fees->tution_fees;
+		$tf = $pm_tf * $num_months;
+		//$sql_fees = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid = '$class'");
+		/*foreach ($sql_fees as $amount) {
 			$pm_tf = $amount->tution_fees;
 			$tf = $pm_tf * $num_months;
-		}
+		}*/
 		for($i=$from; $i<=$to; $i++){
 			$sql_due_month = $wpdb->get_results("SELECT * FROM $fees_dues_table WHERE month='$i' AND uid='$uid' AND fees_type='ttn' ");
 			foreach ($sql_due_month as $due_amt) {
@@ -3806,15 +3809,17 @@ function wpsp_Import_Dummy_contents() {
 	function cal_admission_fees(){
 		global $wpdb;
 
-		$cid = $_POST['cid'];
-		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$uid = $_POST['uid'];
+		$admission_fees = json_decode(apply_filters("get_student_fees", $uid))->admission_fees;
+		echo (!empty($admission_fees))?$admission_fees:0;
+		/*$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$results = $wpdb->get_results("SELECT admission_fees FROM $fees_settings_table WHERE cid='$cid'");
 		if($wpdb->num_rows>0){
 			foreach ($results as $value) {
 				echo $value->admission_fees;
 			}
 		}
-		else echo "0";
+		else echo "0";*/
 
 		wp_die();
 	}
@@ -3822,15 +3827,17 @@ function wpsp_Import_Dummy_contents() {
 	function cal_annual_charge(){
 		global $wpdb;
 
-		$cid = $_POST['cid'];
-		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$uid = $_POST['uid'];
+		$annual_chg = json_decode(apply_filters("get_student_fees", $uid))->annual_chg;
+		echo (!empty($annual_chg))?$annual_chg:0;
+		/*$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$results = $wpdb->get_results("SELECT annual_chg FROM $fees_settings_table WHERE cid='$cid'");
 		if($wpdb->num_rows>0){
 			foreach ($results as $value) {
 				echo $value->annual_chg;
 			}
 		}
-		else echo "0";
+		else echo "0";*/
 
 		wp_die();
 	}
@@ -3838,15 +3845,17 @@ function wpsp_Import_Dummy_contents() {
 	function cal_recreation_charge(){
 		global $wpdb;
 
-		$cid = $_POST['cid'];
-		$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
+		$uid = $_POST['uid'];
+		$recreation_chg = json_decode(apply_filters("get_student_fees", $uid))->recreation_chg;
+		echo (!empty($recreation_chg))?$recreation_chg:0;
+		/*$fees_settings_table = $wpdb->prefix."wpsp_fees_settings";
 		$results = $wpdb->get_results("SELECT recreation_chg FROM $fees_settings_table WHERE cid='$cid'");
 		if($wpdb->num_rows>0){
 			foreach ($results as $value) {
 				echo $value->recreation_chg;
 			}
 		}
-		else echo "0";
+		else echo "0";*/
 
 		wp_die();
 	}

@@ -51,6 +51,7 @@ function wpsp_AddStudent() {
 	$wpsp_fees_settings_table	=	$wpdb->prefix."wpsp_fees_settings";
 	$transport_table = $wpdb->prefix."wpsp_transport";
 	$dues_table	=	$wpdb->prefix."wpsp_fees_dues";
+	$single_student_fees_table	=	$wpdb->prefix."wpsp_single_student_fees";
 	if( isset( $_POST['Class'] ) && !empty( $_POST['Class'] ) ) {
 		$classID	=	$_POST['Class'];
 		$capacity	=	$wpdb->get_var("SELECT c_capacity FROM $wpsp_class_table where cid=$classID"); 		
@@ -82,6 +83,7 @@ function wpsp_AddStudent() {
 	$current_date		=	date("Y-m-d");
 	$curr_month			=	date("m");
 	$trn_route			=	0;
+	$set_fees 			=   $_POST['set_fees'];
 	if( $transport == "on" ){
 		$transport = 1;
 		$trn_route = $_POST['transport_route'];
@@ -188,7 +190,6 @@ function wpsp_AddStudent() {
 						'route_id'			=> $trn_route
 						 );
 		$cid_for_fee = $_POST['Class'];
-		$fees_settings_sql = $wpdb->get_results("SELECT * FROM $wpsp_fees_settings_table WHERE cid='$cid_for_fee'");
 		$session_sql = $wpdb->get_results("SELECT * FROM $wpsp_settings_table WHERE option_name='session' OR option_name='sch_session_start' ;");
 		$adm_f = $ttn_f = $trans_f = $ann_f = $rec_f = $session = 0;
 		foreach ($session_sql as $sess) {
@@ -201,13 +202,30 @@ function wpsp_AddStudent() {
 				$curr_month += 12;
 			}
 		}
-		
-		foreach ($fees_settings_sql as $fee) {
-			$adm_f = $fee->admission_fees;
-			$ttn_f = $fee->tution_fees;
-			//$trans_f = $fee->transport_chg;
-			$ann_f = $fee->annual_chg;
+		if($set_fees){
+			$adm_f			= 	esc_attr((!empty($_POST['s_adm_fees'])?$_POST['s_adm_fees']:0));
+			$ttn_f			= 	esc_attr((!empty($_POST['s_ttn_fees'])?$_POST['s_ttn_fees']:0));
+			$ann_f			=	esc_attr((!empty($_POST['s_ann_chg'])?$_POST['s_ann_chg']:0));
+			$rec_f			= 	esc_attr((!empty($_POST['s_rec_chg'])?$_POST['s_rec_chg']:0));
+			$single_student_fees_table_data  = array(
+														'uid' => $user_id,
+														'admission_fees' => $adm_f,
+														'tution_fees' => $ttn_f,
+														'annual_chg' => $ann_f,
+														'recreation_chg' => $rec_f
+													);
+			$wpdb->insert($single_student_fees_table, $single_student_fees_table_data);
 		}
+		else{
+			$fees_settings_sql = $wpdb->get_results("SELECT * FROM $wpsp_fees_settings_table WHERE cid='$cid_for_fee'");
+			foreach ($fees_settings_sql as $fee) {
+				$adm_f = $fee->admission_fees;
+				$ttn_f = $fee->tution_fees;
+				//$trans_f = $fee->transport_chg;
+				$ann_f = $fee->annual_chg;
+			}
+		}
+		
 		if($transport == 1){
 			$trans_f = 0;
 			$get_transport_fees = $wpdb->get_results("SELECT route_fees FROM $transport_table WHERE id='$trn_route'");
@@ -360,16 +378,46 @@ function wpsp_UpdateStudent(){
 	$pedu 				=	esc_attr($_POST['p_edu']);
 	$pprofession		=	esc_attr($_POST['p_profession']);      
 	$pbloodgroup	      =  esc_attr($_POST['p_bloodgrp']);
+	$single_student_fees_table	=	$wpdb->prefix."wpsp_single_student_fees";
 	if(!empty($_POST['opt_transport'])){
 		if($_POST['opt_transport'] == "on"){
 			$transport = 1;
 		}
-	}
-
-	else{
+	} else{
 		$transport = 0;
 	}
+			
+	$chk_student_fees = $wpdb->get_results("SELECT uid FROM $single_student_fees_table WHERE uid='$user_id'");
+	if($wpdb->num_rows == 0){
+		if(!empty($_POST['se_fees_set'])){
+
+			$se_adm_fees = esc_attr((!empty($_POST['se_adm_fees'])?$_POST['se_adm_fees']:0));
+			$se_ttn_fees = esc_attr((!empty($_POST['se_ttn_fees'])?$_POST['se_ttn_fees']:0));
+			$se_ann_chg = esc_attr((!empty($_POST['se_ann_chg'])?$_POST['se_ann_chg']:0));
+			$se_rec_chg = esc_attr((!empty($_POST['se_rec_chg'])?$_POST['se_rec_chg']:0));
+			$single_student_fees_table_data  = array(
+												'uid' => $user_id,
+												'admission_fees' => $se_adm_fees,
+												'tution_fees' => $se_ttn_fees,
+												'annual_chg' => $se_ann_chg,
+												'recreation_chg' => $se_rec_chg
+											);
+			$wpdb->insert($single_student_fees_table, $single_student_fees_table_data);
+		}
+	} else{
+		if(!empty($_POST['se_fees_set'])){
+			$se_adm_fees = esc_attr((!empty($_POST['se_adm_fees'])?$_POST['se_adm_fees']:0));
+			$se_ttn_fees = esc_attr((!empty($_POST['se_ttn_fees'])?$_POST['se_ttn_fees']:0));
+			$se_ann_chg = esc_attr((!empty($_POST['se_ann_chg'])?$_POST['se_ann_chg']:0));
+			$se_rec_chg = esc_attr((!empty($_POST['se_rec_chg'])?$_POST['se_rec_chg']:0));
+
+			$wpdb->query("UPDATE $single_student_fees_table SET admission_fees = '$se_adm_fees', tution_fees = '$se_ttn_fees', annual_chg = '$se_ann_chg', recreation_chg = '$se_rec_chg' WHERE uid = '$user_id' ");
+		} else{
+			$wpdb->query("DELETE FROM $single_student_fees_table WHERE uid = '$user_id' ");
+		}
+	}
 	
+
 	$studenttable	=	array(
 						'class_id'			=>	isset( $_POST['Class'] ) ? esc_attr( $_POST['Class'] ) : '',						
 						's_rollno' 			=>	isset( $_POST['s_rollno'] ) ? esc_attr($_POST['s_rollno']):'',
@@ -400,7 +448,7 @@ function wpsp_UpdateStudent(){
 						'transport'			=> $transport,
 						'route_id'			=> isset( $_POST['transport_route'] ) ? $_POST['transport_route'] :'',
 						 );						 
-	$stu_upd 		=	$wpdb->update( $wpsp_student_table , $studenttable, array('wp_usr_id'=>$user_id) );    	
+	$stu_upd 	=	$wpdb->update( $wpsp_student_table , $studenttable, array('wp_usr_id'=>$user_id) );    	
 	if (!empty( $_FILES['displaypicture']['name'])) {
 		$avatar	=	uploadImage('displaypicture');		
 		if( isset( $avatar[ 'url' ] ) ) {
@@ -762,4 +810,6 @@ function wpsp_checkRollNo(){
 		}
 		exit();
 	}
+
+
 ?>

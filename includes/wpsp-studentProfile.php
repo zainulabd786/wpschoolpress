@@ -192,12 +192,12 @@ if( !empty( $stinfo ) ) {
 								</div>
 								<div class="row">
 									<div class="form-group col-md-6 col-xs-12">
-										<label for="Class">Class</label> <span class="red">*</span><?php // Bharatdan Gadhavi - 16th Feb 2018 ?>
+										<label for="Class">Class</label> <span class="red">*</span>
 										<?php
 										$class_table = $wpdb->prefix . "wpsp_class";
 										$classes = $wpdb->get_results("select cid,c_name from $class_table");
 										?>
-										<select class="required form-control" name="Class" id="stdClass"><?php // Bharatdan Gadhavi - 16th Feb 2018 ?>
+										<select class="required form-control" name="Class" id="stdClass">
 											<option value="">Select Class</option>
 											<?php
 											foreach ($classes as $class) {
@@ -210,17 +210,17 @@ if( !empty( $stinfo ) ) {
 									<input type="hidden" name="prev_select_class" value="<?php echo $stinfo->class_id;?>">	
 									</div>
 									<div class="form-group col-md-6 col-xs-12">
-										<label for="Rollno">Roll Number</label><span class="red">*</span><?php // Bharatdan Gadhavi - 16th Feb 2018 ?>
+										<label for="Rollno">Roll Number</label><span class="red">*</span>
 										<input type="text" class="required form-control" id="Rollno" onblur="checkRollNo();" value="<?php echo $stinfo->s_rollno; ?>" name="s_rollno" placeholder="Roll Number">										
 									</div>
 								</div>
-								<?php // Bharatdan Gadhavi - 13th Feb 2018 - Start ?>
+								
 								<div class="form-group">
 									<input type="hidden" name="studentFormName" id="studentFormName" value="editForm" />
 									<label for="RegistrationNo">Registration Number</label>
 									<input type="text" class="form-control" id="RegistrationNo" value="<?php echo $stinfo->s_regno; ?>" name="s_regno" placeholder="Registration Number" readonly />
 								</div>
-								<?php // Bharatdan Gadhavi - 13th Feb 2018 - End ?>
+						
 							</div>
 						</div>
 						
@@ -275,12 +275,9 @@ if( !empty( $stinfo ) ) {
                                             <input type="text" class="form-control" name="p_profession" value="<?php echo $stinfo->p_profession; ?>"  placeholder="Parent Profession"> 
                                         </div>
                                 </div>
-								<?php // Bharatdan Gadhavi - 16th Feb 2018 - Start ?>
 								<div class="form-group">
 									<label for="phone">Phone</label>
 									<input type="text" class="form-control" id="phone" value="<?php echo $stinfo->s_phone; ?>" name="s_phone" placeholder="Phone Number" required>
-                                </div>
-								<?php // Bharatdan Gadhavi - 16th Feb 2018 - End ?>
 								<div class="form-group">
                                         <label for="bloodgroup">Blood Group (Optional)</label>
                                         <select class="form-control" id="Bloodgroup" name="p_bloodgrp">
@@ -297,7 +294,57 @@ if( !empty( $stinfo ) ) {
                                 </div>
                             </div>
 						</div>
+						<h3 class="box-title"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;Fees Details</h3>
+						<div class="line_box">
+                            <?php 
+                               	$student_fees_table = $wpdb->prefix."wpsp_single_student_fees";
+                                $student_fees_res = $wpdb->get_results("SELECT * FROM $student_fees_table WHERE uid = '$stinfo->wp_usr_id'");      
+                                if($wpdb->num_rows > 0){ ?>
+                                	<input type="checkbox" name="se_fees_set" id="se_fees_set" data-toggle="toggle" data-on="Set" data-off="Don't Set" checked>
+                                	<div class="se_fees_inp_cont">
+			                            <div class="form-group">
+			                                <label>Admission Fees</label>
+			                               	<input type="text" name="se_adm_fees" class="form-control" value="<?php echo $student_fees_res[0]->admission_fees; ?>">
+			                            </div>
+			                            <div class="form-group">
+			                                <label>Tuition Fees</label>
+			                                <input type="text" name="se_ttn_fees" class="form-control" value="<?php echo $student_fees_res[0]->tution_fees; ?>">
+			                            </div>
+			                            <div class="form-group">
+			                                <label>Annual Charges</label>
+			                                <input type="text" name="se_ann_chg" class="form-control" value="<?php echo $student_fees_res[0]->annual_chg; ?>">
+			                            </div>
+			                            <div class="form-group">
+			                            	<label>Recreation Charges</label>
+			                            	<input type="text" name="se_rec_chg" class="form-control" value="<?php echo $student_fees_res[0]->recreation_chg; ?>">
+			                            </div>
+			                        </div><?php
+                                }  else{ ?>
+                                	<input type="checkbox" name="se_fees_set" id="se_fees_set" data-toggle="toggle" data-on="Set" data-off="Don't Set">
+                                	<div style="display: none;" class="se_fees_inp_cont">
+			                            <div class="form-group">
+			                                <label>Admission Fees</label>
+			                               	<input type="text" name="se_adm_fees" class="form-control">
+			                            </div>
+			                            <div class="form-group">
+			                                <label>Tuition Fees</label>
+			                                <input type="text" name="se_ttn_fees" class="form-control">
+			                            </div>
+			                            <div class="form-group">
+			                                <label>Annual Charges</label>
+			                                <input type="text" name="se_ann_chg" class="form-control">
+			                            </div>
+			                            <div class="form-group">
+			                            	<label>Recreation Charges</label>
+			                            	<input type="text" name="se_rec_chg" class="form-control">
+			                            </div>
+			                        </div><?php
+                               	}
+                            ?>
+                                    
+						</div>
 					</div>
+					
 					
 					<div class="box-footer text-right">
 						<button type='submit' class='btn btn-primary'>Update</button>

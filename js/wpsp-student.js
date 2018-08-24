@@ -598,6 +598,25 @@ $(document).ready(function () {
         });
     });
 
+
+    $("#set_fees").change(function(){
+        if($(this).prop("checked")){
+            $(".fees_inp_cont").slideDown();
+        }
+        else{
+            $(".fees_inp_cont").slideUp();
+        }
+    });
+
+    $("#se_fees_set").on("change ready", function(){
+        if($(this).prop("checked")){
+            $(".se_fees_inp_cont").slideDown();
+        }
+        else{
+            $(".se_fees_inp_cont").slideUp();
+        }
+    });
+    
     
 });
 
