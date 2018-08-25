@@ -214,7 +214,7 @@ function wpsp_AddStudent() {
 														'annual_chg' => $ann_f,
 														'recreation_chg' => $rec_f
 													);
-			$wpdb->insert($single_student_fees_table, $single_student_fees_table_data);
+			//$wpdb->insert($single_student_fees_table, $single_student_fees_table_data);
 		}
 		else{
 			$fees_settings_sql = $wpdb->get_results("SELECT * FROM $wpsp_fees_settings_table WHERE cid='$cid_for_fee'");
@@ -240,15 +240,15 @@ function wpsp_AddStudent() {
 			switch($fees_type_array[$i]){
 				case "adm":
 					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>"0", "amount"=>$adm_f, "fees_type"=>"adm", "session"=>$session);
-					$wpdb->insert($dues_table, $fd_data);
+					//$wpdb->insert($dues_table, $fd_data);
 				break;
 				case "ttn":
 					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>$curr_month, "amount"=>$ttn_f, "fees_type"=>"ttn", "session"=>$session);
-					$wpdb->insert($dues_table, $fd_data);
+					//$wpdb->insert($dues_table, $fd_data);
 				break;
 				case "ann":
 					$fd_data = array("date"=>$current_date, "uid"=>$user_id, "month"=>"0", "amount"=>$ann_f, "fees_type"=>"ann", "session"=>$session);
-					$wpdb->insert($dues_table, $fd_data);
+					//$wpdb->insert($dues_table, $fd_data);
 				break;
 			}
 		}
