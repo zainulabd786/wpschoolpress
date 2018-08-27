@@ -135,7 +135,8 @@ function wpsp_CheckEmail(){
 * @since 2.0.0
 */
 function wpsp_EmailGen($username){
-	return $username."@spischool.org";
+	//return $username."@spischool.org";
+	return $username."@".$_SERVER['HTTP_HOST'];
 }
 
 function wpsp_send_mail( $to, $subject, $body, $attachment='' ) {

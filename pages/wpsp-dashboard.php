@@ -132,7 +132,7 @@
 						<a href="sch-class" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
-			</div>		    
+			</div>		
 			<div class="row">
 				<!-- Left col -->
 				<div class="col-md-8">
