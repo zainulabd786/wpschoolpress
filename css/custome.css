@@ -215,8 +215,7 @@ a.add-parent { margin-bottom:15px; }
 .invoice-header-school-details{
     text-align: center;
     position: relative;
-    top: -20px;
-}
+ }
 .invoice-header-school-details b{
     font-size: 20px;
 }
