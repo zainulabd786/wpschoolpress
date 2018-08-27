@@ -22,6 +22,7 @@
 									
 								<div class="button-group btn-pro">
 
+									<button class="btn btn-danger consume-btn"> Mark Consumed </button>
 									<a class="btn btn-primary" href="?tab=AddNew"><i class="fa fa-plus"></i> Add New </a>
 									<a class="btn btn-primary" href="?tab=Assign"><i class="fa fa-history"></i> Assign Item </a>
 									<!--<a class="btn btn-primary" href="?tab=Summary"><i class="fa fa-history"></i> Items Summary </a>-->
@@ -55,12 +56,12 @@
 									$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
 									$master_table = $wpdb->prefix."wpsp_inventory_master";
 									$teacher_table = $wpdb->prefix."wpsp_teacher";
-									$get_data = $wpdb->get_results("SELECT a.sno, a.date, a.quantity, a.session, b.item_name, c.first_name, c.middle_name, c.last_name, c.empcode, c.wp_usr_id FROM $assigned_table a, $master_table b, $teacher_table c WHERE c.wp_usr_id=a.staff_uid AND b.master_id=a.master_id");
+									$get_data = $wpdb->get_results("SELECT a.sno, a.date, a.quantity, a.session, a.consumed, b.item_name, c.first_name, c.middle_name, c.last_name, c.empcode, c.wp_usr_id FROM $assigned_table a, $master_table b, $teacher_table c WHERE c.wp_usr_id=a.staff_uid AND b.master_id=a.master_id");
 									foreach ($get_data as $assigned) { ?>
 									 	<tr>
 									 		<td>
 												<?php if ( in_array( 'administrator', $role ) || in_array( 'editor', $role )  ) { ?>
-													<input type="checkbox" class="ccheckbox strowselect" name="UID[]" value="<?php echo $assigned->wp_usr_id;?>">
+													<input type="checkbox" class="ccheckbox strowselect" name="UID[]" data-id="<?php echo $assigned->sno; ?>" value="<?php echo $assigned->wp_usr_id;?>">
 												<?php }else echo $key; ?>
 											</td>
 									 		<td><?php echo date('d/m/Y', strtotime($assigned->date)); ?></td>
@@ -68,7 +69,7 @@
 									 		<td><?php echo $assigned->quantity; ?></td>
 									 		<td><?php echo $assigned->first_name." ".$assigned->middle_name." ".$assigned->last_name."-".$assigned->empcode; ?></td>
 									 		<td><?php echo $assigned->session; ?></td>
-									 		<td><span type="button" class="btn btn-primary reassign-btn" id="<?php echo $assigned->sno; ?>">Reassign</span></td>
+									 		<td><span type="button" class="btn btn-primary reassign-btn" id="<?php echo $assigned->sno; ?>" <?php if(!empty($assigned->consumed)) echo "disabled"; ?>><?php echo (empty($assigned->consumed))?"Reassign":"consumed"; ?></span></td>
 									 	</tr> <?php
 									 } ?>
 								</tbody>

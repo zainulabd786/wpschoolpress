@@ -367,7 +367,8 @@
 	  `date` date,
 	  `quantity` int(11),
 	  `staff_uid` int(11),
-	  `session` varchar(12)
+	  `session` varchar(12),
+	  `consumed` int(1)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
 	dbDelta($sql_inv_ass_items_table);
 

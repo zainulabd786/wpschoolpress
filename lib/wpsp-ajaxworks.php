@@ -4724,4 +4724,29 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function mark_item_consumed(){
+		global $wpdb;
+		$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
+		$items = explode(",",$_POST['itemsArr']);
+		//echo "<script> console.log('".$items."') </script>";
+		try{
+			$wpdb->query("BEGIN;");
+
+			foreach ($items as $item_id) {
+				if(!$wpdb->query("UPDATE $assigned_table SET consumed='1' WHERE sno='$item_id' ")) throw new Exception("Error Processing Request");
+				//$sql = "UPDATE $assigned_table SET consumed='1' WHERE id='$item_id'";
+				//echo "<script> console.log('".$sql."') </script>";
+			}
+
+			echo "success";
+
+			$wpdb->query("COMMIT;");
+		} catch(Exception $e){
+			$wpdb->query("ROLLBACK");
+			echo $e->getMessage();
+		}
+
+		wp_die();
+	}
 ?>

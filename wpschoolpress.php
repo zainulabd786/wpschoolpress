@@ -256,6 +256,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_details_to_reassign_item', 'details_to_reassign_item' );
 		
 		add_action( 'wp_ajax_deduct_quantity_after_reassign_item', 'deduct_quantity_after_reassign_item' );
+
+		add_action( 'wp_ajax_mark_inv_item_as_consumed', 'mark_item_consumed' );
 }
 
 function tl_save_error() {

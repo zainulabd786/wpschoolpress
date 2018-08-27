@@ -307,4 +307,47 @@ $(document).ready(function() {
       });
 
       /*------------------Reassign Item---------------------------*/
+
+
+      /*---------------------- Consue Item-----------------------*/
+
+      var checkedItems = [];
+      $(".ccheckbox").change(function(){
+        var id = $(this).attr('data-id');
+        if($(this).prop('checked')){
+          checkedItems.push(id);
+        }
+        else{
+          checkedItems.splice( checkedItems.indexOf(id), 1 );
+        }
+      });
+
+      $(".consume-btn").click(function(){
+        let data = [];
+        data.push(
+          {name:"action", value:"mark_inv_item_as_consumed"},
+          {name:"itemsArr", value: checkedItems.toString()}
+        );
+        $.ajax({
+          method: "POST",
+          url: ajax_url,
+          data: data,
+          success: function(resp){
+            if (resp == 'success') {
+              $.fn.notify('success',{'desc':'Item Successfully Marked as Consumed!'});
+            } else{
+              $.fn.notify('error',{'desc':resp});
+            }
+          },
+          beforeSend: function(){
+            $.fn.notify('loader',{'desc':'Marking item as consumed...'});
+          },
+          complete: function(){
+            $('.pnloader').remove();
+           // location.reload();
+          }
+        });
+      });
+
+      /*---------------------- Consue Item-----------------------*/
 });
