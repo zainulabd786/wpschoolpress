@@ -30,8 +30,8 @@ $(document).ready(function() {
 				eventClick:  function(event, jsEvent, view) 
 					{						
 						$('#viewEventTitle').html(event.title);
-						event.start == null ? $('#eventStart').html('N/A') : $('#eventStart').html( event.start.format('MM/DD/YYYY h:mm A') );
-						event.end == null ? $('#eventEnd').html('N/A') : $('#eventEnd').html( event.end.format('MM/DD/YYYY h:mm A') );
+						$('#eventStart').html(event.start.format('MM/DD/YYYY h:mm A'));
+						$('#eventEnd').html(event.end.format('MM/DD/YYYY h:mm A'));
 						$('#eventDesc').html(event.description);
 						$("#viewModal").modal('show');
 						$('#editEvent').click(function(){
@@ -69,7 +69,7 @@ $(document).ready(function() {
 			events: {
 				url: ajax_url,
 				type: "POST",
-				data:{'action': 'listEvent'},
+				data:{'action': 'listdashboardschedule'},
 				dataType: "JSON",
 				error: function() {
 					alert('There is an error while fetching events!');
