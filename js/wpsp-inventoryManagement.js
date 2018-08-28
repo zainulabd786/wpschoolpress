@@ -262,6 +262,9 @@ $(document).ready(function() {
                           success: function(resp){
                            if (resp == 'success') {
                               $.fn.notify('success',{'desc':'Item Successfully Deleted!'});
+                              setTimeout(function() {
+                                  location.reload();
+                              }, 3000);
                             } else{
                               $.fn.notify('error',{'desc':resp});
                             }
@@ -323,30 +326,37 @@ $(document).ready(function() {
       });
 
       $(".consume-btn").click(function(){
-        let data = [];
-        data.push(
-          {name:"action", value:"mark_inv_item_as_consumed"},
-          {name:"itemsArr", value: checkedItems.toString()}
-        );
-        $.ajax({
-          method: "POST",
-          url: ajax_url,
-          data: data,
-          success: function(resp){
-            if (resp == 'success') {
-              $.fn.notify('success',{'desc':'Item Successfully Marked as Consumed!'});
-            } else{
-              $.fn.notify('error',{'desc':resp});
+        if(checkedItems.length > 0){
+          let data = [];
+          data.push(
+            {name:"action", value:"mark_inv_item_as_consumed"},
+            {name:"itemsArr", value: checkedItems.toString()}
+          );
+          $.ajax({
+            method: "POST",
+            url: ajax_url,
+            data: data,
+            success: function(resp){
+              if (resp == 'success') {
+                $.fn.notify('success',{'desc':'Item Successfully Marked as Consumed!'});
+                setTimeout(function() {
+                  location.reload();
+                }, 3000);
+              } else{
+                $.fn.notify('error',{'desc':resp});
+              }
+            },
+            beforeSend: function(){
+              $.fn.notify('loader',{'desc':'Marking item as consumed...'});
+            },
+            complete: function(){
+              $('.pnloader').remove();
+             // location.reload();
             }
-          },
-          beforeSend: function(){
-            $.fn.notify('loader',{'desc':'Marking item as consumed...'});
-          },
-          complete: function(){
-            $('.pnloader').remove();
-           // location.reload();
-          }
-        });
+          });
+        } else{
+          alert("No Record is Selected!");
+        }
       });
 
       /*---------------------- Consue Item-----------------------*/
