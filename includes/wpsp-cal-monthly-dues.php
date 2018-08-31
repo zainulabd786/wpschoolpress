@@ -72,7 +72,8 @@
 						$c_month = (int)$c_month;
 						$curr_month_name = $months_array[$c_month];
 						$mobile = $student->s_phone;
-						$msg = "Dear Parent, you are requested to submit the fees for the month of ".$curr_month_name.". *Regards SPI School";
+						$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
+						$msg = "Dear Parent, you are requested to submit the fees for the month of ".$curr_month_name.". *Regards ".$sql_SchoolName;
 						$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 						$sms_left = $check_sms[0]->option_value;
 						if($sms_left > 0){

@@ -644,8 +644,10 @@ function wpsp_AttendanceEntry()
 				$studInfo = $wpdb->get_row("SELECT s_phone, CONCAT_WS(' ', s_fname, s_mname, s_lname ) AS full_name  FROM  $stud_table ws WHERE ws.wp_usr_id=$stid");				
 				if( isset( $studInfo->s_phone ) && !empty( $studInfo->s_phone ) ) {
 					$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+					$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
 					$sms_left = $check_sms[0]->option_value;
-					$absentreason = 'Dear Parent, Your Child '.$studInfo->full_name.' of class '.$classname.' is absent on '.$entry_date.' for reason '.$reason[$stid].' , *Regards SPI School';
+					$absentreason = 'Dear Parent, Your Child '.$studInfo->full_name.' of class '.$classname.' is absent on '.$entry_date.' for reason '.$reason[$stid].' , *Regards '.$sql_SchoolName;
+					
 					if($sms_left>0){
 						$status 	=	apply_filters( 'wpsp_send_notification_msg', false, $studInfo->s_phone, $absentreason );
 						if($status){
