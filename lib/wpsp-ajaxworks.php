@@ -646,7 +646,7 @@ function wpsp_AttendanceEntry()
 					$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 					$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
 					$sms_left = $check_sms[0]->option_value;
-					$absentreason = 'Dear Parent, Your Child '.$studInfo->full_name.' of class '.$classname.' is absent on '.$entry_date.' for reason '.$reason[$stid].' , *Regards '.$sql_SchoolName;
+					$absentreason = 'Dear Parent, Your Child '.$studInfo->full_name.' of class '.$classname.' is absent on '.$entry_date.' for reason '.$reason[$stid].' , *Regards '.$sql_SchoolName[0]->option_value;
 					
 					if($sms_left>0){
 						$status 	=	apply_filters( 'wpsp_send_notification_msg', false, $studInfo->s_phone, $absentreason );
@@ -2856,6 +2856,7 @@ function wpsp_Import_Dummy_contents() {
 		$student_table = $wpdb->prefix."wpsp_student";
 		$transport_table = $wpdb->prefix."wpsp_transport";
 		$settings_table = $wpdb->prefix."wpsp_settings";
+		$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
 		/*$sql_expected_amounts = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$cid' ");
 		foreach ($sql_expected_amounts as $amt) {
 			$pm_tf = $amt->tution_fees-$concession;
@@ -2917,7 +2918,7 @@ function wpsp_Import_Dummy_contents() {
 						}
 					}
 				}
-				$msg .= " . *Regards SPI School";
+				$msg .= " . *Regards ".$sql_SchoolName[0]->option_value;
 				$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 				$sms_left = $check_sms[0]->option_value;
 				if($sms_left > 0){
