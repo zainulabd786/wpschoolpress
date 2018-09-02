@@ -3908,7 +3908,7 @@ function wpsp_Import_Dummy_contents() {
 					}
 				}
 			}
-			$msg .= ". please ignore if you have already submitted. *Regards ".$sql_SchoolName[0]->option_value;
+			$msg .= ". Please ignore if you have already submitted. *Regards ".$sql_SchoolName[0]->option_value;
 
 			$phone = $st_num[0]->s_phone;
 			if( !empty( $phone ) ) {
