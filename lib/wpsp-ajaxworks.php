@@ -3877,6 +3877,7 @@ function wpsp_Import_Dummy_contents() {
 		$to_trn_mo = '';
 		$phone = 0;
 		$msg = "Dear Parent, you are requested to submit the fees for the month of ";
+		$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
         for($i=0;$i<count($st_arr);$i++){
 			$status = 0;
 			$st_num = $wpdb->get_results("SELECT s_phone FROM $student_table WHERE wp_usr_id='$st_arr[$i]' ");
@@ -3907,7 +3908,7 @@ function wpsp_Import_Dummy_contents() {
 					}
 				}
 			}
-			$msg .= ". *Regards SPI School";
+			$msg .= ". please ignore if you have already submitted. *Regards ".$sql_SchoolName[0]->option_value;
 
 			$phone = $st_num[0]->s_phone;
 			if( !empty( $phone ) ) {
