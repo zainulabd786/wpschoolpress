@@ -4,7 +4,6 @@ wpsp_header();
 
 	if( is_user_logged_in() ) {
 
-		
 
 		global $current_user, $wpdb,$wpsp_settings_data;
 
@@ -188,7 +187,15 @@ wpsp_header();
 		wpsp_sidebar();
 		wpsp_body_start();
 		$addUrl = add_query_arg( 'ac', 'add', get_permalink());
-		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher') { 	?>
+		if($current_user_role=='administrator' || $current_user_role=='editor'  || $current_user_role=='teacher') { 	
+		
+			
+		?>
+		
+		
+		
+		
+		
 
 		<section class="content-header">
 
@@ -258,7 +265,9 @@ wpsp_header();
 
 									<div class="col-md-4">
 
-										<textarea class="form-control" name="description" required minlength="15"></textarea>
+										<textarea class="form-control" name="description" id="textarea" rows="8" cols="30" maxlength="500"></textarea>
+										<div id="textarea_feedback"></div>
+										<p><span style="color:green;">Please Note* : One message will count after 158 characters</span></p>
 
 									</div>
 
