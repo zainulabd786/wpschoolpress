@@ -203,12 +203,11 @@ a.add-parent { margin-bottom:15px; }
     padding: 8px 0 8px 0;
 }
 .invoice-header-logo-name .invoice-header-logo{
-    text-align: right;
+    text-align: center;
 }
 .invoice-header-logo-name .invoice-header-name{
-    text-align: left;
-    padding: 12px;
-}
+    text-align: center;
+   }
 .invoice-header-logo-name .invoice-header-name h2{
     font-family: Impact, Charcoal, sans-serif;
 }
