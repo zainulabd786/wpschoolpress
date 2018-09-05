@@ -267,7 +267,7 @@ wpsp_header();
 
 										<textarea class="form-control" name="description" id="textarea" rows="8" cols="30" maxlength="500"></textarea>
 										<div id="textarea_feedback"></div>
-										<p><span style="color:green;">Please Note* : One message will count after 158 characters</span></p>
+										<p><span style="color:green;">Please Note* : One message will count after 150 characters</span></p>
 
 									</div>
 
