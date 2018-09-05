@@ -292,6 +292,10 @@ if( !empty( $stinfo ) ) {
                                             <option <?php if ($stinfo->p_bloodgrp == 'AB-') echo "selected"; ?> value="AB-">AB -</option>
                                         </select>
                                 </div>
+								 <div class="form-group">
+                                    <label for="s_additionalinfo">Additional Information</label>
+                                    <input type="text" class="form-control"  value="<?php echo $stinfo->s_additionalinfo; ?>"  name="s_additionalinfo"  placeholder="Additional Information">
+                                </div>
                             </div>
 						</div>
 						<h3 class="box-title"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;Fees Details</h3>

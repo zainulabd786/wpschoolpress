@@ -83,6 +83,7 @@ function wpsp_AddStudent() {
 	$current_date		=	date("Y-m-d");
 	$curr_month			=	date("m");
 	$trn_route			=	0;
+	$additionalInfo		=   esc_attr($_POST['s_additionalinfo']);
 	$set_fees 			=   $_POST['set_fees'];
 	if( $transport == "on" ){
 		$transport = 1;
@@ -187,7 +188,8 @@ function wpsp_AddStudent() {
 						's_pcity' 			=> isset( $_POST['s_pcity'] ) ? esc_attr( $_POST['s_pcity'] ) :'',						
 						's_pzipcode'		=> isset( $_POST['s_pzipcode'] ) ? $_POST['s_pzipcode'] :'',
 						'transport'			=> $transport,
-						'route_id'			=> $trn_route
+						'route_id'			=> $trn_route,
+						's_additionalinfo'   => $additionalInfo
 						 );
 		$cid_for_fee = $_POST['Class'];
 		$session_sql = $wpdb->get_results("SELECT * FROM $wpsp_settings_table WHERE option_name='session' OR option_name='sch_session_start' ;");
@@ -378,6 +380,7 @@ function wpsp_UpdateStudent(){
 	$pedu 				=	esc_attr($_POST['p_edu']);
 	$pprofession		=	esc_attr($_POST['p_profession']);      
 	$pbloodgroup	      =  esc_attr($_POST['p_bloodgrp']);
+	$additionalInfo		=   esc_attr($_POST['s_additionalinfo']);
 	$single_student_fees_table	=	$wpdb->prefix."wpsp_single_student_fees";
 	if(!empty($_POST['opt_transport'])){
 		if($_POST['opt_transport'] == "on"){
@@ -447,6 +450,7 @@ function wpsp_UpdateStudent(){
 						's_pzipcode'		=> isset( $_POST['s_pzipcode'] ) ? $_POST['s_pzipcode'] :'',
 						'transport'			=> $transport,
 						'route_id'			=> isset( $_POST['transport_route'] ) ? $_POST['transport_route'] :'',
+						's_additionalinfo' 			=>  isset( $_POST['s_additionalinfo'] ) ? esc_attr( $_POST['s_additionalinfo'] ) : '',
 						 );						 
 	$stu_upd 	=	$wpdb->update( $wpsp_student_table , $studenttable, array('wp_usr_id'=>$user_id) );    	
 	if (!empty( $_FILES['displaypicture']['name'])) {
@@ -688,6 +692,10 @@ function wpsp_StudentPublicProfile(){
 										<tr>
 											<td class='bold'>Parent Profession</td>
 											<td><?php echo $stinfo->p_profession; ?></td>
+										</tr>
+										<tr>
+											<td class='bold'>Additional Information</td>
+											<td><?php echo $stinfo->s_additionalinfo; ?></td>
 										</tr>
 									</tbody>
 								</table>

@@ -335,6 +335,10 @@
                                         <option value="AB-">AB -</option>
                                     </select>
                                 </div>
+								 <div class="form-group">
+                                    <label for="s_additionalinfo">Additional Information</label>
+                                    <input type="text" class="form-control" name="s_additionalinfo"  placeholder="Additional Information" id="s_additionalinfo">
+                                </div>
 
                                  <div class="form-group">
                                      <label for="p_displaypicture">
