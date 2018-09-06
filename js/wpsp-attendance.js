@@ -214,7 +214,8 @@ $(document).ready(function(){
 						$( '#wpsp-error-msg' ).html(response_data.msg);
 						$( '#AddModal' ).modal( 'hide' );
 					} else {								
-						$( '.AttendanceView' ).html( response_data.msg );
+						//$( '.AttendanceView' ).html( response_data.msg );
+						$( '.AttendanceView-detailed' ).html( response_data.msg );
 					}
 				},
                 error:function(){

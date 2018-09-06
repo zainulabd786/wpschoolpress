@@ -42,213 +42,218 @@ wpsp_header();
 				<div class="col-md-12">
 
 					<div class="box box-solid bg-blue-gradient">
-                <div class="box-header ui-sortable-handle" style="cursor: move;">
-                    <i class="fa fa-graph"></i>
-                    <h3 class="box-title"><i class="fa fa-child" aria-hidden="true"></i> Attendance  Report</h3>
-                    <!-- tools box -->
+		                <div class="box-header ui-sortable-handle" style="cursor: move;">
+		                    <i class="fa fa-graph"></i>
+		                    <h3 class="box-title"><i class="fa fa-child" aria-hidden="true"></i> Attendance  Report</h3>
+		                    <!-- tools box -->
 
-                    <!-- /. tools -->
-                </div>
-    
+		                    <!-- /. tools -->
+		                </div>
+	    
 
 						<div class="box-footer text-black">
 
 							<div class="col-lg-6 col-md-5 col-sm-12 col-xs-12" id="AttendanceEnterForm">
 
-							<h3 class="box-title">Today's Attendance</h3>
-							<div class="line_box">
-								<div class="form-group">
+								<h3 class="box-title">Today's Attendance</h3>
+								<div class="line_box">
+									<div class="form-group">
 
-									<label for="Class">Select Class </label>
-										<select name="classid" id="AttendanceClass" class="form-control">
+										<label for="Class">Select Class </label>
+											<select name="classid" id="AttendanceClass" class="form-control">
 
-											<option value="">Select Class</option>
+												<option value="">Select Class</option>
 
-												<?php 
+													<?php 
 
-												if(isset($_POST['classid']) && $_POST['classid']!='')
+													if(isset($_POST['classid']) && $_POST['classid']!='')
 
-													$selid=$_POST['classid'];
+														$selid=$_POST['classid'];
 
-												else 
+													else 
 
-													$selid=0;
+														$selid=0;
 
-												$ctname=$wpdb->prefix.'wpsp_class';
+													$ctname=$wpdb->prefix.'wpsp_class';
 
-												$clt=$wpdb->get_results("select `cid`,`c_name` from `$ctname`");
+													$clt=$wpdb->get_results("select `cid`,`c_name` from `$ctname`");
 
-												foreach($clt as $cnm)
+													foreach($clt as $cnm)
 
-												{
+													{
 
-												?>
+													?>
 
-													<option value="<?php echo $cnm->cid;?>" <?php if($cnm->cid==$selid) echo "selected";?>><?php echo $cnm->c_name;?></option>
+														<option value="<?php echo $cnm->cid;?>" <?php if($cnm->cid==$selid) echo "selected";?>><?php echo $cnm->c_name;?></option>
+
+													<?php
+
+													}
+
+													?>
+
+											</select>
+										</div>
+
+
+								
+
+										<div class="form-group">
+
+											<label for="date">Date </label>
+											<input type="text" class="form-control select_date" id="AttendanceDate" value="<?php if(isset($_POST['entry_date'])) { echo $_POST['entry_date']; } else { echo date('m/d/Y'); }?>" name="entry_date">
+
+
+										</div>
+
+										<div class="row text-center">
+
+											<button id="AttendanceEnter" name="attendance" class="btn btn-primary">Add/Update</button>
+
+											<button id="Attendanceview" name="attendanceview" class="btn btn-success">View</button>
+
+										</div>
+
+										<div class="col-lg-12 col-md-12 col-sm-12 col-md-offset-3 red" id="wpsp-error-msg" style="margin-top:10px;"></div>
+
+
+								</div>
+							</div>
+
+							<!--	<div class="col-lg-12 col-md-12 Attendance-Overview MTTen">
+
+									<div class="AttendanceContent">
+
+										<?php //include_once( WPSP_PLUGIN_PATH .'/includes/wpsp-attendanceView.php');?>
+
+									</div>								
+
+								</div> -->
+
+
+								<div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 AttendanceView">
+
+									<?php
+
+										$class_names		=	$c_stcount	=	$attendance	=	array();
+
+										$class_table		=	$wpdb->prefix."wpsp_class";
+
+										$student_table		=	$wpdb->prefix."wpsp_student";
+
+										$attendance_table	=	$wpdb->prefix."wpsp_attendance";
+
+										$class_info			=	$wpdb->get_results("select cid,c_name from $class_table");
+
+										foreach($class_info as $cls){
+
+											$class_names[$cls->cid]=$cls->c_name;
+
+										}
+
+										
+
+										$classwise_count	=	$wpdb->get_results("select class_id, count(*) as count from $student_table GROUP BY class_id",ARRAY_A);
+
+										foreach($classwise_count as $clwc){
+
+											$c_stcount[$clwc['class_id']]	=	$clwc['count'];
+
+										}
+
+										$date_today	=	date('Y-m-d');
+
+										
+
+										$attendance_info	=	$wpdb->get_results("select class_id, absents from $attendance_table where date='$date_today'");
+
+										foreach($attendance_info as $attend){
+
+											$absents	=	json_decode($attend->absents);
+
+											$present	=	$c_stcount[$attend->class_id]-count($absents);
+
+											$percent	=	round(($present*100)/$c_stcount[$attend->class_id]);
+
+											$attendance[$attend->class_id]	=	array('present'=>$present,'percentage'=>$percent);
+
+										}
+
+									?>
+
+									<div class="col-sm-12">
+
+										<h3 class="box-title">View Today's Attendance Report</h3>
+										<div style="overflow: hidden;" class="line_box">
+
+											<div class="box-body">
 
 												<?php
 
-												}
+													foreach($class_names as $clid=>$cln){
+
+													$css_class='';
+
+													if(isset($attendance[$clid])){
+
+														if($attendance[$clid]['percentage']==100)
+
+															$css_class="progress-bar-success";
+
+														else if($attendance[$clid]['percentage']<100 && $attendance[$clid]['percentage']>70)
+
+															$css_class="progress-bar-warning";
+
+														else if($attendance[$clid]['percentage']<=70)
+
+															$css_class="progress-bar-danger";
+
+														else
+
+															$css_class="progress-bar-info";
+
+
+
+													}
 
 												?>
 
-										</select>
-									</div>
+														<div class="progress-group">
 
+															<span class="progress-text"><?php echo $cln;?></span>
 
-							
+															<span class="progress-number"><?php if(isset($attendance[$clid])){ echo $attendance[$clid]['present']; }?>/<?php echo (isset($c_stcount[$clid]))?$c_stcount[$clid]:'0';?></span>
 
-									<div class="form-group">
+															<div class="progress sm">
 
-										<label for="date">Date </label>
-										<input type="text" class="form-control select_date" id="AttendanceDate" value="<?php if(isset($_POST['entry_date'])) { echo $_POST['entry_date']; } else { echo date('m/d/Y'); }?>" name="entry_date">
+																<div class="progress-bar <?php echo $css_class;?>" style="width: <?php echo (isset($attendance[$clid]))?$attendance[$clid]['percentage']:'0'; ?>%">
 
-
-									</div>
-
-									<div class="row text-center">
-
-										<button id="AttendanceEnter" name="attendance" class="btn btn-primary">Add/Update</button>
-
-										<button id="Attendanceview" name="attendanceview" class="btn btn-success">View</button>
-
-									</div>
-
-									<div class="col-lg-12 col-md-12 col-sm-12 col-md-offset-3 red" id="wpsp-error-msg" style="margin-top:10px;"></div>
-
-
-							</div>
-						</div>
-
-						<!--	<div class="col-lg-12 col-md-12 Attendance-Overview MTTen">
-
-								<div class="AttendanceContent">
-
-									<?php //include_once( WPSP_PLUGIN_PATH .'/includes/wpsp-attendanceView.php');?>
-
-								</div>								
-
-							</div> -->
-
-
-							<div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 AttendanceView">
-
-								<?php
-
-									$class_names		=	$c_stcount	=	$attendance	=	array();
-
-									$class_table		=	$wpdb->prefix."wpsp_class";
-
-									$student_table		=	$wpdb->prefix."wpsp_student";
-
-									$attendance_table	=	$wpdb->prefix."wpsp_attendance";
-
-									$class_info			=	$wpdb->get_results("select cid,c_name from $class_table");
-
-									foreach($class_info as $cls){
-
-										$class_names[$cls->cid]=$cls->c_name;
-
-									}
-
-									
-
-									$classwise_count	=	$wpdb->get_results("select class_id, count(*) as count from $student_table GROUP BY class_id",ARRAY_A);
-
-									foreach($classwise_count as $clwc){
-
-										$c_stcount[$clwc['class_id']]	=	$clwc['count'];
-
-									}
-
-									$date_today	=	date('Y-m-d');
-
-									
-
-									$attendance_info	=	$wpdb->get_results("select class_id, absents from $attendance_table where date='$date_today'");
-
-									foreach($attendance_info as $attend){
-
-										$absents	=	json_decode($attend->absents);
-
-										$present	=	$c_stcount[$attend->class_id]-count($absents);
-
-										$percent	=	round(($present*100)/$c_stcount[$attend->class_id]);
-
-										$attendance[$attend->class_id]	=	array('present'=>$present,'percentage'=>$percent);
-
-									}
-
-								?>
-
-								<div class="col-sm-12">
-
-									<h3 class="box-title">View Today's Attendance Report</h3>
-									<div class="line_box">
-
-										<div class="box-body">
-
-											<?php
-
-												foreach($class_names as $clid=>$cln){
-
-												$css_class='';
-
-												if(isset($attendance[$clid])){
-
-													if($attendance[$clid]['percentage']==100)
-
-														$css_class="progress-bar-success";
-
-													else if($attendance[$clid]['percentage']<100 && $attendance[$clid]['percentage']>70)
-
-														$css_class="progress-bar-warning";
-
-													else if($attendance[$clid]['percentage']<=70)
-
-														$css_class="progress-bar-danger";
-
-													else
-
-														$css_class="progress-bar-info";
-
-
-
-												}
-
-											?>
-
-													<div class="progress-group">
-
-														<span class="progress-text"><?php echo $cln;?></span>
-
-														<span class="progress-number"><?php if(isset($attendance[$clid])){ echo $attendance[$clid]['present']; }?>/<?php echo (isset($c_stcount[$clid]))?$c_stcount[$clid]:'0';?></span>
-
-														<div class="progress sm">
-
-															<div class="progress-bar <?php echo $css_class;?>" style="width: <?php echo (isset($attendance[$clid]))?$attendance[$clid]['percentage']:'0'; ?>%">
+																</div>
 
 															</div>
 
 														</div>
 
-													</div>
+												<?php } ?>
 
-											<?php } ?>
+											</div>
+									
+											<div class="AttendanceView-detailed col-sm-12"></div>
 
-										</div></div>
+										</div>
 
-								</div>
+									</div>
 
-						
+							
 
-						</div>
+							</div>
 
 						</div>						
 
 					</div>
 
 				</div>
+
 
 			</div>
 
