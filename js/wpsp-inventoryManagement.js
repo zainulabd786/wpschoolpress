@@ -234,13 +234,16 @@ $(document).ready(function() {
                   var action = "assign_inventory_item";
                   let data=new Array();
                   var reasData = JSON.parse($(".reas-data").text());
+                  let reassignedFrom = reasData['item_details'].wp_usr_id;
+                  console.log(reasData);
                   data.push(
                     { name: 'action', value: action },
                     { name: 'item', value: item },
                     { name: 'date', value: date },
                     { name: 'qty', value: qty },
                     { name: 'assignedTo', value: assignedTo },
-                    { name: 'session', value: session }
+                    { name: 'session', value: session },
+                    { name: 'reassignedFrom', value: reassignedFrom }
                   );
                   $.ajax({
                     method: "POST",

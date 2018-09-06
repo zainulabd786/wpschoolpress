@@ -56,7 +56,7 @@
 									$assigned_table = $wpdb->prefix."wpsp_assigned_inventory";
 									$master_table = $wpdb->prefix."wpsp_inventory_master";
 									$teacher_table = $wpdb->prefix."wpsp_teacher";
-									$get_data = $wpdb->get_results("SELECT a.sno, a.date, a.quantity, a.session, a.consumed, b.item_name, c.first_name, c.middle_name, c.last_name, c.empcode, c.wp_usr_id FROM $assigned_table a, $master_table b, $teacher_table c WHERE c.wp_usr_id=a.staff_uid AND b.master_id=a.master_id");
+									$get_data = $wpdb->get_results("SELECT a.sno, a.date, a.quantity, a.session, a.consumed, a.reassigned_from, b.item_name, c.first_name, c.middle_name, c.last_name, c.empcode, c.wp_usr_id FROM $assigned_table a, $master_table b, $teacher_table c WHERE c.wp_usr_id=a.staff_uid AND b.master_id=a.master_id");
 									foreach ($get_data as $assigned) { ?>
 									 	<tr>
 									 		<td>
@@ -69,7 +69,14 @@
 									 		<td><?php echo $assigned->quantity; ?></td>
 									 		<td><?php echo $assigned->first_name." ".$assigned->middle_name." ".$assigned->last_name."-".$assigned->empcode; ?></td>
 									 		<td><?php echo $assigned->session; ?></td>
-									 		<td><span type="button" class="btn btn-primary reassign-btn" id="<?php echo $assigned->sno; ?>" <?php if(!empty($assigned->consumed)) echo "disabled"; ?>><?php echo (empty($assigned->consumed))?"Reassign":"consumed"; ?></span></td>
+									 		<td>
+									 			<span type="button" class="btn btn-primary reassign-btn" id="<?php echo $assigned->sno; ?>" <?php if(!empty($assigned->consumed)) echo "disabled"; ?>><?php echo (empty($assigned->consumed))?"Reassign":"consumed"; ?></span>
+									 			<?php if(!empty($assigned->reassigned_from)){ ?><br/><span class="inv-reas-info">Reassigned From: <b><?php 
+									 				$t_name = $wpdb->get_results("SELECT first_name, middle_name, last_name FROM $teacher_table WHERE wp_usr_id='$assigned->reassigned_from' ");
+									 				$t_fullname = $t_name[0]->first_name." ".$t_name[0]->middle_name." ".$t_name[0]->last_name;
+									 				echo $t_fullname;
+									 			 } ?></b></span>
+									 		</td>
 									 	</tr> <?php
 									 } ?>
 								</tbody>

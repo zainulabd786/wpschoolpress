@@ -2392,6 +2392,7 @@ function wpsp_getStudentsAttendanceList() {
 			$msg	=	__( '<span class="label label-danger">N/A</span> Not Applicable(Date is marked as leave)', 'SchoolWeb' );
 		} else {
 			$attendance				=	$wpdb->get_row( "SELECT * from $att_table where date='$date' and class_id='$classID'", ARRAY_A );
+			//echo "<pre>"; print_r($attendance); echo "</pre>";
 			if( empty( $attendance ) ) {
 				$msg	=	__( '<span class="label label-danger">N/E</span> No Attendance Entered Yet', 'SchoolWeb' );
 			} elseif( isset( $attendance['absents'] ) && $attendance['absents'] !='Nil' ) {
@@ -2400,7 +2401,9 @@ function wpsp_getStudentsAttendanceList() {
 					$absentList[$value->sid] = $value->reason;
 				}				
 			}
-			$studentList	=	$wpdb->get_results( "SELECT CONCAT_WS(' ', s_fname, s_mname, s_lname ) AS full_name, s_rollno from $student_table where class_id='$classID'", ARRAY_A );
+
+				//echo "<pre>"; print_r($absentList); echo "</pre> end";
+			$studentList	=	$wpdb->get_results( "SELECT CONCAT_WS(' ', s_fname, s_mname, s_lname ) AS full_name, wp_usr_id from $student_table where class_id='$classID'", ARRAY_A );
 			if( count( $studentList ) > 0 && empty( $msg ) ) {
 				ob_start();
 				echo '<table class="table"><tr><th>'.__( 'Roll Number', 'SchoolWeb').'</th>
@@ -2409,9 +2412,9 @@ function wpsp_getStudentsAttendanceList() {
 							<th>'.__( 'Commment', 'SchoolWeb' ).'</th>
 							</tr>';
 				foreach( $studentList as $key => $value ) {
-					 $userID		=	$value['s_rollno'];
+					 $userID		=	$value['wp_usr_id'];
 					 $userName		=	$value['full_name'];
-					 $sattendance	=	count( $absentList) >0 && array_key_exists( $userID, $absentList ) ? __( 'Absent', 'SchoolWeb' ) : __( 'Present', 'SchoolWeb' );					 
+					 $sattendance	=	(count( $absentList) >0 && array_key_exists( $userID, $absentList )) ? __( 'Absent', 'SchoolWeb' ) : __( 'Present', 'SchoolWeb' );					 
 					 $commnet		=	isset( $absentList[$userID] ) ? stripslashes ( $absentList[$userID] ) : '';
 					 echo '<tr><td>'.$userID.'</td>
 								<td>'.$userName.'</td>
@@ -4038,9 +4041,11 @@ function wpsp_Import_Dummy_contents() {
 		$assigned_to = $_POST['assignedTo'];
 		$session = $_POST['session'];
 
+		$reassigned_from = (!empty($_POST['reassignedFrom']))?$_POST['reassignedFrom']:0;
+
 		$assign_table = $wpdb->prefix."wpsp_assigned_inventory";
 
-		$assign_data = array( 'master_id' => $item, 'date' => $date, 'quantity' => $quantity, 'staff_uid' => $assigned_to, 'session' => $session );
+		$assign_data = array( 'master_id' => $item, 'date' => $date, 'quantity' => $quantity, 'staff_uid' => $assigned_to, 'session' => $session, 'reassigned_from' => $reassigned_from );
 		if($wpdb->insert($assign_table, $assign_data)){
 			echo 'success';
 		} else{
