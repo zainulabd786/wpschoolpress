@@ -72,7 +72,8 @@
 						$c_month = (int)$c_month;
 						$curr_month_name = $months_array[$c_month];
 						$mobile = $student->s_phone;
-						$msg = "Dear Parent, you are requested to submit the fees for the month of ".$curr_month_name.". *Regards SPI School";
+						$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
+						$msg = "Dear Parent, you are requested to submit the fees for the month of ".$curr_month_name." Please ignore if you have already submitted. *Regards ".$sql_SchoolName[0]->option_value;
 						$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 						$sms_left = $check_sms[0]->option_value;
 						if($sms_left > 0){
@@ -114,5 +115,4 @@
 			$wpdb->query("UPDATE $settings_table SET option_value = '0' WHERE option_name = 'due_php_script_status' ");
 		}
 	}
-	$wpdb->query("UPDATE wp_wpsp_follow_up SET visitor = visitor+'1' WHERE id = '1' ");
 ?>

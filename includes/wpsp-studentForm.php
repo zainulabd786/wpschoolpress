@@ -248,7 +248,7 @@
 								<div class="form-group">
 									<input type="hidden" name="studentFormName" id="studentFormName" value="addForm" />
 									<label for="RegistrationNo">Registration Number</label>
-									<input type="text" class="form-control" id="RegistrationNo" name="s_regno" placeholder="Registration Number" readonly>
+									<input type="text" class="form-control" id="RegistrationNo" name="s_regno" placeholder="Registration Number">
 								</div>
 								<?php // Bharatdan Gadhavi - 13th Feb 2018 - End ?>
                             </div>
@@ -334,6 +334,10 @@
                                         <option value="AB+">AB +</option>
                                         <option value="AB-">AB -</option>
                                     </select>
+                                </div>
+								 <div class="form-group">
+                                    <label for="s_additionalinfo">Additional Information</label>
+                                    <input type="text" class="form-control" name="s_additionalinfo"  placeholder="Additional Information" id="s_additionalinfo">
                                 </div>
 
                                  <div class="form-group">

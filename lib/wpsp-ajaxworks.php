@@ -644,8 +644,10 @@ function wpsp_AttendanceEntry()
 				$studInfo = $wpdb->get_row("SELECT s_phone, CONCAT_WS(' ', s_fname, s_mname, s_lname ) AS full_name  FROM  $stud_table ws WHERE ws.wp_usr_id=$stid");				
 				if( isset( $studInfo->s_phone ) && !empty( $studInfo->s_phone ) ) {
 					$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
+					$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
 					$sms_left = $check_sms[0]->option_value;
-					$absentreason = 'Dear Parent, Your Child '.$studInfo->full_name.' of class '.$classname.' is absent on '.$entry_date.' for reason '.$reason[$stid].' , *Regards SPI School';
+					$absentreason = 'Dear Parent, Your Child '.$studInfo->full_name.' of class '.$classname.' is absent on '.$entry_date.' for reason '.$reason[$stid].' , *Regards '.$sql_SchoolName[0]->option_value;
+					
 					if($sms_left>0){
 						$status 	=	apply_filters( 'wpsp_send_notification_msg', false, $studInfo->s_phone, $absentreason );
 						if($status){
@@ -2857,6 +2859,7 @@ function wpsp_Import_Dummy_contents() {
 		$student_table = $wpdb->prefix."wpsp_student";
 		$transport_table = $wpdb->prefix."wpsp_transport";
 		$settings_table = $wpdb->prefix."wpsp_settings";
+		$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
 		/*$sql_expected_amounts = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$cid' ");
 		foreach ($sql_expected_amounts as $amt) {
 			$pm_tf = $amt->tution_fees-$concession;
@@ -2918,7 +2921,7 @@ function wpsp_Import_Dummy_contents() {
 						}
 					}
 				}
-				$msg .= " . *Regards SPI School";
+				$msg .= " . *Regards ".$sql_SchoolName[0]->option_value;
 				$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 				$sms_left = $check_sms[0]->option_value;
 				if($sms_left > 0){
@@ -3614,10 +3617,10 @@ function wpsp_Import_Dummy_contents() {
 								<div class="invoice-header">
 									<div class="invoice-header-logo-name row">
 
-										<div class="invoice-header-logo col-md-3 col-print-3">
+										<div class="invoice-header-logo col-md-12 col-print-12">
 											<img src="<?php if(!empty($school_logo)) echo $school_logo; ?>" height=90 width=90>
 										</div>
-										<div class="invoice-header-name col-md-9 col-print-9">
+										<div class="invoice-header-name col-md-12 col-print-12">
 											<h2><?php if(!empty($school_name)) echo $school_name; ?></h2>
 										</div>
 
@@ -3877,6 +3880,7 @@ function wpsp_Import_Dummy_contents() {
 		$to_trn_mo = '';
 		$phone = 0;
 		$msg = "Dear Parent, you are requested to submit the fees for the month of ";
+		$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
         for($i=0;$i<count($st_arr);$i++){
 			$status = 0;
 			$st_num = $wpdb->get_results("SELECT s_phone FROM $student_table WHERE wp_usr_id='$st_arr[$i]' ");
@@ -3907,7 +3911,7 @@ function wpsp_Import_Dummy_contents() {
 					}
 				}
 			}
-			$msg .= ". *Regards SPI School";
+			$msg .= ". Please ignore if you have already submitted. *Regards ".$sql_SchoolName[0]->option_value;
 
 			$phone = $st_num[0]->s_phone;
 			if( !empty( $phone ) ) {

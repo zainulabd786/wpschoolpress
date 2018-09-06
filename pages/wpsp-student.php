@@ -283,7 +283,11 @@ $months_array = array("N/A","January", "February", "March", "April", "May", "Jun
 																<tr>
 																	<td class="bold"><?php _e( 'Blood Group', 'SchoolWeb'); ?></td>
 																	<td><?php echo $stinfo->s_bloodgrp; ?></td>
-																</tr>																														
+																</tr>
+																<tr>
+																	<td class="bold"><?php _e( 'Additional Information', 'SchoolWeb'); ?></td>
+																	<td><?php echo $stinfo->s_additionalinfo; ?></td>
+																</tr>																	
 																</tbody>
 															</table>
 														</div>
