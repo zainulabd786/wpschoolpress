@@ -624,6 +624,7 @@ function wpsp_AttendanceEntry()
 	$att_table		=	$wpdb->prefix."wpsp_attendance";
 	$stud_table		=	$wpdb->prefix."wpsp_student";	
 	$class_table	=	$wpdb->prefix."wpsp_class";
+	$settings_table	=	$wpdb->prefix."wpsp_settings";
 	$check_attend	=	$wpdb->get_row("SELECT * FROM $att_table WHERE class_id=$class and date = '$entry_date'");	
 	$classname 		= 	$wpdb->get_var("SELECT c_name FROM $class_table where cid=$class"); 
 	$previousList	=	$previoudids	=	array();
