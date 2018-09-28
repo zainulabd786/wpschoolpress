@@ -2830,12 +2830,12 @@ function wpsp_Import_Dummy_contents() {
 		$from_trn = $_POST['fromDateTrn'];
 		$to_trn = $_POST['toDateTrn'];
 		$num_months = ($to - $from) + 1;
-		$tution_fees = $_POST['tutionFees']; //9600
+		$tution_fees = $_POST['tutionFees']; 
 		$transport_chg = $_POST['transportChg'];
 		$annual_chg = $_POST['annualChg'];
 		$recreation_chg = $_POST['recreationChg'];
 		$exp_admission_fees = $_POST['expadmissionFees'];
-		$exp_tution_fees = $_POST['exptutionFees']; //9600
+		$exp_tution_fees = $_POST['exptutionFees']; 
 		$exp_transport_chg = $_POST['exptransportChg'];
 		$exp_annual_chg = $_POST['expannualChg'];
 		$exp_recreation_chg = $_POST['exprecreationChg'];
@@ -2850,7 +2850,7 @@ function wpsp_Import_Dummy_contents() {
 		$pno = $_POST['pno'];
 		$fees_type = "";
 		$student_fees = json_decode(apply_filters("get_student_fees", $uid));
-		$pm_tf = $student_fees->tution_fees; //1200
+		$pm_tf = $student_fees->tution_fees; 
 		$pm_tc = 0;
 		$msg = "Dear Parents, Thanks for depositing the payment of the month ";
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
@@ -2861,6 +2861,9 @@ function wpsp_Import_Dummy_contents() {
 		$transport_table = $wpdb->prefix."wpsp_transport";
 		$settings_table = $wpdb->prefix."wpsp_settings";
 		$sql_SchoolName		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'sch_name'");
+		$transaction_amount = $admission_fees+$tution_fees+$transport_chg+$annual_chg+$recreation_chg;
+
+		$remarks = "Fees Submission Slip number ".$slip_no;
 		/*$sql_expected_amounts = $wpdb->get_results("SELECT tution_fees FROM $fees_settings_table WHERE cid='$cid' ");
 		foreach ($sql_expected_amounts as $amt) {
 			$pm_tf = $amt->tution_fees-$concession;
@@ -3371,6 +3374,8 @@ function wpsp_Import_Dummy_contents() {
 			else{
 				throw new Exception($wpdb->print_error());
 			}
+
+			if(!apply_filters("ac_record_transaction", $slip_no, 1, 1, $remarks, $transaction_amount, ($mop == "Cash")? 1 : 2 )) throw new Exception($wpdb->print_error());
 
 			$wpdb->query("COMMIT;");
 		}
@@ -4759,4 +4764,3 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
-?>

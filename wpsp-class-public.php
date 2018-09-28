@@ -122,6 +122,9 @@ class Wpsp_Public{
 		if ( is_page( 'sch-changepassword' ) ) {
 			$page_template = dirname( __FILE__ ) . '/pages/wpsp-changepassword.php';
 		}
+		if ( is_page( 'sch-accounting' ) ) {
+			$page_template = dirname( __FILE__ ) . '/pages/wpsp-accounting.php';
+		}
 
 		
 		return $page_template;

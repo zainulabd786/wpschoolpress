@@ -40,6 +40,8 @@ register_activation_hook( __FILE__, 'wpsp_activation' );
 function wpsp_activation() {
 	include_once( WPSP_PLUGIN_PATH.'lib/wpsp-activation.php' );
 
+	do_action("ac_default_fees_group");
+
 	if (! wp_next_scheduled ( 'make_monthly_dues' )) {
  		wp_schedule_event(time(), 'daily', 'make_monthly_dues');
     }
@@ -300,4 +302,117 @@ function single_student_fees($uid){
 	return json_encode($student_fees);
 }
 add_filter("get_student_fees","single_student_fees");
-?>
+
+/**************************************************Accounting Module Functions************************************************/
+//fucnction to record a Transactions
+function ac_record_transaction($ref, $type, $group, $remarks, $amount, $mop){
+	global $wpdb;
+	$error = false;
+	$date_time = date("Y-m-d H:i:s");
+	$tid = apply_filters("ac_get_tid", $mop);
+	$table = ($mop == "cash") ? $wpdb->prefix."wpsp_cash_transactions" : $wpdb->prefix."wpsp_bank_transactions";
+	$balance = ($type == 1) ? apply_filters("ac_get_balance", $mop) + $amount : apply_filters("ac_get_balance", $mop) - $amount;
+
+	$trans_data = array(
+		"tid" => $tid,
+		"date_time" => $date_time,
+		"reference" => $ref,
+		"type" => $type,
+		"group" => $group,
+		"remarks" => $remarks,
+		"amount" => $amount,
+		"balance" => $balance
+	);
+
+	return ($wpdb->insert($table, $trans_data)) ? true : false;
+}
+add_filter("ac_record_transaction", "ac_record_transaction");
+
+//function to return Current Balance
+function ac_balance($mode){  //mode accepts either cash or bank
+	global $wpdb;
+	$error = false;
+	switch($mode){
+		case 1:
+			$cash_table = $wpdb->prefix."wpsp_cash_transactions";
+			$sql = "SELECT balance FROM $cash_table ORDER BY date_time DESC LIMIT 1";
+		break;
+		case 2:
+			$bank_table = $wpdb->prefix."wpsp_bank_transactions";
+			$sql = "SELECT balance FROM $bank_table ORDER BY date_time DESC LIMIT 1";
+		break;
+		default: $error = true;
+	}
+
+	return (!$error) ? $wpdb->get_results($sql)[0]->balance : "Invalid Mode";
+}
+add_filter("ac_get_balance", "ac_balance");
+
+//function to generate transaction id
+function ac_tid($mop){
+	global $wpdb;
+	$error = false;
+	$sql = "";
+	switch($mop){
+		case 1:
+			$cash_table = $wpdb->prefix."wpsp_cash_transactions";
+			$sql = "SELECT tid FROM $cash_table ORDER BY date_time DESC LIMIT 1";
+		break;
+
+		case 2:
+			$bank_table = $wpdb->prefix."wpsp_bank_transactions";
+			$sql = "SELECT tid FROM $bank_table ORDER BY date_time DESC LIMIT 1";
+		break;
+
+		default: $error = true;
+	}
+	$result = $wpdb->get_results($sql);
+
+	return (!$error) ? ($wpdb->num_rows>0) ? $tid = (substr($result[0]->tid, 0, 6) != date("ymd")) ? date('ymd').'0' : $result[0]->tid+1 : $tid = date('ymd').'0' : "invalid mode of payment";
+	
+}
+add_filter("ac_get_tid", "ac_tid");
+
+//function to create group
+function ac_create_group($group_name){
+	global $wpdb;
+	$table = $wpdb->prefix."wpsp_transactions_group";
+	$data = array("group_name"=>$group_name);
+	return ($wpdb->insert($table, $data)) ? true : false;
+}
+
+//function to Delete Group
+function ac_delete_group($id){
+global $wpdb;
+$table = $wpdb->prefix."wpsp_transaction_group";
+return ($wpdb->query("DELETE FROM $table WHERE group_id='$id'")) ? true : false;
+}
+add_filter("ac_delete_group", "ac_delete_group");
+
+//function to update Group
+function ac_update_group($id, $value){
+global $wpdb;
+$table = $wpdb->prefix."wpsp_transaction_group";
+return ($wpdb->query("UPDATE $table SET group_name='$value' WHERE group_id='$id'")) ? true : false;
+}
+add_filter("ac_update_group", "ac_update_group");
+
+//create default fee group
+function ac_default_fees_group(){
+	global $wpdb;
+	$table = $wpdb->prefix."wpsp_transaction_group";
+
+	$results = $wpdb->get_results("SELECT * FROM $table WHERE group_id = '1'");
+
+	($wpdb->num_rows <= 0) ? $wpdb->insert($table, array("id"=>1, "group_name"=>"Fees Submission")) : "";
+
+}
+add_action("ac_default_fees_group", "ac_default_fees_group");
+/**************************************************Accounting Module Functions end************************************************/
+
+
+
+
+
+
+

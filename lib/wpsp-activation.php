@@ -1,4 +1,5 @@
-<?php
+
+`reference` varchar(99),<?php
 	if ( ! defined( 'ABSPATH' ) ) 
 		exit('No Such File');
 	
@@ -27,11 +28,12 @@
 	$fees_management_page       =   array( 'slug' => 'sch-fee-man', 'title' => 'Fees Management' );
 	$inventory_management_page 	=	array( 'slug' => 'sch-inv-management', 'title' => 'Inventory Management');
 	$enquiry 					=	array( 'slug' => 'sch-enquiry', 'title' => 'Enquiry');
+	$accounting_page			=	array( 'slug' => 'sch-accounting', 'title' => 'Accounting');
 	
  	$teacher_found	=	$student_found	=	$parent_found	=	$class_found	=	$dashboard_found	=	
 	$messages_found	=	$exams_found	=	$attendance_found	=	$timetable_found	=	$events_found	=
 	$leave_found	=	$subject_found	=	$settings_found	=	$transport_found	=	$marks_found	=
-	$sms_found	=	$notify_found =	$importhistory_found	=	$teacher_attendance_found = $change_password = $payment_found = $fm_found = $inventory_found = $enquiry_found = 0;
+	$sms_found	=	$notify_found =	$importhistory_found	=	$teacher_attendance_found = $change_password = $payment_found = $fm_found = $inventory_found = $enquiry_found = $accounting_found = 0;
 	
 	$pages = get_pages();
 	foreach ($pages as $page) { 
@@ -61,6 +63,7 @@
             case 'sch-fee-man': 			$fm_found = '1';  				break;
             case 'sch-inv-management': 		$inventory_found = '1';  		break;
             case 'sch-enquiry': 			$enquiry_found = '1';  			break;
+            case 'sch-accounting': 			$accounting_found = '1';  		break;
 			default:						$no_page;			
 		}		
 	}
@@ -278,6 +281,15 @@
 	        'post_excerpt' => 'Fees'
 	    ));
 	}
+	if ( $accounting_found != 1) {
+	    $page_id = wp_insert_post(array(
+	        'post_title' => $accounting_page['title'],
+	        'post_type' => 'page',
+	        'post_name' => $accounting_page['slug'],
+	        'post_status' => 'publish',
+	        'post_excerpt' => 'Accounting'
+	    ));
+	}
 		
 	global $wpdb;
 	$teacher_table            = $wpdb->prefix . 'wpsp_teacher';
@@ -310,6 +322,39 @@
 	$assigned_inventory		  = $wpdb->prefix . 'wpsp_assigned_inventory';
 	$visitors		  		  = $wpdb->prefix . 'wpsp_visitors';
 	$follow_up		  		  = $wpdb->prefix . 'wpsp_follow_up';
+	$transactions_group		  = $wpdb->prefix . 'wpsp_transactions_group';
+	$cash_transactions		  = $wpdb->prefix . 'wpsp_cash_transactions';
+	$bank_transactions		  = $wpdb->prefix . 'wpsp_bank_transactions';
+
+	$sql_transaction_group_table = "CREATE TABLE IF NOT EXISTS $transactions_group  (
+	  `group_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	  `group_name` varchar(50),
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+	dbDelta($sql_transaction_group_table);
+
+	$sql_cash_transactions_table = "CREATE TABLE IF NOT EXISTS $cash_transactions  (
+	  `tid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	  `date_time` datetime,
+	  `reference` varchar(99),
+	  `type` int(1),
+	  `group_id` int(11),
+	  `remarks` varchar(100),
+	  `amount` int(11),
+	  `balance` int(11)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+	dbDelta($sql_cash_transactions_table);
+
+	$sql_bank_transactions_table = "CREATE TABLE IF NOT EXISTS $bank_transactions  (
+	  `tid` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	  `date_time` datetime,
+	  `reference` varchar(99),
+	  `type` int(1),
+	  `group_id` int(11),
+	  `remarks` varchar(100),
+	  `amount` int(11),
+	  `balance` int(11)
+	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+	dbDelta($sql_bank_transactions_table);
 
 	$sql_visitor_table = "CREATE TABLE IF NOT EXISTS $visitors  (
 	  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
