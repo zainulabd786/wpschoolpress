@@ -3374,8 +3374,16 @@ function wpsp_Import_Dummy_contents() {
 			else{
 				throw new Exception($wpdb->print_error());
 			}
-
-			if(!apply_filters("ac_record_transaction", $slip_no, 1, 1, $remarks, $transaction_amount, ($mop == "Cash")? 1 : 2 )) throw new Exception($wpdb->print_error());
+			
+			$args = array(
+				"reference" => $slip_no,
+				"type" => 1,
+				"group" => 1,
+				"remarks" => $remarks,
+				"amount" => $transaction_amount,
+				"mop" => ($mop == "Cash")? 1 : 2
+			);
+			if(!apply_filters("ac_record_transaction", $args)) throw new Exception($wpdb->print_error());
 
 			$wpdb->query("COMMIT;");
 		}

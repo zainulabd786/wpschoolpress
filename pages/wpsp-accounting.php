@@ -13,7 +13,7 @@ wpsp_header();
 			wpsp_topbar();
 			wpsp_sidebar();
 			wpsp_body_start();
-			$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-accounting.php';
+			$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-transactionsList.php';
 			$label = "Accounting"	?>
 			<section class="content-header">
 				<h1><?php echo $label; ?></h1>

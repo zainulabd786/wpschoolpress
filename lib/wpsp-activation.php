@@ -328,7 +328,7 @@
 
 	$sql_transaction_group_table = "CREATE TABLE IF NOT EXISTS $transactions_group  (
 	  `group_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-	  `group_name` varchar(50),
+	  `group_name` varchar(50)
 	)ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
 	dbDelta($sql_transaction_group_table);
 

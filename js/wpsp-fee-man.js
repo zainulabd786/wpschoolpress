@@ -409,6 +409,10 @@ $(document).ready(function(){
 		var mop = $(".mop select").val();
 		var pno = $("#pno").val();
 		var data=new Array();
+		if(mop == ""){
+			alert("Mode of payment can not be empty");
+			return;
+		}
 		data.push(
 			{name: 'action', value: action},
 			{name: 'slip', value: slip},

@@ -305,24 +305,32 @@ add_filter("get_student_fees","single_student_fees");
 
 /**************************************************Accounting Module Functions************************************************/
 //fucnction to record a Transactions
-function ac_record_transaction($ref, $type, $group, $remarks, $amount, $mop){
+function ac_record_transaction($args){
+	$reference = (!empty($args['reference'])) ? $args['reference'] : "";
+	$type = (!empty($args['type'])) ? $args['type'] : "";
+	$group = (!empty($args['group'])) ? $args['group'] : "";
+	$remarks = (!empty($args['remarks'])) ? $args['remarks'] : "";
+	$amount = (!empty($args['amount'])) ? $args['amount'] : "";
+	$mop = (!empty($args['mop'])) ? $args['mop'] : "";
 	global $wpdb;
 	$error = false;
 	$date_time = date("Y-m-d H:i:s");
 	$tid = apply_filters("ac_get_tid", $mop);
-	$table = ($mop == "cash") ? $wpdb->prefix."wpsp_cash_transactions" : $wpdb->prefix."wpsp_bank_transactions";
+	$table = ($mop == 1) ? $wpdb->prefix."wpsp_cash_transactions" : $wpdb->prefix."wpsp_bank_transactions";
 	$balance = ($type == 1) ? apply_filters("ac_get_balance", $mop) + $amount : apply_filters("ac_get_balance", $mop) - $amount;
 
 	$trans_data = array(
 		"tid" => $tid,
 		"date_time" => $date_time,
-		"reference" => $ref,
+		"reference" => $reference,
 		"type" => $type,
-		"group" => $group,
+		"group_id" => $group,
 		"remarks" => $remarks,
 		"amount" => $amount,
 		"balance" => $balance
 	);
+
+	//echo "<pre>"; print_r($trans_data); echo "</pre>";
 
 	return ($wpdb->insert($table, $trans_data)) ? true : false;
 }
@@ -372,6 +380,45 @@ function ac_tid($mop){
 	
 }
 add_filter("ac_get_tid", "ac_tid");
+
+//functions to return Transactions
+function ac_transactions($mode){ //Returns all transactions if mode is set to 0, cash if 1 and bank if 2
+	global $wpdb;
+	$group_table = $wpdb->prefix."wpsp_transactions_group";
+	$cash_table = $wpdb->prefix."wpsp_cash_transactions";
+	$bank_table = $wpdb->prefix."wpsp_bank_transactions";
+	$error = false;
+
+	switch($mode){
+		case 0:
+			$sql = "SELECT a.*, 'cash' AS mop FROM $cash_table a UNION ALL SELECT a.*, 'bank' AS mop FROM $cash_table a ORDER BY date_time DESC";
+		break;
+
+		case 1:
+			$sql = "SELECT a.* FROM $cash_table a ORDER BY date_time DESC";
+		break;
+
+		case 2:
+			$sql = "SELECT a.* FROM $bank_table a ORDER BY date_time DESC";
+		break;
+
+		default: $error = true;
+	}
+
+	if(!$error){
+		return json_encode($wpdb->get_results($sql));
+	}
+}
+add_filter("ac_get_transactions", "ac_transactions");
+
+//function to get Group Name by ID
+function ac_get_group_name($id){
+	global $wpdb;
+	$table = $wpdb->prefix."wpsp_transactions_group";
+	$results = $wpdb->get_results("SELECT group_name FROM $table WHERE group_id='$id'");
+	return $results[0]->group_name;
+}
+add_action("ac_get_group_name", "ac_get_group_name");
 
 //function to create group
 function ac_create_group($group_name){
