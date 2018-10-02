@@ -45,6 +45,7 @@ function wpsp_header(){
 
   if ( is_page( 'sch-accounting' ) ) {
     echo "<link href='".plugins_url('plugins/jquery-confirm-master/css/jquery-confirm.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
+      echo "<link href='".plugins_url('plugins/bootstrap-toggle/css/bootstrap-toggle.min.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
   }
   
   if( is_page('sch-dashboard') ) {
@@ -565,6 +566,8 @@ function wpsp_footer()
   {
       echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
       echo "<script src='".plugins_url("js/wpsp-accounting.js",__FILE__)."' > </script>";
+      echo "<link href='".plugins_url('plugins/bootstrap-toggle/css/bootstrap-toggle.min.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
+      echo "<script src='".plugins_url("plugins/bootstrap-toggle/js/bootstrap-toggle.min.js",__FILE__)."' > </script>";
   }
   if ( is_page( 'sch-enquiry' ) ) 
   {

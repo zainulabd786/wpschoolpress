@@ -260,6 +260,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_deduct_quantity_after_reassign_item', 'deduct_quantity_after_reassign_item' );
 
 		add_action( 'wp_ajax_mark_inv_item_as_consumed', 'mark_item_consumed' );
+
+		add_action( 'wp_ajax_ac_record_transaction_form', 'ac_record_transaction_form' );
 }
 
 function tl_save_error() {
@@ -307,13 +309,12 @@ add_filter("get_student_fees","single_student_fees");
 //fucnction to record a Transactions
 function ac_record_transaction($args){
 	$reference = (!empty($args['reference'])) ? $args['reference'] : "";
-	$type = (!empty($args['type'])) ? $args['type'] : "";
+	$type = (!empty($args['type'])) ? $args['type'] : 0;
 	$group = (!empty($args['group'])) ? $args['group'] : "";
 	$remarks = (!empty($args['remarks'])) ? $args['remarks'] : "";
 	$amount = (!empty($args['amount'])) ? $args['amount'] : "";
 	$mop = (!empty($args['mop'])) ? $args['mop'] : "";
 	global $wpdb;
-	$error = false;
 	$date_time = date("Y-m-d H:i:s");
 	$tid = apply_filters("ac_get_tid", $mop);
 	$table = ($mop == 1) ? $wpdb->prefix."wpsp_cash_transactions" : $wpdb->prefix."wpsp_bank_transactions";
@@ -391,7 +392,7 @@ function ac_transactions($mode){ //Returns all transactions if mode is set to 0,
 
 	switch($mode){
 		case 0:
-			$sql = "SELECT a.*, 'cash' AS mop FROM $cash_table a UNION ALL SELECT a.*, 'bank' AS mop FROM $cash_table a ORDER BY date_time DESC";
+			$sql = "SELECT a.*, 'cash' AS mop FROM $cash_table a UNION ALL SELECT a.*, 'bank' AS mop FROM $bank_table a ORDER BY date_time DESC";
 		break;
 
 		case 1:
@@ -412,13 +413,14 @@ function ac_transactions($mode){ //Returns all transactions if mode is set to 0,
 add_filter("ac_get_transactions", "ac_transactions");
 
 //function to get Group Name by ID
-function ac_get_group_name($id){
+function ac_get_group_names($id){ // returns all groups if id is set to all
 	global $wpdb;
 	$table = $wpdb->prefix."wpsp_transactions_group";
-	$results = $wpdb->get_results("SELECT group_name FROM $table WHERE group_id='$id'");
-	return $results[0]->group_name;
+	$sql = ($id == "all") ? "SELECT * FROM $table" : "SELECT * FROM $table WHERE group_id='$id'";
+	$results = $wpdb->get_results($sql);
+	return json_encode($results);
 }
-add_action("ac_get_group_name", "ac_get_group_name");
+add_action("ac_get_group_names", "ac_get_group_names");
 
 //function to create group
 function ac_create_group($group_name){
@@ -455,6 +457,8 @@ function ac_default_fees_group(){
 
 }
 add_action("ac_default_fees_group", "ac_default_fees_group");
+
+
 /**************************************************Accounting Module Functions end************************************************/
 
 

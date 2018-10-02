@@ -4772,3 +4772,10 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function ac_record_transaction_form(){
+		
+		echo (apply_filters("ac_record_transaction", $_POST)) ? "success":"error";
+
+		wp_die();
+	}

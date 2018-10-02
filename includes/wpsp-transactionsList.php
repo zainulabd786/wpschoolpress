@@ -22,7 +22,8 @@
 									
 								<div class="button-group btn-pro">
 
-									<button class="btn btn-danger consume-btn"> Record Transaction </button>
+									<a href="?tab=record-transaction" class="btn btn-primary"> Record Transaction </a>
+									<a href="?tab=manage-groups" class="btn btn-primary"> Manage Groups </a>
 									
 								</div>
 										
@@ -54,16 +55,16 @@
 								<tbody> 
 									<?php 
 										$transactions = json_decode(apply_filters("ac_get_transactions", 0));
-
+										$srn = 1;
 										foreach ($transactions as $transaction) {
-											$group_name = apply_filters("ac_get_group_name", $transaction->group_id);
+											$group_name = json_decode(apply_filters("ac_get_group_names", $transaction->group_id))[0]->group_name;
 											$debit = ($transaction->type == 0) ? $transaction->amount : "-";
 											$credit = ($transaction->type == 1) ? $transaction->amount : "-";
 											$cash_balance = ($transaction->mop == "cash") ? $transaction->balance : "-";
 											$bank_balance = ($transaction->mop == "bank") ? $transaction->balance : "-";
 											$row_color = ($debit == "-") ? "style='color:green'" : "style='color:red'"; ?>
 											<tr <?php echo $row_color; ?>>
-												<td></td>
+												<td><?php echo $srn; ?></td>
 												<td><?php echo (!empty($transaction->date_time)) ? date("d/m/Y H:i:s", strtotime($transaction->date_time)) : "";  ?></td>
 												<td><?php echo (!empty($transaction->remarks)) ? $transaction->remarks : ""; ?></td>
 												<td><?php echo (!empty($group_name)) ? $group_name : ""; ?></td>
@@ -73,6 +74,7 @@
 												<td><?php echo (!empty($cash_balance)) ? $cash_balance : ""; ?></td>
 												<td><?php echo (!empty($bank_balance)) ? $bank_balance : ""; ?></td>
 											</tr><?php
+											$srn++;
 										}
 
 									?>
@@ -98,4 +100,4 @@
 			</div>
 		</div>
 	</section>
-	</div>
+	

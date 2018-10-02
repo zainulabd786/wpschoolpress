@@ -14,7 +14,15 @@ wpsp_header();
 			wpsp_sidebar();
 			wpsp_body_start();
 			$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-transactionsList.php';
-			$label = "Accounting"	?>
+			$label = "Accounting";
+			if( isset( $_GET['tab'] ) && $_GET['tab'] == 'record-transaction' ) {
+				$label	=	__( 'Record Transaction', 'SchoolWeb');
+				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-recordTransaction.php';
+			}
+			if( isset( $_GET['tab'] ) && $_GET['tab'] == 'manage-groups' ) {
+				$label	=	__( 'Record Transaction', 'SchoolWeb');
+				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-manageTransactionsGroups.php';
+			}	?>
 			<section class="content-header">
 				<h1><?php echo $label; ?></h1>
 				<ol class="breadcrumb">
