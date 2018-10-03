@@ -1,5 +1,4 @@
-
-`reference` varchar(99),<?php
+<?php
 	if ( ! defined( 'ABSPATH' ) ) 
 		exit('No Such File');
 	

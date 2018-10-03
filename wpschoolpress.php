@@ -262,6 +262,12 @@ function ajax_actions(){
 		add_action( 'wp_ajax_mark_inv_item_as_consumed', 'mark_item_consumed' );
 
 		add_action( 'wp_ajax_ac_record_transaction_form', 'ac_record_transaction_form' );
+
+		add_action( 'wp_ajax_ac_update_group_form', 'ac_update_group_form' );
+
+		add_action( 'wp_ajax_ac_delete_group_form', 'ac_delete_group_form' );
+
+		add_action( 'wp_ajax_ac_create_group_form', 'ac_create_group_form' );
 }
 
 function tl_save_error() {
@@ -429,31 +435,35 @@ function ac_create_group($group_name){
 	$data = array("group_name"=>$group_name);
 	return ($wpdb->insert($table, $data)) ? true : false;
 }
+add_filter("ac_create_group", "ac_create_group");
 
 //function to Delete Group
 function ac_delete_group($id){
 global $wpdb;
-$table = $wpdb->prefix."wpsp_transaction_group";
+$table = $wpdb->prefix."wpsp_transactions_group";
 return ($wpdb->query("DELETE FROM $table WHERE group_id='$id'")) ? true : false;
 }
 add_filter("ac_delete_group", "ac_delete_group");
 
 //function to update Group
-function ac_update_group($id, $value){
-global $wpdb;
-$table = $wpdb->prefix."wpsp_transaction_group";
-return ($wpdb->query("UPDATE $table SET group_name='$value' WHERE group_id='$id'")) ? true : false;
+function ac_update_group($args){
+	global $wpdb;
+	$id = (!empty($args['id'])) ? $args['id'] : 0;
+	$group_name = (!empty($args['group_name'])) ? $args['group_name'] : "";
+	$table = $wpdb->prefix."wpsp_transactions_group";
+	return ($wpdb->query("UPDATE $table SET group_name='$group_name' WHERE group_id='$id'")) ? true : $wpdb->print_error();
 }
 add_filter("ac_update_group", "ac_update_group");
 
 //create default fee group
 function ac_default_fees_group(){
 	global $wpdb;
-	$table = $wpdb->prefix."wpsp_transaction_group";
+
+	$table = $wpdb->prefix."wpsp_transactions_group";
 
 	$results = $wpdb->get_results("SELECT * FROM $table WHERE group_id = '1'");
 
-	($wpdb->num_rows <= 0) ? $wpdb->insert($table, array("id"=>1, "group_name"=>"Fees Submission")) : "";
+	($wpdb->num_rows == 0) ? $wpdb->insert($table, array("group_id"=>1, "group_name"=>"Fees Submission")) : "";
 
 }
 add_action("ac_default_fees_group", "ac_default_fees_group");

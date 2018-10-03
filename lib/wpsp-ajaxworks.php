@@ -4775,7 +4775,29 @@ function wpsp_Import_Dummy_contents() {
 
 	function ac_record_transaction_form(){
 		
-		echo (apply_filters("ac_record_transaction", $_POST)) ? "success":"error";
+		echo (apply_filters("ac_record_transaction", $_POST)) ? true : false;
+
+		wp_die();
+	}
+
+	function ac_update_group_form(){
+
+		$args = array("id"=>$_POST["id"], "group_name"=>$_POST["value"]);
+		echo (apply_filters("ac_update_group", $args)) ? true : false;
+		wp_die();
+	}
+
+	function ac_delete_group_form(){
+
+		$id = $_POST["id"];
+		echo (apply_filters("ac_delete_group", $id)) ? true : false;
+
+		wp_die();
+	}
+
+	function ac_create_group_form(){
+
+		echo (apply_filters("ac_create_group", $_POST['group_name'])) ? true : false;
 
 		wp_die();
 	}

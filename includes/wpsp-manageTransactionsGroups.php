@@ -34,11 +34,15 @@
 							</div>
 						</div>
 
-						<div class="col-md-3">
-							
-						</div>
-
-						<div class="col-md-9">
+						<div class="col-md-12">
+							<div class="add-group-name-wrapper">
+								<form name="add-group-name" class="form-inline">
+									<div style="width: 90%" class="form-group">
+										<input style="width: 100%" type="text" name="group_name" class="form-control" placeholder="Enter Group Name">
+									</div>
+									<input type="submit" name="submit_group_name" class="btn btn-success" value="+ Add">
+								</form>
+							</div>
 							<table id="groups_table" class="table table-bordered table-striped table-responsive" style="margin-top:10px">
 								<thead>
 									<tr>
@@ -54,12 +58,15 @@
 										$srn = 1;
 										$groups = json_decode(apply_filters("ac_get_group_names", "all"));
 										foreach ($groups as $group) { ?>
-											<td><?php echo (!empty($srn)) ? $srn : ""; ?></td>
-											<td><?php echo (!empty($group->group_name)) ? $group->group_name : ""; ?></td>
-											<td>
-												<button class="btn-primary btn btn-sm edit-group-btn" data-id="<?php echo $group->group_id; ?>">Edit</button>
-												<button class="btn-danger btn btn-sm delete-group-btn" data-id="<?php echo $group->group_id; ?>">Delete</button>
-											</td><?php
+											<tr>
+												<td><?php echo (!empty($srn)) ? $srn : ""; ?></td>
+												<td><?php echo (!empty($group->group_name)) ? $group->group_name : ""; ?></td>
+												<td>
+													<button class="btn-primary btn btn-sm edit-group-btn" data-value="<?php echo $group->group_name; ?>" data-id="<?php echo $group->group_id; ?>">Edit</button>
+													<button class="btn-danger btn btn-sm delete-group-btn" data-value="<?php echo $group->group_name; ?>" data-id="<?php echo $group->group_id; ?>">Delete</button>
+												</td>
+											</tr><?php
+											$srn++;
 										}
 									?>
 								</tbody>
