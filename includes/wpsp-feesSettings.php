@@ -1,4 +1,5 @@
-<?php $months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); ?>
+<?php $months_array = array("Select Month","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"); global $current_user;	
+	$role		=	 $current_user->roles;?>
 <h2>Fees Settings</h2>
 <form class="feesSettings">
 	<div class="form-group fs-class">
