@@ -334,6 +334,16 @@
 
 						} 
 						else throw new Exception($wpdb->print_error());
+
+						$args = array(
+							"reference" => $slip_no,
+							"type" => 1,
+							"group" => 1,
+							"remarks" => 'Onlin Fees Payment by '.$father_full_name,
+							"amount" => $total_amount_f,
+							"mop" => 2
+						);
+						if(!apply_filters("ac_record_transaction", $args)) throw new Exception($wpdb->print_error());
 					}
 					
 
