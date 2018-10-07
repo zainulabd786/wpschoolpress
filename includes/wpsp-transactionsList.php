@@ -16,26 +16,55 @@
 	                </div>
 
 		            <div class="box-footer text-black">
-						<div class="col-md-12 col-lg-12 col-sm-12" style="padding:0;display: inline-block; margin-bottom:10px">
+						<div class="col-md-12 col-lg-12 col-sm-12 row" style="padding:0;display: inline-block; margin-bottom:10px">
 							
-							<div class="col-md-6 col-sm-12 col-lg-12 ">
-									
+							<div class="col-md-6">
+								<div class="Filters-container">
+									<form style="display: flex;">
+										<div class="form-group">
+											<label for="mode">Mode</label>
+											<select name="mode" class="form-control">
+												<option value="0">All</option>
+												<option value="1">Cash</option>
+												<option value="2">Bank</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="group">Group</label>
+											<select name="group" class="form-control">
+												<option value="">Select Group</option><?php
+												$groups = json_decode(apply_filters("ac_get_group_names", "all"));
+												foreach ($groups as $group) { ?>
+												 	<option value="<?php echo $group->group_id; ?>"><?php echo $group->group_name; ?></option> <?php
+												 } ?>
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="from">From</label>
+											<input type="date" name="from_date" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="to">To</label>
+											<input type="date" name="to_date" class="form-control">
+										</div>
+									</form>
+								</div>
+								
+										
+							</div>
+
+							<div class="col-md-6">
 								<div class="button-group btn-pro">
 
 									<a href="?tab=record-transaction" class="btn btn-primary"> Record Transaction </a>
 									<a href="?tab=manage-groups" class="btn btn-primary"> Manage Groups </a>
 									
 								</div>
-										
-							</div>
-
-							<div class="col-md-6">
-								
 							</div>
 						</div>
-
+						
 						<div class="col-md-12 table-responsive">
-							<!--<pre><?php print_r(apply_filters("ac_get_transactions", 0)); ?></pre>-->
+							
 							<table id="transactions_table" class="table table-bordered table-striped table-responsive" style="margin-top:10px">
 								<thead>
 									<tr>
@@ -54,10 +83,11 @@
 								</thead>
 								<tbody> 
 									<?php 
-										$transactions = json_decode(apply_filters("ac_get_transactions", 0));
+										$args = array("mode"=>0);
+										$transactions = json_decode(apply_filters("ac_get_transactions", $args));
 										$srn = 1;
 										foreach ($transactions as $transaction) {
-											$group_name = json_decode(apply_filters("ac_get_group_names", $transaction->group_id))[0]->group_name;
+											(!empty($transaction->group_id)) ? $group_name = json_decode(apply_filters("ac_get_group_names", $transaction->group_id))[0]->group_name : "";
 											$debit = ($transaction->type == 0) ? $transaction->amount : "-";
 											$credit = ($transaction->type == 1) ? $transaction->amount : "-";
 											$cash_balance = ($transaction->mop == "cash") ? $transaction->balance : "-";

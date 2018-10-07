@@ -389,28 +389,68 @@ function ac_tid($mop){
 add_filter("ac_get_tid", "ac_tid");
 
 //functions to return Transactions
-function ac_transactions($mode){ //Returns all transactions if mode is set to 0, cash if 1 and bank if 2
+function ac_transactions($args){ //Returns all transactions if mode is set to 0, cash if 1 and bank if 2 
+	//pass arguments in this Seqquence 	// 1. "mode"
+										// 2. "from_date"
+										// 3. "to_date" 
+										// 4. "group_id"
 	global $wpdb;
+
+	$mode = (!empty($args['mode'])) ? $args['mode'] : 0;
+	$from_date = (!empty($args['from_date'])) ? $args['from_date'] : "";
+	$to_date = (!empty($args['to_date'])) ? $args['to_date'] : "";
+	$group_id = (!empty($args['group_id'])) ? $args['group_id'] : "";
+
 	$group_table = $wpdb->prefix."wpsp_transactions_group";
 	$cash_table = $wpdb->prefix."wpsp_cash_transactions";
 	$bank_table = $wpdb->prefix."wpsp_bank_transactions";
 	$error = false;
 
-	switch($mode){
-		case 0:
-			$sql = "SELECT a.*, 'cash' AS mop FROM $cash_table a UNION ALL SELECT a.*, 'bank' AS mop FROM $bank_table a ORDER BY date_time DESC";
-		break;
+	$query_param = "";
 
-		case 1:
-			$sql = "SELECT a.* FROM $cash_table a ORDER BY date_time DESC";
-		break;
+	foreach ($args as $key => $value) {
+		switch ($key){
+			case "mode":
+				switch($mode){
+					case 0:
+						$sql = "SELECT *, 'cash' AS mop FROM $cash_table WHERE 1=1 [query_param] UNION ALL SELECT *, 'bank' AS mop FROM $bank_table WHERE 1=1 [query_param] ORDER BY date_time DESC";
+					break;
 
-		case 2:
-			$sql = "SELECT a.* FROM $bank_table a ORDER BY date_time DESC";
-		break;
+					case 1:
+						$sql = "SELECT * FROM $cash_table a WHERE 1=1 [query_param] ORDER BY date_time DESC";
+					break;
 
-		default: $error = true;
+					case 2:
+						$sql = "SELECT * FROM $bank_table b WHERE 1=1 [query_param] ORDER BY date_time DESC";
+					break;
+				}
+			break;
+
+			case "from_date":
+				if(!empty($from_date) && !empty($to_date)){
+					$query_param = "AND DATE(a.date_time) BETWEEN $from_date AND $to_date";
+				} else{
+					$query_param = "AND DATE(a.date_time) > $from_date AND";
+				}	
+			break;
+
+			case 'to_date':
+				if(!empty($from_date) && !empty($to_date)){
+					$query_param = "AND DATE(a.date_time) BETWEEN $from_date AND $to_date";
+				} else{
+					$query_param = "AND DATE(a.date_time) < $to_date";
+				}	
+			break;
+
+			case 'group_id':
+				$query_param .= " AND b.group_id=$group_id AND";
+			break;
+		}
 	}
+
+	$query_param = rtrim($query_param, "AND");
+
+	(strpos($sql, "[query_param]")) ? $sql = str_replace("[query_param]", $query_param, $sql): "";
 
 	if(!$error){
 		return json_encode($wpdb->get_results($sql));
