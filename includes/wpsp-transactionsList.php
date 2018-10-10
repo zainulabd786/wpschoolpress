@@ -20,32 +20,32 @@
 							
 							<div class="col-md-6">
 								<div class="Filters-container">
-									<form style="display: flex;">
+									<form name="transaction-filter-form" style="display: flex;">
 										<div class="form-group">
-											<label for="mode">Mode</label>
-											<select name="mode" class="form-control">
+											<select name="mode" class="form-control change-event">
 												<option value="0">All</option>
 												<option value="1">Cash</option>
 												<option value="2">Bank</option>
 											</select>
+											<label for="mode">Mode</label>
 										</div>
 										<div class="form-group">
-											<label for="group">Group</label>
-											<select name="group" class="form-control">
-												<option value="">Select Group</option><?php
+											<select name="group_id" class="form-control change-event">
+												<option value="">All</option><?php
 												$groups = json_decode(apply_filters("ac_get_group_names", "all"));
 												foreach ($groups as $group) { ?>
 												 	<option value="<?php echo $group->group_id; ?>"><?php echo $group->group_name; ?></option> <?php
 												 } ?>
 											</select>
+											<label for="group">Group</label>
 										</div>
 										<div class="form-group">
+											<input type="date" name="from_date" class="form-control change-event">
 											<label for="from">From</label>
-											<input type="date" name="from_date" class="form-control">
 										</div>
 										<div class="form-group">
+											<input type="date" name="to_date" class="form-control change-event">
 											<label for="to">To</label>
-											<input type="date" name="to_date" class="form-control">
 										</div>
 									</form>
 								</div>
@@ -62,7 +62,6 @@
 								</div>
 							</div>
 						</div>
-						
 						<div class="col-md-12 table-responsive">
 							
 							<table id="transactions_table" class="table table-bordered table-striped table-responsive" style="margin-top:10px">
@@ -75,10 +74,11 @@
 										<th>Remarks</th>
 										<th>Group</th>
 										<th>Reference Number</th>
+										<th>Mode</th>
 										<th>Debit</th>
 										<th>Credit</th>
-										<th>Cash Balance</th>
-										<th>Bank Balance</th>
+										<th class="cash-balance-col">Cash Balance</th>
+										<th class="bank-balance-col">Bank Balance</th>
 									</tr>
 								</thead>
 								<tbody> 
@@ -87,6 +87,7 @@
 										$transactions = json_decode(apply_filters("ac_get_transactions", $args));
 										$srn = 1;
 										foreach ($transactions as $transaction) {
+											$group_name = "-";
 											(!empty($transaction->group_id)) ? $group_name = json_decode(apply_filters("ac_get_group_names", $transaction->group_id))[0]->group_name : "";
 											$debit = ($transaction->type == 0) ? $transaction->amount : "-";
 											$credit = ($transaction->type == 1) ? $transaction->amount : "-";
@@ -99,6 +100,7 @@
 												<td><?php echo (!empty($transaction->remarks)) ? $transaction->remarks : ""; ?></td>
 												<td><?php echo (!empty($group_name)) ? $group_name : ""; ?></td>
 												<td><?php echo (!empty($transaction->reference)) ? $transaction->reference : ""; ?></td>
+												<td><?php echo (!empty($transaction->mop)) ? $transaction->mop : ""; ?></td>
 												<td><?php echo (!empty($debit)) ? $debit : ""; ?></td>
 												<td><?php echo (!empty($credit)) ? $credit : ""; ?></td>
 												<td><?php echo (!empty($cash_balance)) ? $cash_balance : ""; ?></td>
@@ -117,10 +119,11 @@
 									<th>Remarks</th>
 									<th>Group</th>
 									<th>Reference Number</th>
+									<th>Mode</th>
 									<th>Debit</th>
 									<th>Credit</th>
-									<th>Cash Balance</th>
-									<th>Bank Balance</th>
+									<th class="cash-balance-col">Cash Balance</th>
+									<th class="bank-balance-col">Bank Balance</th>
 								  </tr>
 								</tfoot>
 							  </table>

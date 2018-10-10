@@ -504,6 +504,10 @@ function wpsp_body_end()
 }
 function wpsp_footer()
 {
+  $results = apply_filters("ac_get_group_names", "all");
+  echo '<script>
+      var groups = '.$results.';
+    </script>';
   echo "
     <script src='".plugins_url("plugins/jQuery/jQuery-2.1.4.min.js",__FILE__)."'></script>
   <script>
@@ -565,7 +569,7 @@ function wpsp_footer()
   if ( is_page( 'sch-accounting' ) ) 
   {
       echo "<script src='".plugins_url("plugins/jquery-confirm-master/js/jquery-confirm.js",__FILE__)."' > </script>";
-      echo "<script src='".plugins_url("js/wpsp-accounting.js",__FILE__)."' > </script>";
+      echo "<script id='accounting-js' src='".plugins_url("js/wpsp-accounting.js",__FILE__)."' > </script>";
       echo "<link href='".plugins_url('plugins/bootstrap-toggle/css/bootstrap-toggle.min.css', __FILE__ )."'  rel='stylesheet' type='text/css' />";
       echo "<script src='".plugins_url("plugins/bootstrap-toggle/js/bootstrap-toggle.min.js",__FILE__)."' > </script>";
   }

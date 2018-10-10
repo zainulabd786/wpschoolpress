@@ -268,6 +268,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_ac_delete_group_form', 'ac_delete_group_form' );
 
 		add_action( 'wp_ajax_ac_create_group_form', 'ac_create_group_form' );
+
+		add_action( 'wp_ajax_ac_filter_transactions', 'ac_filter_transactions' );
 }
 
 function tl_save_error() {
@@ -395,7 +397,7 @@ function ac_transactions($args){ //Returns all transactions if mode is set to 0,
 										// 3. "to_date" 
 										// 4. "group_id"
 	global $wpdb;
-
+	//echo "<pre>"; print_r($args); echo "</pre>";
 	$mode = (!empty($args['mode'])) ? $args['mode'] : 0;
 	$from_date = (!empty($args['from_date'])) ? $args['from_date'] : "";
 	$to_date = (!empty($args['to_date'])) ? $args['to_date'] : "";
@@ -417,33 +419,33 @@ function ac_transactions($args){ //Returns all transactions if mode is set to 0,
 					break;
 
 					case 1:
-						$sql = "SELECT * FROM $cash_table a WHERE 1=1 [query_param] ORDER BY date_time DESC";
+						$sql = "SELECT *, 'cash' AS mop FROM $cash_table a WHERE 1=1 [query_param] ORDER BY date_time DESC";
 					break;
 
 					case 2:
-						$sql = "SELECT * FROM $bank_table b WHERE 1=1 [query_param] ORDER BY date_time DESC";
+						$sql = "SELECT *, 'bank' AS mop FROM $bank_table b WHERE 1=1 [query_param] ORDER BY date_time DESC";
 					break;
 				}
 			break;
 
 			case "from_date":
 				if(!empty($from_date) && !empty($to_date)){
-					$query_param = "AND DATE(a.date_time) BETWEEN $from_date AND $to_date";
+					$query_param = "AND DATE(date_time) BETWEEN $from_date AND $to_date";
 				} else{
-					$query_param = "AND DATE(a.date_time) > $from_date AND";
+					$query_param = "AND DATE(date_time) > $from_date AND";
 				}	
 			break;
 
 			case 'to_date':
 				if(!empty($from_date) && !empty($to_date)){
-					$query_param = "AND DATE(a.date_time) BETWEEN $from_date AND $to_date";
+					$query_param = "AND DATE(date_time) BETWEEN $from_date AND $to_date";
 				} else{
-					$query_param = "AND DATE(a.date_time) < $to_date";
+					$query_param = "AND DATE(date_time) < $to_date";
 				}	
 			break;
 
 			case 'group_id':
-				$query_param .= " AND b.group_id=$group_id AND";
+				$query_param .= " AND group_id=$group_id AND";
 			break;
 		}
 	}
@@ -451,6 +453,8 @@ function ac_transactions($args){ //Returns all transactions if mode is set to 0,
 	$query_param = rtrim($query_param, "AND");
 
 	(strpos($sql, "[query_param]")) ? $sql = str_replace("[query_param]", $query_param, $sql): "";
+
+	echo $sql."<br/>";
 
 	if(!$error){
 		return json_encode($wpdb->get_results($sql));
@@ -460,13 +464,18 @@ add_filter("ac_get_transactions", "ac_transactions");
 
 //function to get Group Name by ID
 function ac_get_group_names($id){ // returns all groups if id is set to all
+	if(empty($id)) return "";
 	global $wpdb;
 	$table = $wpdb->prefix."wpsp_transactions_group";
 	$sql = ($id == "all") ? "SELECT * FROM $table" : "SELECT * FROM $table WHERE group_id='$id'";
 	$results = $wpdb->get_results($sql);
-	return json_encode($results);
+	$results = json_encode($results);
+	return $results;
 }
-add_action("ac_get_group_names", "ac_get_group_names");
+add_filter("ac_get_group_names", "ac_get_group_names");
+
+//Making Groups Accessible from accounting.js
+
 
 //function to create group
 function ac_create_group($group_name){

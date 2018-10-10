@@ -4801,3 +4801,11 @@ function wpsp_Import_Dummy_contents() {
 
 		wp_die();
 	}
+
+	function ac_filter_transactions(){
+
+		echo apply_filters("ac_get_transactions", $_POST);
+
+		wp_die();
+
+	}
