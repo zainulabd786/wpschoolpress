@@ -49,10 +49,8 @@
 										</div>
 									</form>
 								</div>
-								
-										
 							</div>
-
+							<?php //echo "<pre>"; print_r($wpdb->get_results("SELECT *, 'cash' AS mop FROM wp_wpsp_cash_transactions WHERE 1=1 AND DATE(date_time) > 2018-10-07 UNION ALL SELECT *, 'bank' AS mop FROM wp_wpsp_bank_transactions WHERE 1=1 AND DATE(date_time) > 2018-10-07 ORDER BY date_time DESC")); echo "</pre>"; ?>
 							<div class="col-md-6">
 								<div class="button-group btn-pro">
 

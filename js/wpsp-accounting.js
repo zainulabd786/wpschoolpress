@@ -220,7 +220,7 @@ $(document).ready(function() {
 						tableData += ''+
 							'<tr '+rowColor+'>'+
 								'<td>'+k+'</td>'+
-								'<td>'+v.date_time+'</td>'+
+								'<td>'+convertDate(v.date_time)+'</td>'+
 								'<td>'+v.remarks+'</td>'+
 								'<td>'+groupName+'</td>'+
 								'<td>'+v.reference+'</td>'+
@@ -237,7 +237,7 @@ $(document).ready(function() {
 						tableData += ''+
 							'<tr '+rowColor+'>'+
 								'<td>'+k+'</td>'+
-								'<td>'+v.date_time+'</td>'+
+								'<td>'+convertDate(v.date_time)+'</td>'+
 								'<td>'+v.remarks+'</td>'+
 								'<td>'+groupName+'</td>'+
 								'<td>'+v.reference+'</td>'+
@@ -252,7 +252,7 @@ $(document).ready(function() {
 						tableData += ''+
 							'<tr '+rowColor+'>'+
 								'<td>'+k+'</td>'+
-								'<td>'+v.date_time+'</td>'+
+								'<td>'+convertDate(v.date_time)+'</td>'+
 								'<td>'+v.remarks+'</td>'+
 								'<td>'+groupName+'</td>'+
 								'<td>'+v.reference+'</td>'+
@@ -272,6 +272,13 @@ $(document).ready(function() {
     	
 
     }
+
+
+    function convertDate(inputFormat) { //function to change date format to dd/mm/yyyy
+		function pad(s) { return (s < 10) ? '0' + s : s; }
+	 	var d = new Date(inputFormat);
+	  	return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+	}
     /**************************************************Transactions Filtering end***************************************/
 });
 

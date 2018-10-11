@@ -430,17 +430,17 @@ function ac_transactions($args){ //Returns all transactions if mode is set to 0,
 
 			case "from_date":
 				if(!empty($from_date) && !empty($to_date)){
-					$query_param = "AND DATE(date_time) BETWEEN $from_date AND $to_date";
+					$query_param = "AND DATE(date_time) BETWEEN '$from_date' AND '$to_date'";
 				} else{
-					$query_param = "AND DATE(date_time) > $from_date AND";
+					$query_param = "AND DATE(date_time) > '$from_date' AND";
 				}	
 			break;
 
 			case 'to_date':
 				if(!empty($from_date) && !empty($to_date)){
-					$query_param = "AND DATE(date_time) BETWEEN $from_date AND $to_date";
+					$query_param = "AND DATE(date_time) BETWEEN '$from_date' AND '$to_date'";
 				} else{
-					$query_param = "AND DATE(date_time) < $to_date";
+					$query_param = "AND DATE(date_time) < '$to_date'";
 				}	
 			break;
 
@@ -454,7 +454,7 @@ function ac_transactions($args){ //Returns all transactions if mode is set to 0,
 
 	(strpos($sql, "[query_param]")) ? $sql = str_replace("[query_param]", $query_param, $sql): "";
 
-	echo $sql."<br/>";
+	//echo $sql."<br/>";
 
 	if(!$error){
 		return json_encode($wpdb->get_results($sql));
