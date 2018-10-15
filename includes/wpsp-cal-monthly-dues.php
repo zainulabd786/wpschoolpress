@@ -1,4 +1,6 @@
 <?php
+
+	include "../../../../wp-config.php";
 	global $wpdb;
 	
 	$wpdb->show_errors();
@@ -115,4 +117,6 @@
 			$wpdb->query("UPDATE $settings_table SET option_value = '0' WHERE option_name = 'due_php_script_status' ");
 		}
 	}
+
+	$wpdb->query("UPDATE $settings_table SET option_value = option_value+'1' WHERE option_name = 'due_php_script_status' ");
 ?>

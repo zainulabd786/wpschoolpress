@@ -391,13 +391,12 @@ function ac_tid($mop){
 add_filter("ac_get_tid", "ac_tid");
 
 //functions to return Transactions
-function ac_transactions($args){ //Returns all transactions if mode is set to 0, cash if 1 and bank if 2 
+function ac_transactions($args){
 	//pass arguments in this Seqquence 	// 1. "mode"
 										// 2. "from_date"
 										// 3. "to_date" 
 										// 4. "group_id"
 	global $wpdb;
-	//echo "<pre>"; print_r($args); echo "</pre>";
 	$mode = (!empty($args['mode'])) ? $args['mode'] : 0;
 	$from_date = (!empty($args['from_date'])) ? $args['from_date'] : "";
 	$to_date = (!empty($args['to_date'])) ? $args['to_date'] : "";
