@@ -118,5 +118,4 @@
 		}
 	}
 
-	$wpdb->query("UPDATE $settings_table SET option_value = option_value+'1' WHERE option_name = 'due_php_script_status' ");
 ?>
