@@ -2850,7 +2850,7 @@ function wpsp_Import_Dummy_contents() {
 		$pno = $_POST['pno'];
 		$fees_type = "";
 		$student_fees = json_decode(apply_filters("get_student_fees", $uid));
-		$pm_tf = $student_fees->tution_fees; 
+		$pm_tf = $student_fees->tution_fees - $concession; 
 		$pm_tc = 0;
 		$msg = "Dear Parents, Thanks for depositing the payment of the month ";
 		$rec_table = $wpdb->prefix."wpsp_fees_receipts";
