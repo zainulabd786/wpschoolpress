@@ -330,7 +330,7 @@ function wpsp_sidebar()
 			 if($current_user_role=='administrator' || $current_user_role=='editor' || $current_user_role=='teacher' ) {  
                  echo "<li class=".$enquiry_page.' '.$bgFirstBlock.">
                     <a href='".site_url('sch-enquiry')."'>
-                      <i class='fa fa-table'></i>
+                   	  <i class='fa fa-male'></i>
                       <span>".__('Enquiries And Visitors','SchoolWeb')."</span>
                     </a>
                   </li>";
@@ -346,7 +346,7 @@ function wpsp_sidebar()
           if($current_user_role=='administrator' || $current_user_role=='editor' || $current_user_role=='teacher' ) {  
                  echo "<li class=".$accounting_page.' '.$bgFirstBlock.">
                     <a href='".site_url('sch-accounting')."'>
-                      <i class='fa fa-table'></i>
+                   <i class='fa fa-money'></i>
                       <span>".__('Accounting','SchoolWeb')."</span>
                     </a>
                   </li>";
