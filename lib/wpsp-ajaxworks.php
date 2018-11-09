@@ -2928,7 +2928,9 @@ function wpsp_Import_Dummy_contents() {
 				$msg .= " . *Regards ".$sql_SchoolName[0]->option_value;
 				$check_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='sch_num_sms'");
 				$sms_left = $check_sms[0]->option_value;
-				if($sms_left > 0){
+				$stop_FeeSubmit_sms = $wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name='notification_sms_alert'");
+				$stop_FeeSubmit_sms_Val = $stop_FeeSubmit_sms[0]->option_value;
+				if($sms_left > 0 && $stop_FeeSubmit_sms_Val==1){
 					$reminder_msg_response	= apply_filters( 'wpsp_send_notification_msg', false, $mobile, $msg );
 					if( $reminder_msg_response ){
 						$status = 1;
