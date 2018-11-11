@@ -2825,11 +2825,11 @@ function wpsp_Import_Dummy_contents() {
 		$slip_no = $_POST['slip'];
 		$uid = $_POST['studentId'];
 		$cid = $_POST['classId'];
-		$from = $_POST['fromDate']; //9
-		$to = $_POST['toDate']; //16
+		$from = $_POST['fromDate']; 
+		$to = $_POST['toDate']; 
 		$from_trn = $_POST['fromDateTrn'];
 		$to_trn = $_POST['toDateTrn'];
-		$num_months = ($to - $from) + 1;
+		$num_months = ($to - $from) + 1; 
 		$tution_fees = $_POST['tutionFees']; 
 		$transport_chg = $_POST['transportChg'];
 		$annual_chg = $_POST['annualChg'];
@@ -2840,7 +2840,7 @@ function wpsp_Import_Dummy_contents() {
 		$exp_annual_chg = $_POST['expannualChg'];
 		$exp_recreation_chg = $_POST['exprecreationChg'];
 		$due_adm = $exp_admission_fees - $admission_fees;
-		$due_ttn = $exp_tution_fees - $tution_fees;
+		$due_ttn = $exp_tution_fees - $tution_fees; //0
 		$due_trn = $exp_transport_chg - $transport_chg;
 		$due_ann = $exp_annual_chg - $annual_chg;
 		$due_rec = $exp_recreation_chg - $recreation_chg;
@@ -2944,15 +2944,23 @@ function wpsp_Import_Dummy_contents() {
 		foreach ($sql_due_month as $due_months) {
 			if(!empty($due_months->amount)){
 				if($due_months->fees_type=='ttn'){
-					$outstanding_amt = $due_months->amount - $concession;
+					//$outstanding_amt = $due_months->amount - $concession;
 					if($due_months->month<$from){
 						$from = $due_months->month;
+						$outstanding_amt = $due_months->amount - $concession;
+					}
+					if($due_months->amount < $pm_tf){ //added on 10/11/18
+						$outstanding_amt = $due_months->amount - $concession;
 					}
 				} 
 				if($due_months->fees_type=='trn'){
-					$outstanding_amt_trn = $due_months->amount;
+					//$outstanding_amt_trn = $due_months->amount;
 					if($due_months->month<$from_trn){
 						$from_trn = $due_months->month;
+						$outstanding_amt_trn = $due_months->amount;
+					}
+					if($due_months->amount < $pm_tc){ //added on 10/11/18
+						$outstanding_amt_trn = $due_months->amount;
 					}
 				} 
 			}
@@ -2976,7 +2984,8 @@ function wpsp_Import_Dummy_contents() {
 										'session' => $session,
 										'fees_type' => 'ttn'
 								);
-								$del_amt = $outstanding_amt+$concession;
+								//$del_amt = $outstanding_amt+$concession;
+								$del_amt = $outstanding_amt + $concession;
 								if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("DELETE FROM $dues_table WHERE amount='$del_amt' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
 									$ok = 1;
 								}
@@ -2999,8 +3008,10 @@ function wpsp_Import_Dummy_contents() {
 										'session' => $session,
 										'fees_type' => 'ttn'
 								);
-								if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("UPDATE $dues_table SET amount=amount-'$tution_fees' WHERE amount='$outstanding_amt' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
+								$upd_amt = $outstanding_amt + $concession;
+								if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("UPDATE $dues_table SET amount=amount-'$tution_fees' WHERE amount='$upd_amt' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
 									$ok = 1;
+									$tution_fees = 0; //10/11/18
 								}
 								else{
 									$ok = 0;
@@ -3030,15 +3041,16 @@ function wpsp_Import_Dummy_contents() {
 								$ok = 0;
 								throw new Exception($wpdb->print_error());
 							}
-							if(!empty($outstanding_amt)){
-								if($wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tf' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
+							//if(!empty($outstanding_amt)){
+								$del_amt = $pm_tf+$concession;
+								if($wpdb->query("DELETE FROM $dues_table WHERE amount='$del_amt' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
 									$ok = 1;
 								}
 								else{
 									$ok = 0;
 									throw new Exception($wpdb->print_error());
 								}
-							}
+							//}
 						}
 						else{
 							$due = $pm_tf - $tution_fees;
@@ -3061,17 +3073,19 @@ function wpsp_Import_Dummy_contents() {
 									'fees_type' => "ttn",
 									'session' => $session
 							);
-							if(!empty($outstanding_amt)){
-								if($wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tf' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
+							//if(!empty($outstanding_amt)){
+								$del_amt = $pm_tf+$concession;
+								if($wpdb->query("DELETE FROM $dues_table WHERE amount='$del_amt' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
 									$ok = 1;
 								}
 								else{
 									$ok = 0;
 									throw new Exception($wpdb->print_error());
 								}
-							}
+							//}
 							if($wpdb->insert($record_table, $sql_record_data) && $wpdb->insert($dues_table, $sql_dues_data)){
 								$ok = 1;
+								$tution_fees = 0;
 							}
 							else{
 								$ok = 0;
@@ -3152,7 +3166,7 @@ function wpsp_Import_Dummy_contents() {
 								$ok = 0;
 								throw new Exception($wpdb->print_error());
 							}
-							if(!empty($outstanding_amt)){
+							//if(!empty($outstanding_amt_trn)){
 								if($wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tc' AND fees_type='trn' AND month='$i' AND session='$session' AND uid='$uid' ")){
 									$ok = 1;
 								}
@@ -3160,7 +3174,7 @@ function wpsp_Import_Dummy_contents() {
 									$ok = 0;
 									throw new Exception($wpdb->print_error());
 								}
-							}
+							//}
 						}
 						else{
 							$due = $pm_tc - $transport_chg;
@@ -3183,15 +3197,16 @@ function wpsp_Import_Dummy_contents() {
 									'fees_type' => "trn",
 									'session' => $session
 							);
-							if(!empty($outstanding_amt)){
+							//if(!empty($outstanding_amt_trn)){
 								if($wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tc' AND fees_type='trn' AND month='$i' AND session='$session' AND uid='$uid' ")){
 									$ok = 1;
+									$transport_chg = 0;
 								}
 								else{
 									$ok = 0;
 									throw new Exception($wpdb->print_error());
 								}
-							}
+							//}
 							if($wpdb->insert($record_table, $sql_record_data) && $wpdb->insert($dues_table, $sql_dues_data)){
 								$ok = 1;
 							}
@@ -3383,7 +3398,7 @@ function wpsp_Import_Dummy_contents() {
 				"amount" => $transaction_amount,
 				"mop" => ($mop == "Cash")? 1 : 2
 			);
-			if(!apply_filters("ac_record_transaction", $args)) throw new Exception($wpdb->print_error());
+			if(!apply_filters("ac_record_transaction", $args)) throw new Exception($wpdb->print_error()); // Record Transaction in Accounting Module
 
 			$wpdb->query("COMMIT;");
 		}
@@ -3985,7 +4000,7 @@ function wpsp_Import_Dummy_contents() {
 			$deposited_upto_s = $rec_sql[0]->session;
 			if(!empty($rec_sql)){
 				$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid='$uid' AND month='$deposited_upto_m' AND session='$deposited_upto_s' AND fees_type='ttn'");
-				if($wpdb->num_rows==0){
+				if($wpdb->num_rows == 0){
 					echo "Tution Fees is submitted upto ".$months_array[($deposited_upto_m>12)?$deposited_upto_m-12:$deposited_upto_m];
 				}
 			}

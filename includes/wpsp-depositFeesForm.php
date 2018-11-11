@@ -64,6 +64,7 @@
                 </div>
                  
                 <!-- /.box-header -->
+                <?php //echo "<h1>".apply_filters("ac_get_tid", 1)."</h1>"; ?>
                 <form name="FeesDepositForm" id="FeesDepositForm" method="post" novalidate="novalidate"> 
                     <div class="box-body text-black">
                      
