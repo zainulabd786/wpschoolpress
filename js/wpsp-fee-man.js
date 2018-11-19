@@ -77,7 +77,7 @@ $(document).ready(function(){
 	});
 	$(".dep-class-select select").change(function(){
 		$(".dep-student-select select").html("");
-		$.post(ajax_url, { action: "fetch_all_students_of_a_class", value: $(this).val() }, function(data){
+		$.post(ajax_url, { action: "fetch_all_students", class: $(this).val() }, function(data){
 			data = JSON.parse(JSON.parse(data));
 			data.forEach( i => {
 				let sName = i.s_fname+" "+i.s_mname+" "+i.s_lname;
@@ -639,10 +639,23 @@ $(document).ready(function(){
 	});
 
 	$("#cd-class").change(function(){
+		$("#cd-students").html("");
 		$.post(ajax_url, {
-			action: "fetch_all_students_of_a_class",
-			value: $(this).val()
-		}, data => $("#cd-students").html(data));
+			action: "fetch_all_students",
+			class: $(this).val()
+		}, data => {
+			data = JSON.parse(JSON.parse(data));
+			data.forEach( i => {
+				let sName = i.s_fname+" "+i.s_mname+" "+i.s_lname;
+				let pName = i.p_fname+" "+i.p_mname+" "+i.p_lname;
+				let id = i.wp_usr_id;
+				$("#cd-students").append("<option value='"+id+"'>"+sName+" S/D/O "+pName+"</option>");
+			})
+		});
+	});
+
+	$("#cd-students").change(function(){
+		let req = $.post(ajax_url, );
 	});
 
 	$(".cd-ttn-due").hide();

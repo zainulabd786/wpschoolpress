@@ -779,10 +779,14 @@ function wpsp_checkRollNo(){
 }
 
 	
-	function wpsp_fetch_all_students_of_a_class(){
-		
-		echo json_encode(apply_filters("wpsp_get_student", array('class' => $_POST['value'])));
-		
+
+	function wpsp_fetch_student_details(){
+
+		$class = (!empty($_POST['class'])) ? $_POST['class'] : 0;
+		$id = (!empty($_POST['id'])) ? $_POST['id'] : 0;
+
+		echo json_encode(apply_filters("wpsp_get_student", array('class' => $class, 'id' => $id)));
+
 		wp_die();
 	}
 
