@@ -627,7 +627,14 @@ $(document).ready(function(){
 				$(".btn-print").show();
 			}
 		});
-	})
+	});
+
+	$("#cd-class").change(function(){
+		$.post(ajax_url, {
+			action: "fetch_all_stydents_of_a_class",
+			value: $(this).val()
+		}, data => $("#cd-students").html(data));
+	});
 	/*----------------------------------Custom Due Payment-------------------------*/
 	
 });

@@ -4836,6 +4836,7 @@ function wpsp_Import_Dummy_contents() {
 		$from = $_POST["from"];
 		$to = $_POST["to"];
 		$session = $_POST["session"];
+		$single_student = (!empty($_POST["student"])) ? $_POST["student"] : 0;
 		$fees_types = [];
 		$todays_date = date("Y-m-d");
 
@@ -4845,7 +4846,7 @@ function wpsp_Import_Dummy_contents() {
 		if(!empty($_POST["ann"])) $fees_types[] = $_POST["ann"];
 		if(!empty($_POST["rec"])) $fees_types[] = $_POST["rec"];
 
-		$students = json_decode(apply_filters("wpsp_get_student", array('class' => $class)));
+		$students = json_decode(apply_filters("wpsp_get_student", array('class' => $class, 'id' => $single_student)));
 		try {
 			$wpdb->query("BEGIN;");
 

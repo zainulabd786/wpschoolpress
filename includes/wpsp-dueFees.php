@@ -1,9 +1,7 @@
 <?php  if (!defined('ABSPATH')) exit('No Such File'); 
 $months_array = array("none","January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December");
 $session_start = json_decode(apply_filters("wpsp_session_info", ""))[1]->option_value;
-$session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
-$students = json_decode(apply_filters("wpsp_get_student", array('class' => 1)));
-//print_r($students) ?>
+$session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value; ?>
 <section class="content">
     <div class="row">
 
@@ -23,7 +21,7 @@ $students = json_decode(apply_filters("wpsp_get_student", array('class' => 1)));
                 <form name="custom-due-form" class="form-vertical">
                 	<div class="form-group">
                 		<label> Class: </label>
-                		<select name="class" class="form-control">
+                		<select name="class" class="form-control" id="cd-class">
                 			<option value="0">All</option><?php 
                 			$classes = json_decode(apply_filters("wpsp_get_class", 0)); 
                 			foreach ($classes as $class) { ?>
@@ -32,12 +30,12 @@ $students = json_decode(apply_filters("wpsp_get_student", array('class' => 1)));
                 		</select>
                 	</div>
 
-                	<!-- <div class="form-group">
+                	<div class="form-group">
                 		<label>Students:</label>
-                		<select name="students" class="form-control">
-                			<option value="">All</option>
+                		<select name="student" class="form-control" id="cd-students">
+                			<option value="0">All</option>
                 		</select>
-                	</div> -->
+                	</div>
 
 
                 	<div class="form-group">
