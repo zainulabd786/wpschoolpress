@@ -37,30 +37,6 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                 		</select>
                 	</div>
 
-
-                	<div class="form-group">
-                		<label> From: </label>
-                		<select name="from" class="form-control"><?php
-								for ($m=0; $m<=12; $m++) {
-									if($m == 0) $months_array[0] = "From";	 ?>
-									<option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
-										<?php echo $months_array[$m]; ?>
-									</option>
-								<?php } ?>
-                		</select>
-                	</div>
-                	<div class="form-group">
-                		<label> To: </label>
-                		<select name="to" class="form-control"><?php
-								for ($m=0; $m<=12; $m++) {
-									if($m == 0) $months_array[0] = "To";	 ?>
-									<option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
-										<?php echo $months_array[$m]; ?>
-									</option>;
-								<?php } ?>
-                		</select>
-                	</div>
-
                      <div class="form-group">
                         <label>Session</label>
                         <input type="text" name="session" value="<?= $session; ?>" class="form-control" />
@@ -68,19 +44,71 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                 	
 
                 	
-					<div><label><input type="checkbox" value="ttn" name="ttn"> Tuition Fees</label></div>
+					<div class="well">
+                        <label><input type="checkbox" value="ttn" name="ttn" id="cd-ttn-chk"> Tuition Fees</label>
+                        <div class="cd-ttn-due">
+                            <div class="form-group">
+                                <label> From: </label>
+                                <select name="from" class="form-control"><?php
+                                        for ($m=0; $m<=12; $m++) {
+                                            if($m == 0) $months_array[0] = "From";   ?>
+                                            <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
+                                                <?php echo $months_array[$m]; ?>
+                                            </option>
+                                        <?php } ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label> To: </label>
+                                <select name="to" class="form-control"><?php
+                                        for ($m=0; $m<=12; $m++) {
+                                            if($m == 0) $months_array[0] = "To";     ?>
+                                            <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
+                                                <?php echo $months_array[$m]; ?>
+                                            </option>;
+                                        <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 					
 					
-					<!-- <div><label><input type="checkbox" value="trn" name="trn"> Transport Charges</label></div> -->
+					<!-- <div class="well">
+                        <label><input type="checkbox" value="trn" name="trn" id="cd-trn-chk"> Transport Charges</label>
+                        <div class="cd-trn-due">
+                            <div class="form-group">
+                                <label> From: </label>
+                                <select name="from_trn" class="form-control"><?php
+                                        for ($m=0; $m<=12; $m++) {
+                                            if($m == 0) $months_array[0] = "From";   ?>
+                                            <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
+                                                <?php echo $months_array[$m]; ?>
+                                            </option>
+                                        <?php } ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label> To: </label>
+                                <select name="to_trn" class="form-control"><?php
+                                        for ($m=0; $m<=12; $m++) {
+                                            if($m == 0) $months_array[0] = "To";     ?>
+                                            <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
+                                                <?php echo $months_array[$m]; ?>
+                                            </option>;
+                                        <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div> -->
 					
 					
-					<div><label><input type="checkbox" value="adm" name="adm"> Admission Fees</label></div>
+					<div class="well"> <label><input type="checkbox" value="adm" name="adm"> Admission Fees</label></div>
 					
 					
-					<div><label><input type="checkbox" value="ann" name="ann"> Annual Charges</label></div>
+					<div class="well"><label><input type="checkbox" value="ann" name="ann"> Annual Charges</label></div>
 					
 					
-					<div><label><input type="checkbox" value="rec" name="rec"> Recreation Fees</label></div>
+					<div class="well"><label><input type="checkbox" value="rec" name="rec"> Recreation Fees</label></div>
 					
 					<button type="submit" class="btn btn-primary btn-block">Start Processing</button>
                 </form>

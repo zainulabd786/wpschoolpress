@@ -76,7 +76,16 @@ $(document).ready(function(){
 		$(".inv-entries table tr .inv-entries-amt").html("<i class='fa fa-inr'></i>"+paidAmt+"/-");
 	});
 	$(".dep-class-select select").change(function(){
-		$.post(ajax_url, { action: "fetch_all_stydents_of_a_class", value: $(this).val() }, function(data){ $(".dep-student-select select").html(data); });
+		$(".dep-student-select select").html("");
+		$.post(ajax_url, { action: "fetch_all_students_of_a_class", value: $(this).val() }, function(data){
+			data = JSON.parse(JSON.parse(data));
+			data.forEach( i => {
+				let sName = i.s_fname+" "+i.s_mname+" "+i.s_lname;
+				let pName = i.p_fname+" "+i.p_mname+" "+i.p_lname;
+				let id = i.wp_usr_id;
+				$(".dep-student-select select").append("<option value='"+id+"'>"+sName+" S/D/O "+pName+"</option>");
+			})
+		});
 		$(".b5 .sb2 div").text($(".dep-class-select select option:selected").text());
 	});
 	$(".dep-student-select select").change(function(){
@@ -631,10 +640,16 @@ $(document).ready(function(){
 
 	$("#cd-class").change(function(){
 		$.post(ajax_url, {
-			action: "fetch_all_stydents_of_a_class",
+			action: "fetch_all_students_of_a_class",
 			value: $(this).val()
 		}, data => $("#cd-students").html(data));
 	});
+
+	$(".cd-ttn-due").hide();
+	$("#cd-ttn-chk").click(() => $(".cd-ttn-due").slideToggle());
+
+	$(".cd-trn-due").hide();
+	$("#cd-trn-chk").click(() => $(".cd-trn-due").slideToggle());
 	/*----------------------------------Custom Due Payment-------------------------*/
 	
 });

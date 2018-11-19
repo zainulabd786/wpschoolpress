@@ -272,6 +272,10 @@ function ajax_actions(){
 		add_action( 'wp_ajax_ac_filter_transactions', 'ac_filter_transactions' );
 
 		add_action( 'wp_ajax_make_custom_fees_dues', 'make_custom_fees_dues' );
+
+		add_action( 'wp_ajax_fetch_all_students_of_a_class', 'wpsp_fetch_all_students_of_a_class' );
+
+		add_action( 'wp_ajax_fetch_all_details_of_a_student_for_fee', 'wpsp_fetch_all_student_details' );
 }
 
 function tl_save_error() {

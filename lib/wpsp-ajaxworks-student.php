@@ -777,24 +777,15 @@ function wpsp_checkRollNo(){
 	echo json_encode( $response);
 	exit();
 }
-// Bharatdan Gadhavi - 16th Feb - End
 
-	add_action( 'wp_ajax_fetch_all_stydents_of_a_class', 'wpsp_fetch_all_stydents_of_a_class' );
-	function wpsp_fetch_all_stydents_of_a_class(){
-		global $wpdb;
-		$standard = $_POST['value'];
-		$student_table	=	$wpdb->prefix."wpsp_student";
-		$students	=	$wpdb->get_results("select s_fname, s_mname, s_lname, p_fname, p_mname, p_lname, wp_usr_id from $student_table where class_id='$standard' order by sid desc");
-		echo "<option value=''>Select Student</option>";
-		foreach ($students as $std) {
-			$student_name = $std->s_fname." ".$std->s_mname." ".$std->s_lname;
-			$fathers_name = $std->p_fname." ".$std->p_mname." ".$std->p_lname;
-			echo "<option value='".$std->wp_usr_id."'>".$student_name." S/O ".$fathers_name."</option>";
-		}
-		exit();
+	
+	function wpsp_fetch_all_students_of_a_class(){
+		
+		echo json_encode(apply_filters("wpsp_get_student", array('class' => $_POST['value'])));
+		
+		wp_die();
 	}
 
-	add_action( 'wp_ajax_fetch_all_details_of_a_student_for_fee', 'wpsp_fetch_all_student_details' );
 	function wpsp_fetch_all_student_details(){
 		global $wpdb;
 		$stid = $_POST['studentId'];
