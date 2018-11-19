@@ -598,6 +598,37 @@ $(document).ready(function(){
 	});
 
 	/*--------------------------------CANCEL Payment--------------------------------*/
+
+	/*----------------------------------Custom Due Payment-------------------------*/
+	$("form[name='custom-due-form']").submit(function(e){
+		e.preventDefault();
+		let formData = $(this).serializeArray();
+		formData.push({name: "action", value: "make_custom_fees_dues"})
+		$.ajax({
+			method:"POST",
+			url:ajax_url, 
+			data:formData, 
+			success:function(sfres) {
+				if(sfres=='success'){
+					$.fn.notify('success',{'desc':'Fees Due succesful!'});
+					//window.location.reload();
+				}
+				else
+					$.fn.notify('error',{'desc':sfres});				
+			},
+			error:function(){
+				$.fn.notify('error',{'desc':'Something went wrong'});
+			},
+			beforeSend:function(){
+				$.fn.notify('loader',{'desc':'Processing Data...'});
+			},
+			complete:function(){
+				$('.pnloader').remove();
+				$(".btn-print").show();
+			}
+		});
+	})
+	/*----------------------------------Custom Due Payment-------------------------*/
 	
 });
 

@@ -16,6 +16,9 @@ wpsp_header();
 			if( isset( $_GET['tab'] ) && $_GET['tab'] == 'DepositFees' ) {
 				$label	=	__( 'Deposit Fees', 'SchoolWeb');
 				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-depositFeesForm.php';
+			}else if( isset( $_GET['tab'] ) && $_GET['tab'] == 'DueFees' ) {
+				$label	=	__( 'Due Fees', 'SchoolWeb');
+				$filename	=	WPSP_PLUGIN_PATH .'includes/wpsp-dueFees.php';
 			}
 			else if( isset( $_GET['tab'] ) && $_GET['tab'] == 'PaymentHistory' ) {
 				$label	=	__( 'Payment History', 'SchoolWeb');

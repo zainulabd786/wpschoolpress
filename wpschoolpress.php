@@ -270,6 +270,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_ac_create_group_form', 'ac_create_group_form' );
 
 		add_action( 'wp_ajax_ac_filter_transactions', 'ac_filter_transactions' );
+
+		add_action( 'wp_ajax_make_custom_fees_dues', 'make_custom_fees_dues' );
 }
 
 function tl_save_error() {
@@ -312,6 +314,57 @@ function single_student_fees($uid){
 	return json_encode($student_fees);
 }
 add_filter("get_student_fees","single_student_fees");
+
+function wpsp_get_class($id = 0){
+	//returns all classes if id is 0
+	global $wpdb;
+	$table	=	$wpdb->prefix."wpsp_class";
+	$sql = (!empty($id)) ? "SELECT * FROM $table WHERE cid = '$id' " : "SELECT * FROM $table";
+	$results = $wpdb->get_results($sql);
+
+	$return = ($wpdb->num_rows > 0) ? json_encode($results) : false;
+
+	return $return;
+}
+add_filter("wpsp_get_class","wpsp_get_class");
+
+function wpsp_session_info($session_info){
+	//function to return current session and session start month in json
+	global $wpdb;
+	$settings_table	=	$wpdb->prefix."wpsp_settings";
+	$result = $wpdb->get_results("SELECT option_name, option_value FROM $settings_table WHERE option_name='session' || option_name='sch_session_start'");
+	
+	$session_info = ($wpdb->num_rows > 0) ? json_encode($result) : "";
+
+	return $session_info;
+}
+add_filter("wpsp_session_info","wpsp_session_info");
+
+function wpsp_get_student($args){
+	//returns all Students if nothing is passed or empty values are passed
+	//accepts associative array for filtering students in the following format
+	/*array(
+		'id' => , <Pass wp_usr_id here to filter Students by class>
+		'class' => , <Pass class_id here to filter Students by class>
+	);*/
+	global $wpdb;
+
+	$id = (!empty($args['id'])) ? $args['id'] : 0;
+	$class = (!empty($args['class'])) ? $args['class'] : 0;
+
+	$table	=	$wpdb->prefix."wpsp_student";
+
+	$sql = "SELECT * FROM $table WHERE 1=1";
+	if(!empty($id)) $sql .= " AND wp_usr_id = '$id' ";
+	if(!empty($class)) $sql .= " AND class_id = '$class' ";
+
+	$results = $wpdb->get_results($sql);
+	
+	$return = ($wpdb->num_rows > 0) ? json_encode($results) : false;
+
+	return $return;
+}
+add_filter("wpsp_get_student","wpsp_get_student");
 
 /**************************************************Accounting Module Functions************************************************/
 //fucnction to record a Transactions
@@ -518,6 +571,7 @@ add_action("ac_default_fees_group", "ac_default_fees_group");
 
 
 /**************************************************Accounting Module Functions end************************************************/
+
 
 
 

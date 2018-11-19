@@ -4826,3 +4826,64 @@ function wpsp_Import_Dummy_contents() {
 		wp_die();
 
 	}
+
+
+	function make_custom_fees_dues(){
+		global $wpdb;
+
+		$dues_table = $wpdb->prefix."wpsp_fees_dues";
+		$class = $_POST["class"];
+		$from = $_POST["from"];
+		$to = $_POST["to"];
+		$session = $_POST["session"];
+		$fees_types = [];
+		$todays_date = date("Y-m-d");
+
+		if(!empty($_POST["adm"])) $fees_types[] = $_POST["adm"];
+		if(!empty($_POST["ttn"])) $fees_types[] = $_POST["ttn"];
+		if(!empty($_POST["trn"])) $fees_types[] = $_POST["trn"];
+		if(!empty($_POST["ann"])) $fees_types[] = $_POST["ann"];
+		if(!empty($_POST["rec"])) $fees_types[] = $_POST["rec"];
+
+		$students = json_decode(apply_filters("wpsp_get_student", array('class' => $class)));
+		try {
+			$wpdb->query("BEGIN;");
+
+			foreach ($students as $student) {
+				$student_fees = json_decode(apply_filters("get_student_fees", $student->wp_usr_id));
+				foreach ($fees_types as $fees_type) {
+
+					if($fees_type == "ttn"){ // Due Tution Fees
+						for($i = $from; $i<=$to; $i++){
+							$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>'ttn', 'session'=>$session);
+							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+						}
+					}
+					if($fees_type == "adm"){ //due admission fees
+						$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>'adm', 'session'=>$session);
+						if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+					}
+					if($fees_type == "ann"){ //due annual fees
+						$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->annual_chg, 'fees_type'=>'ann', 'session'=>$session);
+						if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+					}
+					if($fees_type == "rec"){ //due recreation fees
+						$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->recreation_chg, 'fees_type'=>'rec', 'session'=>$session);
+						if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+					}
+
+				}
+			}
+
+			echo "success";
+
+			$wpdb->query("COMMIT;");
+		} catch (Exception $e) {
+			$wpdb->query("ROLLBACK;");
+
+			echo $e->getMessage();
+		}
+		
+
+		wp_die();
+	}

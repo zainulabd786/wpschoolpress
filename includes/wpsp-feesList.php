@@ -61,6 +61,7 @@
 									
 								<div class="button-group btn-pro" <?php echo $prodisable;?> title="<?php echo $protitle;?>">
 
+									<a class="btn btn-primary" href="?tab=DueFees"><i class="fa fa-plus"></i> Due Fees</a>
 									<a class="btn btn-primary" href="?tab=DepositFees"><i class="fa fa-plus"></i> Deposit Fees</a>
 									<a class="btn btn-primary" href="?tab=PaymentHistory"><i class="fa fa-history"></i> Payment History</a>
 									<a class="btn btn-primary" href="?tab=concession"><i class="fa fa-tag"></i> Concessions</a>
