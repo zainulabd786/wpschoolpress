@@ -49,7 +49,7 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                         <div class="cd-ttn-due">
                             <div class="form-group">
                                 <label> From: </label>
-                                <select name="from" class="form-control"><?php
+                                <select name="from" class="form-control" id="from"><?php
                                         for ($m=0; $m<=12; $m++) {
                                             if($m == 0) $months_array[0] = "From";   ?>
                                             <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
@@ -60,7 +60,7 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                             </div>
                             <div class="form-group">
                                 <label> To: </label>
-                                <select name="to" class="form-control"><?php
+                                <select name="to" class="form-control" id="to"><?php
                                         for ($m=0; $m<=12; $m++) {
                                             if($m == 0) $months_array[0] = "To";     ?>
                                             <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
@@ -73,12 +73,12 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                     </div>
 					
 					
-					<!-- <div class="well">
+					<div class="well">
                         <label><input type="checkbox" value="trn" name="trn" id="cd-trn-chk"> Transport Charges</label>
                         <div class="cd-trn-due">
                             <div class="form-group">
                                 <label> From: </label>
-                                <select name="from_trn" class="form-control"><?php
+                                <select name="from_trn" class="form-control" id="from_trn"><?php
                                         for ($m=0; $m<=12; $m++) {
                                             if($m == 0) $months_array[0] = "From";   ?>
                                             <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
@@ -89,7 +89,7 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                             </div>
                             <div class="form-group">
                                 <label> To: </label>
-                                <select name="to_trn" class="form-control"><?php
+                                <select name="to_trn" class="form-control" id="to_trn"><?php
                                         for ($m=0; $m<=12; $m++) {
                                             if($m == 0) $months_array[0] = "To";     ?>
                                             <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
@@ -99,7 +99,7 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                                 </select>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
 					
 					
 					<div class="well"> <label><input type="checkbox" value="adm" name="adm"> Admission Fees</label></div>

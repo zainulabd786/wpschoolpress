@@ -370,6 +370,44 @@ function wpsp_get_student($args){
 }
 add_filter("wpsp_get_student","wpsp_get_student");
 
+function wpsp_get_transport_route($args){
+	//returns all routes if nothing is passed or empty values are passed
+	//accepts associative array for filtering routes in the following format
+	/*array(
+		'id' => , <Pass route_id here to filter routes by id>
+		'bus_no' => , <Pass bus number here to filter routes by bus number>
+		'bus_name' => , <Pass bus name here to filter routes by bus name>
+		'route_fees' => , <Pass route Fees here to filter routes by route fees>
+		'driver_name' => , <Pass driver name here to filter routes by driver name>
+		'phone_no' => , <Pass phone number here to filter routes by driver number>
+	);*/
+	global $wpdb;
+
+	$id = (!empty($args['id'])) ? $args['id'] : 0;
+	$bus_no = (!empty($args['bus_no'])) ? $args['bus_no'] : 0;
+	$bus_name = (!empty($args['bus_name'])) ? $args['bus_name'] : 0;
+	$route_fees = (!empty($args['route_fees'])) ? $args['route_fees'] : 0;
+	$driver_name = (!empty($args['driver_name'])) ? $args['driver_name'] : 0;
+	$phone_no = (!empty($args['phone_no'])) ? $args['phone_no'] : 0;
+
+	$table	=	$wpdb->prefix."wpsp_transport";
+
+	$sql = "SELECT * FROM $table WHERE 1=1";
+	if(!empty($id)) $sql .= " AND id = '$id' ";
+	if(!empty($bus_no)) $sql .= " AND bus_no = '$bus_no' ";
+	if(!empty($bus_name)) $sql .= " AND bus_name = '$bus_name' ";
+	if(!empty($route_fees)) $sql .= " AND route_fees = '$route_fees' ";
+	if(!empty($driver_name)) $sql .= " AND driver_name = '$driver_name' ";
+	if(!empty($phone_no)) $sql .= " AND phone_no = '$phone_no' ";
+
+	$results = $wpdb->get_results($sql);
+	
+	$return = ($wpdb->num_rows > 0) ? json_encode($results) : false;
+
+	return $return;
+}
+add_filter("wpsp_get_transport_route","wpsp_get_transport_route");
+
 /**************************************************Accounting Module Functions************************************************/
 //fucnction to record a Transactions
 function ac_record_transaction($args){

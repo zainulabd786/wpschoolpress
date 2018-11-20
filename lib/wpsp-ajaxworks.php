@@ -4836,8 +4836,8 @@ function wpsp_Import_Dummy_contents() {
 		$class = $_POST["class"];
 		$from = (!empty($_POST['from'])) ? $_POST["from"] : 0;
 		$to = (!empty($_POST['to'])) ? $_POST["to"] : 0;
-		/*$from_trn = (!empty($_POST['from_trn'])) ? $_POST["from_trn"] : 0;
-		$to_trn = (!empty($_POST['to_trn'])) ? $_POST["to_trn"] : 0;*/
+		$from_trn = (!empty($_POST['from_trn'])) ? $_POST["from_trn"] : 0;
+		$to_trn = (!empty($_POST['to_trn'])) ? $_POST["to_trn"] : 0;
 		$session = $_POST["session"];
 
 		$single_student = (!empty($_POST["student"])) ? $_POST["student"] : 0;
@@ -4864,12 +4864,17 @@ function wpsp_Import_Dummy_contents() {
 							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
 						}
 					}
-					/*if($fees_type == "trn"){ // Due Tution Fees
-						for($i = $from_trn; $i<=$to_trn; $i++){
-							$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>'ttn', 'session'=>$session);
-							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+					if($student->transport > 0){ //only run this code if student has opted for transport
+						if($fees_type == "trn"){ // Due Transport Charges Fees
+							$route_info = json_decode(apply_filters("wpsp_get_transport_route", array('id' => $student->route_id )))[0];
+							if(!empty($route_info->route_fees)){
+								for($i = $from_trn; $i<=$to_trn; $i++){
+									$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$route_info->route_fees, 'fees_type'=>'trn', 'session'=>$session);
+									if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+								}
+							}
 						}
-					}*/
+					}
 					if($fees_type == "adm"){ //due admission fees
 						$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>'adm', 'session'=>$session);
 						if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());

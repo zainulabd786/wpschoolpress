@@ -76,7 +76,7 @@ $(document).ready(function(){
 		$(".inv-entries table tr .inv-entries-amt").html("<i class='fa fa-inr'></i>"+paidAmt+"/-");
 	});
 	$(".dep-class-select select").change(function(){
-		$(".dep-student-select select").html("");
+		$(".dep-student-select select").html("<option value=''>Select Students</option>");
 		$.post(ajax_url, { action: "fetch_all_students", class: $(this).val() }, function(data){
 			data = JSON.parse(JSON.parse(data));
 			data.forEach( i => {
@@ -639,7 +639,7 @@ $(document).ready(function(){
 	});
 
 	$("#cd-class").change(function(){
-		$("#cd-students").html("");
+		$("#cd-students").html("<option value='0'>All Students</option>");
 		$.post(ajax_url, {
 			action: "fetch_all_students",
 			class: $(this).val()
@@ -655,8 +655,13 @@ $(document).ready(function(){
 	});
 
 	$("#cd-students").change(function(){
-		let req = $.post(ajax_url, );
+		let req = $.post( ajax_url, { action: "fetch_all_students", id:$(this).val()} );
+		req.done(data => {
+			data = JSON.parse(JSON.parse(data));
+			(data[0].transport > 0) ? $("#cd-trn-chk").attr("disabled", false) : $("#cd-trn-chk").attr("disabled", true) ;
+		});
 	});
+
 
 	$(".cd-ttn-due").hide();
 	$("#cd-ttn-chk").click(() => $(".cd-ttn-due").slideToggle());
