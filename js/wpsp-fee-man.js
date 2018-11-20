@@ -662,6 +662,29 @@ $(document).ready(function(){
 		});
 	});
 
+	$("#from, #to, #from_trn, #to_trn").change(function(){
+		let from = parseInt($("#from").val());
+		let to = parseInt($("#to").val());
+		let from_trn = parseInt($("#from_trn").val());
+		let to_trn = parseInt($("#to_trn").val());
+		if(from != 0 && to != 0){
+			if(from > to){
+				$.post(ajax_url,{action:'fetch_session_start_month'}, function(data){
+					alert(`Your Session starts in ${months_array[data]} and ends in ${months_array[(data-1)]}. So, Please Select Months Between ${months_array[data]} and ${months_array[(data-1)]} `) 
+				});
+				$("#to").val("0");
+			}
+		}
+
+		if(from_trn !== 0 && to_trn !== 0){
+			if(from_trn > to_trn){
+				$.post(ajax_url,{action:'fetch_session_start_month'}, function(data){
+					alert(`Your Session starts in ${months_array[data]} and ends in ${months_array[(data-1)]}. So, Please Select Months Between ${months_array[data]} and ${months_array[(data-1)]} `) 
+				});
+				$("#to_trn").val("0");
+			}
+		}
+	})
 
 	$(".cd-ttn-due").hide();
 	$("#cd-ttn-chk").click(() => $(".cd-ttn-due").slideToggle());
