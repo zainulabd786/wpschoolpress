@@ -687,10 +687,18 @@ $(document).ready(function(){
 	})
 
 	$(".cd-ttn-due").hide();
-	$("#cd-ttn-chk").click(() => $(".cd-ttn-due").slideToggle());
+	$("#cd-ttn-chk").click(() => {
+		let thisEl = $("#cd-ttn-chk"); 
+		(thisEl.prop('checked')) ? $(".cd-ttn-due").find('select').attr('required', true) : $(".cd-ttn-due").find('select').attr('required', false);
+		$(".cd-ttn-due").slideToggle()
+	});
 
 	$(".cd-trn-due").hide();
-	$("#cd-trn-chk").click(() => $(".cd-trn-due").slideToggle());
+	$("#cd-trn-chk").click(() => {
+		let thisEl = $("#cd-trn-chk"); 
+		(thisEl.prop('checked')) ? $(".cd-trn-due").find('select').attr('required', true) : $(".cd-trn-due").find('select').attr('required', false);
+		$(".cd-trn-due").slideToggle()
+	});
 	/*----------------------------------Custom Due Payment-------------------------*/
 	
 });

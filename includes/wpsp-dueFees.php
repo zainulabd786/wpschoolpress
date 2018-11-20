@@ -51,22 +51,28 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                                 <label> From: </label>
                                 <select name="from" class="form-control" id="from"><?php
                                         for ($m=0; $m<=12; $m++) {
-                                            if($m == 0) $months_array[0] = "From";   ?>
-                                            <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
+                                            if($m == 0){ ?>
+                                                <option value="">From</option><?php
+                                            } else{  ?>
+                                            <option value="<?= ($m<$session_start && !empty($m)) ? $m+12 : $m; ?>">
                                                 <?php echo $months_array[$m]; ?>
                                             </option>
-                                        <?php } ?>
+                                        <?php } 
+                                        } ?>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label> To: </label>
                                 <select name="to" class="form-control" id="to"><?php
                                         for ($m=0; $m<=12; $m++) {
-                                            if($m == 0) $months_array[0] = "To";     ?>
-                                            <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
+                                            if($m == 0){ ?>
+                                                <option value="">From</option><?php
+                                            } else{  ?>
+                                            <option value="<?= ($m<$session_start && !empty($m)) ? $m+12 : $m; ?>">
                                                 <?php echo $months_array[$m]; ?>
-                                            </option>;
-                                        <?php } ?>
+                                            </option>
+                                        <?php } 
+                                        } ?>
                                 </select>
                             </div>
                         </div>
@@ -80,22 +86,28 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                                 <label> From: </label>
                                 <select name="from_trn" class="form-control" id="from_trn"><?php
                                         for ($m=0; $m<=12; $m++) {
-                                            if($m == 0) $months_array[0] = "From";   ?>
-                                            <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
+                                            if($m == 0){ ?>
+                                                <option value="">From</option><?php
+                                            } else{  ?>
+                                            <option value="<?= ($m<$session_start && !empty($m)) ? $m+12 : $m; ?>">
                                                 <?php echo $months_array[$m]; ?>
                                             </option>
-                                        <?php } ?>
+                                        <?php } 
+                                        } ?>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label> To: </label>
                                 <select name="to_trn" class="form-control" id="to_trn"><?php
                                         for ($m=0; $m<=12; $m++) {
-                                            if($m == 0) $months_array[0] = "To";     ?>
-                                            <option value="<?php if($m<$session_start && !empty($m)) echo $m+12; else echo $m; ?>">
+                                            if($m == 0){ ?>
+                                                <option value="">To</option><?php
+                                            } else{  ?>
+                                            <option value="<?= ($m<$session_start && !empty($m)) ? $m+12 : $m; ?>">
                                                 <?php echo $months_array[$m]; ?>
-                                            </option>;
-                                        <?php } ?>
+                                            </option>
+                                        <?php } 
+                                        } ?>
                                 </select>
                             </div>
                         </div>
