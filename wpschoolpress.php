@@ -408,6 +408,225 @@ function wpsp_get_transport_route($args){
 }
 add_filter("wpsp_get_transport_route","wpsp_get_transport_route");
 
+function wpsp_submitted_fees($args){
+	/*	
+
+	*PARAMETERS
+		Accepts associative array in this format:
+
+		array(
+			"uid" => <Pass wp_usr_id of student here>,
+			"session" => <Pass session here>,
+			"fees_type" => <Pass fees_type here in an array if you want to get a specific fees type detail. leave blank if you want all fees type details. you can 					filter multiple fees types at a time example `array('ttn', 'trn', 'adm', 'ann', 'rec')` ".>
+		)
+
+		IMPORTANT: student_id and session are required parameters
+
+	*RETURN
+		returns array of objects with fees status of a student for the passed session in the following format:
+		EXAMPLE OUTPUT: 
+			{
+				"uid" : "5"
+				"session" : "2018-19",
+				"ttn" : {
+					{"month" : "1", "status" : "due", "amount" : "2000"},
+					{"month" : "2", "status" : "subitted", "amount" : "2000"},
+					{"month" : "3", "status" : "", "amount" : "0"}
+					.
+					.
+					.
+					upto 12
+				},
+				"trn" : {
+					{"month" : "1", "status" : "due", "amount" : "2000"},
+					{"month" : "2", "status" : "subitted", "amount" : "2000"},
+					{"month" : "3", "status" : "", "amount" : "0"}
+					.
+					.
+					.
+					upto 12
+				},
+				"adm" : {
+					{"month" : "0", "status" : "due", "amount" : "2000"}
+				},
+				"ann" : {
+					{"month" : "0", "status" : "submitted", "amount" : "2000"}
+				},
+				"rec" : {
+					{"month" : "0", "status" : "", "amount" : ""}
+				}
+
+			}
+		
+		<status ''(blank) means that the fees is neither due nor submitted. This may be the case when the month has yet to arrived>
+
+	*/
+	global $wpdb;
+	$rec_table = $wpdb->prefix."wpsp_fees_receipts";
+	$record_table = $wpdb->prefix."wpsp_fees_payment_record";
+	$dues_table = $wpdb->prefix."wpsp_fees_dues";
+
+	$month = 0; $status = ""; $amount = 0;
+
+	$session_start_month = json_decode(apply_filters("wpsp_session_info", ""))[1]->option_value;
+	$current_session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
+
+	$id = (!empty($args['uid'])) ? $args['uid'] : 0; if(empty($id)) return;
+	$session = (!empty($args['session'])) ? $args['session'] : 0; if(empty($session)) return;
+	$fees_types = (!empty($args['fees_type']) || isset($args['fees_type'])) ? $args['fees_type'] : array('ttn', 'trn', 'adm', 'ann', 'rec');
+
+	$return = ["uid" => $id, "session" => $session];
+
+	foreach ($fees_types as $fees_type) {
+		if($fees_type == "ttn"){
+
+			for ($i=1; $i<=12 ; $i++) { //tuition Fees
+				$month = $i;
+				$month_query = ($month<$session_start_month) ? $month+12 : $month;
+				$record_sql = $wpdb->get_results("SELECT * FROM $record_table WHERE uid = '$id' AND month = '$month_query' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ");
+				if($wpdb->num_rows > 0){
+					$month = $record_sql[0]->month;
+					$status = "submitted";
+					$amount = $record_sql[0]->amount;
+					$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+					if($wpdb->num_rows > 0){
+						$month = $dues_sql[0]->month;
+						$status = "due";
+						$amount = $dues_sql[0]->amount;
+					}
+					$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+				} else{
+					$month = $i;
+					$status = "";
+					$amount = 0;
+					$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+					if($wpdb->num_rows > 0){
+						$month = $dues_sql[0]->month;
+						$status = "due";
+						$amount = $dues_sql[0]->amount;
+					}
+					$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+				}
+			}
+		}
+
+		if($fees_type == 'trn'){
+			$student = json_decode(apply_filters("wpsp_get_student", array('id' => $id)))[0];
+			if($student->transport > 0 && $student->route_id > 0){ //Run this code only if student has opted for transport and route is set
+				for ($i=1; $i<=12 ; $i++) { //Transport
+					$month = $i;
+					$month_query = ($month<$session_start_month) ? $month+12 : $month;
+					$record_sql = $wpdb->get_results("SELECT * FROM $record_table WHERE uid = '$id' AND month = '$month_query' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ");
+					if($wpdb->num_rows > 0){
+						$month = $record_sql[0]->month;
+						$status = "submitted";
+						$amount = $record_sql[0]->amount;
+						$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+						if($wpdb->num_rows > 0){
+							$month = $dues_sql[0]->month;
+							$status = "due";
+							$amount = $dues_sql[0]->amount;
+						}
+						$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+					} else{
+						$month = $i;
+						$status = "";
+						$amount = 0;
+						$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+						if($wpdb->num_rows > 0){
+							$month = $dues_sql[0]->month;
+							$status = "due";
+							$amount = $dues_sql[0]->amount;
+						}
+						$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+					}
+				}
+			}
+		}
+
+		if($fees_type == "adm"){
+			$month = 0;
+			$status = "";
+			$amount = 0;
+			$record_sql = $wpdb->get_results("SELECT * FROM $record_table WHERE uid = '$id' AND month = '0' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ");
+			if($wpdb->num_rows > 0){
+				$status = "submitted";
+				$amount = $record_sql[0]->amount;
+				$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+				if($wpdb->num_rows > 0){
+					$status = "due";
+					$amount = $dues_sql[0]->amount;
+				}
+				$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+			} else{
+				$status = "";
+				$amount = 0;
+				$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+				if($wpdb->num_rows > 0){
+					$status = "due";
+					$amount = $dues_sql[0]->amount;
+				}
+				$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+			}
+		} 
+
+		if($fees_type == "ann"){
+			$month = 0;
+			$status = "";
+			$amount = 0;
+			$record_sql = $wpdb->get_results("SELECT * FROM $record_table WHERE uid = '$id' AND month = '0' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ");
+			if($wpdb->num_rows > 0){
+				$status = "submitted";
+				$amount = $record_sql[0]->amount;
+				$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+				if($wpdb->num_rows > 0){
+					$status = "due";
+					$amount = $dues_sql[0]->amount;
+				}
+				$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+			} else{
+				$status = "";
+				$amount = 0;
+				$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+				if($wpdb->num_rows > 0){
+					$status = "due";
+					$amount = $dues_sql[0]->amount;
+				}
+				$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+			}
+		}
+
+		if($fees_type == "rec"){
+			$month = 0;
+			$status = "";
+			$amount = 0;
+			$record_sql = $wpdb->get_results("SELECT * FROM $record_table WHERE uid = '$id' AND month = '0' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ");
+			if($wpdb->num_rows > 0){
+				$status = "submitted";
+				$amount = $record_sql[0]->amount;
+				$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+				if($wpdb->num_rows > 0){
+					$status = "due";
+					$amount = $dues_sql[0]->amount;
+				}
+				$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+			} else{
+				$status = "";
+				$amount = 0;
+				$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
+				if($wpdb->num_rows > 0){
+					$status = "due";
+					$amount = $dues_sql[0]->amount;
+				}
+				$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
+			}
+		}
+	}
+
+	return json_encode($return);
+}
+add_filter("wpsp_submitted_fees", "wpsp_submitted_fees");
+
 /**************************************************Accounting Module Functions************************************************/
 //fucnction to record a Transactions
 function ac_record_transaction($args){
