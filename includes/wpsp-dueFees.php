@@ -18,8 +18,8 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                  
                 <!-- /.box-header -->
                 <!-- <pre>   FOR TESTING PURPOSE ONLY
-                <?php //$arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => 60, 'session' => '2018-19')));
-                //print_r($arr);
+                <?php $arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => 28, 'session' => '2018-19')));
+                print_r($arr);
                 /*foreach ($arr->ttn as $ar) {
                     echo $ar->month." ".$ar->amount." ".$ar->status."<br/>";
                  }*/ ?>
