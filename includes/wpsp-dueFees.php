@@ -17,7 +17,13 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                 </div>
                  
                 <!-- /.box-header -->
-                
+                <!-- <pre>   FOR TESTING PURPOSE ONLY
+                <?php //$arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => 60, 'session' => '2018-19')));
+                //print_r($arr);
+                /*foreach ($arr->ttn as $ar) {
+                    echo $ar->month." ".$ar->amount." ".$ar->status."<br/>";
+                 }*/ ?>
+                </pre> -->
                 <form name="custom-due-form" class="form-vertical">
                 	<div class="form-group">
                 		<label> Class: </label>
@@ -66,7 +72,7 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                                 <select name="to" class="form-control" id="to"><?php
                                         for ($m=0; $m<=12; $m++) {
                                             if($m == 0){ ?>
-                                                <option value="">From</option><?php
+                                                <option value="">To</option><?php
                                             } else{  ?>
                                             <option value="<?= ($m<$session_start && !empty($m)) ? $m+12 : $m; ?>">
                                                 <?php echo $months_array[$m]; ?>

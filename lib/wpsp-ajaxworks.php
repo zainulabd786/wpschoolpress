@@ -4860,8 +4860,17 @@ function wpsp_Import_Dummy_contents() {
 
 					if($fees_type == "ttn"){ // Due Tution Fees
 						for($i = $from; $i<=$to; $i++){
-							$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>'ttn', 'session'=>$session);
-							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+							$fees_data_arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => $student->wp_usr_id, 'session' => $session, 'fees_type' => array($fees_type))));
+							$fee_status = "";
+							foreach ($fees_data_arr->ttn as $fees_data) {
+			                    if($fees_data->month == $i){
+			                    	$fee_status = $fees_data->status;
+			                    }
+			                }
+			                if(empty($fee_status)){
+			                	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+								if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+			                }
 						}
 					}
 					if($student->transport > 0){ //only run this code if student has opted for transport
@@ -4869,23 +4878,60 @@ function wpsp_Import_Dummy_contents() {
 							$route_info = json_decode(apply_filters("wpsp_get_transport_route", array('id' => $student->route_id )))[0];
 							if(!empty($route_info->route_fees)){
 								for($i = $from_trn; $i<=$to_trn; $i++){
-									$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$route_info->route_fees, 'fees_type'=>'trn', 'session'=>$session);
-									if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+									$fees_data_arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => $student->wp_usr_id, 'session' => $session, 'fees_type' => array($fees_type))));
+									$fee_status = "";
+									foreach ($fees_data_arr->trn as $fees_data) {
+					                    if($fees_data->month == $i){
+					                    	$fee_status = $fees_data->status;
+					                    }
+					                }
+					                if(empty($fee_status)){
+					                	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+										if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+					                }
 								}
 							}
 						}
 					}
 					if($fees_type == "adm"){ //due admission fees
-						$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>'adm', 'session'=>$session);
-						if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+						$fees_data_arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => $student->wp_usr_id, 'session' => $session, 'fees_type' => array($fees_type))));
+						$fee_status = "";
+						foreach ($fees_data_arr->adm as $fees_data) {
+					    	if($fees_data->month == $i){
+					            $fee_status = $fees_data->status;
+					        }
+					    }
+					    if(empty($fee_status)){
+					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+					    }
+						
 					}
 					if($fees_type == "ann"){ //due annual fees
-						$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->annual_chg, 'fees_type'=>'ann', 'session'=>$session);
-						if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+						$fees_data_arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => $student->wp_usr_id, 'session' => $session, 'fees_type' => array($fees_type))));
+						$fee_status = "";
+						foreach ($fees_data_arr->ann as $fees_data) {
+					    	if($fees_data->month == $i){
+					            $fee_status = $fees_data->status;
+					        }
+					    }
+					    if(empty($fee_status)){
+					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+					    }
 					}
 					if($fees_type == "rec"){ //due recreation fees
-						$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->recreation_chg, 'fees_type'=>'rec', 'session'=>$session);
-						if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+						$fees_data_arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => $student->wp_usr_id, 'session' => $session, 'fees_type' => array($fees_type))));
+						$fee_status = "";
+						foreach ($fees_data_arr->rec as $fees_data) {
+					    	if($fees_data->month == $i){
+					            $fee_status = $fees_data->status;
+					        }
+					    }
+					    if(empty($fee_status)){
+					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
+					    }
 					}
 
 				}
