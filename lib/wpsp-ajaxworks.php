@@ -4868,7 +4868,7 @@ function wpsp_Import_Dummy_contents() {
 			                    }
 			                }
 			                if(empty($fee_status)){
-			                	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+			                	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>$fees_type, 'session'=>$session);
 								if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
 			                }
 						}
@@ -4886,7 +4886,7 @@ function wpsp_Import_Dummy_contents() {
 					                    }
 					                }
 					                if(empty($fee_status)){
-					                	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+					                	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>$fees_type, 'session'=>$session);
 										if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
 					                }
 								}
@@ -4902,7 +4902,7 @@ function wpsp_Import_Dummy_contents() {
 					        }
 					    }
 					    if(empty($fee_status)){
-					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>$fees_type, 'session'=>$session);
 							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
 					    }
 						
@@ -4916,7 +4916,7 @@ function wpsp_Import_Dummy_contents() {
 					        }
 					    }
 					    if(empty($fee_status)){
-					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>$fees_type, 'session'=>$session);
 							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
 					    }
 					}
@@ -4929,7 +4929,7 @@ function wpsp_Import_Dummy_contents() {
 					        }
 					    }
 					    if(empty($fee_status)){
-					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>'$fees_type', 'session'=>$session);
+					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>$fees_type, 'session'=>$session);
 							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
 					    }
 					}
