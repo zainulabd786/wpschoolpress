@@ -4887,7 +4887,7 @@ function wpsp_Import_Dummy_contents() {
 					                    }
 					                }
 					                if(empty($fee_status) || $fee_status ==""){
-					                	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$student_fees->tution_fees, 'fees_type'=>$fees_type, 'session'=>$session);
+					                	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$i, 'amount'=>$route_info->route_fees, 'fees_type'=>$fees_type, 'session'=>$session);
 										if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
 					                }
 								}
@@ -4909,7 +4909,7 @@ function wpsp_Import_Dummy_contents() {
 						//echo "fees Status ".$fee_status."<br>";
 						//print_r($fees_data);
 					    if(empty($fee_status) || $fee_status ==""){
-					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>$fees_type, 'session'=>$session);
+					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->annual_chg, 'fees_type'=>$fees_type, 'session'=>$session);
 							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
 					    }
 					}
@@ -4917,7 +4917,7 @@ function wpsp_Import_Dummy_contents() {
 						$fees_data = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => $student->wp_usr_id, 'session' => $session, 'fees_type' => array($fees_type))));
 						$fee_status = $fees_data->rec[0]->status;
 					    if(empty($fee_status) || $fee_status ==""){
-					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->admission_fees, 'fees_type'=>$fees_type, 'session'=>$session);
+					    	$data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>0, 'amount'=>$student_fees->recreation_chg, 'fees_type'=>$fees_type, 'session'=>$session);
 							if(!$wpdb->insert($dues_table, $data)) throw new Exception($wpdb->print_error());
 					    }
 					}
@@ -4936,4 +4936,12 @@ function wpsp_Import_Dummy_contents() {
 		
 
 		wp_die();
+	}
+
+
+	function chk_fees_status(){
+		$fees_data = json_decode(apply_filters("wpsp_submitted_fees", $_POST));
+		$from = (!empty($_POST['from'])) ? $_POST['from'] : 0;
+		$to = (!empty($_POST['to'])) ? $_POST['to'] : 0;
+		
 	}
