@@ -633,7 +633,6 @@ $(document).ready(function(){
 			},
 			complete:function(){
 				$('.pnloader').remove();
-				$(".btn-print").show();
 			}
 		});
 	});
@@ -662,27 +661,56 @@ $(document).ready(function(){
 		});
 	});
 
-	$("#from, #to, #from_trn, #to_trn").change(function(){
-		let from = parseInt($("#from").val());
-		let to = parseInt($("#to").val());
-		let from_trn = parseInt($("#from_trn").val());
-		let to_trn = parseInt($("#to_trn").val());
-		if(from != 0 && to != 0){
+	$("#from, #to").change(function(){
+		let from = $("#from").val();
+		let to = $("#to").val();
+		let session = $("#cd-session").val();
+		let uid = $("#cd-students").val();
+		let feesType = "ttn";
+		//code to check if fees already submitted or due
+		
+
+		if(from !== "" && to !== ""){
 			if(from > to){
 				$.post(ajax_url,{action:'fetch_session_start_month'}, function(data){
 					alert(`Your Session starts in ${months_array[data]} and ends in ${months_array[(data-1)]}. So, Please Select Months Between ${months_array[data]} and ${months_array[(data-1)]} `) 
 				});
 				$("#to").val("0");
 			}
+			$.post( ajax_url, {
+				action: "chk_fees_status",
+				from: from,
+				to: to,
+				session: session,
+				uid: uid,
+				fees_type: feesType
+			}, resp => (!resp) ? alert("Fees of this month is either due or already desposited!") : "" );
 		}
 
-		if(from_trn !== 0 && to_trn !== 0){
-			if(from_trn > to_trn){
+	});
+
+	$("#from_trn, #to_trn").change(() => {
+		let from = $("#from_trn").val();
+		let to = $("#to_trn").val();
+		let session = $("#cd-session").val();
+		let uid = $("#cd-students").val();
+		let feesType = "trn";
+
+		if(from !== "" && to !== ""){
+			if(from > to){
 				$.post(ajax_url,{action:'fetch_session_start_month'}, function(data){
 					alert(`Your Session starts in ${months_array[data]} and ends in ${months_array[(data-1)]}. So, Please Select Months Between ${months_array[data]} and ${months_array[(data-1)]} `) 
 				});
-				$("#to_trn").val("0");
+				$("#to").val("0");
 			}
+			$.post( ajax_url, {
+				action: "chk_fees_status",
+				from: from,
+				to: to,
+				session: session,
+				uid: uid,
+				fees_type: feesType
+			}, resp => (!resp) ? alert("Fees of this month is either due or already desposited!") : "" );
 		}
 	})
 

@@ -276,6 +276,8 @@ function ajax_actions(){
 		add_action( 'wp_ajax_fetch_all_students', 'wpsp_fetch_student_details' );
 
 		add_action( 'wp_ajax_fetch_all_details_of_a_student_for_fee', 'wpsp_fetch_all_student_details' );
+		
+		add_action( 'wp_ajax_chk_fees_status', 'chk_fees_status' );
 }
 
 function tl_save_error() {
@@ -473,8 +475,7 @@ function wpsp_submitted_fees($args){
 
 	$id = (!empty($args['uid'])) ? $args['uid'] : 0; if(empty($id)) return;
 	$session = (!empty($args['session'])) ? $args['session'] : 0; if(empty($session)) return;
-	$fees_types = (!empty($args['fees_type']) || isset($args['fees_type'])) ? $args['fees_type'] : array('ttn', 'trn', 'adm', 'ann', 'rec');
-
+	$fees_types = (!empty($args['fees_type']) && is_array($args['fees_type']) && isset($args['fees_type'])) ? $args['fees_type'] : array('ttn', 'trn', 'adm', 'ann', 'rec');
 	$return = ["uid" => $id, "session" => $session];
 
 	foreach ($fees_types as $fees_type) {

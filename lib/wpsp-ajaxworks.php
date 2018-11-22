@@ -4940,8 +4940,18 @@ function wpsp_Import_Dummy_contents() {
 
 
 	function chk_fees_status(){
-		$fees_data = json_decode(apply_filters("wpsp_submitted_fees", $_POST));
 		$from = (!empty($_POST['from'])) ? $_POST['from'] : 0;
 		$to = (!empty($_POST['to'])) ? $_POST['to'] : 0;
+		$fees_type = (!empty($_POST['fees_type'])) ? $_POST['fees_type'] : 0;
 		
+		$return = true;
+		$fees_data = json_decode(apply_filters("wpsp_submitted_fees", $_POST));
+		for($i = $from; $i <= $to; $i++){
+			$fee_status = $fees_data->$fees_type[$i]->status;
+			if($fee_status != "") $return = false; break;
+		}
+
+		echo $return;
+
+		wp_die();
 	}
