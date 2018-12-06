@@ -52,12 +52,13 @@
 					foreach ($sql_fees as $f) {
 						$tf = $f->tution_fees;
 					}*/
-					$sql_trans_fees = $wpdb->get_results("SELECT a.route_fees FROM $transport_table a, $student_table b WHERE a.id=b.route_id AND b.transport = 1 ");
+					/*$sql_trans_fees = $wpdb->get_results("SELECT a.route_fees FROM $transport_table a, $student_table b WHERE a.id=b.route_id AND b.transport = 1 ");
 					foreach ($sql_trans_fees as $trf) {
 						$tc = $trf->route_fees;
-					}
+					}*/
 					$sql_tf_data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$curr_month, 'amount'=>$tf, 'fees_type'=>'ttn', 'session'=>$session);
 					if($student->transport == 1){
+						$tc = json_decode(apply_filters("wpsp_get_transport_route", array('id' => $student->route_id)))->route_fees;
 						$sql_tc_data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$curr_month, 'amount'=>$tc, 'fees_type'=>'trn', 'session'=>$session);
 					}
 				
