@@ -58,7 +58,7 @@
 					}*/
 					$sql_tf_data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$curr_month, 'amount'=>$tf, 'fees_type'=>'ttn', 'session'=>$session);
 					if($student->transport == 1){
-						$tc = json_decode(apply_filters("wpsp_get_transport_route", array('id' => $student->route_id)))->route_fees;
+						$tc = json_decode(apply_filters("wpsp_get_transport_route", array('id' => $student->route_id)))[0]->route_fees;
 						$sql_tc_data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$curr_month, 'amount'=>$tc, 'fees_type'=>'trn', 'session'=>$session);
 					}
 				

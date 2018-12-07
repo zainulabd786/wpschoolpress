@@ -18,9 +18,11 @@ $session = json_decode(apply_filters("wpsp_session_info", ""))[0]->option_value;
                  
                 <!-- /.box-header -->
                   <pre>
-                <?php $arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => 60, 'session' => '2018-19')));
+                <?php /*$arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => 60, 'session' => '2018-19')));
                 $fees_type = 'ttn';
-                print_r($arr->$fees_type);
+                print_r($arr->$fees_type);*/
+               /* $tc = json_decode(apply_filters("wpsp_get_transport_route", array('id' => 1)))[0]->route_fees;
+                print_r($tc);*/
                 ?>
                 </pre> 
                 <form name="custom-due-form" class="form-vertical">
