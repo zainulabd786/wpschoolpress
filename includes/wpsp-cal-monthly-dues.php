@@ -37,7 +37,8 @@
 		$sql_due_date		= 	$wpdb->get_results("SELECT option_value FROM $settings_table WHERE option_name = 'due_date' AND option_value = '$curr_date' ");
 		if($wpdb->num_rows>0){
 			try{
-				$student_sql = $wpdb->get_results("SELECT wp_usr_id, class_id, transport, s_phone FROM $student_table");
+				//$student_sql = $wpdb->get_results("SELECT wp_usr_id, class_id, transport, s_phone, route_id FROM $student_table");
+				$student_sql = json_decode(apply_filters("wpsp_get_student", array()));
 				foreach ($student_sql as $student) {
 					$tf = 0;
 					$tc = 0;
@@ -58,6 +59,10 @@
 					}*/
 					$sql_tf_data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$curr_month, 'amount'=>$tf, 'fees_type'=>'ttn', 'session'=>$session);
 					if($student->transport == 1){
+						/*echo $student->wp_usr_id."<br>";
+						echo $student->transport."<br>";
+						echo $student->route_id."<br>";*/
+						//echo "<pre>"; print_r($student); echo "</pre>";
 						$tc = json_decode(apply_filters("wpsp_get_transport_route", array('id' => $student->route_id)))[0]->route_fees;
 						$sql_tc_data = array('date'=>$todays_date, 'uid'=>$student->wp_usr_id, 'month'=>$curr_month, 'amount'=>$tc, 'fees_type'=>'trn', 'session'=>$session);
 					}
