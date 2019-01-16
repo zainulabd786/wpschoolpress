@@ -662,15 +662,15 @@ $(document).ready(function(){
 	});
 
 	$("#from, #to").change(function(){
-		let from = $("#from").val();
-		let to = $("#to").val();
+		let from = parseInt($("#from").val());
+		let to = parseInt($("#to").val());
 		let session = $("#cd-session").val();
 		let uid = $("#cd-students").val();
 		let feesType = "ttn";
 		//code to check if fees already submitted or due
 		
 
-		if(from !== "" && to !== ""){
+		if(from && to){
 			if(from > to){
 				$.post(ajax_url,{action:'fetch_session_start_month'}, function(data){
 					alert(`Your Session starts in ${months_array[data]} and ends in ${months_array[(data-1)]}. So, Please Select Months Between ${months_array[data]} and ${months_array[(data-1)]} `) 
@@ -690,18 +690,19 @@ $(document).ready(function(){
 	});
 
 	$("#from_trn, #to_trn").change(() => {
-		let from = $("#from_trn").val();
-		let to = $("#to_trn").val();
+		let from = parseInt($("#from_trn").val());
+		let to = parseInt($("#to_trn").val());
 		let session = $("#cd-session").val();
 		let uid = $("#cd-students").val();
 		let feesType = "trn";
 
-		if(from !== "" && to !== ""){
+		if(from && to){
 			if(from > to){
 				$.post(ajax_url,{action:'fetch_session_start_month'}, function(data){
+					console.log(data);
 					alert(`Your Session starts in ${months_array[data]} and ends in ${months_array[(data-1)]}. So, Please Select Months Between ${months_array[data]} and ${months_array[(data-1)]} `) 
 				});
-				$("#to").val("0");
+				$("#to_trn").val("0");
 			}
 			$.post( ajax_url, {
 				action: "chk_fees_status",
