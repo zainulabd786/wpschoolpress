@@ -2876,7 +2876,9 @@ function wpsp_Import_Dummy_contents() {
 		if(!empty($transport_chg)) $fees_type .= "/trn";
 		if(!empty($annual_chg)) $fees_type .= "/ann";
 		if(!empty($recreation_chg)) $fees_type .= "/rec";
-		$fees_type_arr = explode("/", $fees_type);
+		$fees_type_arr = array_filter(explode("/", $fees_type));
+		//echo "<pre>"; print_r(array_filter($fees_type_arr)); echo "</pre>";
+		//echo $fees_type;
 		$sql_slip_data = array(
 				'slip_no' => $slip_no,
 				'date' => $todays_date,
@@ -3220,8 +3222,9 @@ function wpsp_Import_Dummy_contents() {
 					}				
 				}
 			}
+			//echo "<pre>"; print_r($fees_type_arr); echo "</pre>";
 			for($j=0;$j<count($fees_type_arr);$j++){
-				$month = "N/A";
+				$month = 0;
 				switch ($fees_type_arr[$j]) {
 					case 'adm':
 						$sql_record_data = array(
@@ -3278,7 +3281,7 @@ function wpsp_Import_Dummy_contents() {
 
 					case "ann":
 						$sql_record_data = array(
-								'tid' => $tid.$j."2",
+								'tid' => $tid.$j."1",
 								'slip_no' => $slip_no,
 								'date_time' => $current_date_time,
 								'uid' => $uid,
@@ -3326,7 +3329,7 @@ function wpsp_Import_Dummy_contents() {
 						}
 						else{
 							$ok = 0;
-							throw new Exception($wpdb->print_error());
+							throw new Exception($wpdb->print_error()."dddddddddddddddddddddddd");
 						}
 					break;
 
