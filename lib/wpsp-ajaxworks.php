@@ -2995,7 +2995,9 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
+									
 								}
 								$outstanding_amt = 0;
 							}
@@ -3019,7 +3021,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
 						}
@@ -3052,7 +3055,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							//}
 						}
@@ -3084,7 +3088,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							//}
 							if($wpdb->insert($record_table, $sql_record_data) && $wpdb->insert($dues_table, $sql_dues_data)){
@@ -3122,7 +3127,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 								$outstanding_amt_trn = 0;
 							}
@@ -3144,7 +3150,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
 						}
@@ -3176,7 +3183,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							//}
 						}
@@ -3208,7 +3216,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							//}
 							if($wpdb->insert($record_table, $sql_record_data) && $wpdb->insert($dues_table, $sql_dues_data)){
@@ -3253,7 +3262,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
 						}
@@ -3266,7 +3276,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
 						}
@@ -3306,7 +3317,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
 							
@@ -3319,7 +3331,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
 							
@@ -3329,7 +3342,8 @@ function wpsp_Import_Dummy_contents() {
 						}
 						else{
 							$ok = 0;
-							throw new Exception($wpdb->print_error()."dddddddddddddddddddddddd");
+							//throw new Exception($wpdb->print_error());
+							throw new Exception("Fees is either not due or already submitted", 1);
 						}
 					break;
 
@@ -3360,7 +3374,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
 							
@@ -3373,7 +3388,8 @@ function wpsp_Import_Dummy_contents() {
 								}
 								else{
 									$ok = 0;
-									throw new Exception($wpdb->print_error());
+									//throw new Exception($wpdb->print_error());
+									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
 							

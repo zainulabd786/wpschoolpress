@@ -460,7 +460,7 @@ $(document).ready(function(){
 					$.fn.notify('error',{'desc':sfres});				
 			},
 			error:function(){
-				$.fn.notify('error',{'desc':'Something went wrong'});
+				$.fn.notify('error! ',{'desc':'Something went wrong'});
 			},
 			beforeSend:function(){
 				$.fn.notify('loader',{'desc':'Saving Data...'});
