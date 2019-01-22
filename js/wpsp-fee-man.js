@@ -457,7 +457,7 @@ $(document).ready(function(){
 					//window.location.reload();
 				}
 				else
-					$.fn.notify('error! ',{'desc':sfres});				
+					$.fn.notify('error',{'desc':sfres});				
 			},
 			error:function(){
 				$.fn.notify('error! ',{'desc':'Something went wrong'});
