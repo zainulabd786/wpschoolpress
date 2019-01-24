@@ -2816,6 +2816,7 @@ function wpsp_Import_Dummy_contents() {
 		global $wpdb;
 		$admission_fees = 0;
 		$wpdb->show_errors();
+		$ok = 0;
 		$issue_date = $_POST['issueDate'];
 		$current_date_time = $issue_date." ".date("H:i:s");
 		$todays_date =	$issue_date;
@@ -2876,8 +2877,8 @@ function wpsp_Import_Dummy_contents() {
 		if(!empty($transport_chg)) $fees_type .= "/trn";
 		if(!empty($annual_chg)) $fees_type .= "/ann";
 		if(!empty($recreation_chg)) $fees_type .= "/rec";
-		$fees_type_arr = array_filter(explode("/", $fees_type));
-		//echo "<pre>"; print_r(array_filter($fees_type_arr)); echo "</pre>";
+		$fees_type_arr = array_values(array_filter(explode("/", $fees_type)));
+		//echo "<pre>"; print_r($fees_type_arr); echo "</pre>";
 		//echo $fees_type;
 		$sql_slip_data = array(
 				'slip_no' => $slip_no,
@@ -3291,8 +3292,8 @@ function wpsp_Import_Dummy_contents() {
 					break;
 
 					case "ann":
-						$sql_record_data = array(
-								'tid' => $tid.$j."1",
+						/*$sql_record_data = array(
+								'tid' => $tid.$j."2",
 								'slip_no' => $slip_no,
 								'date_time' => $current_date_time,
 								'uid' => $uid,
@@ -3321,10 +3322,10 @@ function wpsp_Import_Dummy_contents() {
 									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
-							
 						}
 						else{
 							$find_ann_dues = $wpdb->get_results("SELECT * FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid'");
+							
 							if($wpdb->num_rows>0){
 								if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid' ")){
 									$ok = 1;
@@ -3335,15 +3336,66 @@ function wpsp_Import_Dummy_contents() {
 									throw new Exception("Fees is either not due or already submitted", 1);
 								}
 							}
-							
 						}
 						if($wpdb->insert($record_table, $sql_record_data)){
 							$ok = 1;
 						}
 						else{
 							$ok = 0;
-							//throw new Exception($wpdb->print_error());
-							throw new Exception("Fees is either not due or already submitted", 1);
+							throw new Exception($wpdb->print_error());
+						}*/
+
+						$sql_record_data = array(
+								'tid' => $tid.$j."1",
+								'slip_no' => $slip_no,
+								'date_time' => $current_date_time,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $annual_chg,
+								'session' => $session,
+								'fees_type' => 'ann'
+						);
+						if($annual_chg < $exp_annual_chg){
+							$sql_dues_data = array(
+								'date' => $todays_date,
+								'uid' => $uid,
+								'month' => $month,
+								'amount' => $exp_annual_chg - $annual_chg,
+								'fees_type' => "ann",
+								'session' => $session
+							);
+							$find_ann_dues = $wpdb->get_results("SELECT * FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$exp_annual_chg' AND uid='$uid'");
+							if($wpdb->num_rows>0){
+								if($wpdb->query("UPDATE $dues_table SET amount=amount-'$annual_chg' WHERE fees_type='ann' AND session='$session' AND amount='$exp_annual_chg' AND uid='$uid'")){
+									$ok = 1;
+								}
+								else{
+									$ok = 0;
+									throw new Exception($wpdb->print_error());
+									//throw new Exception("Fees is either not due or already submitted", 1);
+								}
+							}
+						}
+						else{
+							$find_ann_dues = $wpdb->get_results("SELECT * FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid'");
+							
+							if($wpdb->num_rows>0){
+								if($wpdb->query("DELETE FROM $dues_table WHERE fees_type='ann' AND session='$session' AND amount='$annual_chg' AND uid='$uid' ")){
+									$ok = 1;
+								}
+								else{
+									$ok = 0;
+									throw new Exception($wpdb->print_error());
+									//throw new Exception("Fees is either not due or already submitted", 1);
+								}
+							}
+						}
+						if($wpdb->insert($record_table, $sql_record_data)){
+							$ok = 1;
+						}
+						else{
+							$ok = 0;
+							throw new Exception($wpdb->print_error());
 						}
 					break;
 
@@ -3408,7 +3460,7 @@ function wpsp_Import_Dummy_contents() {
 				echo "success";
 			}
 			else{
-				throw new Exception($wpdb->print_error());
+				throw new Exception($wpdb->print_error()."ppppppppppppppp".$ok);
 			}
 			
 			$args = array(
