@@ -2874,7 +2874,7 @@ function wpsp_Import_Dummy_contents() {
 			$pm_tc = $trans_amount->route_fees;
 		}
 		if(!empty($admission_fees)) $fees_type .= "adm";
-		if(!empty($transport_chg)) $fees_type .= "/trn";
+		//if(!empty($transport_chg)) $fees_type .= "/trn";
 		if(!empty($annual_chg)) $fees_type .= "/ann";
 		if(!empty($recreation_chg)) $fees_type .= "/rec";
 		$fees_type_arr = array_values(array_filter(explode("/", $fees_type)));
@@ -3176,7 +3176,7 @@ function wpsp_Import_Dummy_contents() {
 							}
 							else{
 								$ok = 0;
-								throw new Exception($wpdb->print_error());
+								throw new Exception($wpdb->print_error()."0000002");
 							}
 							//if(!empty($outstanding_amt_trn)){
 								if($wpdb->query("DELETE FROM $dues_table WHERE amount='$pm_tc' AND fees_type='trn' AND month='$i' AND session='$session' AND uid='$uid' ")){
@@ -3226,7 +3226,7 @@ function wpsp_Import_Dummy_contents() {
 							}
 							else{
 								$ok = 0;
-								throw new Exception($wpdb->print_error());
+								throw new Exception($wpdb->print_error()."0000001");
 							}
 						}
 					}				
