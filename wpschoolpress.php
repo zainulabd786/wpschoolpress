@@ -485,6 +485,8 @@ function wpsp_submitted_fees($args){
 				$month = $i;
 				$month_query = ($month<$session_start_month) ? $month+12 : $month;
 				$record_sql = $wpdb->get_results("SELECT * FROM $record_table WHERE uid = '$id' AND month = '$month_query' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ");
+				// echo "SELECT * FROM $record_table WHERE uid = '$id' AND month = '$month_query' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ";
+				// die('die');
 				if($wpdb->num_rows > 0){
 					$month = $record_sql[0]->month;
 					$status = "submitted";
@@ -498,6 +500,7 @@ function wpsp_submitted_fees($args){
 					$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
 				} else{
 					$month = $i;
+					$month = ($month<$session_start_month) ? $month+12 : $month;
 					$status = "";
 					$amount = 0;
 					$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");
@@ -531,6 +534,7 @@ function wpsp_submitted_fees($args){
 						$return[$fees_type][] = array('month' => $month, 'status' => $status, 'amount' => $amount);
 					} else{
 						$month = $i;
+						$month = ($month<$session_start_month) ? $month+12 : $month;
 						$status = "";
 						$amount = 0;
 						$dues_sql = $wpdb->get_results("SELECT * FROM $dues_table WHERE uid = '$id' AND month = '$month' AND session = '$session' AND fees_type = '$fees_type'");

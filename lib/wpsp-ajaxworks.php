@@ -4911,6 +4911,8 @@ function wpsp_Import_Dummy_contents() {
 		$to_trn = (!empty($_POST['to_trn'])) ? $_POST["to_trn"] : 0;
 		$session = $_POST["session"];
 
+		$session_start_month = json_decode(apply_filters("wpsp_session_info", ""))[1]->option_value;
+
 		$single_student = (!empty($_POST["student"])) ? $_POST["student"] : 0;
 		$fees_types = [];
 		$todays_date = date("Y-m-d");
@@ -4934,7 +4936,9 @@ function wpsp_Import_Dummy_contents() {
 							$fees_data_arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => $student->wp_usr_id, 'session' => $session, 'fees_type' => array($fees_type))));
 							$fee_status = "";
 							foreach ($fees_data_arr->ttn as $fees_data) {
-			                    if($fees_data->month == $i){
+								$month = $i;
+								$month = ($month<$session_start_month) ? $month+12 : $month;
+			                    if($fees_data->month == $month){
 			                    	$fee_status = $fees_data->status;
 			                    }
 			                }
@@ -4945,7 +4949,7 @@ function wpsp_Import_Dummy_contents() {
 						}
 					}
 
-					if($student->transport > 0){ //only run this code if student has opted for transport
+					if($student->transport > 0 && $student->route_id > 0){ //only run this code if student has opted for transport
 						if($fees_type == "trn"){ // Due Transport Charges Fees
 							$route_info = json_decode(apply_filters("wpsp_get_transport_route", array('id' => $student->route_id )))[0];
 							if(!empty($route_info->route_fees)){
@@ -4953,7 +4957,9 @@ function wpsp_Import_Dummy_contents() {
 									$fees_data_arr = json_decode(apply_filters("wpsp_submitted_fees", array('uid' => $student->wp_usr_id, 'session' => $session, 'fees_type' => array($fees_type))));
 									$fee_status = "";
 									foreach ($fees_data_arr->trn as $fees_data) {
-					                    if($fees_data->month == $i){
+										$month = $i;
+										$month = ($month<$session_start_month) ? $month+12 : $month;
+					                    if($fees_data->month == $month){
 					                    	$fee_status = $fees_data->status;
 					                    }
 					                }
