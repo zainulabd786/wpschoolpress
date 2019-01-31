@@ -483,10 +483,11 @@ function wpsp_submitted_fees($args){
 
 			for ($i=1; $i<=12 ; $i++) { //tuition Fees
 				$month = $i;
+				//echo $session_start_month."--".$month; die;
 				$month_query = ($month<$session_start_month) ? $month+12 : $month;
 				$record_sql = $wpdb->get_results("SELECT * FROM $record_table WHERE uid = '$id' AND month = '$month_query' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ");
-				// echo "SELECT * FROM $record_table WHERE uid = '$id' AND month = '$month_query' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ";
-				// die('die');
+				//echo "SELECT * FROM $record_table WHERE uid = '$id' AND month = '$month_query' AND session = '$session' AND fees_type = '$fees_type' AND status = '0' ";
+				//die('die');
 				if($wpdb->num_rows > 0){
 					$month = $record_sql[0]->month;
 					$status = "submitted";

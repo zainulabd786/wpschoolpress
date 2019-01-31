@@ -2987,7 +2987,8 @@ function wpsp_Import_Dummy_contents() {
 										'month' => $month,
 										'amount' => $outstanding_amt,
 										'session' => $session,
-										'fees_type' => 'ttn'
+										'fees_type' => 'ttn',
+										'status' => 0
 								);
 								//$del_amt = $outstanding_amt+$concession;
 								$del_amt = $outstanding_amt + $concession;
@@ -3013,7 +3014,8 @@ function wpsp_Import_Dummy_contents() {
 										'month' => $month,
 										'amount' => $tution_fees,
 										'session' => $session,
-										'fees_type' => 'ttn'
+										'fees_type' => 'ttn',
+										'status' => 0
 								);
 								$upd_amt = $outstanding_amt + $concession;
 								if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("UPDATE $dues_table SET amount=amount-'$tution_fees' WHERE amount='$upd_amt' AND fees_type='ttn' AND month='$i' AND session='$session' AND uid='$uid' ")){
@@ -3040,7 +3042,8 @@ function wpsp_Import_Dummy_contents() {
 									'month' => $month,
 									'amount' => $pm_tf,
 									'session' => $session,
-									'fees_type' => 'ttn'
+									'fees_type' => 'ttn',
+									'status' => 0
 							);
 							if($wpdb->insert($record_table, $sql_record_data)){
 								$ok = 1;
@@ -3072,7 +3075,8 @@ function wpsp_Import_Dummy_contents() {
 									'month' => $month,
 									'amount' => $tution_fees,
 									'session' => $session,
-									'fees_type' => 'ttn'
+									'fees_type' => 'ttn',
+									'status' => 0
 							);
 							$sql_dues_data = array(
 									'date' => $todays_date,
@@ -3121,7 +3125,8 @@ function wpsp_Import_Dummy_contents() {
 										'month' => $month,
 										'amount' => $outstanding_amt_trn,
 										'session' => $session,
-										'fees_type' => 'trn'
+										'fees_type' => 'trn',
+										'status' => 0
 								);
 								if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("DELETE FROM $dues_table WHERE amount='$outstanding_amt_trn' AND fees_type='trn' AND month='$i' AND session='$session' AND uid='$uid' ")){
 									$ok = 1;
@@ -3144,7 +3149,8 @@ function wpsp_Import_Dummy_contents() {
 										'month' => $month,
 										'amount' => $transport_chg,
 										'session' => $session,
-										'fees_type' => 'trn'
+										'fees_type' => 'trn',
+										'status' => 0
 								);
 								if($wpdb->insert($record_table, $sql_record_data) && $wpdb->query("UPDATE $dues_table SET amount=amount-'$transport_chg' WHERE amount='$outstanding_amt_trn' AND fees_type='trn' AND month='$i' AND session='$session' AND uid='$uid' ")){
 									$ok = 1;
@@ -3169,7 +3175,8 @@ function wpsp_Import_Dummy_contents() {
 									'month' => $month,
 									'amount' => $pm_tc,
 									'session' => $session,
-									'fees_type' => 'trn'
+									'fees_type' => 'trn',
+									'status' => 0
 							);
 							if($wpdb->insert($record_table, $sql_record_data)){
 								$ok = 1;
@@ -3200,7 +3207,8 @@ function wpsp_Import_Dummy_contents() {
 									'month' => $month,
 									'amount' => $transport_chg,
 									'session' => $session,
-									'fees_type' => 'trn'
+									'fees_type' => 'trn',
+									'status' => 0
 							);
 							$sql_dues_data = array(
 									'date' => $todays_date,
@@ -3245,7 +3253,8 @@ function wpsp_Import_Dummy_contents() {
 								'month' => $month,
 								'amount' => $admission_fees,
 								'session' => $session,
-								'fees_type' => 'adm'
+								'fees_type' => 'adm',
+								'status' => 0
 						);
 						if($admission_fees < $exp_admission_fees){
 							$sql_dues_data = array(
@@ -3353,7 +3362,8 @@ function wpsp_Import_Dummy_contents() {
 								'month' => $month,
 								'amount' => $annual_chg,
 								'session' => $session,
-								'fees_type' => 'ann'
+								'fees_type' => 'ann',
+								'status' => 0
 						);
 						if($annual_chg < $exp_annual_chg){
 							$sql_dues_data = array(
@@ -3408,7 +3418,8 @@ function wpsp_Import_Dummy_contents() {
 								'month' => $month,
 								'amount' => $recreation_chg,
 								'session' => $session,
-								'fees_type' => 'rec'
+								'fees_type' => 'rec',
+								'status' => 0
 						);
 						if($recreation_chg < $exp_recreation_chg){
 							$sql_dues_data = array(
